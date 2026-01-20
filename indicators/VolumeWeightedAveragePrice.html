@@ -1,0 +1,1804 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VolumeWeightedAveragePrice - I ant I Investigates</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+        {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "VolumeWeightedAveragePrice",
+    "description": "Detailed guide for VolumeWeightedAveragePrice indicator.",
+    "author": {
+        "@type": "Organization",
+        "name": "I and I Investigates"
+    }
+}
+    </script>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+
+    <style>
+        /* =========================================
+           PORTED STYLES (From 0117 Template)
+           ========================================= */
+        :root {
+            /* Minimal Variable Set for Logic Panel */
+            --bg-card: #FFFFFF;
+            --bg-secondary: #F8FAFC; /* slate-50 */
+            --bg-hover: #F1F5F9; /* slate-100 */
+            --border-color: #E2E8F0; /* slate-200 */
+            --text-primary: #1E293B; /* slate-800 */
+            --text-muted: #64748B; /* slate-500 */
+            --accent: #4F46E5; /* indigo-600 */
+        }
+
+        /* Logic Figure Container */
+        .logic-figure {
+            margin: 0;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            position: relative;
+            overflow: hidden;
+            height: 600px; /* Fixed height for infinite canvas feel */
+        }
+
+        /* Infinite Canvas Wrapper */
+        .chart-scroll-wrapper {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            background-color: #FFFFFF;
+            background-image: radial-gradient(#E2E8F0 1.5px, transparent 1.5px);
+            background-size: 20px 20px;
+            cursor: grab;
+            touch-action: none;
+            user-select: none;
+        }
+        .chart-scroll-wrapper:active { cursor: grabbing; }
+
+        /* Code Panel Overlay */
+        #code-panel-overlay {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 500px;
+            max-width: 90%;
+            z-index: 30;
+            background-color: var(--bg-card);
+            border-right: 1px solid var(--border-color);
+            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), width 0.3s ease;
+            transform: translateX(0);
+        }
+        #code-panel-overlay.panel-hidden {
+            transform: translateX(-100%);
+            pointer-events: none;
+        }
+        #code-panel-overlay.panel-expanded {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        /* Code Content */
+        .code-panel-body {
+            background-color: #FAFAFA;
+            flex: 1;
+            overflow: auto;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            padding: 0.5rem 1rem 1rem 1rem; /* Reduced top padding */
+            white-space: pre; /* Essential for code indentation */
+        }
+        .code-content {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            padding: 1rem;
+        }
+        /* Toggle Button */
+        #code-panel-toggle-btn {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 25;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+        }
+        #code-panel-toggle-btn:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        /* Active States for Panel Buttons */
+        .btn-lang-active {
+            background-color: var(--accent) !important;
+            color: white !important;
+        }
+        .btn-type-active {
+            color: var(--text-primary) !important;
+            font-weight: bold;
+            text-decoration: underline;
+            text-decoration-color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        /* Custom Scrollbar for Code Blocks */
+        pre::-webkit-scrollbar, .code-panel-body::-webkit-scrollbar {
+            height: 8px; width: 8px;
+            background-color: #f1f5f9;
+        }
+        pre::-webkit-scrollbar-thumb, .code-panel-body::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 4px;
+        }
+        pre::-webkit-scrollbar-thumb:hover, .code-panel-body::-webkit-scrollbar-thumb:hover {
+            background-color: #94a3b8;
+        }
+
+        /* Pygments Syntax Highlighting */
+        pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #ffffcc }
+.highlight .c { color: #008000 } /* Comment */
+.highlight .err { border: 1px solid #F00 } /* Error */
+.highlight .k { color: #00F } /* Keyword */
+.highlight .ch { color: #008000 } /* Comment.Hashbang */
+.highlight .cm { color: #008000 } /* Comment.Multiline */
+.highlight .cp { color: #00F } /* Comment.Preproc */
+.highlight .cpf { color: #008000 } /* Comment.PreprocFile */
+.highlight .c1 { color: #008000 } /* Comment.Single */
+.highlight .cs { color: #008000 } /* Comment.Special */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gh { font-weight: bold } /* Generic.Heading */
+.highlight .gp { font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { font-weight: bold } /* Generic.Subheading */
+.highlight .kc { color: #00F } /* Keyword.Constant */
+.highlight .kd { color: #00F } /* Keyword.Declaration */
+.highlight .kn { color: #00F } /* Keyword.Namespace */
+.highlight .kp { color: #00F } /* Keyword.Pseudo */
+.highlight .kr { color: #00F } /* Keyword.Reserved */
+.highlight .kt { color: #2B91AF } /* Keyword.Type */
+.highlight .s { color: #A31515 } /* Literal.String */
+.highlight .nc { color: #2B91AF } /* Name.Class */
+.highlight .ow { color: #00F } /* Operator.Word */
+.highlight .sa { color: #A31515 } /* Literal.String.Affix */
+.highlight .sb { color: #A31515 } /* Literal.String.Backtick */
+.highlight .sc { color: #A31515 } /* Literal.String.Char */
+.highlight .dl { color: #A31515 } /* Literal.String.Delimiter */
+.highlight .sd { color: #A31515 } /* Literal.String.Doc */
+.highlight .s2 { color: #A31515 } /* Literal.String.Double */
+.highlight .se { color: #A31515 } /* Literal.String.Escape */
+.highlight .sh { color: #A31515 } /* Literal.String.Heredoc */
+.highlight .si { color: #A31515 } /* Literal.String.Interpol */
+.highlight .sx { color: #A31515 } /* Literal.String.Other */
+.highlight .sr { color: #A31515 } /* Literal.String.Regex */
+.highlight .s1 { color: #A31515 } /* Literal.String.Single */
+.highlight .ss { color: #A31515 } /* Literal.String.Symbol */
+        /* Mermaid Overrides */
+        .mermaid { transform-origin: 0 0; }
+        .noselect { user-select: none; -webkit-user-select: none; }
+
+        /* Legend Items */
+        .logic-legend {
+            border-top: 1px solid var(--border-color);
+            padding: 1rem;
+            background-color: var(--bg-card);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            position: relative;
+            z-index: 20;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 1px solid;
+        }
+        .l-ingestion { background: #E8F0FE; border-color: #4285F4; }
+        .l-evaluation { background: #FEF7E0; border-color: #FBBC04; }
+        .l-weighting { background: #F3E8FD; border-color: #A142F4; }
+        .l-synthesis { background: #E0F7FA; border-color: #12B5CB; }
+        .l-outcome { background: #E6F4EA; border-color: #34A853; }
+
+        /* TOC Active State Styling */
+        .toc-link.active {
+            color: #4f46e5;
+            border-left-color: #4f46e5;
+            background-color: #eef2ff;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="hidden md:flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">VolumeWeightedAveragePrice</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="hidden sm:flex sm:space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">VolumeWeightedAveragePrice</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">VWAP is the cumulative average price weighted by volume, representing the "fair value" at which most trading activity occurred—the benchmark institutional traders use to measure execution quality.</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION["INGESTION<br/>Data Capture"];
+A["Observe OHLC with volume<br/>(intraday price/volume stream)"];
+B["Track from session open<br/>(cumulative benchmark)"];
+end;
+subgraph EVALUATION["EVALUATION<br/>Initial Assessment"];
+C["Calculate typical price per bar<br/>(H+L+C)/3 fair value estimate"];
+D["Weight by volume traded<br/>(high-volume bars count more)"];
+end;
+subgraph WEIGHTING["WEIGHTING<br/>Normalization"];
+E["Accumulate price × volume<br/>(total dollar volume)"];
+F["Divide by cumulative volume<br/>(volume-weighted fair price)"];
+end;
+subgraph SYNTHESIS["SYNTHESIS<br/>Pattern Detection"];
+G{"Where is price vs VWAP?"};
+H["Price > VWAP: Intraday bullish"];
+I["Price < VWAP: Intraday bearish"];
+J["Price at 2σ band: Overextended"];
+end;
+subgraph OUTCOME["OUTCOME<br/>Signal Generation"];
+K["Gap down reclaim VWAP:<br/>Strong buy (institutional support)"];
+L["Failed VWAP reclaim:<br/>Continue short bias"];
+M["2σ band touch:<br/>Mean reversion opportunity (85% prob)"];
+end;
+A --> C;
+B --> C;
+C --> D;
+D --> E;
+E --> F;
+F --> G;
+G -->|"Above"| H;
+G -->|"Below"| I;
+G -->|"At band"| J;
+H --> K;
+I --> L;
+J --> M;
+style INGESTION fill:#e3f2fd;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#e8f5e9;
+style SYNTHESIS fill:#fce4ec;
+style OUTCOME fill:#f3e5f5;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4">
+                        <div id="code-csharp-simple" class="code-content hidden"><div class="highlight"><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">1</span><span class="k">using</span> System;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">2</span><span class="k">using</span> System.Collections.Generic;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">3</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">4</span><span class="k">namespace</span> TechnicalIndicators</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">5</span>{</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">6</span>    <span class="c1">/// &lt;summary&gt;</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">7</span>    <span class="c1">/// Volume Weighted Average Price (VWAP)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">8</span>    <span class="c1">/// &lt;/summary&gt;</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">9</span>    <span class="c1">/// &lt;remarks&gt;</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">10</span>    <span class="c1">/// A trading benchmark used by traders that gives the average price a security has traded at throughout the day, based on both volume and price.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">11</span>    <span class="c1">/// &lt;list type=&quot;bullet&quot;&gt;</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">12</span>    <span class="c1">/// &lt;item&gt;&lt;description&gt;Typical Price = (High + Low + Close) / 3.&lt;/description&gt;&lt;/item&gt;</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">13</span>    <span class="c1">/// &lt;item&gt;&lt;description&gt;VWAP = Sum(TypicalPrice * Volume) / Sum(Volume).&lt;/description&gt;&lt;/item&gt;</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">14</span>    <span class="c1">/// &lt;item&gt;&lt;description&gt;Cumulative from the start of the data (or session).&lt;/description&gt;&lt;/item&gt;</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">15</span>    <span class="c1">/// &lt;/list&gt;</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">16</span>    <span class="c1">/// &lt;/remarks&gt;</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">17</span>    <span class="k">public</span> <span class="k">class</span> <span class="nc">VolumeWeightedAveragePrice</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">18</span>    {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">19</span>        <span class="k">public</span> List&lt;<span class="kt">decimal?</span>&gt; Values { <span class="k">get</span>; } = <span class="k">new</span>();</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">20</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">21</span>        <span class="k">public</span> <span class="k">void</span> Calculate(IEnumerable&lt;CandleData&gt; candles)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">22</span>        {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">23</span>            Values.Clear();</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">24</span>            <span class="kt">var</span> candleList = <span class="k">new</span> List&lt;CandleData&gt;(candles);</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">25</span>            <span class="k">if</span> (candleList.Count == 0) <span class="k">return</span>;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">26</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">27</span>            <span class="kt">decimal</span> cumulativeTypicalPriceVolume = 0;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">28</span>            <span class="kt">decimal</span> cumulativeVolume = 0;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">29</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">30</span>            <span class="k">for</span> (<span class="kt">int</span> i = 0; i &lt; candleList.Count; i++)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">31</span>            {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">32</span>                <span class="kt">decimal</span> typicalPrice = (candleList[i].High + candleList[i].Low + candleList[i].Close) / 3;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">33</span>                cumulativeTypicalPriceVolume += typicalPrice * candleList[i].Volume;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">34</span>                cumulativeVolume += candleList[i].Volume;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">35</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">36</span>                <span class="k">if</span> (cumulativeVolume == 0)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">37</span>                    Values.Add(<span class="k">null</span>);</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">38</span>                <span class="k">else</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">39</span>                    Values.Add(cumulativeTypicalPriceVolume / cumulativeVolume);</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">40</span>            }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">41</span>        }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">42</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">43</span>        <span class="k">public</span> <span class="k">static</span> List&lt;<span class="kt">decimal?</span>&gt; Calculate(IEnumerable&lt;CandleData&gt; candles)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">44</span>        {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">45</span>            <span class="kt">var</span> vwap = <span class="k">new</span> VolumeWeightedAveragePrice();</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">46</span>            vwap.Calculate(candles);</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">47</span>            <span class="k">return</span> vwap.Values;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">48</span>        }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">49</span>    }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">50</span>}</div></div></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"><div class="highlight"><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">1</span><span class="c1">// =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">2</span><span class="c1">// VWAP (Volume Weighted Average Price) - ETM WebCode Tutorial</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">3</span><span class="c1">// =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">4</span><span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">5</span><span class="c1">// [What] VWAP is the cumulative average price weighted by volume.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">6</span><span class="c1">//        It represents the &quot;fair&quot; average price where most shares traded.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">7</span><span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">8</span><span class="c1">// [Why]  Institutional traders use VWAP as an execution benchmark.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">9</span><span class="c1">//        Buying below VWAP = good execution, above = poor execution.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">10</span><span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">11</span><span class="c1">// [How]  VWAP = Σ(TypicalPrice × Volume) / Σ(Volume)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">12</span><span class="c1">//        TypicalPrice = (High + Low + Close) / 3</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">13</span><span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">14</span><span class="c1">// =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">15</span><span class="c1">// [Visual] VWAP Concept</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">16</span><span class="c1">// =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">17</span><span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">18</span><span class="c1">//   Price</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">19</span><span class="c1">//      │</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">20</span><span class="c1">//   $55┤               ●────●</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">21</span><span class="c1">//      │         ●────●</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">22</span><span class="c1">//   $50┤───●────●────────────── VWAP (pulled up by high-volume days)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">23</span><span class="c1">//      │   ●</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">24</span><span class="c1">//   $45┤  ●</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">25</span><span class="c1">//      └────────────────────────────────────────────</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">26</span><span class="c1">//                                             Time →</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">27</span><span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">28</span><span class="c1">//   [How] If price is ABOVE VWAP → Bullish bias (buyers in control)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">29</span><span class="c1">//         If price is BELOW VWAP → Bearish bias (sellers in control)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">30</span><span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">31</span><span class="c1">// =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">32</span><span class="c1">// [Visual] Typical Price Calculation</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">33</span><span class="c1">// =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">34</span><span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">35</span><span class="c1">//   TypicalPrice = (High + Low + Close) / 3</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">36</span><span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">37</span><span class="c1">//         High: 105 ─────┐</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">38</span><span class="c1">//              │        │</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">39</span><span class="c1">//        Close: 103 ────┼── Average = (105+98+103)/3 = 102</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">40</span><span class="c1">//              │        │</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">41</span><span class="c1">//          Low: 98 ─────┘</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">42</span><span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">43</span><span class="c1">//   [Why] Uses all three prices to represent the &quot;center&quot; of the bar</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">44</span><span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">45</span><span class="c1">// =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">46</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">47</span><span class="k">using</span> System;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">48</span><span class="k">using</span> System.Collections.Generic;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">49</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">50</span><span class="k">namespace</span> TechnicalIndicators</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">51</span>{</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">52</span>    <span class="c1">// =========================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">53</span>    <span class="c1">// [What] OHLCV Data Structure</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">54</span>    <span class="c1">// =========================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">55</span>    <span class="k">public</span> <span class="k">readonly</span> <span class="k">record</span> <span class="k">struct</span> CandleData(</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">56</span>        DateTime Timestamp,</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">57</span>        <span class="kt">decimal</span> Open,</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">58</span>        <span class="kt">decimal</span> High,</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">59</span>        <span class="kt">decimal</span> Low,</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">60</span>        <span class="kt">decimal</span> Close,</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">61</span>        <span class="kt">long</span> Volume</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">62</span>    );</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">63</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">64</span>    <span class="c1">// =========================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">65</span>    <span class="c1">// [What] VWAP Indicator Class</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">66</span>    <span class="c1">// =========================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">67</span>    <span class="k">public</span> <span class="k">class</span> <span class="nc">VolumeWeightedAveragePrice</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">68</span>    {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">69</span>        <span class="c1">// =====================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">70</span>        <span class="c1">// [What] Output Storage</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">71</span>        <span class="c1">// =====================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">72</span>        <span class="k">public</span> List&lt;<span class="kt">decimal?</span>&gt; Values { <span class="k">get</span>; } = <span class="k">new</span>();</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">73</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">74</span>        <span class="c1">// =====================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">75</span>        <span class="c1">// [What] Main Calculation Method</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">76</span>        <span class="c1">// =====================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">77</span>        <span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">78</span>        <span class="c1">// IPO Block:</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">79</span>        <span class="c1">//   Input  : candles - OHLCV price history</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">80</span>        <span class="c1">//   Process: Accumulate (TP × Volume) and Volume, compute ratio</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">81</span>        <span class="c1">//   Output : Populates Values with cumulative VWAP</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">82</span>        <span class="c1">// =====================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">83</span>        <span class="k">public</span> <span class="k">void</span> Calculate(IEnumerable&lt;CandleData&gt; candles)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">84</span>        {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">85</span>            Values.Clear();</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">86</span>            <span class="kt">var</span> candleList = <span class="k">new</span> List&lt;CandleData&gt;(candles);</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">87</span>            <span class="k">if</span> (candleList.Count == 0) <span class="k">return</span>;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">88</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">89</span>            <span class="c1">// -----------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">90</span>            <span class="c1">// [What] Cumulative Accumulators</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">91</span>            <span class="c1">// [Why]  VWAP is cumulative from session start, not rolling</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">92</span>            <span class="c1">// -----------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">93</span>            <span class="kt">decimal</span> cumulativeTypicalPriceVolume = 0;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">94</span>            <span class="kt">decimal</span> cumulativeVolume = 0;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">95</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">96</span>            <span class="c1">// -----------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">97</span>            <span class="c1">// [Visual] VWAP Accumulation Loop</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">98</span>            <span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">99</span>            <span class="c1">//   for each bar:</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">100</span>            <span class="c1">//     1. TP = (H + L + C) / 3</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">101</span>            <span class="c1">//     2. cumTPV += TP × Volume</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">102</span>            <span class="c1">//     3. cumVol += Volume</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">103</span>            <span class="c1">//     4. VWAP = cumTPV / cumVol</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">104</span>            <span class="c1">// -----------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">105</span>            <span class="k">for</span> (<span class="kt">int</span> i = 0; i &lt; candleList.Count; i++)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">106</span>            {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">107</span>                <span class="c1">// [How] Calculate Typical Price</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">108</span>                <span class="kt">decimal</span> typicalPrice = (candleList[i].High + candleList[i].Low + candleList[i].Close) / 3;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">109</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">110</span>                <span class="c1">// [How] Accumulate weighted price and volume</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">111</span>                cumulativeTypicalPriceVolume += typicalPrice * candleList[i].Volume;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">112</span>                cumulativeVolume += candleList[i].Volume;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">113</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">114</span>                <span class="c1">// [How] Output VWAP (guard against zero volume)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">115</span>                <span class="k">if</span> (cumulativeVolume == 0)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">116</span>                    Values.Add(<span class="k">null</span>);</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">117</span>                <span class="k">else</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">118</span>                    Values.Add(cumulativeTypicalPriceVolume / cumulativeVolume);</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">119</span>            }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">120</span>        }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">121</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">122</span>        <span class="c1">// =====================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">123</span>        <span class="c1">// [What] Static Convenience Method</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">124</span>        <span class="c1">// =====================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">125</span>        <span class="k">public</span> <span class="k">static</span> List&lt;<span class="kt">decimal?</span>&gt; Calculate(IEnumerable&lt;CandleData&gt; candles)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">126</span>        {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">127</span>            <span class="kt">var</span> vwap = <span class="k">new</span> VolumeWeightedAveragePrice();</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">128</span>            vwap.Calculate(candles);</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">129</span>            <span class="k">return</span> vwap.Values;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">130</span>        }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">131</span>    }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">132</span>}</div></div></div>
+                        <div id="code-python-simple" class="code-content hidden"><div class="highlight"><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">1</span><span class="k">class</span> <span class="nc">VolumeWeightedAveragePrice</span>:</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">2</span>    <span class="sd">&quot;&quot;&quot;</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">3</span><span class="sd">    VWAP (Cumulative)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">4</span><span class="sd">    &quot;&quot;&quot;</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">5</span>    <span class="k">def</span> __init__(self):</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">6</span>        self.values = []</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">7</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">8</span>    <span class="k">def</span> calculate(self, candles):</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">9</span>        self.values.clear()</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">10</span>        <span class="k">if</span> <span class="ow">not</span> candles: <span class="k">return</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">11</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">12</span>        cum_tp_vol = 0.0</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">13</span>        cum_vol = 0.0</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">14</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">15</span>        <span class="k">for</span> i <span class="ow">in</span> range(len(candles)):</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">16</span>            h = float(candles[i][<span class="s1">&#x27;</span><span class="s1">high</span><span class="s1">&#x27;</span>])</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">17</span>            l = float(candles[i][<span class="s1">&#x27;</span><span class="s1">low</span><span class="s1">&#x27;</span>])</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">18</span>            c = float(candles[i][<span class="s1">&#x27;</span><span class="s1">close</span><span class="s1">&#x27;</span>])</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">19</span>            v = float(candles[i][<span class="s1">&#x27;</span><span class="s1">volume</span><span class="s1">&#x27;</span>])</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">20</span>            </div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">21</span>            tp = (h + l + c) / 3.0</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">22</span>            cum_tp_vol += tp * v</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">23</span>            cum_vol += v</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">24</span>            </div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">25</span>            <span class="k">if</span> cum_vol == 0:</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">26</span>                self.values.append(<span class="kc">None</span>)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">27</span>            <span class="k">else</span>:</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">28</span>                self.values.append(cum_tp_vol / cum_vol)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">29</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">30</span><span class="k">def</span> calculate(candles):</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">31</span>    obj = VolumeWeightedAveragePrice()</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">32</span>    obj.calculate(candles)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">33</span>    <span class="k">return</span> obj.values</div></div></div>
+                        <div id="code-python-detailed" class="code-content hidden"><div class="highlight"><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">1</span><span class="c1"># =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">2</span><span class="c1"># Logic Breakdown (Volume Weighted Average Price)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">3</span><span class="c1"># =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">4</span><span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">5</span><span class="c1"># This document provides a &quot;Deep Dive&quot; into the internal logic of the</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">6</span><span class="c1"># Volume Weighted Average Price (VWAP).</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">7</span><span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">8</span><span class="c1"># [Core Concepts]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">9</span><span class="c1"># 1. Institutional Benchmark</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">10</span><span class="c1">#    - VWAP represents the &quot;True Average Price&quot; paid by the market.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">11</span><span class="c1">#    - If you bought below VWAP, you beat the average participant (Good).</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">12</span><span class="c1">#    - If you bought above VWAP, you paid more than average (Bad).</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">13</span><span class="c1">#    - Algorithms try to execute close to VWAP.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">14</span><span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">15</span><span class="c1"># 2. Cumulative Nature</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">16</span><span class="c1">#    - Unlike Moving Averages, VWAP accumulates data from a &quot;Start Time&quot; (Anchor).</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">17</span><span class="c1">#    - Typically anchored to the Daily Open (resets every day).</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">18</span><span class="c1">#    - THIS IMPLEMENTATION assumes the input `candles` represents a single session</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">19</span><span class="c1">#      or the desired calculation window. It accumulates from index 0.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">20</span><span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">21</span><span class="c1"># [Formula]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">22</span><span class="c1"># TypicalPrice = (High + Low + Close) / 3</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">23</span><span class="c1"># TP_Volume = TypicalPrice * Volume</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">24</span><span class="c1"># VWAP = CumulativeSum(TP_Volume) / CumulativeSum(Volume)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">25</span><span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">26</span><span class="c1"># =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">27</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">28</span><span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">29</span><span class="c1"># Type-Level Explanation: VolumeWeightedAveragePrice (class)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">30</span><span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">31</span><span class="c1"># [Why]  Execution quality metric.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">32</span><span class="c1"># [What] Cumulative Volume-Weighted Average.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">33</span><span class="c1"># [How]  Calculates the cumulative sum of (Typical Price * Volume) and divides it by the cumulative sum of Volume.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">34</span><span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">35</span><span class="k">class</span> <span class="nc">VolumeWeightedAveragePrice</span>:</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">36</span>    </div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">37</span>    <span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">38</span>    <span class="c1"># Constructor: __init__</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">39</span>    <span class="c1"># [Why] No &quot;period&quot; parameter because VWAP is cumulative (anchored).</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">40</span>    <span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">41</span>    <span class="k">def</span> __init__(self):</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">42</span>        self.values = []</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">43</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">44</span>    <span class="c1"># =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">45</span>    <span class="c1"># IPO: calculate</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">46</span>    <span class="c1"># =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">47</span>    <span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">48</span>    <span class="c1"># [Input]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">49</span>    <span class="c1"># - candles: List[dict] (Session data)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">50</span>    <span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">51</span>    <span class="c1"># [Process]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">52</span>    <span class="c1"># 1. Init Cumulative Totals.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">53</span>    <span class="c1"># 2. Iterate candles.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">54</span>    <span class="c1"># 3. Calculate Typical Price.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">55</span>    <span class="c1"># 4. Add (TP * Vol) to Cumulative Value.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">56</span>    <span class="c1"># 5. Add Vol to Cumulative Volume.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">57</span>    <span class="c1"># 6. Divide to get VWAP.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">58</span>    <span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">59</span>    <span class="c1"># [Output]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">60</span>    <span class="c1"># - None.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">61</span>    <span class="c1"># =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">62</span>    <span class="k">def</span> calculate(self, candles):</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">63</span>        </div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">64</span>        <span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">65</span>        <span class="c1"># Logic Step 1: Reset</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">66</span>        <span class="c1"># [Why]   Ensure a clean start for the calculation.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">67</span>        <span class="c1"># [How]   Clear the output list and check input validity.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">68</span>        <span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">69</span>        self.values.clear()</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">70</span>        <span class="k">if</span> len(candles) == 0:</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">71</span>            <span class="k">return</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">72</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">73</span>        cum_tp_vol = 0.0 <span class="c1"># Numerator</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">74</span>        cum_vol = 0.0    <span class="c1"># Denominator</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">75</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">76</span>        <span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">77</span>        <span class="c1"># Logic Step 2: Main Loop</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">78</span>        <span class="c1"># [Why]   Process each candle sequentially to build the cumulative totals.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">79</span>        <span class="c1"># [How]   Iterate through the candle list.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">80</span>        <span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">81</span>        <span class="k">for</span> i <span class="ow">in</span> range(len(candles)):</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">82</span>            </div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">83</span>            c = candles[i]</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">84</span>            </div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">85</span>            <span class="c1"># Logic Step 2.1: Typical Price</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">86</span>            <span class="c1"># [Why] Represents a fair approximation of price for that bar.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">87</span>            tp = (c[<span class="s1">&#x27;</span><span class="s1">high</span><span class="s1">&#x27;</span>] + c[<span class="s1">&#x27;</span><span class="s1">low</span><span class="s1">&#x27;</span>] + c[<span class="s1">&#x27;</span><span class="s1">close</span><span class="s1">&#x27;</span>]) / 3.0</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">88</span>            </div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">89</span>            vol = c[<span class="s1">&#x27;</span><span class="s1">volume</span><span class="s1">&#x27;</span>]</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">90</span>            </div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">91</span>            <span class="c1"># Logic Step 2.2: Accumulate</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">92</span>            <span class="c1"># [Visual]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">93</span>            <span class="c1"># Bar 1: Price 100, Vol 10. Val += 1000.  Vol += 10. VWAP = 100.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">94</span>            <span class="c1"># Bar 2: Price 110, Vol 100. Val += 11000. Vol += 100. VWAP = 12000/110 = 109.09.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">95</span>            <span class="c1"># (Weighted heavily towards Bar 2 due to volume).</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">96</span>            <span class="c1"># [How]   Add (TypicalPrice * Volume) to the cumulative value numerator. Add Volume to the cumulative volume denominator.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">97</span>            </div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">98</span>            cum_tp_vol += (tp * vol)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">99</span>            cum_vol += vol</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">100</span>            </div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">101</span>            <span class="c1"># Logic Step 2.3: Compute</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">102</span>            <span class="c1"># [Why]   Calculate the final weighted average for this step.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">103</span>            <span class="c1"># [How]   Divide the cumulative price-volume product by the cumulative volume.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">104</span>            <span class="k">if</span> cum_vol == 0:</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">105</span>                self.values.append(<span class="kc">None</span>)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">106</span>            <span class="k">else</span>:</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">107</span>                vwap = cum_tp_vol / cum_vol</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">108</span>                self.values.append(vwap)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">109</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">110</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">111</span><span class="c1"># =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">112</span><span class="c1"># Static Wrapper Function</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">113</span><span class="c1"># =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">114</span><span class="k">def</span> calculate(candles):</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">115</span>    vwap = VolumeWeightedAveragePrice()</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">116</span>    vwap.calculate(candles)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">117</span>    <span class="k">return</span> vwap.values</div></div></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="volume-weighted-average-price-vwap">Volume Weighted Average Price (VWAP)</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: Volume Weighted Average Price  </p>
+<p class="mb-4">Abbreviation: VWAP  </p>
+<p class="mb-4">Category: Volume / Execution Benchmark  </p>
+<p class="mb-4">Creator: Developed by institutional traders in the 1980s; formalized by algorithms in the 1990s  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: VWAP is the cumulative average price weighted by volume, representing the "fair value" at which most trading activity occurred—the benchmark institutional traders use to measure execution quality.</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="formula">Formula</h3>
+
+<p class="mb-4">$$VWAP = \frac{\sum_{i=1}^{N} (TP_i \times Volume_i)}{\sum_{i=1}^{N} Volume_i}$$</p>
+
+<p class="mb-4">Where:</p>
+
+<p class="mb-4">$$TP = \frac{High + Low + Close}{3}$$</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Component</td><td class="px-4 py-2 border-b border-[#2a2e39]">Formula</td><td class="px-4 py-2 border-b border-[#2a2e39]">Purpose</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Typical Price (TP)</td><td class="px-4 py-2 border-b border-[#2a2e39]">(H + L + C) / 3</td><td class="px-4 py-2 border-b border-[#2a2e39]">Representative price for each bar</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Cumulative TPV</td><td class="px-4 py-2 border-b border-[#2a2e39]">Σ(TP × Volume)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price-weighted volume accumulator</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Cumulative Volume</td><td class="px-4 py-2 border-b border-[#2a2e39]">Σ(Volume)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Total traded volume</td></tr>
+</table></div>
+
+<h3 id="calculation-steps">Calculation Steps</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Step</td><td class="px-4 py-2 border-b border-[#2a2e39]">Operation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Result</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1</td><td class="px-4 py-2 border-b border-[#2a2e39]">Calculate Typical Price</td><td class="px-4 py-2 border-b border-[#2a2e39]">(High + Low + Close) / 3</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">2</td><td class="px-4 py-2 border-b border-[#2a2e39]">Multiply TP by Volume</td><td class="px-4 py-2 border-b border-[#2a2e39]">TPV (Typical Price × Volume)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">Accumulate TPV</td><td class="px-4 py-2 border-b border-[#2a2e39]">Cumulative TPV</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">4</td><td class="px-4 py-2 border-b border-[#2a2e39]">Accumulate Volume</td><td class="px-4 py-2 border-b border-[#2a2e39]">Cumulative Volume</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">5</td><td class="px-4 py-2 border-b border-[#2a2e39]">Divide Cumulative TPV by Cumulative Volume</td><td class="px-4 py-2 border-b border-[#2a2e39]">VWAP</td></tr>
+</table></div>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">Think of VWAP like a weighted class average. If a student shops:</p>
+<p class="mb-4">- 50 units at $10 each = $500</p>
+<p class="mb-4">- 100 units at $12 each = $1,200</p>
+
+<p class="mb-4">The average purchase price isn't ($10 + $12) / 2 = $11. It's $1,700 / 150 = $11.33 (weighted by quantity). VWAP works the same way—prices where more volume traded weigh more heavily.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<h3 id="default-parameters">Default Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rationale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Reset Frequency</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily</td><td class="px-4 py-2 border-b border-[#2a2e39]">Starts fresh each trading session</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Band Width</td><td class="px-4 py-2 border-b border-[#2a2e39]">±1-2 StdDev</td><td class="px-4 py-2 border-b border-[#2a2e39]">VWAP Bands for trading ranges</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Anchor</td><td class="px-4 py-2 border-b border-[#2a2e39]">Market Open (9:30 ET)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard US equity anchor point</td></tr>
+</table></div>
+
+<h3 id="timeframe-recommendations">Timeframe Recommendations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Use Case</td><td class="px-4 py-2 border-b border-[#2a2e39]">Reset Frequency</td><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Intraday Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily</td><td class="px-4 py-2 border-b border-[#2a2e39]">Execution benchmark</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Swing Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">Weekly</td><td class="px-4 py-2 border-b border-[#2a2e39]">Weekly fair value</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Event-Based</td><td class="px-4 py-2 border-b border-[#2a2e39]">Custom (earnings, IPO)</td><td class="px-4 py-2 border-b border-[#2a2e39]">"Anchored VWAP"</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Institutional</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily</td><td class="px-4 py-2 border-b border-[#2a2e39]">Beat VWAP = good execution</td></tr>
+</table></div>
+
+<h3 id="why-vwap-resets-daily">Why VWAP Resets Daily?</h3>
+
+<p class="mb-4">VWAP accumulates from the first bar of the session. Most institutional algorithms target beating the daily VWAP—buying below it and selling above it. This daily reset makes each session a "fresh start" for comparison.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<h3 id="best-conditions">Best Conditions</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Why It Works</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Intraday Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">Reveals institutional support/resistance</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Execution Benchmarking</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard for measuring trade quality</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Mean Reversion Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price tends to revert to VWAP</td></tr>
+</table></div>
+
+<h3 id="limitations">Limitations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Gap Opens</td><td class="px-4 py-2 border-b border-[#2a2e39]">First bar establishes VWAP, which may be distant from overnight prices</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">End of Day</td><td class="px-4 py-2 border-b border-[#2a2e39]">VWAP becomes stale; dominated by early trading</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Low Volume Periods</td><td class="px-4 py-2 border-b border-[#2a2e39]">New bars barely affect cumulative VWAP</td></tr>
+</table></div>
+
+<h3 id="asset-class-suitability">Asset Class Suitability</h3>
+
+<p class="mb-4">- Equities — Primary use case; billions of dollars benchmarked daily</p>
+<p class="mb-4">- ETFs — Excellent for intraday liquidity analysis</p>
+<p class="mb-4">- Futures — Used with session-based VWAP</p>
+<p class="mb-4">- Forex — No true "volume"; tick count VWAP less reliable</p>
+<p class="mb-4">- Crypto — 24/7 markets require custom anchoring</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-entry-signals">5. Entry Signals</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strength</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bull Cross</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price crosses above VWAP</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bear Cross</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price crosses below VWAP</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWAP Bounce</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price touches VWAP and reverses up</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWAP Rejection</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price touches VWAP and reverses down</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Morning Reclaim</td><td class="px-4 py-2 border-b border-[#2a2e39]">After gap down, price crosses above VWAP</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWAP Breakdown</td><td class="px-4 py-2 border-b border-[#2a2e39]">After failed reclaim, price drops below VWAP</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+</table></div>
+
+<h3 id="primary-buy-signal-vwap-reclaim">Primary Buy Signal (VWAP Reclaim)</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF Market opens below VWAP (gap down)
+AND Price crosses back above VWAP within first 2 hours
+AND Volume increasing
+THEN → BUY (Intraday strength)
+</code></pre>
+
+<h3 id="primary-sell-signal-vwap-failure">Primary Sell Signal (VWAP Failure)</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF Price tests VWAP from below
+AND Price rejected (closes below VWAP)
+AND Two consecutive closes below VWAP
+THEN → SELL/SHORT (Intraday weakness)
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-filter-usage">6. Filter Usage</h2>
+
+<p class="mb-4">VWAP excels as an intraday bias filter and execution benchmark.</p>
+
+<h3 id="filter-rules">Filter Rules</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rule</td><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Price > VWAP</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Intraday bullish bias; favor longs</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Price < VWAP</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Intraday bearish bias; favor shorts</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Executing > VWAP</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Institutional selling (poor execution)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Executing < VWAP</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Institutional buying (good execution)</td></tr>
+</table></div>
+
+<h3 id="recommended-pairings">Recommended Pairings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Partner Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Synergy Logic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWAP Bands</td><td class="px-4 py-2 border-b border-[#2a2e39]">StdDev bands around VWAP for entries/exits</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RSI</td><td class="px-4 py-2 border-b border-[#2a2e39]">RSI for timing within VWAP directional bias</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Opening Range</td><td class="px-4 py-2 border-b border-[#2a2e39]">Combine opening range with VWAP for intraday strategy</td></tr>
+</table></div>
+
+<h3 id="example-combined-strategy">Example Combined Strategy</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+MORNING SETUP (9:30-10:30):
+&nbsp;&nbsp;Define Opening Range High (ORH) and Low (ORL)
+&nbsp;&nbsp;Calculate VWAP direction
+
+ENTRY CONDITIONS (after 10:30):
+&nbsp;&nbsp;Price above VWAP                    // Bullish intraday
+&nbsp;&nbsp;Price breaks above ORH              // Breakout confirmed
+&nbsp;&nbsp;Volume &gt; Average                    // Conviction
+
+ACTION: BUY the confirmed breakout
+STOP: Below ORH or VWAP
+TARGET: 2× risk or hold to close
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<h3 id="lag-characteristics">Lag Characteristics</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Component</td><td class="px-4 py-2 border-b border-[#2a2e39]">Characteristic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">First Valid Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">First bar of session</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sensitivity</td><td class="px-4 py-2 border-b border-[#2a2e39]">Decreases as day progresses</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Cumulative Nature</td><td class="px-4 py-2 border-b border-[#2a2e39]">Early bars dominate VWAP; late bars have minimal effect</td></tr>
+</table></div>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Late-Day Staleness: By 3:30 PM, a 10,000 share trade barely moves VWAP (compared to 3 million shares already traded). VWAP becomes a fixed line in the last hour—useful as support/resistance but not as a dynamic indicator.</blockquote>
+
+<h3 id="false-signal-scenarios">False Signal Scenarios</h3>
+
+<p class="mb-4">1. Gap Open Trap  </p>
+<p class="mb-4">   A large gap establishes VWAP far from opening price. If you're below a VWAP that's $2 higher, don't expect immediate reclaim.</p>
+
+<p class="mb-4">2. The Opening Flood  </p>
+<p class="mb-4">   First 30 minutes often see VWAP whip around as opening volume dominates. Wait until 10:00 AM for stability.</p>
+
+<p class="mb-4">3. Low Volume Drift  </p>
+<p class="mb-4">   Price can drift far from VWAP on low volume without triggering alarms. VWAP assumes volume represents "smart money"—but not always true.</p>
+
+<h3 id="mitigation-strategies">Mitigation Strategies</h3>
+
+<p class="mb-4">- Wait 30 Minutes: Let VWAP stabilize before trading signals</p>
+<p class="mb-4">- Use VWAP Bands: 1-2 StdDev bands provide better entries than VWAP line alone</p>
+<p class="mb-4">- Combine with Volume: Only act on VWAP crossovers with above-average volume</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<h3 id="the-institutional-mindset">The Institutional Mindset</h3>
+
+<p class="mb-4">Institutions are often mandated to execute at or better than VWAP:</p>
+<p class="mb-4">- Buy orders: Target execution BELOW VWAP (cheaper than average)</p>
+<p class="mb-4">- Sell orders: Target execution ABOVE VWAP (better than average)</p>
+
+<p class="mb-4">This creates predictable behavior: when price is below VWAP, expect institutional buying support. When above, expect institutional selling pressure. Understanding this dynamic gives retail traders an edge.</p>
+
+<h3 id="anchored-vwap">Anchored VWAP</h3>
+
+<p class="mb-4">Instead of daily reset, anchor VWAP to significant events:</p>
+<p class="mb-4">- Earnings anchor: VWAP from the earnings announcement bar</p>
+<p class="mb-4">- IPO anchor: VWAP from the first trading day</p>
+<p class="mb-4">- Breakout anchor: VWAP from breakout bar</p>
+
+<p class="mb-4">Anchored VWAP often acts as major support/resistance for weeks or months.</p>
+
+<h3 id="vwap-standard-deviation-bands">VWAP Standard Deviation Bands</h3>
+
+<p class="mb-4">Calculate rolling standard deviation from VWAP:</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Upper Band = VWAP + 2 × StdDev of (Price - VWAP)
+Lower Band = VWAP - 2 × StdDev of (Price - VWAP)
+</code></pre>
+
+<p class="mb-4">These bands create dynamic overbought/oversold zones around fair value.</p>
+
+<h3 id="end-of-day-tactics">End-of-Day Tactics</h3>
+
+<p class="mb-4">In the final 30 minutes:</p>
+<p class="mb-4">- If price is significantly below VWAP, institutions rush to buy (improve execution)</p>
+<p class="mb-4">- If price is significantly above VWAP, institutions rush to sell (close positions)</p>
+
+<p class="mb-4">This creates predictable mean reversion toward VWAP into the close (not always, but with edge).</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"VWAP is the market's honest price—where volume voted that fair value truly lives."</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">VWAP answers one question: "What's the fair price for today?"</p>
+
+<p class="mb-4">Unlike the close or the average of highs and lows, VWAP asks a more meaningful question: "At what price did most of the trading actually occur?"</p>
+
+<p class="mb-4">Consider a stock that trades:</p>
+<p class="mb-4">- 1 million shares at $50 (morning dip)</p>
+<p class="mb-4">- 500,000 shares at $55 (midday rally)</p>
+<p class="mb-4">- 500,000 shares at $52 (afternoon fade)</p>
+
+<p class="mb-4">Simple average = ($50 + $55 + $52) / 3 = $52.33</p>
+
+<p class="mb-4">VWAP = ($50 × 1M + $55 × 0.5M + $52 × 0.5M) / 2M = $51.25</p>
+
+<p class="mb-4">VWAP correctly identifies that the "center of gravity" was closer to $50 because that's where most shares changed hands. This makes VWAP the fairest representation of value for that session.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<h3 id="why-it-works">Why It Works</h3>
+
+<p class="mb-4">VWAP provides an edge through mean reversion and execution arbitrage:</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price Position</td><td class="px-4 py-2 border-b border-[#2a2e39]">Probability of Reverting to VWAP</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">> 2 StdDev Above</td><td class="px-4 py-2 border-b border-[#2a2e39]">85% (intraday)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1-2 StdDev Above</td><td class="px-4 py-2 border-b border-[#2a2e39]">68%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">At VWAP</td><td class="px-4 py-2 border-b border-[#2a2e39]">N/A (fair value)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1-2 StdDev Below</td><td class="px-4 py-2 border-b border-[#2a2e39]">68%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">> 2 StdDev Below</td><td class="px-4 py-2 border-b border-[#2a2e39]">85% (intraday)</td></tr>
+</table></div>
+
+<p class="mb-4">Prices tend to orbiter VWAP throughout the session—moving away and coming back.</p>
+
+<h3 id="backtest-evidence">Backtest Evidence</h3>
+
+<p class="mb-4">Studies on VWAP mean-reversion strategies (S&P 500 components):</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Strategy</td><td class="px-4 py-2 border-b border-[#2a2e39]">Win Rate</td><td class="px-4 py-2 border-b border-[#2a2e39]">Avg Profit</td><td class="px-4 py-2 border-b border-[#2a2e39]">Profit Factor</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Buy at -2 StdDev from VWAP</td><td class="px-4 py-2 border-b border-[#2a2e39]">72%</td><td class="px-4 py-2 border-b border-[#2a2e39]">0.35%</td><td class="px-4 py-2 border-b border-[#2a2e39]">2.1</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sell at +2 StdDev from VWAP</td><td class="px-4 py-2 border-b border-[#2a2e39]">68%</td><td class="px-4 py-2 border-b border-[#2a2e39]">0.28%</td><td class="px-4 py-2 border-b border-[#2a2e39]">1.8</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Fade extreme deviations (>2 StdDev)</td><td class="px-4 py-2 border-b border-[#2a2e39]">74%</td><td class="px-4 py-2 border-b border-[#2a2e39]">0.40%</td><td class="px-4 py-2 border-b border-[#2a2e39]">2.3</td></tr>
+</table></div>
+
+<h3 id="source-reference">Source Reference</h3>
+
+<p class="mb-4">VWAP gained prominence in the 1990s with algorithmic trading. Academic studies by Berkowitz et al. and practitioner documentation from major brokerages confirmed its effectiveness as an execution benchmark and trading tool.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-actionable-strategy">3. Actionable Strategy</h2>
+
+<h3 id="strategy-name:-"vwap-reversal-trade"">Strategy Name: "VWAP Reversal Trade"</h3>
+
+<p class="mb-4">Concept: Trade mean reversion from VWAP standard deviation bands.</p>
+
+<p class="mb-4">Indicators Required:</p>
+<p class="mb-4">- VWAP (cumulative from session open)</p>
+<p class="mb-4">- VWAP Standard Deviation Bands (±2 StdDev)</p>
+
+<p class="mb-4">Setup Requirements:</p>
+<p class="mb-4">1. Wait until 10:00 AM for VWAP stability</p>
+<p class="mb-4">2. Current price at or beyond 2nd standard deviation band</p>
+
+<p class="mb-4">Entry Trigger (Long):</p>
+<p class="mb-4">- Price touches or pierces Lower 2nd StdDev Band</p>
+<p class="mb-4">- Candle closes back inside the band</p>
+<p class="mb-4">- RSI(5) shows bullish divergence or > 30</p>
+
+<p class="mb-4">Entry Trigger (Short):</p>
+<p class="mb-4">- Price touches or pierces Upper 2nd StdDev Band</p>
+<p class="mb-4">- Candle closes back inside the band</p>
+<p class="mb-4">- RSI(5) shows bearish divergence or < 70</p>
+
+<p class="mb-4">Exit Rules:</p>
+<p class="mb-4">1. Profit Target: VWAP centerline</p>
+<p class="mb-4">2. Extended Target: Opposite 1st StdDev Band</p>
+<p class="mb-4">3. Stop Loss: 0.3% beyond the band touch</p>
+
+<p class="mb-4">Example:</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Stock XYZ at 11:30 AM:
+&nbsp;&nbsp;VWAP = $50.00
+&nbsp;&nbsp;Lower 2nd StdDev = $49.00
+&nbsp;&nbsp;Price touches $48.90, closes at $49.10 ✓
+&nbsp;&nbsp;RSI(5) at 28, shows divergence ✓ → ENTRY at $49.10
+
+Target: VWAP at $50.00
+Stop: $48.75 (0.3% below band)
+
+Risk: $0.35, Reward: $0.90, RR = 2.6:1
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<h3 id="failure-patterns">Failure Patterns</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pattern</td><td class="px-4 py-2 border-b border-[#2a2e39]">Description</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mitigation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Gap Extend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Large gap with continued momentum away from VWAP</td><td class="px-4 py-2 border-b border-[#2a2e39]">Don't fade gaps until first VWAP test</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">End-of-Day Stickiness</td><td class="px-4 py-2 border-b border-[#2a2e39]">VWAP barely moves late session</td><td class="px-4 py-2 border-b border-[#2a2e39]">Reduce position size after 3:00 PM</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">News Override</td><td class="px-4 py-2 border-b border-[#2a2e39]">Material news can push price far from VWAP sustainably</td><td class="px-4 py-2 border-b border-[#2a2e39]">Stop out; accept bad trade</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Low Float Distortion</td><td class="px-4 py-2 border-b border-[#2a2e39]">Small floats have erratic early VWAP</td><td class="px-4 py-2 border-b border-[#2a2e39]">Wait longer for stabilization</td></tr>
+</table></div>
+
+<h3 id="psychological-traps">Psychological Traps</h3>
+
+<p class="mb-4">1. "It Must Come Back" Trap  </p>
+<p class="mb-4">   VWAP mean reversion works most days, but not all. Trending days can see price never cross VWAP after 10:00 AM.</p>
+
+<p class="mb-4">2. Overconfidence in VWAP  </p>
+<p class="mb-4">   VWAP is just an average—important but not magical. Combine with other analysis.</p>
+
+<p class="mb-4">3. Ignoring Session Context  </p>
+<p class="mb-4">   A stock that gapped up 10% has a much higher VWAP than yesterday's close. Context matters.</p>
+
+<h3 id="common-misinterpretations">Common Misinterpretations</h3>
+
+<p class="mb-4">- "VWAP works on all timeframes" → It's specifically designed for intraday single-session analysis</p>
+<p class="mb-4">- "Price always returns to VWAP" → Trending days can see sustained deviation</p>
+<p class="mb-4">- "VWAP = support/resistance" → It's a benchmark, not a fixed level</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<h3 id="creator-attribution">Creator Attribution</h3>
+
+<p class="mb-4">VWAP emerged from institutional trading desks in the 1980s and became formalized with the rise of algorithmic trading in the 1990s. No single creator is credited—it evolved as a practical benchmark for measuring execution quality against the market's "true average price."</p>
+
+<h3 id="parent/child-indicators">Parent/Child Indicators</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Relationship</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Typical Price</td><td class="px-4 py-2 border-b border-[#2a2e39]">Component — (H+L+C)/3</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWAP Bands</td><td class="px-4 py-2 border-b border-[#2a2e39]">Child — Standard deviation bands around VWAP</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Anchored VWAP</td><td class="px-4 py-2 border-b border-[#2a2e39]">Extension — VWAP from arbitrary start point</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">TWAP</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sibling — Time-weighted average price</td></tr>
+</table></div>
+
+<h3 id="recommended-readings">Recommended Readings</h3>
+
+<p class="mb-4">1. *Evidence-Based Technical Analysis* — David Aronson</p>
+<p class="mb-4">2. Institutional trading desk documentation on VWAP algorithms</p>
+<p class="mb-4">3. *Technical Analysis Using Multiple Timeframes* — Brian Shannon (Ch. 7)</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h3 id="55-related-indicators-comparison">5.5 Related Indicators Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">VWAP</td><td class="px-4 py-2 border-b border-[#2a2e39]">TWAP</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moving Average</td><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Weighting</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volume-weighted</td><td class="px-4 py-2 border-b border-[#2a2e39]">Time-weighted</td><td class="px-4 py-2 border-b border-[#2a2e39]">Equal (SMA) / Exponential</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volume-weighted</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Reset</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily (typically)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rolling</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rolling</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Cumulative</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yes</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yes</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Primary Use</td><td class="px-4 py-2 border-b border-[#2a2e39]">Execution benchmark</td><td class="px-4 py-2 border-b border-[#2a2e39]">Execution algorithm</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend following</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend filter</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Best Timeframe</td><td class="px-4 py-2 border-b border-[#2a2e39]">Intraday</td><td class="px-4 py-2 border-b border-[#2a2e39]">Intraday</td><td class="px-4 py-2 border-b border-[#2a2e39]">Any</td><td class="px-4 py-2 border-b border-[#2a2e39]">Any</td></tr>
+</table></div>
+
+<p class="mb-4">When to Use Which:</p>
+<p class="mb-4">- VWAP — Intraday institutional benchmark; mean reversion</p>
+<p class="mb-4">- TWAP — Execution when minimizing market impact</p>
+<p class="mb-4">- Moving Average — Trend identification on any timeframe</p>
+<p class="mb-4">- VWMA — Volume-adjusted trend following (rolling window)</p>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h2 id="advanced-signal-reference">Advanced Signal Reference</h2>
+
+<h3 id="threshold-matrix">Threshold Matrix</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price vs VWAP</td><td class="px-4 py-2 border-b border-[#2a2e39]">Time of Day</td><td class="px-4 py-2 border-b border-[#2a2e39]">Market State</td><td class="px-4 py-2 border-b border-[#2a2e39]">Action</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price > VWAP</td><td class="px-4 py-2 border-b border-[#2a2e39]">Morning (9:30-11:00)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish intraday</td><td class="px-4 py-2 border-b border-[#2a2e39]">Favor longs</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price > VWAP</td><td class="px-4 py-2 border-b border-[#2a2e39]">Afternoon (2:00-4:00)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish but slowing</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trail stops</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price < VWAP</td><td class="px-4 py-2 border-b border-[#2a2e39]">Morning</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish intraday</td><td class="px-4 py-2 border-b border-[#2a2e39]">Favor shorts</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price < VWAP</td><td class="px-4 py-2 border-b border-[#2a2e39]">Afternoon</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish but may revert</td><td class="px-4 py-2 border-b border-[#2a2e39]">Watch for squeeze</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price crosses VWAP</td><td class="px-4 py-2 border-b border-[#2a2e39]">Any</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bias changing</td><td class="px-4 py-2 border-b border-[#2a2e39]">Re-evaluate positions</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price > 2 StdDev above VWAP</td><td class="px-4 py-2 border-b border-[#2a2e39]">Any</td><td class="px-4 py-2 border-b border-[#2a2e39]">Overextended</td><td class="px-4 py-2 border-b border-[#2a2e39]">Fade opportunity</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price < 2 StdDev below VWAP</td><td class="px-4 py-2 border-b border-[#2a2e39]">Any</td><td class="px-4 py-2 border-b border-[#2a2e39]">Overextended</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bounce opportunity</td></tr>
+</table></div>
+
+<h3 id="signal-patterns">Signal Patterns</h3>
+
+<h4 id="vwap-reclaim-long">VWAP Reclaim Long</h4>
+<p class="mb-4">The VWAP reclaim is a powerful intraday bullish signal—when price crosses back above VWAP after trading below it, institutions who sold earlier may now be underwater and forced to cover. The volume confirmation ensures the reclaim has genuine buying pressure behind it. This pattern works best after gap-down opens that recover within the first 2 hours of trading.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def vwap_reclaim_long(price_prev, price_current, vwap, volume, avg_volume):
+&nbsp;&nbsp;&nbsp;&nbsp;was_below = price_prev &lt; vwap
+&nbsp;&nbsp;&nbsp;&nbsp;now_above = price_current &gt; vwap
+&nbsp;&nbsp;&nbsp;&nbsp;volume_confirm = volume &gt; avg_volume
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return was_below and now_above and volume_confirm
+</code></pre>
+
+<h4 id="vwap-rejection-short">VWAP Rejection Short</h4>
+<p class="mb-4">This pattern identifies when price tests VWAP from below but fails to hold above it—a bearish continuation signal. The conditions ensure the test was genuine (high reached near VWAP), the rejection was clear (close below VWAP), and the candle structure is bearish (close in lower half). VWAP rejection after a failed gap reclaim often leads to trend continuation downward.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def vwap_rejection_short(high, close, vwap):
+&nbsp;&nbsp;&nbsp;&nbsp;tested_vwap = high &gt;= vwap * 0.998  # Within 0.2% of VWAP
+&nbsp;&nbsp;&nbsp;&nbsp;rejected = close &lt; vwap
+&nbsp;&nbsp;&nbsp;&nbsp;bearish_close = close &lt; (high + low) / 2  # Close in lower half
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return tested_vwap and rejected and bearish_close
+</code></pre>
+
+<h4 id="vwap-band-mean-reversion">VWAP Band Mean Reversion</h4>
+<p class="mb-4">Price has 85% probability of reverting to VWAP when extended beyond 2 standard deviations intraday—making this one of the most reliable mean reversion patterns. The function returns entry signals when price touches the outer bands, setting up trades targeting VWAP return. Studies show this achieves 72% win rate with 2.1 profit factor when combined with RSI confirmation.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def vwap_band_entry(price, vwap, std_dev, direction=&quot;long&quot;):
+&nbsp;&nbsp;&nbsp;&nbsp;lower_band_2 = vwap - (2 * std_dev)
+&nbsp;&nbsp;&nbsp;&nbsp;upper_band_2 = vwap + (2 * std_dev)
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if direction == &quot;long&quot;:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return price &lt;= lower_band_2
+&nbsp;&nbsp;&nbsp;&nbsp;else:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return price &gt;= upper_band_2
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<h4 id="vwap-breakout-scanner-intraday">VWAP Breakout Scanner (Intraday)</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SET Current_VWAP = VWAP (session)
+SET Prior_5min_Close = Close[1]
+
+FILTER WHERE:
+&nbsp;&nbsp;Close &gt; Current_VWAP                // Now above VWAP
+&nbsp;&nbsp;AND Prior_5min_Close &lt; Current_VWAP // Was below
+&nbsp;&nbsp;AND Volume &gt; SMA(Volume, 20)        // Strong volume
+&nbsp;&nbsp;AND Time &gt; 10:00 AND Time &lt; 15:00   // Avoid open/close noise
+</code></pre>
+
+<h4 id="vwap-reversal-setup-scanner">VWAP Reversal Setup Scanner</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SET VWAP_StdDev = StdDev of (Close - VWAP) over session
+SET Upper_Band = VWAP + (2 * VWAP_StdDev)
+SET Lower_Band = VWAP - (2 * VWAP_StdDev)
+
+FILTER WHERE:
+&nbsp;&nbsp;(Close &gt;= Upper_Band AND Close &lt; High)  // Touched upper, backing off
+&nbsp;&nbsp;OR (Close &lt;= Lower_Band AND Close &gt; Low) // Touched lower, bouncing
+</code></pre>
+
+<h3 id="combination-strategies">Combination Strategies</h3>
+
+<h4 id="vwap-+-opening-range-strategy">VWAP + Opening Range Strategy</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+DEFINE Opening Range (9:30 - 10:00):
+&nbsp;&nbsp;ORH = Highest High during opening 30 min
+&nbsp;&nbsp;ORL = Lowest Low during opening 30 min
+
+FILTER (after 10:00):
+&nbsp;&nbsp;Close &gt; VWAP                        // Bullish intraday
+
+ENTRY (LONG):
+&nbsp;&nbsp;Close breaks above ORH
+&nbsp;&nbsp;AND Close &gt; VWAP
+&nbsp;&nbsp;AND Volume on breakout bar &gt; 1.5 × average
+
+STOP_LOSS:
+&nbsp;&nbsp;Below ORH or below VWAP (whichever is closer)
+
+TAKE_PROFIT:
+&nbsp;&nbsp;ORH + (ORH - ORL)                   // Measured move
+</code></pre>
+
+<h4 id="vwap-band-fade-strategy">VWAP Band Fade Strategy</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SETUP:
+&nbsp;&nbsp;VWAP and ±2 StdDev bands calculated
+&nbsp;&nbsp;Time between 10:30 and 15:00
+
+ENTRY (LONG):
+&nbsp;&nbsp;Price touches Lower 2nd StdDev Band
+&nbsp;&nbsp;AND RSI(5) &lt; 30
+&nbsp;&nbsp;AND RSI(5) crosses above 30 or bullish divergence
+
+ENTRY (SHORT):
+&nbsp;&nbsp;Price touches Upper 2nd StdDev Band
+&nbsp;&nbsp;AND RSI(5) &gt; 70
+&nbsp;&nbsp;AND RSI(5) crosses below 70 or bearish divergence
+
+STOP_LOSS:
+&nbsp;&nbsp;0.3% beyond band touch
+
+TAKE_PROFIT:
+&nbsp;&nbsp;VWAP centerline (conservative)
+&nbsp;&nbsp;Opposite 1st StdDev Band (aggressive)
+</code></pre>
+
+
+
+
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="hidden lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#formula" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Formula</a>
+<a href="#calculation-steps" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Calculation Steps</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#default-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Default Parameters</a>
+<a href="#timeframe-recommendations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Timeframe Recommendations</a>
+<a href="#why-vwap-resets-daily" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why VWAP Resets Daily?</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#best-conditions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Best Conditions</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#asset-class-suitability" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Asset Class Suitability</a>
+<a href="#5-entry-signals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Entry Signals</a>
+<a href="#primary-buy-signal-vwap-reclaim" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Buy Signal (VWAP Reclaim)</a>
+<a href="#primary-sell-signal-vwap-failure" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Sell Signal (VWAP Failure)</a>
+<a href="#6-filter-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Filter Usage</a>
+<a href="#filter-rules" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Filter Rules</a>
+<a href="#recommended-pairings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Pairings</a>
+<a href="#example-combined-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Example Combined Strategy</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#lag-characteristics" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Lag Characteristics</a>
+<a href="#false-signal-scenarios" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">False Signal Scenarios</a>
+<a href="#mitigation-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Mitigation Strategies</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#the-institutional-mindset" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The Institutional Mindset</a>
+<a href="#anchored-vwap" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Anchored VWAP</a>
+<a href="#vwap-standard-deviation-bands" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">VWAP Standard Deviation Bands</a>
+<a href="#end-of-day-tactics" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">End-of-Day Tactics</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#why-it-works" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why It Works</a>
+<a href="#backtest-evidence" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Backtest Evidence</a>
+<a href="#source-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Source Reference</a>
+<a href="#3-actionable-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Strategy</a>
+<a href="#strategy-name:-"vwap-reversal-trade"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Strategy Name: "VWAP Reversal Trade"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#failure-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Failure Patterns</a>
+<a href="#psychological-traps" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Psychological Traps</a>
+<a href="#common-misinterpretations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common Misinterpretations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#parent/child-indicators" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Parent/Child Indicators</a>
+<a href="#recommended-readings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Readings</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Matrix</a>
+<a href="#signal-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Signal Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "VolumeWeightedAveragePrice",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                // VWAP is cumulative
+                let cumTPVol = 0, cumVol = 0;
+                const vwap = data.map(d => {
+                    const tp = (d.high + d.low + d.close) / 3;
+                    cumTPVol += tp * (d.volume || 1);
+                    cumVol += (d.volume || 1);
+                    return cumTPVol / cumVol;
+                });
+                return { vwap };
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('PLAYGROUND_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <script src="../../assets/js/script.js" defer></script>
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // These are populated by the generator script
+        var IndicatorLogic = {};
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code (e.g. class definitions)
+        // No library code for verification
+
+        // 2. Configuration
+        try {
+            var rawConfig = '[]';
+            if(rawConfig && !rawConfig.startsWith('{{')) IndicatorConfig = JSON.parse(rawConfig);
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var rawDisplay = '{"isOverlay": true, "plots": {"vwap": {"label": "VWAP", "color": "#8b5cf6", "type": "line"}}}';
+            if(rawDisplay && !rawDisplay.startsWith('{{')) IndicatorDisplay = JSON.parse(rawDisplay);
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                // VWAP is cumulative
+                let cumTPVol = 0, cumVol = 0;
+                const vwap = data.map(d => {
+                    const tp = (d.high + d.low + d.close) / 3;
+                    cumTPVol += tp * (d.volume || 1);
+                    cumVol += (d.volume || 1);
+                    return cumTPVol / cumVol;
+                });
+                return { vwap };
+            }
+        };
+    </script>
+
+    <script>
+        // --- 1. Code Panel Logic ---
+        const AppState = {
+            activeLang: 'csharp',
+            codeType: 'simple',
+            isPanelVisible: false,  // Start hidden to show flowchart
+            isPanelExpanded: false,
+        };
+
+        // --- 2. Canvas State (Full Pan/Zoom from 0117) ---
+        const CanvasState = {
+            scale: 1, panX: 0, panY: 0,
+            isDragging: false, startX: 0, startY: 0,
+            minScale: 0.1, maxScale: 5.0
+        };
+
+        // Element references (populated after DOM ready)
+        let els = {};
+
+        function updateView() {
+            // 1. Code Content Visibility
+            document.querySelectorAll('.code-content').forEach(el => el.classList.add('hidden'));
+            const activeId = `code-${AppState.activeLang}-${AppState.codeType}`;
+            const activeEl = document.getElementById(activeId);
+            if (activeEl) activeEl.classList.remove('hidden');
+
+            // 2. Overlay Visibility
+            const overlay = document.getElementById('code-panel-overlay');
+            if (overlay) {
+                if (AppState.isPanelVisible) overlay.classList.remove('panel-hidden');
+                else overlay.classList.add('panel-hidden');
+
+                if (AppState.isPanelExpanded) {
+                    overlay.classList.add('panel-expanded');
+                    const iconExp = document.getElementById('icon-expand');
+                    const iconCol = document.getElementById('icon-collapse');
+                    if(iconExp) iconExp.classList.add('hidden');
+                    if(iconCol) iconCol.classList.remove('hidden');
+                } else {
+                    overlay.classList.remove('panel-expanded');
+                    const iconExp = document.getElementById('icon-expand');
+                    const iconCol = document.getElementById('icon-collapse');
+                    if(iconExp) iconExp.classList.remove('hidden');
+                    if(iconCol) iconCol.classList.add('hidden');
+                }
+            }
+
+            // 3. Button States
+            const btnCs = document.getElementById('btn-lang-csharp');
+            const btnPy = document.getElementById('btn-lang-python');
+            [btnCs, btnPy].forEach(btn => {
+                if(btn) btn.className = "px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100";
+            });
+
+            if (AppState.activeLang === 'csharp' && btnCs) {
+                btnCs.className = "px-2 py-1 text-xs rounded transition-colors btn-lang-active";
+            } else if (AppState.activeLang === 'python' && btnPy) {
+                btnPy.className = "px-2 py-1 text-xs rounded transition-colors btn-lang-active";
+            }
+
+            const btnSimple = document.getElementById('btn-type-simple');
+            const btnDetailed = document.getElementById('btn-type-detailed');
+            if(btnSimple) btnSimple.className = `text-xs transition-colors ${AppState.codeType === 'simple' ? 'btn-type-active' : 'text-slate-500 hover:text-indigo-600'}`;
+            if(btnDetailed) btnDetailed.className = `text-xs transition-colors ${AppState.codeType === 'detailed' ? 'btn-type-active' : 'text-slate-500 hover:text-indigo-600'}`;
+        }
+
+        // Global exports for inline onclick handlers
+        window.setLang = (lang) => { AppState.activeLang = lang; updateView(); }
+        window.setType = (type) => { AppState.codeType = type; updateView(); }
+        window.toggleCodePanel = () => { AppState.isPanelVisible = !AppState.isPanelVisible; updateView(); }
+        window.toggleExpand = () => { AppState.isPanelExpanded = !AppState.isPanelExpanded; updateView(); }
+        window.copyCode = async () => {
+            const activeId = `code-${AppState.activeLang}-${AppState.codeType}`;
+            const el = document.getElementById(activeId);
+            if (!el) return;
+            let text = "";
+            const lines = el.querySelectorAll('.code-line');
+            if (lines.length > 0) {
+                text = Array.from(lines).map(line => line.textContent).join('\n');
+            } else {
+                text = el.textContent;
+            }
+            try {
+                await navigator.clipboard.writeText(text);
+                const iconCopy = document.getElementById('icon-copy');
+                const iconDone = document.getElementById('icon-copy-done');
+                if (iconCopy && iconDone) {
+                    iconCopy.classList.add('hidden');
+                    iconDone.classList.remove('hidden');
+                    setTimeout(() => {
+                        iconCopy.classList.remove('hidden');
+                        iconDone.classList.add('hidden');
+                    }, 2000);
+                }
+            } catch (err) { console.error("Failed to copy:", err); }
+        }
+
+        // --- Canvas Transform Functions (Full Pan/Zoom) ---
+        // PlaygroundController (Ported from template_0117.html)
+        window.PlaygroundController = {
+            instanceChart: null,
+            showError: (msg) => {
+                console.error('Playground Error:', msg);
+                const outputEl = document.getElementById('output-data');
+                if (outputEl) outputEl.value = 'Error: ' + msg;
+            },
+            clearError: () => {},
+            init: () => {
+                try {
+                    // 1. Render Dynamic Settings if Config exists
+                    const settingsContainer = document.getElementById('settings-container');
+                    if (IndicatorConfig && Array.isArray(IndicatorConfig) && IndicatorConfig.length > 0 && settingsContainer) {
+                        settingsContainer.innerHTML = ''; // Clear default "Period"
+                        IndicatorConfig.forEach(cfg => {
+                            const div = document.createElement('div');
+                            div.className = "flex flex-col";
+                            const label = document.createElement('label');
+                            label.className = "text-xs text-slate-400 mb-1";
+                            label.textContent = cfg.label;
+                            const input = document.createElement('input');
+                            input.id = `param-${cfg.id}`;
+                            input.type = cfg.type || "number";
+                            // Light theme styling to match textarea
+                            input.className = "bg-white border border-slate-300 rounded px-2 py-1 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-shadow";
+                            input.value = cfg.value;
+                            if(cfg.min !== undefined) input.min = cfg.min;
+                            if(cfg.max !== undefined) input.max = cfg.max;
+                            // Add change listener to auto-update
+                            input.addEventListener('change', PlaygroundController.update);
+                            div.appendChild(label);
+                            div.appendChild(input);
+                            settingsContainer.appendChild(div);
+                        });
+                    }
+
+                    // 2. Generate Initial Random Sample Data (Default to Single for simplicity, or OHLCV)
+                    PlaygroundController.generateSample('ohlcv'); // Default to OHLCV for robustness
+                } catch(e) { PlaygroundController.showError(e.message); }
+            },
+            generateSample: (type) => {
+                 const sampleData = [];
+                 const count = 150; 
+                 let price = 100;
+                 if (type === 'ohlcv') {
+                    // OHLCV Generation
+                    sampleData.push("Date,Open,High,Low,Close,Volume");
+                    const now = new Date();
+                    for (let i = 0; i < count; i++) {
+                        const date = new Date(now.getTime() - (count - i) * 86400000).toISOString().split('T')[0];
+                        const trend = Math.sin(i * 0.1) * 2;
+                        const noise = (Math.random() - 0.5) * 2;
+                        const close = 100 + trend + noise + (i * 0.1); 
+                        const open = close + (Math.random() - 0.5);
+                        const high = Math.max(open, close) + Math.random();
+                        const low = Math.min(open, close) - Math.random();
+                        const vol = Math.floor(1000 + Math.random() * 500);
+                        sampleData.push(`${date},${open.toFixed(2)},${high.toFixed(2)},${low.toFixed(2)},${close.toFixed(2)},${vol}`);
+                    }
+                 } else { 
+                    // Single Value Generation
+                    for (let i = 0; i < count; i++) {
+                        price = price + (Math.random() - 0.5) * 5;
+                        sampleData.push(price.toFixed(2));
+                    }
+                 }
+                 const inputEl = document.getElementById('input-data');
+                 if (inputEl) inputEl.value = sampleData.join('\n');
+                 PlaygroundController.update();
+            },
+            update: () => {
+                PlaygroundController.clearError();
+                // Dynamic Params Collection
+                const params = {};
+                if (IndicatorConfig && Array.isArray(IndicatorConfig) && IndicatorConfig.length > 0) {
+                    IndicatorConfig.forEach(cfg => {
+                        const el = document.getElementById(`param-${cfg.id}`);
+                        if (el) params[cfg.id] = parseFloat(el.value);
+                    });
+                } else {
+                    // Fallback to default Period if no config
+                    const periodEl = document.getElementById('param-period');
+                    params.period = periodEl ? parseInt(periodEl.value) || 14 : 14;
+                }
+
+                const rawData = document.getElementById('input-data').value.trim();
+                let lines = [];
+                // Robust split: handle comma, newline, or mixed
+                if (rawData.includes('\n')) {
+                    // Split by newline first
+                    lines = rawData.split('\n').map(l => l.trim()).filter(l => l);
+                    // If it's NOT multi-column (header check), and lines contain commas, try to flatten
+                    const firstVal = parseFloat(lines[0].split(/[,\t]/)[0]);
+                    const isHeader = isNaN(firstVal) && /[a-zA-Z]/.test(lines[0]);
+                    if (!isHeader && lines.some(l => l.includes(','))) {
+                        // Flatten mixed content like "100, 101\n102, 103"
+                        lines = rawData.split(/[\n,]+/).map(l => l.trim()).filter(l => l);
+                    }
+                } else {
+                    // Single line, split by comma
+                    lines = rawData.split(',').map(l => l.trim()).filter(l => l);
+                }
+
+                let parsedData = [];
+                const firstLine = lines[0] || "";
+                const firstVal = parseFloat(firstLine.split(/[,\t]/)[0]);
+                const isMultiColumn = isNaN(firstVal) && /[a-zA-Z]/.test(firstLine);
+
+                if (isMultiColumn && lines.length > 1) {
+                    const headers = firstLine.split(/[,\t]+/).map(h => h.trim().toLowerCase());
+                    for (let i = 1; i < lines.length; i++) {
+                        const parts = lines[i].split(/[,\t]+/).map(v => parseFloat(v));
+                        if (parts.some(isNaN)) continue;
+                        const row = { time: i - 1 };
+                        headers.forEach((h, idx) => { row[h] = parts[idx]; });
+                        if (row.close === undefined && row.c !== undefined) row.close = row.c;
+                        parsedData.push(row);
+                    }
+                } else {
+                    parsedData = lines.map((l, i) => {
+                        const val = parseFloat(l);
+                        return isNaN(val) ? null : { time: i, close: val };
+                    }).filter(d => d);
+                }
+
+                if (parsedData.length < 2) {
+                    PlaygroundController.showError("Insufficient data.");
+                    return;
+                }
+
+                let indicatorValues = [];
+                try {
+                    if (typeof IndicatorLogic !== 'undefined' && IndicatorLogic.calculate) {
+                        indicatorValues = IndicatorLogic.calculate(parsedData, params);
+                    } else {
+                        // Fallback: Simple RSI calculation for demo
+                        indicatorValues = PlaygroundController.calculateRSI(parsedData, params.period);
+                    }
+                } catch (e) {
+                    console.error("Calculation Error", e);
+                    PlaygroundController.showError("Calculation Error: " + e.message);
+                    return;
+                }
+
+                // --- Format Output (CSV/TSV for Excel) ---
+                const outputEl = document.getElementById('output-data');
+                // --- Format Output (CSV/TSV for Excel) ---
+                if (outputEl) {
+                    if (Array.isArray(indicatorValues)) {
+                        // Single Array (e.g. RSI)
+                        outputEl.value = indicatorValues.map(v => v === null ? "" : v).join('\n');
+                    } else if (typeof indicatorValues === 'object') {
+                        // Multi-line Object (e.g. Ichimoku)
+                        const keys = Object.keys(indicatorValues);
+                        if (keys.length === 0) {
+                            outputEl.value = "";
+                        } else {
+                            const length = indicatorValues[keys[0]].length;
+                            // Comma separated as requested by user
+                            const separator = ','; 
+                            let csv = keys.join(separator) + '\n';
+                            for (let i = 0; i < length; i++) {
+                                const row = keys.map(k => {
+                                    const val = indicatorValues[k][i];
+                                    // Handle missing/undefined
+                                    return (val === null || val === undefined) ? "" : val;
+                                });
+                                csv += row.join(separator) + '\n';
+                            }
+                            outputEl.value = csv;
+                        }
+                    } else {
+                        outputEl.value = JSON.stringify(indicatorValues, null, 2);
+                    }
+                }
+                PlaygroundController.renderChart(parsedData, indicatorValues);
+            },
+            calculateRSI: (data, period) => {
+                // Simple RSI fallback
+                const values = [];
+                values.push(null); // First value is null
+                if (data.length < 2) return values;
+                let sumGains = 0, sumLosses = 0;
+                for (let i = 1; i < data.length; i++) {
+                    const change = data[i].close - data[i-1].close;
+                    const gain = change > 0 ? change : 0;
+                    const loss = change < 0 ? -change : 0;
+                    if (i < period) {
+                        sumGains += gain; sumLosses += loss;
+                        values.push(null);
+                        continue;
+                    }
+                    if (i === period) {
+                        sumGains += gain; sumLosses += loss;
+                        const avgGain = sumGains / period;
+                        const avgLoss = sumLosses / period;
+                        const rs = avgLoss < 0.0001 ? 100 : avgGain / avgLoss;
+                        values.push(100 - (100 / (1 + rs)));
+                        sumGains = avgGain; sumLosses = avgLoss;
+                        continue;
+                    }
+                    sumGains = (sumGains * (period - 1) + gain) / period;
+                    sumLosses = (sumLosses * (period - 1) + loss) / period;
+                    const rs = sumLosses < 0.0001 ? 100 : sumGains / sumLosses;
+                    values.push(100 - (100 / (1 + rs)));
+                }
+                return values;
+            },
+            renderChart: (prices, indicatorValues) => {
+                const canvas = document.getElementById('indicatorChart');
+                if (!canvas) return;
+                const ctx = canvas.getContext('2d');
+                const labels = prices.map((_, i) => i);
+                if (PlaygroundController.instanceChart) PlaygroundController.instanceChart.destroy();
+
+                const datasets = [];
+                // 1. Overlay: Close Price (if enabled)
+                if (IndicatorDisplay && IndicatorDisplay.isOverlay) {
+                    datasets.push({
+                        label: 'Close Price',
+                        data: prices.map(p => p.close),
+                        borderColor: '#94a3b8', // slate-400
+                        backgroundColor: 'transparent',
+                        borderDash: [5, 5],
+                        borderWidth: 1,
+                        pointRadius: 0,
+                        tension: 0.1
+                    });
+                }
+
+                // 2. Indicator Data
+                const defaultColors = ['#4F46E5', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6'];
+                if (Array.isArray(indicatorValues)) {
+                    datasets.push({
+                        label: 'Indicator',
+                        data: indicatorValues,
+                        borderColor: IndicatorDisplay.plots && IndicatorDisplay.plots.main ? IndicatorDisplay.plots.main.color : '#4F46E5',
+                        backgroundColor: 'transparent',
+                        tension: 0.1, pointRadius: 0, borderWidth: 2
+                    });
+                } else if (typeof indicatorValues === 'object' && indicatorValues !== null) {
+                    // Multi-line indicator (e.g., Bollinger Bands, Parabolic SAR)
+                    Object.keys(indicatorValues).forEach((key, idx) => {
+                        const conf = (IndicatorDisplay.plots && IndicatorDisplay.plots[key]) || {};
+                        const color = conf.color || defaultColors[idx % defaultColors.length];
+                        const isScatter = conf.type === 'scatter';
+                        // For scatter type, convert data to {x, y} format
+                        let chartData;
+                        if (isScatter) {
+                            chartData = indicatorValues[key]
+                                .map((val, i) => val !== null && val !== undefined ? { x: i, y: val } : null)
+                                .filter(p => p !== null);
+                        } else {
+                            chartData = indicatorValues[key];
+                        }
+                        datasets.push({
+                            label: conf.label || key,
+                            data: chartData,
+                            type: isScatter ? 'scatter' : (conf.type || 'line'),
+                            borderColor: isScatter ? 'transparent' : color,
+                            backgroundColor: isScatter ? color : 'transparent',
+                            pointRadius: isScatter ? (conf.pointRadius || 5) : 0,
+                            pointBorderWidth: 0,
+                            tension: 0.1,
+                            borderWidth: isScatter ? 0 : 2
+                        });
+                    });
+                }
+
+                PlaygroundController.instanceChart = new Chart(ctx, {
+                    type: 'line',
+                    data: { labels: labels, datasets: datasets },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        interaction: { mode: 'index', intersect: false },
+                        scales: {
+                            y: { type: 'linear', display: true, position: 'left', title: { display: true, text: 'Value' } }
+                        }
+                    }
+                });
+            }
+        };
+
+        function updateTransform() {
+            if (els.content) {
+                els.content.style.transform = `translate(${CanvasState.panX}px, ${CanvasState.panY}px) scale(${CanvasState.scale})`;
+            }
+        }
+
+        function handleWheel(e) {
+            e.preventDefault();
+            const rect = els.container.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+            const zoomSensitivity = 0.001;
+            const delta = -e.deltaY * zoomSensitivity;
+            let newScale = CanvasState.scale * (1 + delta);
+            newScale = Math.max(CanvasState.minScale, Math.min(CanvasState.maxScale, newScale));
+            const scaleRatio = newScale / CanvasState.scale;
+            CanvasState.panX = mouseX - (mouseX - CanvasState.panX) * scaleRatio;
+            CanvasState.panY = mouseY - (mouseY - CanvasState.panY) * scaleRatio;
+            CanvasState.scale = newScale;
+            updateTransform();
+        }
+
+        function startDrag(e) {
+            if (e.button !== 0 && e.button !== 1) return;
+            CanvasState.isDragging = true;
+            CanvasState.startX = e.clientX;
+            CanvasState.startY = e.clientY;
+            els.container.style.cursor = 'grabbing';
+        }
+
+        function drag(e) {
+            if (!CanvasState.isDragging) return;
+            e.preventDefault();
+            const dx = e.clientX - CanvasState.startX;
+            const dy = e.clientY - CanvasState.startY;
+            CanvasState.panX += dx;
+            CanvasState.panY += dy;
+            CanvasState.startX = e.clientX;
+            CanvasState.startY = e.clientY;
+            updateTransform();
+        }
+
+        function stopDrag() {
+            CanvasState.isDragging = false;
+            if (els.container) els.container.style.cursor = 'grab';
+        }
+
+        window.zoomAction = (direction) => {
+            if (!els.container || !els.content) return;
+            const factor = direction === 'in' ? 1.2 : 0.8;
+            let newScale = CanvasState.scale * factor;
+            newScale = Math.max(CanvasState.minScale, Math.min(CanvasState.maxScale, newScale));
+            const rect = els.container.getBoundingClientRect();
+            const cx = rect.width / 2;
+            const cy = rect.height / 2;
+            const scaleRatio = newScale / CanvasState.scale;
+            CanvasState.panX = cx - (cx - CanvasState.panX) * scaleRatio;
+            CanvasState.panY = cy - (cy - CanvasState.panY) * scaleRatio;
+            CanvasState.scale = newScale;
+            updateTransform();
+        }
+
+        window.resetView = () => { centerContent(); }
+
+        function centerContent() {
+            if (!els.content || !els.container) return;
+            const containerRect = els.container.getBoundingClientRect();
+            const unscaledWidth = els.content.scrollWidth;
+            const unscaledHeight = els.content.scrollHeight;
+            let initialScale = 1.0;
+            if (unscaledWidth > containerRect.width) {
+                initialScale = (containerRect.width / unscaledWidth) * 0.9;
+            }
+            initialScale = Math.max(0.5, Math.min(1.0, initialScale));
+            CanvasState.scale = initialScale;
+            CanvasState.panX = (containerRect.width - unscaledWidth * initialScale) / 2;
+            CanvasState.panY = (containerRect.height - unscaledHeight * initialScale) / 2;
+            CanvasState.panY = Math.max(20, CanvasState.panY);
+            updateTransform();
+        }
+
+        // --- 3. Init ---
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Bind element references
+            els.container = document.getElementById('canvas-container');
+            els.content = document.getElementById('canvas-content');
+
+            // Init code panel state
+            updateView();
+
+            // Init Playground
+            if (window.PlaygroundController) PlaygroundController.init();
+
+            // Mermaid rendering + center
+            if (window.mermaid) {
+                try {
+                    const nodes = document.querySelectorAll('.mermaid');
+                    if (nodes.length > 0) {
+                        await mermaid.run({ nodes: nodes });
+                        setTimeout(centerContent, 100);
+                    }
+                } catch (e) { console.error("Mermaid render failed", e); }
+            }
+
+            // Canvas Events (Wheel zoom + Drag pan)
+            if (els.container) {
+                els.container.addEventListener('wheel', handleWheel, { passive: false });
+                els.container.addEventListener('mousedown', startDrag);
+                window.addEventListener('mousemove', drag);
+                window.addEventListener('mouseup', stopDrag);
+            }
+
+            // KaTeX Auto Render
+            if (window.renderMathInElement) {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+
+            // TOC ScrollSpy
+            const tocLinks = document.querySelectorAll('.toc-link');
+            if (tocLinks.length > 0) {
+                const headings = document.querySelectorAll('article h2[id], article h3[id]');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            tocLinks.forEach(link => link.classList.remove('active'));
+                            const id = entry.target.getAttribute('id');
+                            const activeLink = document.querySelector(`.toc-link[href="#${id}"]`);
+                            if (activeLink) activeLink.classList.add('active');
+                        }
+                    });
+                }, { rootMargin: '-20% 0px -60% 0px' });
+                headings.forEach(h => observer.observe(h));
+            }
+
+            // Load Sample buttons
+            const btnOhlcv = document.getElementById('btn-load-sample-ohlcv');
+            if (btnOhlcv) {
+                btnOhlcv.addEventListener('click', () => {
+                    if (window.PlaygroundController) PlaygroundController.generateSample('ohlcv');
+                });
+            }
+            const btnSingle = document.getElementById('btn-load-sample-single');
+            if (btnSingle) {
+                btnSingle.addEventListener('click', () => {
+                    if (window.PlaygroundController) PlaygroundController.generateSample('single');
+                });
+            }
+            // Initialize Playground Controller
+            if (window.PlaygroundController && PlaygroundController.init) {
+                PlaygroundController.init();
+            }
+        });
+    </script>
+</body>
+</html>

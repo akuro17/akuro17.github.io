@@ -250,7 +250,7 @@ window.PlaygroundController = {
     },
 
     renderSettings: function () {
-        const container = document.getElementById('params-container');
+        const container = document.getElementById('settings-container');
         if (!container) return;
         container.innerHTML = '';
 
@@ -324,33 +324,88 @@ window.PlaygroundController = {
     },
 
     initChart: function () {
-        const ctx = document.getElementById('indicatorChart').getContext('2d');
-        // Note: ID was 'indicatorChart' in template.html
+        const canvas = document.getElementById('indicatorChart');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+
+        // Dynamically build datasets based on plots config
+        const datasets = [];
+        const plots = this.display.plots || {};
+        const defaultColors = ['#1A73E8', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6'];
+
+        // For overlay indicators, add Close Price dataset first
+        if (this.display.isOverlay) {
+            datasets.push({
+                label: 'Close Price',
+                data: [],
+                borderColor: '#9ca3af',
+                borderWidth: 1,
+                borderDash: [5, 5],
+                tension: 0.1,
+                pointRadius: 0,
+                order: 100,
+                yAxisID: 'y',
+                fill: false
+            });
+        }
+
+        Object.keys(plots).forEach((key, idx) => {
+            const conf = plots[key] || {};
+            const color = conf.color || defaultColors[idx % defaultColors.length];
+            const isScatter = conf.type === 'scatter';
+
+            const dataset = {
+                label: conf.label || key,
+                data: [],
+                borderColor: isScatter ? 'transparent' : color,
+                backgroundColor: isScatter ? color : (conf.backgroundColor || 'transparent'),
+                borderWidth: isScatter ? 0 : 2,
+                tension: 0.1,
+                pointRadius: isScatter ? (conf.pointRadius || 4) : 0,
+                pointBorderWidth: 0,
+                pointStyle: isScatter ? 'circle' : 'circle',
+                order: conf.type === 'bar' ? 10 : idx,
+                yAxisID: this.display.isOverlay ? 'y' : 'y1',
+                fill: conf.fill || false
+            };
+
+            // For scatter, use 'scatter' type which doesn't draw lines
+            if (isScatter) {
+                dataset.type = 'scatter';
+            } else {
+                dataset.type = conf.type || 'line';
+                dataset.showLine = true;
+            }
+
+            datasets.push(dataset);
+        });
+
+        // Fallback: If no plots defined, create a single default dataset
+        if (datasets.length === 0) {
+            datasets.push({
+                label: 'Indicator',
+                data: [],
+                borderColor: '#1A73E8',
+                borderWidth: 2,
+                tension: 0.1,
+                pointRadius: 3,
+                order: 1,
+                yAxisID: this.display.isOverlay ? 'y' : 'y1'
+            });
+        }
 
         this.chart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: [],
-                datasets: [
-                    {
-                        label: 'Indicator',
-                        data: [],
-                        borderColor: this.display.plots.main.color || '#1A73E8',
-                        borderWidth: 2,
-                        tension: 0.1,
-                        pointRadius: 3,
-                        hoverRadius: 6,
-                        order: 1,
-                        yAxisID: this.display.isOverlay ? 'y' : 'y1'
-                    }
-                ]
+                datasets: datasets
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 interaction: { mode: 'index', intersect: false },
                 scales: {
-                    x: { grid: { color: '#E0E3E7' } }, // Light mode grid
+                    x: { grid: { color: '#E0E3E7' } },
                     y: {
                         display: true,
                         grid: { color: '#E0E3E7' },
@@ -359,7 +414,7 @@ window.PlaygroundController = {
                     y1: {
                         display: !this.display.isOverlay,
                         position: 'left',
-                        grid: { drawOnChartArea: false } // Independent grid
+                        grid: { drawOnChartArea: false }
                     }
                 }
             }
@@ -370,12 +425,12 @@ window.PlaygroundController = {
         console.log("Playground Update...");
         const logKey = (msg) => {
             const el = document.getElementById('output-data');
-            if (el) el.value = msg + "\n" + el.value; // Prepend
+            if (el) el.value = msg + "\n" + el.value;
             console.log(msg);
         };
 
         const el = document.getElementById('output-data');
-        if (el) el.value = ""; // Clear
+        if (el) el.value = "";
 
         logKey("[1] Reading Input...");
 
@@ -386,12 +441,23 @@ window.PlaygroundController = {
         logKey(`[2] Parsed ${data.length} rows.`);
 
         // Run Calculation
-        let results = [];
+        let results = null;
         try {
             logKey("[3] Calculating...");
             if (this.logic && this.logic.calculate) {
                 results = this.logic.calculate(data, params);
-                logKey(`[4] Calculation done. Results: ${results.length}`);
+
+                // Detect result type
+                const isObject = typeof results === 'object' && !Array.isArray(results) && results !== null;
+                if (isObject) {
+                    const keys = Object.keys(results);
+                    const firstLen = results[keys[0]] ? results[keys[0]].length : 0;
+                    logKey(`[4] Calculation done. Multi-plot object with ${keys.length} series, ${firstLen} values each.`);
+                } else if (Array.isArray(results)) {
+                    logKey(`[4] Calculation done. Array with ${results.length} values.`);
+                } else {
+                    logKey(`[4] Calculation done. Unknown result type.`);
+                }
             } else {
                 logKey("[Error] Logic (this.logic.calculate) not found.");
                 return;
@@ -402,29 +468,48 @@ window.PlaygroundController = {
             return;
         }
 
-        // Update Outputs
-        const definedCount = results.filter(v => v !== null && !isNaN(v)).length;
-        logKey(`[5] Valid Values: ${definedCount}`);
-
-        // Print last value
-        if (results.length > 0) {
-            logKey(`[Result] Last Value: ${results[results.length - 1]}`);
-        }
-
         // Update Chart
         if (this.chart) {
-            logKey("[6] Updating Chart...");
-            this.chart.data.labels = data.map(d => d.date);
+            logKey("[5] Updating Chart...");
+            this.chart.data.labels = data.map(d => d.date || d.time);
 
-            // Debugging Datasets
-            console.log("Current Datasets:", this.chart.data.datasets);
+            // Update Close Price dataset if it exists (for overlay indicators)
+            const closePriceDataset = this.chart.data.datasets.find(ds => ds.label === 'Close Price');
+            if (closePriceDataset) {
+                closePriceDataset.data = data.map(d => d.close);
+            }
 
-            // We only have 1 dataset now (Indicator) at index 0
-            if (this.chart.data.datasets.length > 0) {
-                this.chart.data.datasets[0].data = results;
-                console.log("Assigned Data to Dataset[0]:", results.slice(0, 5) + "...");
-            } else {
-                logKey("[Error] No datasets defined in chart config.");
+            const isObjectResult = typeof results === 'object' && !Array.isArray(results) && results !== null;
+
+            if (isObjectResult) {
+                // Multi-plot indicator (e.g., Bollinger Bands: {upper, middle, lower})
+                const labels = this.chart.data.labels;
+                Object.keys(results).forEach((key, idx) => {
+                    // Find matching dataset by label or index
+                    const dataset = this.chart.data.datasets.find(ds =>
+                        ds.label.toLowerCase() === key.toLowerCase() ||
+                        ds.label.toLowerCase().includes(key.toLowerCase())
+                    ) || this.chart.data.datasets[idx];
+
+                    if (dataset) {
+                        // For scatter type, convert to {x, y} format
+                        if (dataset.type === 'scatter') {
+                            dataset.data = results[key].map((val, i) =>
+                                val !== null ? { x: i, y: val } : null
+                            ).filter(p => p !== null);
+                        } else {
+                            dataset.data = results[key];
+                        }
+                        console.log(`Assigned ${key} data to dataset "${dataset.label}":`, dataset.data.slice(0, 3), '...');
+                    }
+                });
+                logKey(`[6] Mapped ${Object.keys(results).length} series to chart.`);
+            } else if (Array.isArray(results)) {
+                // Single-plot indicator
+                if (this.chart.data.datasets.length > 0) {
+                    this.chart.data.datasets[0].data = results;
+                }
+                logKey(`[6] Assigned ${results.length} values to dataset.`);
             }
 
             try {
@@ -438,19 +523,30 @@ window.PlaygroundController = {
             logKey("[Error] Chart instance missing.");
         }
 
-        // ---------------------------------------------------------
-        // ADDED: Output Full Results (Moved to End to remain at TOP)
-        // ---------------------------------------------------------
-        if (results.length > 0) {
-            let csvOutput = "\n[--- Calculated Results (Date, Value) ---]\n";
-            results.forEach((val, idx) => {
-                // Fix: explicit check for undefined to allow '0' or empty string
-                const dateStr = (data[idx] && data[idx].date !== undefined) ? data[idx].date : `Row-${idx}`;
-                const valStr = (val !== null && !isNaN(val)) ? val.toFixed(4) : "NaN";
-                csvOutput += `${dateStr}, ${valStr}\n`;
-            });
-            csvOutput += "--------------------------------------------\n";
+        // Output results to text area
+        if (results) {
+            let csvOutput = "\n[--- Calculated Results ---]\n";
+            const isObjectResult = typeof results === 'object' && !Array.isArray(results) && results !== null;
 
+            if (isObjectResult) {
+                const keys = Object.keys(results);
+                const length = results[keys[0]] ? results[keys[0]].length : 0;
+                csvOutput += keys.join(',') + '\n';
+                for (let i = 0; i < length; i++) {
+                    const row = keys.map(k => {
+                        const val = results[k][i];
+                        return (val === null || val === undefined) ? '' : (typeof val === 'number' ? val.toFixed(4) : val);
+                    });
+                    csvOutput += row.join(',') + '\n';
+                }
+            } else if (Array.isArray(results)) {
+                results.forEach((val, idx) => {
+                    const dateStr = (data[idx] && data[idx].date !== undefined) ? data[idx].date : `Row-${idx}`;
+                    const valStr = (val !== null && !isNaN(val)) ? val.toFixed(4) : "NaN";
+                    csvOutput += `${dateStr}, ${valStr}\n`;
+                });
+            }
+            csvOutput += "--------------------------------------------\n";
             const el = document.getElementById('output-data');
             if (el) el.value = csvOutput + el.value;
         }
