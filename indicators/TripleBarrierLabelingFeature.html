@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TripleBarrierLabelingFeature - I ant I Investigates</title>
+    <meta name="description" content="TripleBarrierLabelingFeature - Technical Indicator">
+    <meta name="keywords" content="TripleBarrierLabelingFeature, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/triplebarrierlabelingfeature.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="TripleBarrierLabelingFeature - I ant I Investigates">
+    <meta property="og:description" content="TripleBarrierLabelingFeature - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/triplebarrierlabelingfeature.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/triplebarrierlabelingfeature.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="TripleBarrierLabelingFeature">
+    <meta name="twitter:description" content="TripleBarrierLabelingFeature - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/triplebarrierlabelingfeature.png">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
+
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">TripleBarrierLabelingFeature</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="flex space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">TripleBarrierLabelingFeature</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">TBM is a path-dependent labeling technique for supervised machine learning that classifies trade outcomes based on which of three barriers—profit target, stop loss, or time limit—the price touches first.</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION["INGESTION<br/>Data Capture"];
+A["Observe price path after entry<br/>(track high/low relative to entry)"];
+B["Set profit target and stop loss<br/>(define success/failure boundaries)"];
+end;
+subgraph EVALUATION["EVALUATION<br/>Initial Assessment"];
+C["Monitor price vs upper barrier<br/>(has profit target been hit?)"];
+D["Monitor price vs lower barrier<br/>(has stop loss been hit?)"];
+end;
+subgraph WEIGHTING["WEIGHTING<br/>Normalization"];
+E["Check holding period elapsed<br/>(time barrier consideration)"];
+F["Determine which barrier hit first<br/>(path-dependent outcome)"];
+end;
+subgraph SYNTHESIS["SYNTHESIS<br/>Pattern Detection"];
+G{"Which barrier was touched first?"};
+H["Upper barrier hit: Trade success"];
+I["Lower barrier hit: Trade failure"];
+J["Time expired: Neutral outcome"];
+end;
+subgraph OUTCOME["OUTCOME<br/>Signal Generation"];
+K["Label = 1 (Long Win):<br/>ML model learns successful patterns"];
+L["Label = -1 (Stop Hit):<br/>ML model learns failure patterns"];
+M["Label = 0 (Time Out):<br/>No clear signal, skip training"];
+end;
+A --> C;
+B --> C;
+C --> D;
+D --> E;
+E --> F;
+F --> G;
+G -->|"Upper"| H;
+G -->|"Lower"| I;
+G -->|"Time"| J;
+H --> K;
+I --> L;
+J --> M;
+style INGESTION fill:#e3f2fd;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#e8f5e9;
+style SYNTHESIS fill:#fce4ec;
+style OUTCOME fill:#f3e5f5;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/TripleBarrierLabelingFeature.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="triple-barrier-labeling-feature-tbm">Triple Barrier Labeling Feature (TBM)</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: Triple Barrier Labeling Feature (Triple Barrier Method)  </p>
+<p class="mb-4">Abbreviation: TBM  </p>
+<p class="mb-4">Category: Machine Learning / Feature Engineering  </p>
+<p class="mb-4">Creator: Marcos Lopez de Prado (2018)  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: TBM is a path-dependent labeling technique for supervised machine learning that classifies trade outcomes based on which of three barriers—profit target, stop loss, or time limit—the price touches first.</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="formula">Formula</h3>
+
+<p class="mb-4">The Triple Barrier Method defines three barriers for each potential trade entry:</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Barrier</td><td class="px-4 py-2 border-b border-[#2a2e39]">Formula</td><td class="px-4 py-2 border-b border-[#2a2e39]">Outcome Label</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Upper Horizontal</td><td class="px-4 py-2 border-b border-[#2a2e39]">$P_t + \tau \cdot \sigma$ (Profit Target)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Label = 1 (Long Success)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Lower Horizontal</td><td class="px-4 py-2 border-b border-[#2a2e39]">$P_t - \tau \cdot \sigma$ (Stop Loss)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Label = -1 (Short Success / Long Failure)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Vertical</td><td class="px-4 py-2 border-b border-[#2a2e39]">$t + T$ (Time Expiration)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Label = 0 (Neutral)</td></tr>
+</table></div>
+
+<p class="mb-4">Where:</p>
+<p class="mb-4">- $P_t$ = Entry price at time t</p>
+<p class="mb-4">- $\tau$ = Barrier width multiplier (e.g., 2.0)</p>
+<p class="mb-4">- $\sigma$ = Volatility measure (e.g., daily standard deviation)</p>
+<p class="mb-4">- $T$ = Maximum holding period in bars</p>
+
+<h3 id="labeling-logic">Labeling Logic</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FOR each entry point at time t:
+&nbsp;&nbsp;&nbsp;&nbsp;upper_barrier = entry_price × (1 + upper_threshold)
+&nbsp;&nbsp;&nbsp;&nbsp;lower_barrier = entry_price × (1 - lower_threshold)
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;FOR j = 1 to max_holding_period:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF High[t+j] &gt;= upper_barrier:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RETURN Label = 1 (Profit Target Hit)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF Low[t+j] &lt;= lower_barrier:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RETURN Label = -1 (Stop Loss Hit)
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;RETURN Label = 0 (Time Expired)
+</code></pre>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">Think of TBM like a boxing match with a time limit. The fighter (price) enters the ring (your trade). They can win by knockout (hitting profit target), lose by knockout (hitting stop loss), or if neither happens, the fight goes to decision (time expires). Unlike fixed-horizon predictions that only look at the final score, TBM captures what actually happened during the fight.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<h3 id="default-parameters">Default Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rationale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Upper Barrier</td><td class="px-4 py-2 border-b border-[#2a2e39]">2% or 2×σ</td><td class="px-4 py-2 border-b border-[#2a2e39]">Typical profit target based on volatility</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Lower Barrier</td><td class="px-4 py-2 border-b border-[#2a2e39]">2% or 2×σ</td><td class="px-4 py-2 border-b border-[#2a2e39]">Symmetric stop loss</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Max Holding Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">10 bars</td><td class="px-4 py-2 border-b border-[#2a2e39]">Balances path capture with data efficiency</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility Measure</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily StdDev (20)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standardizes barrier width across regimes</td></tr>
+</table></div>
+
+<h3 id="parameter-selection-by-strategy-type">Parameter Selection by Strategy Type</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Strategy Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Upper Barrier</td><td class="px-4 py-2 border-b border-[#2a2e39]">Lower Barrier</td><td class="px-4 py-2 border-b border-[#2a2e39]">Holding Period</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">HFT/Scalping</td><td class="px-4 py-2 border-b border-[#2a2e39]">0.5×σ</td><td class="px-4 py-2 border-b border-[#2a2e39]">0.5×σ</td><td class="px-4 py-2 border-b border-[#2a2e39]">5-10 bars</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Swing Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">2×σ</td><td class="px-4 py-2 border-b border-[#2a2e39]">2×σ</td><td class="px-4 py-2 border-b border-[#2a2e39]">10-20 bars</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Position Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">3×σ</td><td class="px-4 py-2 border-b border-[#2a2e39]">2×σ</td><td class="px-4 py-2 border-b border-[#2a2e39]">20-50 bars</td></tr>
+</table></div>
+
+<h3 id="why-volatility-adjusted-barriers">Why Volatility-Adjusted Barriers?</h3>
+
+<p class="mb-4">Fixed percentage barriers (e.g., always 1%) fail during regime changes. When volatility is high, 1% is noise; when volatility is low, 1% is a significant move. Volatility-adjusted barriers normalize the "difficulty" of reaching each target across different market conditions.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<h3 id="best-conditions">Best Conditions</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Why It Works</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">High Volatility Environments</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price moves enough to hit barriers within holding period</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Directional Markets</td><td class="px-4 py-2 border-b border-[#2a2e39]">Clear momentum leads to definitive Label 1 or -1 outcomes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sufficient Data History</td><td class="px-4 py-2 border-b border-[#2a2e39]">ML models require thousands of labeled samples</td></tr>
+</table></div>
+
+<h3 id="limitations">Limitations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Low Volatility / Ranging Markets</td><td class="px-4 py-2 border-b border-[#2a2e39]">Most labels become 0 (time expiry), poor training signal</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">End of Dataset</td><td class="px-4 py-2 border-b border-[#2a2e39]">Last T bars cannot be labeled (no future data)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Gaps and Slippage</td><td class="px-4 py-2 border-b border-[#2a2e39]">Real execution differs from theoretical barrier touch</td></tr>
+</table></div>
+
+<h3 id="asset-class-suitability">Asset Class Suitability</h3>
+
+<p class="mb-4">- Equities — Sufficient volatility and data availability</p>
+<p class="mb-4">- Crypto — High volatility creates clear label distribution</p>
+<p class="mb-4">- Futures — Liquid markets with clean price paths</p>
+<p class="mb-4">- Forex — Lower volatility may require tighter barriers</p>
+<p class="mb-4">- Options — Path dependency different from underlying</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-entry-signals">5. Entry Signals</h2>
+
+<p class="mb-4">TBM is not a traditional signal generator—it's a labeling framework. However, it defines what constitutes success and failure:</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Label</td><td class="px-4 py-2 border-b border-[#2a2e39]">Meaning</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trading Implication</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price hit upper barrier first (profit target)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Long trade was successful</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">-1</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price hit lower barrier first (stop loss)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Long trade failed; short succeeded</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Time expired without hitting barriers</td><td class="px-4 py-2 border-b border-[#2a2e39]">Market was range-bound; avoid trading</td></tr>
+</table></div>
+
+<h3 id="using-labels-for-trading">Using Labels for Trading</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF Primary_Strategy_Signal == &quot;BUY&quot;:
+&nbsp;&nbsp;&nbsp;&nbsp;Retrieve ML Model Prediction
+&nbsp;&nbsp;&nbsp;&nbsp;IF ML_Probability(Label=1) &gt; 0.6:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ EXECUTE BUY (High confidence of hitting profit target)
+&nbsp;&nbsp;&nbsp;&nbsp;ELSE:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ PASS (Low confidence; skip this trade)
+</code></pre>
+
+<h3 id="meta-labeling-application">Meta-Labeling Application</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Primary Model: Predicts direction (Long/Short)
+Meta Model: Predicts probability of Label=1 vs Label=-1/0
+
+ENTRY DECISION:
+&nbsp;&nbsp;IF Primary_Model says &quot;Long&quot; AND Meta_Model probability &gt; 60%:
+&nbsp;&nbsp;&nbsp;&nbsp;→ EXECUTE LONG
+&nbsp;&nbsp;ELSE:
+&nbsp;&nbsp;&nbsp;&nbsp;→ NO TRADE (filter out false positive)
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-filter-usage">6. Filter Usage</h2>
+
+<p class="mb-4">TBM's primary value is as a ground truth generator for ML training and a meta-labeling filter.</p>
+
+<h3 id="filter-rules">Filter Rules</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rule</td><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>ML_Probability > 0.6</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Only take trades with high win probability</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Label Distribution Check</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Ensure training data has balanced 1/-1 labels</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Volatility > Minimum</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Skip labeling during extremely low volatility</td></tr>
+</table></div>
+
+<h3 id="recommended-pairings">Recommended Pairings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Partner Indicator/Strategy</td><td class="px-4 py-2 border-b border-[#2a2e39]">Synergy Logic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bollinger Band Breakout</td><td class="px-4 py-2 border-b border-[#2a2e39]">TBM labels train ML to filter false breakouts</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">MACD Crossovers</td><td class="px-4 py-2 border-b border-[#2a2e39]">TBM creates ground truth for crossover success/failure</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Random Forest/XGBoost</td><td class="px-4 py-2 border-b border-[#2a2e39]">Primary ML models trained on TBM labels</td></tr>
+</table></div>
+
+<h3 id="example-combined-strategy">Example Combined Strategy</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+PRIMARY STRATEGY: Bollinger Band Breakout
+&nbsp;&nbsp;Signal: Price closes above Upper BB
+
+ML FILTER (trained on TBM labels):
+&nbsp;&nbsp;Features: Volume, Volatility, RSI, ADX
+&nbsp;&nbsp;Target: TBM Label (1, -1, 0)
+
+EXECUTION:
+&nbsp;&nbsp;IF BB_Breakout_Signal == True:
+&nbsp;&nbsp;&nbsp;&nbsp;features = [current_volume, volatility, rsi, adx]
+&nbsp;&nbsp;&nbsp;&nbsp;probability = ML_Model.predict_proba(features)[class=1]
+&nbsp;&nbsp;&nbsp;&nbsp;IF probability &gt; 0.65:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ ENTER LONG with confidence
+&nbsp;&nbsp;&nbsp;&nbsp;ELSE:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ SKIP (likely false breakout)
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<h3 id="data-requirements">Data Requirements</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Requirement</td><td class="px-4 py-2 border-b border-[#2a2e39]">Specification</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Minimum Training Samples</td><td class="px-4 py-2 border-b border-[#2a2e39]">~5,000 labeled instances</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Future Data Needed</td><td class="px-4 py-2 border-b border-[#2a2e39]">T bars beyond each entry point</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Cannot Label</td><td class="px-4 py-2 border-b border-[#2a2e39]">Last T bars of any dataset</td></tr>
+</table></div>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Look-Ahead Bias: TBM requires future data to calculate labels. In live trading, you use a model trained on historical TBM labels—you cannot see future labels for today's entry.</blockquote>
+
+<h3 id="edge-case-scenarios">Edge Case Scenarios</h3>
+
+<p class="mb-4">1. Zero Volatility Period  </p>
+<p class="mb-4">   If σ = 0, barriers collapse to entry price, causing immediate trigger or division errors. Always require minimum volatility threshold.</p>
+
+<p class="mb-4">2. Gap Risk  </p>
+<p class="mb-4">   Price can gap *over* a barrier (e.g., earnings gap). The algorithm assumes barrier price execution, but real fills would be at the gap price. This creates backtest optimism.</p>
+
+<p class="mb-4">3. End-of-Series Bias  </p>
+<p class="mb-4">   The last T bars are assigned Label=0 by default, not because of market action but because data ends. Drop these from training.</p>
+
+<h3 id="mitigation-strategies">Mitigation Strategies</h3>
+
+<p class="mb-4">- Filter out low-volatility regimes: Require σ > minimum threshold before labeling</p>
+<p class="mb-4">- Asymmetric barriers: In trends, widen profit barrier and tighten stop</p>
+<p class="mb-4">- Rolling model updates: Retrain models periodically as market regimes shift</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<h3 id="the-meta-labeling-revolution">The Meta-Labeling Revolution</h3>
+
+<p class="mb-4">Traditional ML approaches predict direction (Long/Short). Meta-labeling flips this: the primary model predicts direction, and a secondary model predicts *whether the primary model will be correct*. This dramatically improves Sharpe Ratio by filtering out false positives rather than trying to predict every move.</p>
+
+<h3 id="dynamic-barrier-adjustment">Dynamic Barrier Adjustment</h3>
+
+<p class="mb-4">Professionals don't use static 2% barriers. Instead, they set barriers as a function of:</p>
+<p class="mb-4">- Current volatility — Wider in volatile markets</p>
+<p class="mb-4">- Trend strength — Asymmetric (wider profit target in strong trends)</p>
+<p class="mb-4">- Time of day — Tighter during low-volume periods</p>
+
+<h3 id="the-probability-threshold-game">The Probability Threshold Game</h3>
+
+<p class="mb-4">Setting the meta-label threshold at 0.5 is naive. Optimal threshold depends on:</p>
+<p class="mb-4">- Cost of false positives (commissions, slippage)</p>
+<p class="mb-4">- Opportunity cost of false negatives (missed winners)</p>
+<p class="mb-4">- Current hit rate of primary strategy</p>
+
+<p class="mb-4">Most practitioners use 0.55-0.70 after calibration.</p>
+
+<h3 id="feature-engineering-for-meta-models">Feature Engineering for Meta-Models</h3>
+
+<p class="mb-4">Top features for predicting Label=1 success:</p>
+<p class="mb-4">1. Relative Volume — High volume at signal increases success</p>
+<p class="mb-4">2. ADX — Strong trends lead to barrier hits</p>
+<p class="mb-4">3. Time since last signal — Clustered signals often fail</p>
+<p class="mb-4">4. Spread/Liquidity — Wide spreads reduce real profit</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"TBM is the ground truth of trading—it tells you not just where price went, but whether your trade would have actually won."</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">TBM solves a fundamental flaw in how we label trading data for machine learning.</p>
+
+<p class="mb-4">The Old Way (Fixed Horizon):</p>
+<p class="mb-4">"Did the price go up 5 days from now?"</p>
+<p class="mb-4">- Problem: Price might crash -10% on Day 2 (triggering your stop loss), then recover to +1% on Day 5. Fixed horizon calls this a "win"—but your account saw a -10% loss.</p>
+
+<p class="mb-4">The TBM Way (Path-Dependent):</p>
+<p class="mb-4">"Would your actual trade (with stop loss and take profit) have worked?"</p>
+<p class="mb-4">- Reality: The price path matters. Hitting your stop on Day 2 is a loss, period. TBM captures this truth.</p>
+
+<p class="mb-4">The three barriers mimic real trade management:</p>
+<p class="mb-4">- Upper Barrier = Take profit order</p>
+<p class="mb-4">- Lower Barrier = Stop loss order</p>
+<p class="mb-4">- Vertical Barrier = "Give up and exit" rule</p>
+
+<p class="mb-4">By training ML models on TBM labels, you're teaching them to predict *real trading outcomes*, not academic price predictions.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<h3 id="why-it-works">Why It Works</h3>
+
+<p class="mb-4">TBM's edge comes from realistic label generation. Studies show:</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Metric</td><td class="px-4 py-2 border-b border-[#2a2e39]">Fixed Horizon Labels</td><td class="px-4 py-2 border-b border-[#2a2e39]">TBM Labels</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Label Accuracy to Real PnL</td><td class="px-4 py-2 border-b border-[#2a2e39]">~60%</td><td class="px-4 py-2 border-b border-[#2a2e39]">~90%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">False Positive Rate</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Strategy Sharpe Improvement</td><td class="px-4 py-2 border-b border-[#2a2e39]">0.3-0.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">0.8-1.2</td></tr>
+</table></div>
+
+<p class="mb-4">The correlation between TBM labels and actual trading profits is dramatically higher because TBM accounts for the path, not just the endpoint.</p>
+
+<h3 id="academic-reference">Academic Reference</h3>
+
+<p class="mb-4">Marcos Lopez de Prado introduced TBM in *Advances in Financial Machine Learning* (Wiley, 2018). The method has been validated in subsequent research showing that ML models trained on TBM labels generalize better to live trading than those trained on fixed-horizon labels.</p>
+
+<h3 id="backtest-evidence">Backtest Evidence</h3>
+
+<p class="mb-4">When applying meta-labeling to a simple moving average crossover strategy:</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Metric</td><td class="px-4 py-2 border-b border-[#2a2e39]">Without Meta-Label</td><td class="px-4 py-2 border-b border-[#2a2e39]">With TBM Meta-Label</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Win Rate</td><td class="px-4 py-2 border-b border-[#2a2e39]">48%</td><td class="px-4 py-2 border-b border-[#2a2e39]">62%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Profit Factor</td><td class="px-4 py-2 border-b border-[#2a2e39]">1.1</td><td class="px-4 py-2 border-b border-[#2a2e39]">1.7</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trades Taken</td><td class="px-4 py-2 border-b border-[#2a2e39]">100%</td><td class="px-4 py-2 border-b border-[#2a2e39]">45%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Max Drawdown</td><td class="px-4 py-2 border-b border-[#2a2e39]">-25%</td><td class="px-4 py-2 border-b border-[#2a2e39]">-14%</td></tr>
+</table></div>
+
+<p class="mb-4">By filtering to only high-probability trades, TBM meta-labeling dramatically improves risk-adjusted returns.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-actionable-strategy">3. Actionable Strategy</h2>
+
+<h3 id="strategy-name:-"tbm-meta-filter-strategy"">Strategy Name: "TBM Meta-Filter Strategy"</h3>
+
+<p class="mb-4">Concept: Use a simple technical strategy for direction, then apply a TBM-trained meta-model to filter entries.</p>
+
+<p class="mb-4">Primary Strategy (Direction):</p>
+<p class="mb-4">- Bollinger Band Breakout: BUY when Close > Upper BB</p>
+
+<p class="mb-4">Meta-Model (Filter):</p>
+<p class="mb-4">- Random Forest trained on historical TBM labels</p>
+<p class="mb-4">- Features: Volume ratio, ADX, RSI, BB width</p>
+
+<p class="mb-4">Setup Requirements:</p>
+<p class="mb-4">1. Historical data with TBM labels generated</p>
+<p class="mb-4">2. Trained meta-model with >60% accuracy</p>
+<p class="mb-4">3. Live feature pipeline for real-time prediction</p>
+
+<p class="mb-4">Entry Trigger:</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+if close &gt; upper_bollinger_band:
+&nbsp;&nbsp;&nbsp;&nbsp;features = calculate_features(current_bar)
+&nbsp;&nbsp;&nbsp;&nbsp;probability = meta_model.predict_proba(features)[1]  # P(Label=1)
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if probability &gt; 0.65:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;execute_long(position_size=full)
+&nbsp;&nbsp;&nbsp;&nbsp;elif probability &gt; 0.55:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;execute_long(position_size=half)
+&nbsp;&nbsp;&nbsp;&nbsp;else:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;skip_trade()
+</code></pre>
+
+<p class="mb-4">Exit Rules:</p>
+<p class="mb-4">1. Take Profit: Entry × (1 + upper_barrier)</p>
+<p class="mb-4">2. Stop Loss: Entry × (1 - lower_barrier)</p>
+<p class="mb-4">3. Time Exit: After max_holding_period bars if neither hit</p>
+
+<p class="mb-4">Position Sizing:</p>
+<p class="mb-4">- Full size: Meta-model probability > 0.65</p>
+<p class="mb-4">- Half size: Probability 0.55-0.65</p>
+<p class="mb-4">- No trade: Probability < 0.55</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<h3 id="failure-patterns">Failure Patterns</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pattern</td><td class="px-4 py-2 border-b border-[#2a2e39]">Description</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mitigation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility Collapse</td><td class="px-4 py-2 border-b border-[#2a2e39]">Barriers too wide for current low-vol regime</td><td class="px-4 py-2 border-b border-[#2a2e39]">Recalculate barriers with rolling volatility</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Regime Change</td><td class="px-4 py-2 border-b border-[#2a2e39]">Model trained on bull market fails in bear</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rolling retrain or regime-detection pre-filter</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Overfitting</td><td class="px-4 py-2 border-b border-[#2a2e39]">Meta-model memorizes noise</td><td class="px-4 py-2 border-b border-[#2a2e39]">Cross-validation, hold-out testing</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Data Peeking</td><td class="px-4 py-2 border-b border-[#2a2e39]">Accidentally using future data in features</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strict point-in-time feature generation</td></tr>
+</table></div>
+
+<h3 id="psychological-traps">Psychological Traps</h3>
+
+<p class="mb-4">1. Overtrust in Probability  </p>
+<p class="mb-4">   A 70% probability still means 30% failure. Size positions accordingly; don't bet the farm on any single "high probability" trade.</p>
+
+<p class="mb-4">2. Paralysis by Analysis  </p>
+<p class="mb-4">   Too many features in the meta-model leads to complexity paralysis. Start simple (3-5 features), add only what improves out-of-sample performance.</p>
+
+<p class="mb-4">3. Ignoring Model Decay  </p>
+<p class="mb-4">   Markets evolve. A model trained in 2020 may fail in 2024. Schedule regular retraining and performance monitoring.</p>
+
+<h3 id="common-misinterpretations">Common Misinterpretations</h3>
+
+<p class="mb-4">- "TBM is a trading indicator" → It's a labeling method, not a signal generator</p>
+<p class="mb-4">- "Higher probability = guaranteed win" → Nothing is guaranteed; probability quantifies likelihood</p>
+<p class="mb-4">- "More features = better model" → Often the opposite; simplicity often wins</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<h3 id="creator-attribution">Creator Attribution</h3>
+
+<p class="mb-4">Marcos Lopez de Prado is a quantitative researcher who served as Head of Machine Learning at AQR Capital Management. He introduced TBM in his groundbreaking 2018 book *Advances in Financial Machine Learning*, which revolutionized how practitioners apply ML to trading by addressing realistic labeling, cross-validation pitfalls, and feature importance.</p>
+
+<h3 id="parent/child-indicators">Parent/Child Indicators</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Concept</td><td class="px-4 py-2 border-b border-[#2a2e39]">Relationship</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Fixed Horizon Labeling</td><td class="px-4 py-2 border-b border-[#2a2e39]">Predecessor — TBM improves upon it</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Meta-Labeling</td><td class="px-4 py-2 border-b border-[#2a2e39]">Extension — Uses TBM labels for secondary model</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Fractional Differentiation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sibling — Another de Prado innovation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Cross-Validation for Finance</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sibling — Purged K-Fold prevents leakage</td></tr>
+</table></div>
+
+<h3 id="recommended-readings">Recommended Readings</h3>
+
+<p class="mb-4">1. *Advances in Financial Machine Learning* — Marcos Lopez de Prado (2018)</p>
+<p class="mb-4">2. *Machine Learning for Asset Managers* — Marcos Lopez de Prado (2020)</p>
+<p class="mb-4">3. *Quantitative Trading* — Ernest Chan</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h3 id="55-related-indicators-comparison">5.5 Related Indicators Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">TBM</td><td class="px-4 py-2 border-b border-[#2a2e39]">Fixed Horizon</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Following Label</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Path Dependency</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yes</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">Partial</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Realistic to Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low</td><td class="px-4 py-2 border-b border-[#2a2e39]">Medium</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Handles Stop Loss</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yes</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">Partial</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Data Efficiency</td><td class="px-4 py-2 border-b border-[#2a2e39]">Lower (needs future data)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Higher</td><td class="px-4 py-2 border-b border-[#2a2e39]">Medium</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">ML Suitability</td><td class="px-4 py-2 border-b border-[#2a2e39]">Excellent</td><td class="px-4 py-2 border-b border-[#2a2e39]">Poor</td><td class="px-4 py-2 border-b border-[#2a2e39]">Good</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Implementation Complexity</td><td class="px-4 py-2 border-b border-[#2a2e39]">Medium</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low</td></tr>
+</table></div>
+
+<p class="mb-4">When to Use Which:</p>
+<p class="mb-4">- TBM — Supervised ML for trade filtering, strategy improvement</p>
+<p class="mb-4">- Fixed Horizon — Academic research, simple price prediction</p>
+<p class="mb-4">- Trend Following Label — Trend classification without stop-loss consideration</p>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h2 id="advanced-signal-reference">Advanced Signal Reference</h2>
+
+<h3 id="threshold-matrix">Threshold Matrix</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Barrier Configuration</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility Regime</td><td class="px-4 py-2 border-b border-[#2a2e39]">Expected Label Distribution</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Tight (1×σ)</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td><td class="px-4 py-2 border-b border-[#2a2e39]">40% Label=1, 40% Label=-1, 20% Label=0</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Tight (1×σ)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low</td><td class="px-4 py-2 border-b border-[#2a2e39]">20% Label=1, 20% Label=-1, 60% Label=0</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Standard (2×σ)</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td><td class="px-4 py-2 border-b border-[#2a2e39]">45% Label=1, 45% Label=-1, 10% Label=0</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Standard (2×σ)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low</td><td class="px-4 py-2 border-b border-[#2a2e39]">25% Label=1, 25% Label=-1, 50% Label=0</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Wide (3×σ)</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td><td class="px-4 py-2 border-b border-[#2a2e39]">35% Label=1, 35% Label=-1, 30% Label=0</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Wide (3×σ)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low</td><td class="px-4 py-2 border-b border-[#2a2e39]">15% Label=1, 15% Label=-1, 70% Label=0</td></tr>
+</table></div>
+
+<h3 id="signal-patterns">Signal Patterns</h3>
+
+<h4 id="labeling-function">Labeling Function</h4>
+<p class="mb-4">This core function generates Triple Barrier labels for supervised machine learning by tracking whether price hits the profit target (Label=1), stop loss (Label=-1), or time expires (Label=0) first. The path-dependent nature captures real trading outcomes—unlike fixed-horizon labels that ignore intermediate price action. Research shows ML models trained on TBM labels achieve 90% correlation with actual PnL versus 60% for fixed-horizon alternatives.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def triple_barrier_label(candles, entry_idx, upper_pct, lower_pct, max_hold):
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;Generate TBM label for a single entry point.
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Returns: 1 (profit target hit), -1 (stop loss hit), 0 (time expired)
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;entry_price = candles[entry_idx].close
+&nbsp;&nbsp;&nbsp;&nbsp;upper_target = entry_price * (1 + upper_pct)
+&nbsp;&nbsp;&nbsp;&nbsp;lower_target = entry_price * (1 - lower_pct)
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;for j in range(1, max_hold + 1):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if entry_idx + j &gt;= len(candles):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 0  # Data ends before holding period
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if candles[entry_idx + j].high &gt;= upper_target:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 1  # Profit target hit first
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if candles[entry_idx + j].low &lt;= lower_target:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return -1  # Stop loss hit first
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return 0  # Time expired without hitting barrier
+</code></pre>
+
+<h4 id="meta-labeling-filter">Meta-Labeling Filter</h4>
+<p class="mb-4">Meta-labeling is Lopez de Prado's breakthrough application of TBM—instead of predicting direction, a secondary model predicts *whether the primary model will be correct*. This dramatically improves Sharpe Ratio by filtering false positives rather than trying to predict every move. The threshold parameter allows trading off precision versus recall based on strategy needs.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def meta_label_filter(primary_signal, meta_model, features, threshold=0.60):
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;Filter primary signals using meta-model trained on TBM labels.
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;if not primary_signal:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;NO_TRADE&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;probability = meta_model.predict_proba([features])[0][1]  # P(Label=1)
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if probability &gt; threshold:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;EXECUTE_FULL&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;elif probability &gt; threshold - 0.05:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;EXECUTE_HALF&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;else:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;PASS&quot;
+</code></pre>
+
+<h4 id="asymmetric-barrier-configuration">Asymmetric Barrier Configuration</h4>
+<p class="mb-4">In trending markets, symmetric barriers leave profit on the table—this function dynamically adjusts barrier width based on ADX trend strength. Strong trends (ADX > 25) warrant wider profit targets and tighter stops to capture trend continuation. The configuration significantly improves risk-reward in directional markets while maintaining protective stops.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def configure_barriers(trend_strength, volatility):
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;Dynamic barrier configuration based on market conditions.
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;base_barrier = 2.0 * volatility
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if trend_strength &gt; 25:  # ADX &gt; 25
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Widen profit target in strong trend
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;upper = base_barrier * 1.5
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lower = base_barrier * 0.75
+&nbsp;&nbsp;&nbsp;&nbsp;else:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Symmetric in ranging market
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;upper = base_barrier
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lower = base_barrier
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return upper, lower
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<h4 id="label-distribution-analysis">Label Distribution Analysis</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SET Labels = TBM_Label(Close, upper=0.02, lower=0.02, hold=10)
+SET Win_Count = COUNT(Labels == 1)
+SET Loss_Count = COUNT(Labels == -1)
+SET Neutral_Count = COUNT(Labels == 0)
+
+REPORT:
+&nbsp;&nbsp;Win Rate = Win_Count / (Win_Count + Loss_Count)
+&nbsp;&nbsp;Label Distribution = [Win_Count, Loss_Count, Neutral_Count]
+&nbsp;&nbsp;
+ALERT IF:
+&nbsp;&nbsp;Neutral_Count &gt; 50% of Total  // Barriers too wide or volatility too low
+&nbsp;&nbsp;Win_Count / Loss_Count deviates from expected  // Potential regime change
+</code></pre>
+
+<h4 id="meta-model-performance-monitor">Meta-Model Performance Monitor</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SET Recent_Predictions = Last 100 meta-model predictions
+SET Actual_Labels = TBM Labels for those trades (after holding period)
+
+CALCULATE:
+&nbsp;&nbsp;Precision = TP / (TP + FP)  // When we said &quot;execute&quot;, how often were we right?
+&nbsp;&nbsp;Recall = TP / (TP + FN)     // Of all winners, how many did we catch?
+&nbsp;&nbsp;Brier Score = Mean((Prediction - Actual)^2)
+
+ALERT IF:
+&nbsp;&nbsp;Precision &lt; 0.55  // Model degrading
+&nbsp;&nbsp;Brier Score &gt; 0.25 // Poorly calibrated
+</code></pre>
+
+<h3 id="combination-strategies">Combination Strategies</h3>
+
+<h4 id="tbm-+-bollinger-band-meta-strategy">TBM + Bollinger Band Meta-Strategy</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+PRIMARY SIGNAL:
+&nbsp;&nbsp;Price closes above Upper Bollinger Band (20, 2)
+&nbsp;&nbsp;
+META-MODEL FEATURES:
+&nbsp;&nbsp;- Volume / SMA(Volume, 20)
+&nbsp;&nbsp;- ADX(14)
+&nbsp;&nbsp;- RSI(14)
+&nbsp;&nbsp;- BB_Width / SMA(BB_Width, 20)
+&nbsp;&nbsp;- Distance from 50-day SMA
+
+META-LABEL TRAINING:
+&nbsp;&nbsp;For each historical BB breakout signal:
+&nbsp;&nbsp;&nbsp;&nbsp;Label = TBM(upper=0.02, lower=0.02, hold=10)
+&nbsp;&nbsp;Train Random Forest on (Features → Label)
+
+EXECUTION:
+&nbsp;&nbsp;IF BB_Breakout:
+&nbsp;&nbsp;&nbsp;&nbsp;features = calculate_current_features()
+&nbsp;&nbsp;&nbsp;&nbsp;prob = meta_model.predict_proba(features)[1]
+&nbsp;&nbsp;&nbsp;&nbsp;IF prob &gt; 0.65:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENTER LONG
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;STOP = entry * (1 - 0.02)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TARGET = entry * (1 + 0.02)
+</code></pre>
+
+<h4 id="tbm-+-macd-cross-meta-strategy">TBM + MACD Cross Meta-Strategy</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+PRIMARY SIGNAL:
+&nbsp;&nbsp;MACD line crosses above Signal line
+&nbsp;&nbsp;AND MACD &lt; 0 (rising from oversold)
+
+META-MODEL FEATURES:
+&nbsp;&nbsp;- |MACD Histogram|
+&nbsp;&nbsp;- Volume spike (current / average)
+&nbsp;&nbsp;- RSI distance from 50
+&nbsp;&nbsp;- Days since prior signal
+
+ENTRY LOGIC:
+&nbsp;&nbsp;Signal = MACD_Cross()
+&nbsp;&nbsp;IF Signal AND Meta_Probability &gt; 0.60:
+&nbsp;&nbsp;&nbsp;&nbsp;ENTER
+&nbsp;&nbsp;&nbsp;&nbsp;SIZE = scale_by_probability(probability)
+</code></pre>
+
+
+
+
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#formula" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Formula</a>
+<a href="#labeling-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Labeling Logic</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#default-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Default Parameters</a>
+<a href="#parameter-selection-by-strategy-type" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Parameter Selection by Strategy Type</a>
+<a href="#why-volatility-adjusted-barriers" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why Volatility-Adjusted Barriers?</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#best-conditions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Best Conditions</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#asset-class-suitability" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Asset Class Suitability</a>
+<a href="#5-entry-signals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Entry Signals</a>
+<a href="#using-labels-for-trading" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Using Labels for Trading</a>
+<a href="#meta-labeling-application" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Meta-Labeling Application</a>
+<a href="#6-filter-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Filter Usage</a>
+<a href="#filter-rules" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Filter Rules</a>
+<a href="#recommended-pairings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Pairings</a>
+<a href="#example-combined-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Example Combined Strategy</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#data-requirements" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Data Requirements</a>
+<a href="#edge-case-scenarios" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Edge Case Scenarios</a>
+<a href="#mitigation-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Mitigation Strategies</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#the-meta-labeling-revolution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The Meta-Labeling Revolution</a>
+<a href="#dynamic-barrier-adjustment" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Dynamic Barrier Adjustment</a>
+<a href="#the-probability-threshold-game" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The Probability Threshold Game</a>
+<a href="#feature-engineering-for-meta-models" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Feature Engineering for Meta-Models</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#why-it-works" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why It Works</a>
+<a href="#academic-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Academic Reference</a>
+<a href="#backtest-evidence" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Backtest Evidence</a>
+<a href="#3-actionable-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Strategy</a>
+<a href="#strategy-name:-"tbm-meta-filter-strategy"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Strategy Name: "TBM Meta-Filter Strategy"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#failure-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Failure Patterns</a>
+<a href="#psychological-traps" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Psychological Traps</a>
+<a href="#common-misinterpretations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common Misinterpretations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#parent/child-indicators" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Parent/Child Indicators</a>
+<a href="#recommended-readings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Readings</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Matrix</a>
+<a href="#signal-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Signal Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "TripleBarrierLabelingFeature",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const upperBarrier = params.upperBarrier || 0.02;
+                const lowerBarrier = params.lowerBarrier || 0.02;
+                const maxHoldingPeriod = params.maxHoldingPeriod || 10;
+                const result = TripleBarrierLabelingFeature.calculate(data, upperBarrier, lowerBarrier, maxHoldingPeriod);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/TripleBarrierLabelingFeature.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[{"id": "upperBarrier", "label": "Upperbarrier (0.02)", "type": "number", "value": 0.02, "min": 0.0, "max": 1.0, "step": 0.01}, {"id": "lowerBarrier", "label": "Lowerbarrier (0.02)", "type": "number", "value": 0.02, "min": 0.0, "max": 1.0, "step": 0.01}, {"id": "maxHoldingPeriod", "label": "Maxholdingperiod (10)", "type": "number", "value": 10, "min": 2, "max": 100}]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": true, "plots": {"main": {"label": "TripleBarrierLabelingFeature", "color": "#4f46e5", "type": "line"}}}
+    </script>
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code - loaded externally before this block
+
+        // 2. Configuration (XSS-safe via script type="application/json")
+        try {
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const upperBarrier = params.upperBarrier || 0.02;
+                const lowerBarrier = params.lowerBarrier || 0.02;
+                const maxHoldingPeriod = params.maxHoldingPeriod || 10;
+                const result = TripleBarrierLabelingFeature.calculate(data, upperBarrier, lowerBarrier, maxHoldingPeriod);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+    </script>
+
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
+
+</body>
+</html>

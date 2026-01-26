@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PortfolioMetrics - I ant I Investigates</title>
+    <meta name="description" content="PortfolioMetrics - Technical Indicator">
+    <meta name="keywords" content="PortfolioMetrics, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/portfoliometrics.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="PortfolioMetrics - I ant I Investigates">
+    <meta property="og:description" content="PortfolioMetrics - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/portfoliometrics.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/portfoliometrics.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PortfolioMetrics">
+    <meta name="twitter:description" content="PortfolioMetrics - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/portfoliometrics.png">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
+
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">PortfolioMetrics</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="flex space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">PortfolioMetrics</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">Portfolio Metrics quantify investment performance relative to risk, enabling comparison of different strategies by measuring how much return is generated per unit of risk taken.</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION["Phase 1: Ingestion"];
+A[/"Receive Portfolio Returns"/];
+B["Capture Risk-Free Rate"];
+C["Define Evaluation Period"];
+end;
+subgraph EVALUATION["Phase 2: Evaluation"];
+D["Calculate Excess Returns"];
+E["Measure Return Volatility"];
+F["Track Downside Deviations"];
+end;
+subgraph WEIGHTING["Phase 3: Weighting"];
+G["Compute Sharpe Ratio"];
+H["Compute Sortino Ratio"];
+I["Compute Calmar Ratio"];
+end;
+subgraph SYNTHESIS["Phase 4: Synthesis"];
+J["Compare to Thresholds"];
+K["Rank Risk-Adjusted Quality"];
+L["Assess Strategy Efficiency"];
+end;
+subgraph OUTCOME["Phase 5: Outcome"];
+M{"Strategy Quality Assessment?"};
+N["Sharpe > 1.0 = Good Performance"];
+O["Sortino > 1.5 = Excellent Downside Management"];
+P["Sharpe < 0.5 = Inadequate Risk-Return"];
+Q[/"Generate Strategy Quality Signal"/];
+end;
+A --> B;
+B --> C;
+C --> D;
+D --> E;
+E --> F;
+F --> G;
+G --> H;
+H --> I;
+I --> J;
+J --> K;
+K --> L;
+L --> M;
+M -->|Good| N;
+M -->|Excellent| O;
+M -->|Poor| P;
+N --> Q;
+O --> Q;
+P --> Q;
+style INGESTION fill:#e3f2fd;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#e8f5e9;
+style SYNTHESIS fill:#fce4ec;
+style OUTCOME fill:#f3e5f5;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/PortfolioMetrics.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="portfolio-metrics-sharpe-ratio-&-risk-adjusted-returns">Portfolio Metrics (Sharpe Ratio & Risk-Adjusted Returns)</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: Portfolio Metrics / Risk-Adjusted Performance Measures  </p>
+<p class="mb-4">Key Metrics: Sharpe Ratio, Sortino Ratio, Treynor Ratio, Information Ratio  </p>
+<p class="mb-4">Category: Risk / Portfolio Analysis  </p>
+<p class="mb-4">Creator: William F. Sharpe (1966), Frank Sortino (1980s)  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: Portfolio Metrics quantify investment performance relative to risk, enabling comparison of different strategies by measuring how much return is generated per unit of risk taken.</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="sharpe-ratio-formula">Sharpe Ratio Formula</h3>
+
+<p class="mb-4">$$Sharpe\ Ratio = \frac{R_p - R_f}{\sigma_p}$$</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Variable</td><td class="px-4 py-2 border-b border-[#2a2e39]">Meaning</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">$R_p$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Portfolio return (annualized)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">$R_f$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Risk-free rate (T-bill rate)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">$\sigma_p$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard deviation of portfolio returns (annualized)</td></tr>
+</table></div>
+
+<h3 id="related-metrics">Related Metrics</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Metric</td><td class="px-4 py-2 border-b border-[#2a2e39]">Formula</td><td class="px-4 py-2 border-b border-[#2a2e39]">Difference from Sharpe</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sortino Ratio</td><td class="px-4 py-2 border-b border-[#2a2e39]">$(R_p - R_f) / \sigma_{downside}$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Uses downside deviation only</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Treynor Ratio</td><td class="px-4 py-2 border-b border-[#2a2e39]">$(R_p - R_f) / \beta$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Uses beta instead of volatility</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Information Ratio</td><td class="px-4 py-2 border-b border-[#2a2e39]">$(R_p - R_b) / \sigma_{tracking}$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Measures active return vs benchmark</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Calmar Ratio</td><td class="px-4 py-2 border-b border-[#2a2e39]">$CAGR / MaxDrawdown$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Uses max drawdown as risk</td></tr>
+</table></div>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">Think of the Sharpe Ratio like miles per gallon for investments. A car that goes 300 miles on 10 gallons (30 MPG) is more efficient than one going 400 miles on 20 gallons (20 MPG), even though the second car traveled farther. Similarly, a portfolio earning 15% with 10% volatility (Sharpe 1.5) is "better" than one earning 20% with 30% volatility (Sharpe 0.67)—it delivers more return per unit of risk "fuel."</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<h3 id="sharpe-ratio-interpretation">Sharpe Ratio Interpretation</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sharpe Ratio</td><td class="px-4 py-2 border-b border-[#2a2e39]">Quality</td><td class="px-4 py-2 border-b border-[#2a2e39]">Interpretation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">< 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Poor</td><td class="px-4 py-2 border-b border-[#2a2e39]">Returns below risk-free rate; value destruction</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.0 - 0.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">Below Average</td><td class="px-4 py-2 border-b border-[#2a2e39]">Not worth the risk vs. T-bills</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.5 - 1.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Acceptable</td><td class="px-4 py-2 border-b border-[#2a2e39]">Decent risk-adjusted return</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1.0 - 1.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">Good</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong performance</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1.5 - 2.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Good</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rare; excellent risk efficiency</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">> 2.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Exceptional</td><td class="px-4 py-2 border-b border-[#2a2e39]">Usually unsustainable or sampling bias</td></tr>
+</table></div>
+
+<h3 id="standard-parameters">Standard Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Notes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Return Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily → Annualized</td><td class="px-4 py-2 border-b border-[#2a2e39]">Multiply by √252</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Risk-Free Rate</td><td class="px-4 py-2 border-b border-[#2a2e39]">1-3 Month T-Bill</td><td class="px-4 py-2 border-b border-[#2a2e39]">Current yield</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rolling Window</td><td class="px-4 py-2 border-b border-[#2a2e39]">3 Years</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard for fund evaluation</td></tr>
+</table></div>
+
+<h3 id="when-to-use-each-metric">When to Use Each Metric</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Metric</td><td class="px-4 py-2 border-b border-[#2a2e39]">Best Use Case</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sharpe</td><td class="px-4 py-2 border-b border-[#2a2e39]">General portfolio efficiency</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sortino</td><td class="px-4 py-2 border-b border-[#2a2e39]">When only downside risk matters</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Treynor</td><td class="px-4 py-2 border-b border-[#2a2e39]">Comparing fully diversified portfolios</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Information</td><td class="px-4 py-2 border-b border-[#2a2e39]">Active manager evaluation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Calmar</td><td class="px-4 py-2 border-b border-[#2a2e39]">Hedge fund / CTA evaluation</td></tr>
+</table></div>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<h3 id="best-conditions">Best Conditions</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Why It Works</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Normal Market Distributions</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sharpe assumes normally distributed returns</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Long Evaluation Periods</td><td class="px-4 py-2 border-b border-[#2a2e39]">More reliable over 3+ years</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Comparing Similar Strategies</td><td class="px-4 py-2 border-b border-[#2a2e39]">Apples-to-apples risk comparison</td></tr>
+</table></div>
+
+<h3 id="limitations">Limitations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Fat-Tailed Distributions</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sharpe underestimates tail risk</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Short Time Periods</td><td class="px-4 py-2 border-b border-[#2a2e39]">Statistically unreliable</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Illiquid Assets</td><td class="px-4 py-2 border-b border-[#2a2e39]">Understated volatility inflates Sharpe</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Leveraged Strategies</td><td class="px-4 py-2 border-b border-[#2a2e39]">Easy to game Sharpe with leverage</td></tr>
+</table></div>
+
+<h3 id="asset-class-considerations">Asset Class Considerations</h3>
+
+<p class="mb-4">- Mutual Funds/ETFs — Standard metric for comparison</p>
+<p class="mb-4">- Hedge Funds — Often use Sortino or Calmar</p>
+<p class="mb-4">- Private Equity — Smoothed returns inflate Sharpe</p>
+<p class="mb-4">- Crypto — Non-normal distributions; use Sortino</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-entry-signals">5. Entry Signals</h2>
+
+<p class="mb-4">Portfolio metrics are analytical tools, not trading signals. However, they inform allocation decisions:</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Metric State</td><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Action</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Improving Sharpe</td><td class="px-4 py-2 border-b border-[#2a2e39]">6-month Sharpe > 12-month Sharpe</td><td class="px-4 py-2 border-b border-[#2a2e39]">Increase allocation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Declining Sharpe</td><td class="px-4 py-2 border-b border-[#2a2e39]">Current Sharpe < Historical average</td><td class="px-4 py-2 border-b border-[#2a2e39]">Reduce allocation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sortino > Sharpe</td><td class="px-4 py-2 border-b border-[#2a2e39]">Downside volatility lower than total</td><td class="px-4 py-2 border-b border-[#2a2e39]">Favorable regime</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sharpe < 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Negative risk-adjusted return</td><td class="px-4 py-2 border-b border-[#2a2e39]">Exit strategy</td></tr>
+</table></div>
+
+<h3 id="allocation-decision-framework">Allocation Decision Framework</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF Strategy_Sharpe &gt; 1.0 AND Sortino &gt; 1.2
+AND Max_Drawdown_3yr &lt; 15%
+THEN → Full allocation to strategy
+
+IF Strategy_Sharpe between 0.5-1.0
+AND Sortino &gt; 1.0
+THEN → Partial allocation (50%)
+
+IF Strategy_Sharpe &lt; 0.5
+THEN → Do not allocate; seek alternatives
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-filter-usage">6. Filter Usage</h2>
+
+<p class="mb-4">Portfolio metrics act as strategy filters to determine which approaches deserve capital.</p>
+
+<h3 id="filter-rules">Filter Rules</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rule</td><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Sharpe > 1.0</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Required threshold for strategy adoption</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Sortino > 1.5</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Required when downside protection matters</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Calmar > 0.5</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Minimum for drawdown-sensitive investors</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Information Ratio > 0.5</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Required for active managers</td></tr>
+</table></div>
+
+<h3 id="recommended-pairings">Recommended Pairings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Partner Analysis</td><td class="px-4 py-2 border-b border-[#2a2e39]">Synergy Logic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Maximum Drawdown</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sharpe doesn't capture worst-case</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Ulcer Index</td><td class="px-4 py-2 border-b border-[#2a2e39]">Measures drawdown duration anxiety</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Win Rate / Profit Factor</td><td class="px-4 py-2 border-b border-[#2a2e39]">Complements Sharpe with trade-level data</td></tr>
+</table></div>
+
+<h3 id="example-evaluation">Example Evaluation</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+STRATEGY SCORECARD:
+&nbsp;&nbsp;Sharpe Ratio: 1.25        ✓ (&gt; 1.0)
+&nbsp;&nbsp;Sortino Ratio: 1.80       ✓ (&gt; Sharpe)
+&nbsp;&nbsp;Max Drawdown: -12%        ✓ (&lt; 15%)
+&nbsp;&nbsp;Calmar Ratio: 1.2         ✓ (&gt; 0.5)
+&nbsp;&nbsp;Ulcer Index: 5.2          ✓ (&lt; 10)
+
+CONCLUSION: Approved for full allocation
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<h3 id="measurement-pitfalls">Measurement Pitfalls</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Issue</td><td class="px-4 py-2 border-b border-[#2a2e39]">Description</td><td class="px-4 py-2 border-b border-[#2a2e39]">Solution</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Short Sample Bias</td><td class="px-4 py-2 border-b border-[#2a2e39]">1-year Sharpe is statistically meaningless</td><td class="px-4 py-2 border-b border-[#2a2e39]">Require 3+ years</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Survivorship Bias</td><td class="px-4 py-2 border-b border-[#2a2e39]">Only surviving funds measured</td><td class="px-4 py-2 border-b border-[#2a2e39]">Include dead funds</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Stale Pricing</td><td class="px-4 py-2 border-b border-[#2a2e39]">Illiquid assets show low volatility</td><td class="px-4 py-2 border-b border-[#2a2e39]">Adjust for liquidity</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Leverage Manipulation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Leverage scales Sharpe linearly</td><td class="px-4 py-2 border-b border-[#2a2e39]">Normalize to unleveraged</td></tr>
+</table></div>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Reality Check: A Sharpe ratio calculated on 1 year of monthly data has a 95% confidence interval of roughly ±0.7. That means a "1.0 Sharpe" could really be anywhere from 0.3 to 1.7.</blockquote>
+
+<h3 id="common-errors">Common Errors</h3>
+
+<p class="mb-4">1. Annualization Errors  </p>
+<p class="mb-4">   Daily Sharpe × √252; Monthly Sharpe × √12. Mixing these destroys comparability.</p>
+
+<p class="mb-4">2. Ignoring Skewness  </p>
+<p class="mb-4">   A strategy with occasional massive losses but steady gains can show high Sharpe.</p>
+
+<p class="mb-4">3. Comparing Different Periods  </p>
+<p class="mb-4">   2019 vs. 2020 Sharpe comparisons are meaningless due to different market regimes.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<h3 id="the-underwater-chart">The Underwater Chart</h3>
+
+<p class="mb-4">Sharpe doesn't capture how long you're underwater (below prior peak). Two strategies with identical Sharpe could feel very different:</p>
+<p class="mb-4">- Strategy A: -10% max drawdown lasting 2 months</p>
+<p class="mb-4">- Strategy B: -10% max drawdown lasting 24 months</p>
+
+<p class="mb-4">The Ulcer Index captures this: $UI = \sqrt{\frac{1}{n}\sum D^2}$ where D is the percentage drawdown.</p>
+
+<h3 id="rolling-sharpe-analysis">Rolling Sharpe Analysis</h3>
+
+<p class="mb-4">Plot Sharpe ratio on a rolling 12-month basis. Look for:</p>
+<p class="mb-4">- Declining trend: Strategy may be crowded or arbitraged away</p>
+<p class="mb-4">- High volatility: Strategy inconsistent; regime-dependent</p>
+<p class="mb-4">- Stable high: Robust strategy worth allocating to</p>
+
+<h3 id="sharpe-ratio-decay">Sharpe Ratio Decay</h3>
+
+<p class="mb-4">Academic research shows high-Sharpe strategies decay. An initial 2.0 Sharpe typically falls to:</p>
+<p class="mb-4">- 1.5 after 2 years (information leakage)</p>
+<p class="mb-4">- 1.0 after 5 years (crowding)</p>
+<p class="mb-4">- 0.5 after 10 years (fully arbitraged)</p>
+
+<p class="mb-4">Plan for decay; rotate strategies before they become commoditized.</p>
+
+<h3 id="sortino-preference-for-asymmetric-returns">Sortino Preference for Asymmetric Returns</h3>
+
+<p class="mb-4">For strategies with limited downside (e.g., covered calls), Sortino > Sharpe because upside volatility isn't "risk." When investing in options-selling or trend-following strategies, prefer Sortino ratio evaluation.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"Portfolio metrics are the lie detector of investing—they expose whether impressive returns come from skill or reckless gambling, forcing honest answers to the question: 'Is this return worth the risk?'"</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">Portfolio Metrics answer: "Is the return worth the risk?"</p>
+
+<p class="mb-4">Raw returns are meaningless without context. A 20% return sounds great—until you learn it came with 50% volatility. Portfolio metrics normalize returns by risk, enabling fair comparison.</p>
+
+<p class="mb-4">The Sharpe Ratio became the gold standard because it's intuitive: excess return divided by risk. If two portfolios have the same expected return, the one with lower volatility has higher Sharpe—it achieves the same result more efficiently.</p>
+
+<p class="mb-4">Key insight: Higher Sharpe is better, but context matters:</p>
+<p class="mb-4">- 1.0 Sharpe in stocks is excellent</p>
+<p class="mb-4">- 1.0 Sharpe in bonds is mediocre (should be higher given low volatility)</p>
+<p class="mb-4">- 1.0 Sharpe with 5% max drawdown is better than 1.5 Sharpe with 30% drawdown</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<h3 id="academic-evidence">Academic Evidence</h3>
+
+<p class="mb-4">Studies on the predictive power of Sharpe ratios:</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Finding</td><td class="px-4 py-2 border-b border-[#2a2e39]">Research</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Past Sharpe has weak future predictability</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sharpe (1994)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">3-year minimum for statistical significance</td><td class="px-4 py-2 border-b border-[#2a2e39]">Lo (2002)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sortino superior for non-normal returns</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sortino & Price (1994)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sharpe decay averages -0.15/year</td><td class="px-4 py-2 border-b border-[#2a2e39]">Posthuma & van der Sluis (2003)</td></tr>
+</table></div>
+
+<h3 id="why-it-works">Why It Works</h3>
+
+<p class="mb-4">Sharpe works because of risk-return trade-off. Efficient markets price risk—assets with higher inherent risk require higher expected returns. By measuring excess return per risk unit, Sharpe identifies strategies exceeding this equilibrium relationship.</p>
+
+<h3 id="statistical-significance">Statistical Significance</h3>
+
+<p class="mb-4">For a Sharpe ratio with 95% confidence:</p>
+
+<p class="mb-4">$$SE(Sharpe) \approx \sqrt{\frac{1 + \frac{S^2}{2}}{n-1}}$$</p>
+
+<p class="mb-4">With 36 monthly observations and Sharpe = 1.0, the standard error is ~0.25, meaning the 95% CI is [0.5, 1.5].</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-actionable-strategy">3. Actionable Strategy</h2>
+
+<h3 id="strategy-name:-"risk-budget-allocation"">Strategy Name: "Risk Budget Allocation"</h3>
+
+<p class="mb-4">Concept: Allocate capital to strategies based on risk-adjusted metrics.</p>
+
+<p class="mb-4">Requirements:</p>
+<p class="mb-4">1. Calculate 3-year rolling Sharpe, Sortino, Max Drawdown for each strategy</p>
+<p class="mb-4">2. Rank strategies by Sharpe/Sortino</p>
+<p class="mb-4">3. Allocate based on ranking with risk budget constraints</p>
+
+<p class="mb-4">Allocation Formula:</p>
+<p class="mb-4">$$Weight_i = \frac{Sharpe_i / \sigma_i}{\sum (Sharpe_j / \sigma_j)}$$</p>
+
+<p class="mb-4">Constraints:</p>
+<p class="mb-4">- Maximum 25% per strategy</p>
+<p class="mb-4">- Minimum Sharpe 0.5 for any allocation</p>
+<p class="mb-4">- Maximum aggregate drawdown risk: 20%</p>
+
+<p class="mb-4">Rebalance:</p>
+<p class="mb-4">- Monthly review</p>
+<p class="mb-4">- Quarterly rebalancing if weights drift > 5%</p>
+
+<p class="mb-4">Example:</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Strategy Portfolio:
+&nbsp;&nbsp;Strategy A: Sharpe 1.5, σ 10% → Score: 0.15
+&nbsp;&nbsp;Strategy B: Sharpe 1.0, σ 15% → Score: 0.067
+&nbsp;&nbsp;Strategy C: Sharpe 0.8, σ 8%  → Score: 0.10
+
+Normalized Weights:
+&nbsp;&nbsp;A: 47%, B: 21%, C: 32%
+
+Applied Constraints (25% max):
+&nbsp;&nbsp;A: 25%, B: 21%, C: 25%, Cash: 29%
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<h3 id="failure-patterns">Failure Patterns</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pattern</td><td class="px-4 py-2 border-b border-[#2a2e39]">Description</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mitigation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Short Sample Bias</td><td class="px-4 py-2 border-b border-[#2a2e39]">12-month Sharpe is noise</td><td class="px-4 py-2 border-b border-[#2a2e39]">Require 36+ months</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Tail Risk Blindness</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sharpe ignores fat tails</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use Sortino or CVaR</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Illiquidity Premium</td><td class="px-4 py-2 border-b border-[#2a2e39]">Stale prices inflate Sharpe</td><td class="px-4 py-2 border-b border-[#2a2e39]">Adjust for smoothing</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Gaming</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strategies designed to max Sharpe</td><td class="px-4 py-2 border-b border-[#2a2e39]">Look at maximum drawdown</td></tr>
+</table></div>
+
+<h3 id="psychological-traps">Psychological Traps</h3>
+
+<p class="mb-4">1. Chasing High Sharpe  </p>
+<p class="mb-4">   Strategies with 3+ Sharpe usually hide risk or are back-fitted.</p>
+
+<p class="mb-4">2. Ignoring Drawdowns  </p>
+<p class="mb-4">   A 2.0 Sharpe with -50% drawdown is brutal to live through.</p>
+
+<p class="mb-4">3. Past Performance Bias  </p>
+<p class="mb-4">   High historical Sharpe doesn't persist; expect mean reversion.</p>
+
+<h3 id="common-misinterpretations">Common Misinterpretations</h3>
+
+<p class="mb-4">- "Higher Sharpe is always better" → Depends on drawdown tolerance and skewness</p>
+<p class="mb-4">- "Sharpe > 2 is achievable" → Sustainable > 2 is extremely rare</p>
+<p class="mb-4">- "Risk-free rate doesn't matter" → In low-rate environments, it significantly affects Sharpe</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<h3 id="creator-attribution">Creator Attribution</h3>
+
+<p class="mb-4">William F. Sharpe developed the ratio in his 1966 paper "Mutual Fund Performance" (Journal of Business), winning the Nobel Prize in Economics in 1990. Frank Sortino developed the downside-focused variant in the 1980s, addressing Sharpe's inability to distinguish upside from downside volatility.</p>
+
+<h3 id="related-metrics">Related Metrics</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Metric</td><td class="px-4 py-2 border-b border-[#2a2e39]">Relationship</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Modern Portfolio Theory</td><td class="px-4 py-2 border-b border-[#2a2e39]">Foundation — Risk-return optimization</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">CAPM</td><td class="px-4 py-2 border-b border-[#2a2e39]">Theoretical — Expected returns based on beta</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Efficient Frontier</td><td class="px-4 py-2 border-b border-[#2a2e39]">Visual — Where Sharpe is maximized</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Value at Risk</td><td class="px-4 py-2 border-b border-[#2a2e39]">Complements — Tail risk measure</td></tr>
+</table></div>
+
+<h3 id="recommended-readings">Recommended Readings</h3>
+
+<p class="mb-4">1. *Investments* — Bodie, Kane, Marcus (Chapter on Performance Evaluation)</p>
+<p class="mb-4">2. *Active Portfolio Management* — Grinold & Kahn</p>
+<p class="mb-4">3. *The Statistics of Sharpe Ratios* — Andrew Lo (2002)</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h3 id="55-related-indicators-comparison">5.5 Related Indicators Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sharpe</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sortino</td><td class="px-4 py-2 border-b border-[#2a2e39]">Calmar</td><td class="px-4 py-2 border-b border-[#2a2e39]">Information</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Risk Measure</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility</td><td class="px-4 py-2 border-b border-[#2a2e39]">Downside Dev</td><td class="px-4 py-2 border-b border-[#2a2e39]">Max Drawdown</td><td class="px-4 py-2 border-b border-[#2a2e39]">Tracking Error</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Numerator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Excess Return</td><td class="px-4 py-2 border-b border-[#2a2e39]">Excess Return</td><td class="px-4 py-2 border-b border-[#2a2e39]">CAGR</td><td class="px-4 py-2 border-b border-[#2a2e39]">Active Return</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Best For</td><td class="px-4 py-2 border-b border-[#2a2e39]">General use</td><td class="px-4 py-2 border-b border-[#2a2e39]">Asymmetric returns</td><td class="px-4 py-2 border-b border-[#2a2e39]">Hedge funds</td><td class="px-4 py-2 border-b border-[#2a2e39]">Active managers</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Weakness</td><td class="px-4 py-2 border-b border-[#2a2e39]">Ignores tails</td><td class="px-4 py-2 border-b border-[#2a2e39]">Complex to calc</td><td class="px-4 py-2 border-b border-[#2a2e39]">Backward looking</td><td class="px-4 py-2 border-b border-[#2a2e39]">Benchmark dependent</td></tr>
+</table></div>
+
+<p class="mb-4">When to Use Which:</p>
+<p class="mb-4">- Sharpe — General strategy/fund comparison</p>
+<p class="mb-4">- Sortino — When downside protection matters</p>
+<p class="mb-4">- Calmar — For drawdown-sensitive investors</p>
+<p class="mb-4">- Information — Evaluating active fund managers vs. benchmark</p>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h2 id="advanced-signal-reference">Advanced Signal Reference</h2>
+
+<h3 id="threshold-matrix">Threshold Matrix</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Metric</td><td class="px-4 py-2 border-b border-[#2a2e39]">Poor</td><td class="px-4 py-2 border-b border-[#2a2e39]">Acceptable</td><td class="px-4 py-2 border-b border-[#2a2e39]">Good</td><td class="px-4 py-2 border-b border-[#2a2e39]">Excellent</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sharpe Ratio</td><td class="px-4 py-2 border-b border-[#2a2e39]">< 0.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">0.5-1.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">1.0-1.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">> 1.5</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sortino Ratio</td><td class="px-4 py-2 border-b border-[#2a2e39]">< 0.7</td><td class="px-4 py-2 border-b border-[#2a2e39]">0.7-1.2</td><td class="px-4 py-2 border-b border-[#2a2e39]">1.2-2.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">> 2.0</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Calmar Ratio</td><td class="px-4 py-2 border-b border-[#2a2e39]">< 0.3</td><td class="px-4 py-2 border-b border-[#2a2e39]">0.3-0.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">0.5-1.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">> 1.0</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Information Ratio</td><td class="px-4 py-2 border-b border-[#2a2e39]">< 0.2</td><td class="px-4 py-2 border-b border-[#2a2e39]">0.2-0.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">0.5-0.7</td><td class="px-4 py-2 border-b border-[#2a2e39]">> 0.7</td></tr>
+</table></div>
+
+<h3 id="calculation-patterns">Calculation Patterns</h3>
+
+<h4 id="sharpe-ratio-calculation">Sharpe Ratio Calculation</h4>
+<p class="mb-4">The Sharpe Ratio is the gold standard for risk-adjusted performance, measuring excess return per unit of total volatility. Higher values indicate better risk-adjusted performance—a Sharpe above 1.0 is considered good, while sustained values above 2.0 are exceptional and rare. The annualization factor (√252) converts daily values to yearly equivalents for standardized comparison.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def calculate_sharpe(returns, risk_free_rate=0.02, periods_per_year=252):
+&nbsp;&nbsp;&nbsp;&nbsp;excess_returns = returns - (risk_free_rate / periods_per_year)
+&nbsp;&nbsp;&nbsp;&nbsp;mean_excess = excess_returns.mean()
+&nbsp;&nbsp;&nbsp;&nbsp;std_dev = excess_returns.std()
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;sharpe = (mean_excess / std_dev) * np.sqrt(periods_per_year)
+&nbsp;&nbsp;&nbsp;&nbsp;return sharpe
+</code></pre>
+
+<h4 id="sortino-ratio-calculation">Sortino Ratio Calculation</h4>
+<p class="mb-4">The Sortino Ratio improves upon Sharpe by penalizing only downside volatility rather than all volatility, making it superior for asymmetric return distributions. Upside volatility (profits) is not considered risk, so strategies with occasional large gains aren't penalized. A Sortino above 1.5 indicates excellent downside risk management, and this metric is preferred for options-selling and trend-following strategies.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def calculate_sortino(returns, risk_free_rate=0.02, periods_per_year=252):
+&nbsp;&nbsp;&nbsp;&nbsp;excess_returns = returns - (risk_free_rate / periods_per_year)
+&nbsp;&nbsp;&nbsp;&nbsp;mean_excess = excess_returns.mean()
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;downside_returns = excess_returns[excess_returns &lt; 0]
+&nbsp;&nbsp;&nbsp;&nbsp;downside_std = np.sqrt((downside_returns ** 2).mean())
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;sortino = (mean_excess / downside_std) * np.sqrt(periods_per_year)
+&nbsp;&nbsp;&nbsp;&nbsp;return sortino
+</code></pre>
+
+<h4 id="rolling-sharpe-analysis">Rolling Sharpe Analysis</h4>
+<p class="mb-4">Rolling Sharpe analysis tracks how risk-adjusted performance evolves over time, revealing strategy consistency and potential decay. A declining trend indicates the strategy may be getting crowded or arbitraged away, while high volatility suggests regime-dependence. Stable high rolling Sharpe identifies robust strategies worthy of continued allocation.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def rolling_sharpe(returns, window=252, risk_free_rate=0.02):
+&nbsp;&nbsp;&nbsp;&nbsp;sharpe_series = []
+&nbsp;&nbsp;&nbsp;&nbsp;for i in range(window, len(returns)):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window_returns = returns[i-window:i]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sharpe = calculate_sharpe(window_returns, risk_free_rate)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sharpe_series.append(sharpe)
+&nbsp;&nbsp;&nbsp;&nbsp;return sharpe_series
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<h4 id="high-efficiency-portfolio-filter">High Efficiency Portfolio Filter</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Sharpe_Ratio_3yr &gt; 1.0
+AND Sortino_Ratio_3yr &gt; 1.5
+AND Max_Drawdown_3yr &lt; 15%
+</code></pre>
+
+<h4 id="improving-strategy-filter">Improving Strategy Filter</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Sharpe_Rolling_6mo &gt; Sharpe_Rolling_12mo
+AND Sharpe_Rolling_12mo &gt; 0.8
+</code></pre>
+
+<h4 id="risk-adjusted-momentum">Risk-Adjusted Momentum</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FOR each strategy:
+&nbsp;&nbsp;Score = Sharpe × (1 - Correlation_to_SPY)
+&nbsp;&nbsp;RANK by Score descending
+&nbsp;&nbsp;SELECT top 3
+</code></pre>
+
+<h3 id="combination-strategies">Combination Strategies</h3>
+
+<h4 id="multi-metric-strategy-selection">Multi-Metric Strategy Selection</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SCORE = (Sharpe × 0.4) + (Sortino × 0.3) + (Calmar × 0.3)
+
+THRESHOLDS:
+&nbsp;&nbsp;SCORE &gt; 1.5 → Full allocation
+&nbsp;&nbsp;SCORE 1.0-1.5 → 50% allocation
+&nbsp;&nbsp;SCORE &lt; 1.0 → No allocation
+</code></pre>
+
+<h4 id="drawdown-aware-allocation">Drawdown-Aware Allocation</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FOR each strategy:
+&nbsp;&nbsp;IF Max_Drawdown &lt; Tolerance AND Sharpe &gt; 1.0:
+&nbsp;&nbsp;&nbsp;&nbsp;Weight = Sharpe / Portfolio_Sharpe_Sum
+&nbsp;&nbsp;&nbsp;&nbsp;APPLY 25% maximum constraint
+</code></pre>
+
+
+
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#sharpe-ratio-formula" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Sharpe Ratio Formula</a>
+<a href="#related-metrics" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Related Metrics</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#sharpe-ratio-interpretation" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Sharpe Ratio Interpretation</a>
+<a href="#standard-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Standard Parameters</a>
+<a href="#when-to-use-each-metric" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">When to Use Each Metric</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#best-conditions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Best Conditions</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#asset-class-considerations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Asset Class Considerations</a>
+<a href="#5-entry-signals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Entry Signals</a>
+<a href="#allocation-decision-framework" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Allocation Decision Framework</a>
+<a href="#6-filter-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Filter Usage</a>
+<a href="#filter-rules" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Filter Rules</a>
+<a href="#recommended-pairings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Pairings</a>
+<a href="#example-evaluation" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Example Evaluation</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#measurement-pitfalls" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Measurement Pitfalls</a>
+<a href="#common-errors" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common Errors</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#the-underwater-chart" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The Underwater Chart</a>
+<a href="#rolling-sharpe-analysis" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Rolling Sharpe Analysis</a>
+<a href="#sharpe-ratio-decay" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Sharpe Ratio Decay</a>
+<a href="#sortino-preference-for-asymmetric-returns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Sortino Preference for Asymmetric Returns</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#academic-evidence" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Academic Evidence</a>
+<a href="#why-it-works" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why It Works</a>
+<a href="#statistical-significance" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Statistical Significance</a>
+<a href="#3-actionable-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Strategy</a>
+<a href="#strategy-name:-"risk-budget-allocation"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Strategy Name: "Risk Budget Allocation"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#failure-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Failure Patterns</a>
+<a href="#psychological-traps" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Psychological Traps</a>
+<a href="#common-misinterpretations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common Misinterpretations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#related-metrics" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Related Metrics</a>
+<a href="#recommended-readings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Readings</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Matrix</a>
+<a href="#calculation-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Calculation Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "PortfolioMetrics",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 14;
+                const result = PortfolioMetrics.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/PortfolioMetrics.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[{"id": "period", "label": "Period (14)", "type": "number", "value": 14, "min": 2, "max": 100}]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": true, "plots": {"main": {"label": "PortfolioMetrics", "color": "#4f46e5", "type": "line"}}}
+    </script>
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code - loaded externally before this block
+
+        // 2. Configuration (XSS-safe via script type="application/json")
+        try {
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 14;
+                const result = PortfolioMetrics.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+    </script>
+
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
+
+</body>
+</html>

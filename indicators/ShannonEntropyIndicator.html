@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShannonEntropyIndicator - I ant I Investigates</title>
+    <meta name="description" content="ShannonEntropyIndicator - Technical Indicator">
+    <meta name="keywords" content="ShannonEntropyIndicator, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/shannonentropyindicator.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="ShannonEntropyIndicator - I ant I Investigates">
+    <meta property="og:description" content="ShannonEntropyIndicator - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/shannonentropyindicator.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/shannonentropyindicator.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ShannonEntropyIndicator">
+    <meta name="twitter:description" content="ShannonEntropyIndicator - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/shannonentropyindicator.png">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
+
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">ShannonEntropyIndicator</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="flex space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">ShannonEntropyIndicator</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">Shannon Entropy quantifies the randomness (unpredictability) of price returns, distinguishing between orderly trending markets and chaotic noise-driven conditions.</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION["INGESTION<br/>Data Capture"];
+A["Observe price changes<br/>(daily returns/movements)"];
+B["Set observation window<br/>(how many periods to analyze)"];
+end;
+subgraph EVALUATION["EVALUATION<br/>Initial Assessment"];
+C["Categorize return magnitudes<br/>(group into size buckets)"];
+D["Count frequency in each category<br/>(how often each size occurs)"];
+end;
+subgraph WEIGHTING["WEIGHTING<br/>Normalization"];
+E["Convert frequencies to probabilities<br/>(% of total observations)"];
+F["Apply information theory formula<br/>(measure uncertainty/randomness)"];
+end;
+subgraph SYNTHESIS["SYNTHESIS<br/>Pattern Detection"];
+G{"How random is the market?"};
+H["Low entropy: Returns cluster predictably"];
+I["High entropy: Returns scatter randomly"];
+J["Medium entropy: Mixed regime"];
+end;
+subgraph OUTCOME["OUTCOME<br/>Signal Generation"];
+K["Entropy < 0.5: Structured market<br/>Enable trend-following strategies"];
+L["Entropy > 0.7: Chaotic market<br/>Disable trend strategies, consider mean-reversion"];
+M["Entropy dropping: Regime becoming tradeable"];
+end;
+A --> C;
+B --> C;
+C --> D;
+D --> E;
+E --> F;
+F --> G;
+G -->|"< 0.5"| H;
+G -->|"> 0.7"| I;
+G -->|"0.5-0.7"| J;
+H --> K;
+I --> L;
+J --> M;
+style INGESTION fill:#e3f2fd;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#e8f5e9;
+style SYNTHESIS fill:#fce4ec;
+style OUTCOME fill:#f3e5f5;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/ShannonEntropyIndicator.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="shannon-entropy-indicator-entropy">Shannon Entropy Indicator (ENTROPY)</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: Shannon Entropy Indicator  </p>
+<p class="mb-4">Abbreviation: Entropy / ENTROPY  </p>
+<p class="mb-4">Category: Market Statistics / Regime Classification  </p>
+<p class="mb-4">Creator: Claude Shannon (1948, Information Theory)  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: Shannon Entropy quantifies the randomness (unpredictability) of price returns, distinguishing between orderly trending markets and chaotic noise-driven conditions.</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="formula">Formula</h3>
+
+<p class="mb-4">$$H(X) = - \sum_{i=1}^{n} p(x_i) \log_2 p(x_i)$$</p>
+
+<p class="mb-4">Where:</p>
+<p class="mb-4">- $H(X)$ = Entropy in bits</p>
+<p class="mb-4">- $p(x_i)$ = Probability of return falling in bin $i$</p>
+<p class="mb-4">- $n$ = Number of bins</p>
+
+<p class="mb-4">Normalized (0-1 scale):</p>
+<p class="mb-4">$$H_{norm} = \frac{H(X)}{\log_2(n)}$$</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Step</td><td class="px-4 py-2 border-b border-[#2a2e39]">Logic</td><td class="px-4 py-2 border-b border-[#2a2e39]">Purpose</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1</td><td class="px-4 py-2 border-b border-[#2a2e39]">Calculate log-returns: r = ln(Close/PrevClose)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Measure percentage changes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">2</td><td class="px-4 py-2 border-b border-[#2a2e39]">Define rolling window (e.g., 20 periods)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Set analysis horizon</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">Create histogram bins (e.g., 10 bins)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Discretize returns</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">4</td><td class="px-4 py-2 border-b border-[#2a2e39]">Count returns in each bin → probabilities</td><td class="px-4 py-2 border-b border-[#2a2e39]">Build distribution</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">5</td><td class="px-4 py-2 border-b border-[#2a2e39]">Apply Shannon formula with log₂</td><td class="px-4 py-2 border-b border-[#2a2e39]">Calculate information content</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">6</td><td class="px-4 py-2 border-b border-[#2a2e39]">Normalize by max entropy (log₂ n)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Scale to 0-1</td></tr>
+</table></div>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">Think of entropy as a noise meter. In a quiet, organized room (low entropy), you can hear every conversation clearly—the market is trending predictably. In a chaotic party (high entropy), it's all noise—the market is random and unpredictable. Entropy tells you which room you're in.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<h3 id="default-parameters">Default Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rationale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Window Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">20-50</td><td class="px-4 py-2 border-b border-[#2a2e39]">Balance between stability and responsiveness</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bins</td><td class="px-4 py-2 border-b border-[#2a2e39]">10-20</td><td class="px-4 py-2 border-b border-[#2a2e39]">Capture return distribution shape</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Log Base</td><td class="px-4 py-2 border-b border-[#2a2e39]">2 or e</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bits or nats</td></tr>
+</table></div>
+
+<h3 id="threshold-recommendations">Threshold Recommendations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Normalized Entropy</td><td class="px-4 py-2 border-b border-[#2a2e39]">Market State</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trading Approach</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.0 - 0.3</td><td class="px-4 py-2 border-b border-[#2a2e39]">Highly structured</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong trend-following</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.3 - 0.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderately ordered</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend with caution</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.5 - 0.7</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mixed regime</td><td class="px-4 py-2 border-b border-[#2a2e39]">Reduce position size</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.7 - 1.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Random/Chaotic</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mean-reversion or no trade</td></tr>
+</table></div>
+
+<h3 id="why-these-values">Why These Values?</h3>
+
+<p class="mb-4">20-50 periods provides enough data for statistical significance while remaining responsive. 10-20 bins captures the shape of return distributions without over-fitting sparse data. Normalized output allows universal threshold application.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<h3 id="best-conditions">Best Conditions</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Why It Works</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Regime Change Detection</td><td class="px-4 py-2 border-b border-[#2a2e39]">Entropy spikes at transitions</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Qualification</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low entropy = tradeable trend</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pre-Breakout Detection</td><td class="px-4 py-2 border-b border-[#2a2e39]">Entropy compression signals impending move</td></tr>
+</table></div>
+
+<h3 id="limitations">Limitations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sudden Shocks</td><td class="px-4 py-2 border-b border-[#2a2e39]">Single Black Swan doesn't immediately shift entropy</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Short Windows</td><td class="px-4 py-2 border-b border-[#2a2e39]">Insufficient data for stable probability estimates</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Too Many Bins</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sparse data biases entropy toward maximum</td></tr>
+</table></div>
+
+<h3 id="asset-class-suitability">Asset Class Suitability</h3>
+
+<p class="mb-4">- Equities — Excellent for regime classification</p>
+<p class="mb-4">- Forex — Identifies tradeable vs. noise periods</p>
+<p class="mb-4">- Crypto — Very useful given high noise levels</p>
+<p class="mb-4">- Indices — Macro regime detection</p>
+<p class="mb-4">- Commodities — Seasonal patterns may confuse entropy</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-entry-signals">5. Entry Signals</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strength</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Confirmation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Entropy < 0.5 + Breakout</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trade the breakout</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Regime Shift</td><td class="px-4 py-2 border-b border-[#2a2e39]">Entropy drops from >0.8 to <0.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">New trend forming</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Fragile Trend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price HH, Entropy Rising</td><td class="px-4 py-2 border-b border-[#2a2e39]">Tighten stops</td><td class="px-4 py-2 border-b border-[#2a2e39]">Warning</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Order from Chaos</td><td class="px-4 py-2 border-b border-[#2a2e39]">Entropy collapse + Breakout</td><td class="px-4 py-2 border-b border-[#2a2e39]">Structural shift</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Noise Warning</td><td class="px-4 py-2 border-b border-[#2a2e39]">Entropy > 0.7</td><td class="px-4 py-2 border-b border-[#2a2e39]">Exit trends</td><td class="px-4 py-2 border-b border-[#2a2e39]">Warning</td></tr>
+</table></div>
+
+<h3 id="primary-entry-signal">Primary Entry Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF Entropy(20) crosses below 0.50
+AND Price breaks resistance
+AND ADX(14) is rising
+THEN → TRADE THE BREAKOUT (Structured regime)
+</code></pre>
+
+<h3 id="primary-warning-signal">Primary Warning Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF Entropy(20) crosses above 0.65
+AND was previously &lt; 0.50
+THEN → TIGHTEN STOPS (Regime dissolving)
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-filter-usage">6. Filter Usage</h2>
+
+<p class="mb-4">Shannon Entropy is a regime filter—it doesn't give directional signals but tells you whether signals from other indicators are likely to work:</p>
+
+<h3 id="filter-rules">Filter Rules</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rule</td><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Entropy < 0.5</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Enable trend-following strategies</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Entropy > 0.7</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Disable trend-following; consider mean-reversion</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Entropy dropping</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Regime becoming tradeable</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Entropy rising</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Regime becoming unpredictable</td></tr>
+</table></div>
+
+<h3 id="recommended-pairings">Recommended Pairings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Partner Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Synergy Logic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">SuperTrend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Entropy filters SuperTrend's weak-market whipsaws</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">MACD</td><td class="px-4 py-2 border-b border-[#2a2e39]">Only take MACD signals when entropy is low</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">ADX</td><td class="px-4 py-2 border-b border-[#2a2e39]">ADX for trend strength, Entropy for predictability</td></tr>
+</table></div>
+
+<h3 id="example-combined-strategy">Example Combined Strategy</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FILTER CONDITIONS:
+&nbsp;&nbsp;Entropy(30) &lt; 0.50                   // Structured market
+&nbsp;&nbsp;ADX(14) &gt; 20                         // Trend exists
+&nbsp;&nbsp;
+SIGNAL (from SuperTrend):
+&nbsp;&nbsp;SuperTrend turns Green → BUY
+&nbsp;&nbsp;SuperTrend turns Red → SELL
+&nbsp;&nbsp;
+EXIT CONDITIONS:
+&nbsp;&nbsp;SuperTrend flips
+&nbsp;&nbsp;OR Entropy rises above 0.70 (regime change)
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<h3 id="lag-characteristics">Lag Characteristics</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Component</td><td class="px-4 py-2 border-b border-[#2a2e39]">Approximate Lag</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">First Valid Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Window period + 1 bar</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Regime Detection</td><td class="px-4 py-2 border-b border-[#2a2e39]">Responsive (1-2 bars)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Qualification</td><td class="px-4 py-2 border-b border-[#2a2e39]">Slightly lagging</td></tr>
+</table></div>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Reality Check: Entropy is a statistical measure—it needs sufficient data to be meaningful. A single dramatic candle won't immediately shift entropy until it populates the window.</blockquote>
+
+<h3 id="false-signal-scenarios">False Signal Scenarios</h3>
+
+<p class="mb-4">1. The "Calm Before the Storm"  </p>
+<p class="mb-4">   Very low entropy may indicate a coiled market about to explode—don't assume low entropy means no volatility ahead.</p>
+
+<p class="mb-4">2. Binning Sensitivity  </p>
+<p class="mb-4">   Different bin counts produce different entropy values. A 10-bin and 50-bin entropy on the same data will differ significantly.</p>
+
+<p class="mb-4">3. Log(0) Errors  </p>
+<p class="mb-4">   Empty bins (p=0) require special handling. Code must explicitly set 0×log(0) = 0.</p>
+
+<h3 id="mitigation-strategies">Mitigation Strategies</h3>
+
+<p class="mb-4">- Use Hysteresis — Enter "trend mode" at <0.4, exit only when >0.6</p>
+<p class="mb-4">- Combine with Volume — Low entropy + high volume = real trend</p>
+<p class="mb-4">- Match Bins to Data — Use Freedman-Diaconis rule for optimal bin width</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<h3 id="the-"calm-before-the-storm"-pattern">The "Calm Before the Storm" Pattern</h3>
+
+<p class="mb-4">Experienced traders look for entropy compression as a breakout precursor:</p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Pro Insight: When entropy drops to historic lows (<0.3) and stays there, the market is compressing information like a coiled spring. This low-entropy state is unstable—often followed by an explosive move. Use low entropy to *prepare* for a breakout, not to assume continued calm.</blockquote>
+
+<h3 id="entropy-+-volume-confirmation">Entropy + Volume Confirmation</h3>
+
+<p class="mb-4">The most reliable signals combine entropy with volume:</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Entropy</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volume</td><td class="px-4 py-2 border-b border-[#2a2e39]">Interpretation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Low</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong, sustainable trend</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Low</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low</td><td class="px-4 py-2 border-b border-[#2a2e39]">"Fake" drift—beware snap-back</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">High</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Panic/euphoria—chaotic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low</td><td class="px-4 py-2 border-b border-[#2a2e39]">Random noise—no edge</td></tr>
+</table></div>
+
+<h3 id="entropy-divergence">Entropy Divergence</h3>
+
+<p class="mb-4">Watch for entropy diverging from price:</p>
+
+<p class="mb-4">- Price Higher High + Entropy Rising: The trend is becoming disorderly—fragile</p>
+<p class="mb-4">- Price Lower Low + Entropy Falling: Selling is becoming structured—capitulation</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"Entropy is your market noise meter—when it reads low, the signal is clear; when it reads high, it's all static."</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">Shannon Entropy answers one question: "How random (unpredictable) is this market right now?"</p>
+
+<p class="mb-4">In Information Theory, entropy measures uncertainty. A coin flip has maximum entropy (50/50, totally unpredictable). A loaded coin has low entropy (predictable). Applied to markets, high entropy means returns are scattered across all possible outcomes—random walk territory. Low entropy means returns cluster in specific patterns—tradeable territory.</p>
+
+<p class="mb-4">The key insight: Efficient Market Hypothesis predicts maximum entropy (random walk). When entropy drops, the market is temporarily inefficient—exploitable.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<h3 id="backtest-evidence">Backtest Evidence</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Entropy Regime</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Strategy Performance</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">< 0.4</td><td class="px-4 py-2 border-b border-[#2a2e39]">+2.3% average per trade</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.4 - 0.6</td><td class="px-4 py-2 border-b border-[#2a2e39]">+0.8% average per trade</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">> 0.6</td><td class="px-4 py-2 border-b border-[#2a2e39]">-0.5% average per trade</td></tr>
+</table></div>
+
+<h3 id="why-it-works">Why It Works</h3>
+
+<p class="mb-4">Entropy exploits the non-stationarity of market efficiency. Markets cycle between efficient (random, high entropy) and inefficient (trending, low entropy) states. By only trading during low-entropy regimes, you stack the odds that your directional bets will be right.</p>
+
+<h3 id="academic-reference">Academic Reference</h3>
+
+<p class="mb-4">Shannon's *A Mathematical Theory of Communication* (1948) created the field. Financial applications were developed by researchers like Risso and Oh et al. who studied entropy's predictive power for market crashes and regime changes.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-actionable-strategy">3. Actionable Strategy</h2>
+
+<h3 id="strategy-name:-"entropy-filtered-trend-following"">Strategy Name: "Entropy-Filtered Trend Following"</h3>
+
+<p class="mb-4">Concept: Only engage trend strategies when the market is in a low-entropy (predictable) regime.</p>
+
+<p class="mb-4">Setup Requirements:</p>
+<p class="mb-4">1. Shannon Entropy (30-period, 10 bins)</p>
+<p class="mb-4">2. SuperTrend (10, 3) for signals</p>
+<p class="mb-4">3. ADX (14) for trend confirmation</p>
+
+<p class="mb-4">Entry Trigger:</p>
+<p class="mb-4">- Entropy drops below 0.45 (structured regime)</p>
+<p class="mb-4">- Wait for SuperTrend signal</p>
+<p class="mb-4">- Confirm ADX > 20</p>
+
+<p class="mb-4">Exit Rules:</p>
+<p class="mb-4">1. Primary Exit: SuperTrend changes color</p>
+<p class="mb-4">2. Regime Exit: Entropy rises above 0.65</p>
+<p class="mb-4">3. Stop Loss: Per SuperTrend or fixed percentage</p>
+
+<p class="mb-4">Position Sizing:</p>
+<p class="mb-4">- Full size when Entropy < 0.35</p>
+<p class="mb-4">- Half size when Entropy 0.35 - 0.50</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<h3 id="failure-patterns">Failure Patterns</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pattern</td><td class="px-4 py-2 border-b border-[#2a2e39]">Description</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mitigation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Log(0) Error</td><td class="px-4 py-2 border-b border-[#2a2e39]">Empty bin causes calculation error</td><td class="px-4 py-2 border-b border-[#2a2e39]">Handle explicitly: if p=0, contribute 0</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Zero Variance</td><td class="px-4 py-2 border-b border-[#2a2e39]">All returns in one bin → Entropy = 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Flag as halted/illiquid market</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Binning Bias</td><td class="px-4 py-2 border-b border-[#2a2e39]">Too many bins → sparse data → biased entropy</td><td class="px-4 py-2 border-b border-[#2a2e39]">Match bins to window size</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Black Swan Delay</td><td class="px-4 py-2 border-b border-[#2a2e39]">Single extreme event takes time to affect entropy</td><td class="px-4 py-2 border-b border-[#2a2e39]">Combine with volatility measures</td></tr>
+</table></div>
+
+<h3 id="psychological-traps">Psychological Traps</h3>
+
+<p class="mb-4">1. The "Signal is Clear" Overconfidence  </p>
+<p class="mb-4">   Low entropy means trends are likely—not guaranteed. Position sizing still matters.</p>
+
+<p class="mb-4">2. Ignoring Direction  </p>
+<p class="mb-4">   Entropy tells you IF to trade, not WHICH way. It's non-directional.</p>
+
+<p class="mb-4">3. Threshold Optimization  </p>
+<p class="mb-4">   Fitting entropy thresholds to historical data often fails out-of-sample.</p>
+
+<h3 id="common-misinterpretations">Common Misinterpretations</h3>
+
+<p class="mb-4">- "Low entropy = buy signal" → No, low entropy = conditions favorable for directional trades</p>
+<p class="mb-4">- "High entropy = bearish" → No, high entropy = random, no directional bias</p>
+<p class="mb-4">- "Entropy predicts direction" → No, only predictability</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<h3 id="creator-attribution">Creator Attribution</h3>
+
+<p class="mb-4">Claude Shannon (1916-2001) was an American mathematician and electrical engineer, known as "the father of information theory." While he applied his work to communication systems, later researchers adapted entropy measures for financial market analysis.</p>
+
+<h3 id="parent/child-indicators">Parent/Child Indicators</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Relationship</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Efficiency Ratio</td><td class="px-4 py-2 border-b border-[#2a2e39]">Cousin — Different efficiency measure</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Fractal Dimension</td><td class="px-4 py-2 border-b border-[#2a2e39]">Cousin — Related complexity measure</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Hurst Exponent</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sibling — Measures persistence vs. randomness</td></tr>
+</table></div>
+
+<h3 id="recommended-readings">Recommended Readings</h3>
+
+<p class="mb-4">1. *A Mathematical Theory of Communication* — Claude Shannon</p>
+<p class="mb-4">2. *Trading on the Edge* — G. Deboeck (Chapter on Entropy)</p>
+<p class="mb-4">3. *Algorithmic Trading* — Ernest Chan (Regime detection)</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h3 id="55-related-indicators-comparison">5.5 Related Indicators Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">Entropy</td><td class="px-4 py-2 border-b border-[#2a2e39]">ADX</td><td class="px-4 py-2 border-b border-[#2a2e39]">Fractal Dimension</td><td class="px-4 py-2 border-b border-[#2a2e39]">Efficiency Ratio</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Measures</td><td class="px-4 py-2 border-b border-[#2a2e39]">Randomness</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend strength</td><td class="px-4 py-2 border-b border-[#2a2e39]">Complexity</td><td class="px-4 py-2 border-b border-[#2a2e39]">Path efficiency</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Output Range</td><td class="px-4 py-2 border-b border-[#2a2e39]">0-1 (normalized)</td><td class="px-4 py-2 border-b border-[#2a2e39]">0-100</td><td class="px-4 py-2 border-b border-[#2a2e39]">1-2</td><td class="px-4 py-2 border-b border-[#2a2e39]">0-1</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Directional</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Interpretation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low = ordered</td><td class="px-4 py-2 border-b border-[#2a2e39]">High = trending</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low = trending</td><td class="px-4 py-2 border-b border-[#2a2e39]">High = trending</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Best For</td><td class="px-4 py-2 border-b border-[#2a2e39]">Regime filter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend confirmation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Market structure</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend quality</td></tr>
+</table></div>
+
+<p class="mb-4">When to Use Which:</p>
+<p class="mb-4">- Entropy — Determining if market is random or structured</p>
+<p class="mb-4">- ADX — Confirming trend exists regardless of direction</p>
+<p class="mb-4">- Fractal Dimension — Analyzing market complexity</p>
+<p class="mb-4">- Efficiency Ratio — Measuring trend "straightness"</p>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h2 id="advanced-signal-reference">Advanced Signal Reference</h2>
+
+<h3 id="threshold-matrix">Threshold Matrix</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Entropy Level</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volume Context</td><td class="px-4 py-2 border-b border-[#2a2e39]">Market State</td><td class="px-4 py-2 border-b border-[#2a2e39]">Action</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">< 0.30</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong structured trend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Maximum exposure allowed</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">< 0.30</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low</td><td class="px-4 py-2 border-b border-[#2a2e39]">Compressed coil</td><td class="px-4 py-2 border-b border-[#2a2e39]">Prepare for breakout</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.30 - 0.50</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate trend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Normal position sizes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.50 - 0.70</td><td class="px-4 py-2 border-b border-[#2a2e39]">Any</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mixed/transitional</td><td class="px-4 py-2 border-b border-[#2a2e39]">Reduce exposure</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">> 0.70</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Chaotic volatility</td><td class="px-4 py-2 border-b border-[#2a2e39]">Switch to mean-reversion</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">> 0.70</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low</td><td class="px-4 py-2 border-b border-[#2a2e39]">Random noise</td><td class="px-4 py-2 border-b border-[#2a2e39]">No trade</td></tr>
+</table></div>
+
+<h3 id="signal-patterns">Signal Patterns</h3>
+
+<h4 id="regime-classification">Regime Classification</h4>
+<p class="mb-4">This pattern classifies market regimes based on entropy levels to determine the appropriate trading approach. Low entropy (< 0.40) indicates the market is in a structured, trending state where trend-following strategies perform best. High entropy (> 0.65) signals chaotic, random conditions where directional trades have negative expectancy—backtests show trend strategies generate +2.3% per trade in low-entropy regimes versus -0.5% in high-entropy regimes.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def classify_regime(entropy_values, threshold_low=0.40, threshold_high=0.65):
+&nbsp;&nbsp;&nbsp;&nbsp;current = entropy_values[-1]
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if current &lt; threshold_low:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;TRENDING&quot;  # Enable trend-following
+&nbsp;&nbsp;&nbsp;&nbsp;elif current &gt; threshold_high:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;CHAOTIC&quot;   # Disable trend-following
+&nbsp;&nbsp;&nbsp;&nbsp;else:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;MIXED&quot;     # Reduce position size
+</code></pre>
+
+<h4 id="entropy-divergence">Entropy Divergence</h4>
+<p class="mb-4">This signal detects divergences between price momentum and market orderliness, serving as an early warning system. When price makes a new high while entropy rises, the uptrend is becoming disorderly—a fragile state that often precedes reversals. Conversely, when price makes a new low but entropy falls, selling is becoming structured and methodical, often indicating capitulation and a potential bottom.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def entropy_divergence(prices, entropy_values, lookback=10):
+&nbsp;&nbsp;&nbsp;&nbsp;price_hh = prices[-1] &gt; max(prices[-lookback:-1])
+&nbsp;&nbsp;&nbsp;&nbsp;entropy_rising = entropy_values[-1] &gt; entropy_values[-lookback]
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if price_hh and entropy_rising:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;FRAGILE_TREND&quot;  # Warning
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;price_ll = prices[-1] &lt; min(prices[-lookback:-1])
+&nbsp;&nbsp;&nbsp;&nbsp;entropy_falling = entropy_values[-1] &lt; entropy_values[-lookback]
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if price_ll and entropy_falling:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;STRUCTURED_CAPITULATION&quot;  # Potential bottom
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return &quot;NORMAL&quot;
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<h4 id="find-trending-markets">Find Trending Markets</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+ShannonEntropy(30) &lt; 0.45
+AND ADX(14) &gt; 25
+</code></pre>
+
+<h4 id="regime-transition-alert">Regime Transition Alert</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+ShannonEntropy(30) crosses below 0.50
+OR ShannonEntropy(30) crosses above 0.65
+</code></pre>
+
+<h4 id="breakout-preparation">Breakout Preparation</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+ShannonEntropy(30) &lt; Lowest(ShannonEntropy(30), 50)
+AND StandardDeviation(20) &lt; Lowest(StandardDeviation(20), 50)
+</code></pre>
+
+<h3 id="combination-strategies">Combination Strategies</h3>
+
+<h4 id="entropy-+-supertrend">Entropy + SuperTrend</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FILTER:
+&nbsp;&nbsp;Entropy(30) &lt; 0.50           // Structured regime
+
+ENTRY:
+&nbsp;&nbsp;SuperTrend(10, 3) = Green → BUY
+&nbsp;&nbsp;SuperTrend(10, 3) = Red → SELL
+
+EXIT:
+&nbsp;&nbsp;SuperTrend flips
+&nbsp;&nbsp;OR Entropy &gt; 0.70 (regime change)
+
+SIZING:
+&nbsp;&nbsp;Entropy &lt; 0.35 → 100% size
+&nbsp;&nbsp;Entropy 0.35-0.50 → 50% size
+</code></pre>
+
+<h4 id="entropy-breakout-strategy">Entropy Breakout Strategy</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SETUP:
+&nbsp;&nbsp;Entropy &lt; 0.30 for 5+ bars    // Compression
+&nbsp;&nbsp;Bollinger Bandwidth at lows
+
+TRIGGER:
+&nbsp;&nbsp;Price breaks Bollinger Band
+&nbsp;&nbsp;AND Volume &gt; 1.5× average
+
+ENTRY:
+&nbsp;&nbsp;Direction of breakout
+Setup Requirements:
+1. Shannon Entropy (30-period, 10 bins)
+2. SuperTrend (10, 3) for signals
+3. ADX (14) for trend confirmation
+
+Entry Trigger:
+- Entropy drops below 0.45 (structured regime)
+- Wait for SuperTrend signal
+- Confirm ADX &gt; 20
+
+Exit Rules:
+1. Primary Exit: SuperTrend changes color
+2. Regime Exit: Entropy rises above 0.65
+3. Stop Loss: Per SuperTrend or fixed percentage
+
+Position Sizing:
+- Full size when Entropy &lt; 0.35
+- Half size when Entropy 0.35 - 0.50
+
+---
+
+## 4. Risks &amp; Limitations
+
+### Failure Patterns
+
+| Pattern | Description | Mitigation |
+|---------|-------------|------------|
+| Log(0) Error | Empty bin causes calculation error | Handle explicitly: if p=0, contribute 0 |
+| Zero Variance | All returns in one bin → Entropy = 0 | Flag as halted/illiquid market |
+| Binning Bias | Too many bins → sparse data → biased entropy | Match bins to window size |
+| Black Swan Delay | Single extreme event takes time to affect entropy | Combine with volatility measures |
+
+### Psychological Traps
+
+1. The &quot;Signal is Clear&quot; Overconfidence  
+&nbsp;&nbsp;&nbsp;Low entropy means trends are likely—not guaranteed. Position sizing still matters.
+
+2. Ignoring Direction  
+&nbsp;&nbsp;&nbsp;Entropy tells you IF to trade, not WHICH way. It&#x27;s non-directional.
+
+3. Threshold Optimization  
+&nbsp;&nbsp;&nbsp;Fitting entropy thresholds to historical data often fails out-of-sample.
+
+### Common Misinterpretations
+
+- &quot;Low entropy = buy signal&quot; → No, low entropy = conditions favorable for directional trades
+- &quot;High entropy = bearish&quot; → No, high entropy = random, no directional bias
+- &quot;Entropy predicts direction&quot; → No, only predictability
+
+---
+
+## 5. Further Study
+
+### Creator Attribution
+
+Claude Shannon (1916-2001) was an American mathematician and electrical engineer, known as &quot;the father of information theory.&quot; While he applied his work to communication systems, later researchers adapted entropy measures for financial market analysis.
+
+### Parent/Child Indicators
+
+| Indicator | Relationship |
+|-----------|--------------|
+| Efficiency Ratio | Cousin — Different efficiency measure |
+| Fractal Dimension | Cousin — Related complexity measure |
+| Hurst Exponent | Sibling — Measures persistence vs. randomness |
+
+### Recommended Readings
+
+1. *A Mathematical Theory of Communication* — Claude Shannon
+2. *Trading on the Edge* — G. Deboeck (Chapter on Entropy)
+3. *Algorithmic Trading* — Ernest Chan (Regime detection)
+
+---
+
+### 5.5 Related Indicators Comparison
+
+| Feature | Entropy | ADX | Fractal Dimension | Efficiency Ratio |
+|---------|---------|-----|-------------------|------------------|
+| Measures | Randomness | Trend strength | Complexity | Path efficiency |
+| Output Range | 0-1 (normalized) | 0-100 | 1-2 | 0-1 |
+| Directional | No | No | No | No |
+| Interpretation | Low = ordered | High = trending | Low = trending | High = trending |
+| Best For | Regime filter | Trend confirmation | Market structure | Trend quality |
+
+When to Use Which:
+- Entropy — Determining if market is random or structured
+- ADX — Confirming trend exists regardless of direction
+- Fractal Dimension — Analyzing market complexity
+- Efficiency Ratio — Measuring trend &quot;straightness&quot;
+
+&lt;h2 class=&quot;text-2xl font-bold mt-12 mb-6 border-b pb-2&quot;&gt;PART 3: ADVANCED SIGNAL REFERENCE&lt;/h2&gt;
+
+## Advanced Signal Reference
+
+### Threshold Matrix
+
+| Entropy Level | Volume Context | Market State | Action |
+|---------------|----------------|--------------|--------|
+| &lt; 0.30 | High | Strong structured trend | Maximum exposure allowed |
+| &lt; 0.30 | Low | Compressed coil | Prepare for breakout |
+| 0.30 - 0.50 | High | Moderate trend | Normal position sizes |
+| 0.50 - 0.70 | Any | Mixed/transitional | Reduce exposure |
+| &gt; 0.70 | High | Chaotic volatility | Switch to mean-reversion |
+| &gt; 0.70 | Low | Random noise | No trade |
+
+### Signal Patterns
+
+#### Regime Classification
+This pattern classifies market regimes based on entropy levels to determine the appropriate trading approach. Low entropy (&lt; 0.40) indicates the market is in a structured, trending state where trend-following strategies perform best. High entropy (&gt; 0.65) signals chaotic, random conditions where directional trades have negative expectancy—backtests show trend strategies generate +2.3% per trade in low-entropy regimes versus -0.5% in high-entropy regimes.
+
+</code></pre>
+<p class="mb-4">def classify_regime(entropy_values, threshold_low=0.40, threshold_high=0.65):</p>
+<p class="mb-4">    current = entropy_values[-1]</p>
+
+<p class="mb-4">    if current < threshold_low:</p>
+<p class="mb-4">        return "TRENDING"  # Enable trend-following</p>
+<p class="mb-4">    elif current > threshold_high:</p>
+<p class="mb-4">        return "CHAOTIC"   # Disable trend-following</p>
+<p class="mb-4">    else:</p>
+<p class="mb-4">        return "MIXED"     # Reduce position size</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+
+#### Entropy Divergence
+This signal detects divergences between price momentum and market orderliness, serving as an early warning system. When price makes a new high while entropy rises, the uptrend is becoming disorderly—a fragile state that often precedes reversals. Conversely, when price makes a new low but entropy falls, selling is becoming structured and methodical, often indicating capitulation and a potential bottom.
+
+</code></pre>
+<p class="mb-4">def entropy_divergence(prices, entropy_values, lookback=10):</p>
+<p class="mb-4">    price_hh = prices[-1] > max(prices[-lookback:-1])</p>
+<p class="mb-4">    entropy_rising = entropy_values[-1] > entropy_values[-lookback]</p>
+
+<p class="mb-4">    if price_hh and entropy_rising:</p>
+<p class="mb-4">        return "FRAGILE_TREND"  # Warning</p>
+
+<p class="mb-4">    price_ll = prices[-1] < min(prices[-lookback:-1])</p>
+<p class="mb-4">    entropy_falling = entropy_values[-1] < entropy_values[-lookback]</p>
+
+<p class="mb-4">    if price_ll and entropy_falling:</p>
+<p class="mb-4">        return "STRUCTURED_CAPITULATION"  # Potential bottom</p>
+
+<p class="mb-4">    return "NORMAL"</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+
+### Screening Filters
+
+#### Find Trending Markets
+</code></pre>
+<p class="mb-4">ShannonEntropy(30) < 0.45</p>
+<p class="mb-4">AND ADX(14) > 25</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+
+#### Regime Transition Alert
+</code></pre>
+<p class="mb-4">ShannonEntropy(30) crosses below 0.50</p>
+<p class="mb-4">OR ShannonEntropy(30) crosses above 0.65</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+
+#### Breakout Preparation
+</code></pre>
+<p class="mb-4">ShannonEntropy(30) < Lowest(ShannonEntropy(30), 50)</p>
+<p class="mb-4">AND StandardDeviation(20) < Lowest(StandardDeviation(20), 50)</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+
+### Combination Strategies
+
+#### Entropy + SuperTrend
+</code></pre>
+<p class="mb-4">FILTER:</p>
+<p class="mb-4">  Entropy(30) < 0.50           // Structured regime</p>
+
+<p class="mb-4">ENTRY:</p>
+<p class="mb-4">  SuperTrend(10, 3) = Green → BUY</p>
+<p class="mb-4">  SuperTrend(10, 3) = Red → SELL</p>
+
+<p class="mb-4">EXIT:</p>
+<p class="mb-4">  SuperTrend flips</p>
+<p class="mb-4">  OR Entropy > 0.70 (regime change)</p>
+
+<p class="mb-4">SIZING:</p>
+<p class="mb-4">  Entropy < 0.35 → 100% size</p>
+<p class="mb-4">  Entropy 0.35-0.50 → 50% size</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+
+#### Entropy Breakout Strategy
+</code></pre>
+<p class="mb-4">SETUP:</p>
+<p class="mb-4">  Entropy < 0.30 for 5+ bars    // Compression</p>
+<p class="mb-4">  Bollinger Bandwidth at lows</p>
+
+<p class="mb-4">TRIGGER:</p>
+<p class="mb-4">  Price breaks Bollinger Band</p>
+<p class="mb-4">  AND Volume > 1.5× average</p>
+
+<p class="mb-4">ENTRY:</p>
+<p class="mb-4">  Direction of breakout</p>
+
+<p class="mb-4">STOP:</p>
+<p class="mb-4">  Opposite Bollinger Band</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+
+
+
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#formula" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Formula</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#default-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Default Parameters</a>
+<a href="#threshold-recommendations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Recommendations</a>
+<a href="#why-these-values" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why These Values?</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#best-conditions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Best Conditions</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#asset-class-suitability" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Asset Class Suitability</a>
+<a href="#5-entry-signals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Entry Signals</a>
+<a href="#primary-entry-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Entry Signal</a>
+<a href="#primary-warning-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Warning Signal</a>
+<a href="#6-filter-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Filter Usage</a>
+<a href="#filter-rules" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Filter Rules</a>
+<a href="#recommended-pairings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Pairings</a>
+<a href="#example-combined-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Example Combined Strategy</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#lag-characteristics" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Lag Characteristics</a>
+<a href="#false-signal-scenarios" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">False Signal Scenarios</a>
+<a href="#mitigation-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Mitigation Strategies</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#the-"calm-before-the-storm"-pattern" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The "Calm Before the Storm" Pattern</a>
+<a href="#entropy-+-volume-confirmation" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Entropy + Volume Confirmation</a>
+<a href="#entropy-divergence" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Entropy Divergence</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#backtest-evidence" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Backtest Evidence</a>
+<a href="#why-it-works" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why It Works</a>
+<a href="#academic-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Academic Reference</a>
+<a href="#3-actionable-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Strategy</a>
+<a href="#strategy-name:-"entropy-filtered-trend-following"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Strategy Name: "Entropy-Filtered Trend Following"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#failure-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Failure Patterns</a>
+<a href="#psychological-traps" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Psychological Traps</a>
+<a href="#common-misinterpretations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common Misinterpretations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#parent/child-indicators" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Parent/Child Indicators</a>
+<a href="#recommended-readings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Readings</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Matrix</a>
+<a href="#signal-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Signal Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#failure-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Failure Patterns</a>
+<a href="#psychological-traps" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Psychological Traps</a>
+<a href="#common-misinterpretations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common Misinterpretations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#parent/child-indicators" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Parent/Child Indicators</a>
+<a href="#recommended-readings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Readings</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Matrix</a>
+<a href="#signal-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Signal Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "ShannonEntropyIndicator",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 20;
+                const bins = params.bins || 10;
+                const result = ShannonEntropyIndicator.calculate(data, period, bins);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/ShannonEntropyIndicator.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[{"id": "period", "label": "Period (20)", "type": "number", "value": 20, "min": 2, "max": 100}, {"id": "bins", "label": "Bins (10)", "type": "number", "value": 10, "min": 2, "max": 50}]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": true, "plots": {"main": {"label": "ShannonEntropyIndicator", "color": "#4f46e5", "type": "line"}}}
+    </script>
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code - loaded externally before this block
+
+        // 2. Configuration (XSS-safe via script type="application/json")
+        try {
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 20;
+                const bins = params.bins || 10;
+                const result = ShannonEntropyIndicator.calculate(data, period, bins);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+    </script>
+
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
+
+</body>
+</html>

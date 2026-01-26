@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kagi - I ant I Investigates</title>
+    <meta name="description" content="Kagi - Technical Indicator">
+    <meta name="keywords" content="Kagi, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/kagi.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Kagi - I ant I Investigates">
+    <meta property="og:description" content="Kagi - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/kagi.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/kagi.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Kagi">
+    <meta name="twitter:description" content="Kagi - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/kagi.png">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
+
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">Kagi</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="flex space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">Kagi</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">Kagi charts are time-independent price charts that filter out market noise by only recording significant price reversals, using thick (Yang) and thin (Yin) lines to indicate bullish and bearish structural states.</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION["Phase 1: Ingestion"];
+A[/"Receive Price Data Stream"/];
+B["Capture Closing Prices"];
+C["Define Reversal Threshold"];
+end;
+subgraph EVALUATION["Phase 2: Evaluation"];
+D["Track Price Direction"];
+E["Measure Move Magnitude"];
+F["Compare vs Reversal Amount"];
+end;
+subgraph WEIGHTING["Phase 3: Weighting"];
+G["Filter Insignificant Movements"];
+H["Identify Genuine Reversals"];
+I["Preserve Structural Extremes"];
+end;
+subgraph SYNTHESIS["Phase 4: Synthesis"];
+J["Mark Significant Shoulders"];
+K["Mark Significant Waists"];
+L["Classify Yang vs Yin State"];
+end;
+subgraph OUTCOME["Phase 5: Outcome"];
+M{"Structural Shift Detection?"};
+N["Yang Formation = Bullish Breakout"];
+O["Yin Formation = Bearish Breakdown"];
+P["Trend Continuation = Hold"];
+Q[/"Generate Noise-Filtered Structure Signal"/];
+end;
+A --> B;
+B --> C;
+C --> D;
+D --> E;
+E --> F;
+F --> G;
+G --> H;
+H --> I;
+I --> J;
+J --> K;
+K --> L;
+L --> M;
+M -->|Break Above Shoulder| N;
+M -->|Break Below Waist| O;
+M -->|No Break| P;
+N --> Q;
+O --> Q;
+P --> Q;
+style INGESTION fill:#e3f2fd;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#e8f5e9;
+style SYNTHESIS fill:#fce4ec;
+style OUTCOME fill:#f3e5f5;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/Kagi.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="kagi-charts">Kagi Charts</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: Kagi Charts (かぎ足, Kagiashi)  </p>
+<p class="mb-4">Abbreviation: Kagi  </p>
+<p class="mb-4">Category: Price Action / Non-Time-Based Chart Style  </p>
+<p class="mb-4">Creator: Traditional Japanese (circa 1870s)  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: Kagi charts are time-independent price charts that filter out market noise by only recording significant price reversals, using thick (Yang) and thin (Yin) lines to indicate bullish and bearish structural states.</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="algorithm">Algorithm</h3>
+
+<p class="mb-4">Unlike time-based charts, Kagi uses a conditional state machine based on a Reversal Amount (threshold):</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Step</td><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Action</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1</td><td class="px-4 py-2 border-b border-[#2a2e39]">Initialize</td><td class="px-4 py-2 border-b border-[#2a2e39]">Set reference price to first close, direction = rising</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">2</td><td class="px-4 py-2 border-b border-[#2a2e39]">Continuation</td><td class="px-4 py-2 border-b border-[#2a2e39]">If rising and price > current high → extend line upward</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">Continuation</td><td class="px-4 py-2 border-b border-[#2a2e39]">If falling and price < current low → extend line downward</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">4</td><td class="px-4 py-2 border-b border-[#2a2e39]">Reversal (Up to Down)</td><td class="px-4 py-2 border-b border-[#2a2e39]">If rising and (high - price) ≥ threshold → draw horizontal, reverse to falling</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">5</td><td class="px-4 py-2 border-b border-[#2a2e39]">Reversal (Down to Up)</td><td class="px-4 py-2 border-b border-[#2a2e39]">If falling and (price - low) ≥ threshold → draw horizontal, reverse to rising</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">6</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yang (Thick)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Line becomes thick when price breaks above prior Shoulder (local high)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">7</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yin (Thin)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Line becomes thin when price breaks below prior Waist (local low)</td></tr>
+</table></div>
+
+<h3 id="mathematical-state-transition">Mathematical State Transition</h3>
+
+<p class="mb-4">$$State_{t} = \begin{cases} Yang & \text{if } Price_t > \text{Previous Shoulder} \\ Yin & \text{if } Price_t < \text{Previous Waist} \\ State_{t-1} & \text{otherwise} \end{cases}$$</p>
+
+<h3 id="reversal-threshold-options">Reversal Threshold Options</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Method</td><td class="px-4 py-2 border-b border-[#2a2e39]">Formula</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use Case</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Fixed Percentage</td><td class="px-4 py-2 border-b border-[#2a2e39]">$Threshold = Price \times ReversalPct / 100$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Adapts to price level</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Fixed Points</td><td class="px-4 py-2 border-b border-[#2a2e39]">$Threshold = FixedAmount$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Consistent absolute moves</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">ATR-Based</td><td class="px-4 py-2 border-b border-[#2a2e39]">$Threshold = N \times ATR(14)$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility-adaptive</td></tr>
+</table></div>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">Think of Kagi like a seismograph that only records significant earthquakes. Minor tremors (small price fluctuations) are ignored—only when the ground moves enough to exceed the threshold does the needle (line) change direction. The line thickness (Yang/Yin) tells you whether the overall structural pressure is building up (bullish) or releasing (bearish).</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<h3 id="default-parameters">Default Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rationale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Reversal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Percentage</td><td class="px-4 py-2 border-b border-[#2a2e39]">Adapts to different price levels</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Reversal Amount</td><td class="px-4 py-2 border-b border-[#2a2e39]">4%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Balances noise filtering with responsiveness</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">ATR Alternative</td><td class="px-4 py-2 border-b border-[#2a2e39]">3× ATR(14)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Professional volatility-adaptive approach</td></tr>
+</table></div>
+
+<h3 id="asset-specific-recommendations">Asset-Specific Recommendations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Asset Class</td><td class="px-4 py-2 border-b border-[#2a2e39]">Reversal Amount</td><td class="px-4 py-2 border-b border-[#2a2e39]">Notes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Forex</td><td class="px-4 py-2 border-b border-[#2a2e39]">0.5-1%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Lower volatility pairs</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Equities</td><td class="px-4 py-2 border-b border-[#2a2e39]">3-5%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Average volatility stocks</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Crypto</td><td class="px-4 py-2 border-b border-[#2a2e39]">5-8%</td><td class="px-4 py-2 border-b border-[#2a2e39]">High volatility assets</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Commodities</td><td class="px-4 py-2 border-b border-[#2a2e39]">2-4%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate volatility</td></tr>
+</table></div>
+
+<h3 id="why-these-values">Why These Values?</h3>
+
+<p class="mb-4">The 4% default filters out most intraday noise while catching genuine trend reversals. Using ATR-based thresholds allows the chart to adapt automatically to changing volatility conditions—wider thresholds during volatile periods and tighter during calm periods.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<h3 id="best-conditions">Best Conditions</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Why It Works</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trending Markets</td><td class="px-4 py-2 border-b border-[#2a2e39]">Kagi excels at clarifying trend structure without time noise</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">High-Noise Environments</td><td class="px-4 py-2 border-b border-[#2a2e39]">Filters out minor fluctuations that clutter candlestick charts</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Breakout Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">Shoulder/Waist breaks provide clear entry points</td></tr>
+</table></div>
+
+<h3 id="limitations">Limitations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Low Volatility</td><td class="px-4 py-2 border-b border-[#2a2e39]">If Range < Reversal Amount, chart produces no new lines</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Extreme Volatility</td><td class="px-4 py-2 border-b border-[#2a2e39]">Many whipsaws if threshold too low</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Indicator Overlay</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard time-based indicators don't align with Kagi's non-linear X-axis</td></tr>
+</table></div>
+
+<h3 id="asset-class-suitability">Asset Class Suitability</h3>
+
+<p class="mb-4">- Forex — Excellent for filtering currency pair noise</p>
+<p class="mb-4">- Equities — Strong for trend identification</p>
+<p class="mb-4">- Futures — Good for position traders</p>
+<p class="mb-4">- Crypto — Works but requires higher reversal thresholds</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-entry-signals">5. Entry Signals</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strength</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Yang Formation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Line turns thick (breaks above Shoulder)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Yin Formation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Line turns thin (breaks below Waist)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Multi-Level Break</td><td class="px-4 py-2 border-b border-[#2a2e39]">Breaks 2nd or 3rd consecutive Shoulder</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Waist Retest</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yang line bounces off previous Waist level</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Three Buddha Top</td><td class="px-4 py-2 border-b border-[#2a2e39]">Three peaks, middle highest (H&S pattern)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Inverted Three Buddha</td><td class="px-4 py-2 border-b border-[#2a2e39]">Three troughs, middle lowest</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+</table></div>
+
+<h3 id="primary-buy-signal">Primary Buy Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF Line turns Yang (Thick/Green)
+AND Price breaks above Previous Shoulder
+THEN → BUY (Structural Bullish Shift)
+</code></pre>
+
+<h3 id="primary-sell/exit-signal">Primary Sell/Exit Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF Line turns Yin (Thin/Red)
+AND Price breaks below Previous Waist
+THEN → SELL/EXIT (Structural Bearish Shift)
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-filter-usage">6. Filter Usage</h2>
+
+<p class="mb-4">Kagi charts work best when combined with trend strength confirmation indicators, since Kagi already filters noise but lacks momentum context.</p>
+
+<h3 id="filter-rules">Filter Rules</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rule</td><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Line = Yang</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Only take long positions</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Line = Yin</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Only take short positions or stay flat</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>ADX > 25</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Validate trend strength before trading Kagi signals</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Second Shoulder Break</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Wait for confirmation of first break</td></tr>
+</table></div>
+
+<h3 id="recommended-pairings">Recommended Pairings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Partner Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Synergy Logic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">ADX</td><td class="px-4 py-2 border-b border-[#2a2e39]">Confirms trend strength; avoids trading in range-bound markets</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Volume</td><td class="px-4 py-2 border-b border-[#2a2e39]">Confirms Shoulder/Waist breaks with volume expansion</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Support/Resistance</td><td class="px-4 py-2 border-b border-[#2a2e39]">Kagi Shoulders/Waists often coincide with key levels</td></tr>
+</table></div>
+
+<h3 id="example-combined-strategy">Example Combined Strategy</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+ENTRY CONDITIONS:
+&nbsp;&nbsp;Kagi Line = Yang                      // Structural bullish
+&nbsp;&nbsp;ADX(14) &gt; 25                          // Trend present
+&nbsp;&nbsp;Price breaks above 2nd Shoulder       // Confirmation
+
+ACTION: BUY on breakout
+STOP: Below most recent Waist
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<h3 id="lag-characteristics">Lag Characteristics</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Aspect</td><td class="px-4 py-2 border-b border-[#2a2e39]">Characteristic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Line Changes</td><td class="px-4 py-2 border-b border-[#2a2e39]">Inherently lagging by Reversal Amount</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Time Lag</td><td class="px-4 py-2 border-b border-[#2a2e39]">Variable—can be 1 candle or 100 candles depending on volatility</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Missing Moves</td><td class="px-4 py-2 border-b border-[#2a2e39]">Early portions of trends are missed by design</td></tr>
+</table></div>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Reality Check: Kagi charts are *not* predictive. By the time a Yang line forms, the move to break the Shoulder has already happened. Use Kagi for structure confirmation, not early entry.</blockquote>
+
+<h3 id="false-signal-scenarios">False Signal Scenarios</h3>
+
+<p class="mb-4">1. The "No-Draw" Period  </p>
+<p class="mb-4">   If volatility is lower than the reversal threshold, no new lines appear. Don't confuse silence with stability—volatility may be building.</p>
+
+<p class="mb-4">2. Thin Cloud Whipsaws  </p>
+<p class="mb-4">   In choppy markets at the reversal threshold boundary, rapid Yang/Yin alternations occur. Raise the threshold or wait for second confirmation.</p>
+
+<p class="mb-4">3. Synchronization Issues  </p>
+<p class="mb-4">   Overlaying time-based indicators on Kagi charts causes misalignment. Use Kagi for structure, regular charts for indicators.</p>
+
+<h3 id="mitigation-strategies">Mitigation Strategies</h3>
+
+<p class="mb-4">- Use ATR-Based Thresholds: Automatically adapts to volatility</p>
+<p class="mb-4">- Wait for Second Break: First Yang/Yin may be false; second confirms</p>
+<p class="mb-4">- Volume Confirmation: Require volume spike on Shoulder/Waist breaks</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<h3 id="the-"waist"-retest-entry">The "Waist" Retest Entry</h3>
+
+<p class="mb-4">In a strong Yang trend, price often pulls back to the level of the previous Waist (the horizontal connector). If the line remains Yang and bounces off this level, it's a high-confidence continuation entry. This is the Kagi equivalent of "buying the dip."</p>
+
+<h3 id="three-buddha-pattern-recognition">Three Buddha Pattern Recognition</h3>
+
+<p class="mb-4">The Three Buddha Top (Head and Shoulders equivalent) is remarkably clear on Kagi charts because noise is filtered. Look for:</p>
+<p class="mb-4">- Three peaks (Shoulders)</p>
+<p class="mb-4">- Middle peak highest (the "Buddha")</p>
+<p class="mb-4">- Yin line breaks below the two connecting Waists (neckline)</p>
+
+<p class="mb-4">This pattern is more reliable on Kagi than candlesticks because the filtering removes false peaks.</p>
+
+<h3 id="portfolio-selection-technique">Portfolio Selection Technique</h3>
+
+<p class="mb-4">Screen for stocks where:</p>
+<p class="mb-4">- Kagi Line = Yang (bullish structure)</p>
+<p class="mb-4">- Line has been Yang for at least 3 reversals (sustained trend)</p>
+<p class="mb-4">- Most recent Shoulder is higher than previous (higher highs)</p>
+<p class="mb-4">- ADX > 25 confirms trend strength</p>
+
+<p class="mb-4">This identifies structurally bullish equities in confirmed uptrends.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"Kagi charts are the market's structural X-ray—thick lines show the bones of a bull, thin lines reveal the skeleton of a bear, and the Shoulders and Waists mark the joints where the body can bend."</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">Kagi answers: "What is the underlying price structure, stripped of time-based noise?"</p>
+
+<p class="mb-4">Traditional candlestick charts show every time period equally—a quiet Monday gets the same space as a volatile Friday. Kagi charts compress quiet periods (no line movement) and expand active periods (multiple reversals). This time-independence reveals the true supply/demand battle underneath the surface.</p>
+
+<p class="mb-4">The Yang/Yin mechanism is the key insight:</p>
+<p class="mb-4">- Yang (Thick): Structural uptrend—price has broken above prior resistance</p>
+<p class="mb-4">- Yin (Thin): Structural downtrend—price has broken below prior support</p>
+
+<p class="mb-4">A line stays its color until the opposite structural break occurs. This creates a binary trend indicator built into the chart itself.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<h3 id="why-it-works">Why It Works</h3>
+
+<p class="mb-4">The edge comes from noise reduction. Studies show that 70-80% of price movements are random noise within the signal. By requiring a threshold reversal (4% or 3× ATR), Kagi filters most noise and highlights genuine trend changes.</p>
+
+<h3 id="signal-quality-improvement">Signal Quality Improvement</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Metric</td><td class="px-4 py-2 border-b border-[#2a2e39]">Candlestick Signals</td><td class="px-4 py-2 border-b border-[#2a2e39]">Kagi Signals</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">False Breakouts</td><td class="px-4 py-2 border-b border-[#2a2e39]">High frequency</td><td class="px-4 py-2 border-b border-[#2a2e39]">Significantly reduced</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pattern Clarity</td><td class="px-4 py-2 border-b border-[#2a2e39]">Often ambiguous</td><td class="px-4 py-2 border-b border-[#2a2e39]">Clear Shoulders/Waists</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Whipsaw Trades</td><td class="px-4 py-2 border-b border-[#2a2e39]">Common</td><td class="px-4 py-2 border-b border-[#2a2e39]">Filtered by threshold</td></tr>
+</table></div>
+
+<h3 id="historical-context">Historical Context</h3>
+
+<p class="mb-4">Kagi charts developed alongside rice trading in 1870s Japan. Rice traders needed to identify genuine price trends without the distraction of daily fluctuations. The method survived 150+ years because it works.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-actionable-strategy">3. Actionable Strategy</h2>
+
+<h3 id="strategy-name:-"yang-breakout-confirmation"">Strategy Name: "Yang Breakout Confirmation"</h3>
+
+<p class="mb-4">Concept: Enter when Kagi confirms structural bullish shift with momentum backing.</p>
+
+<p class="mb-4">Setup Requirements:</p>
+<p class="mb-4">1. Kagi Line = Yin (starting from bearish structure)</p>
+<p class="mb-4">2. ADX(14) > 20 (some trend present)</p>
+<p class="mb-4">3. Price approaching potential Shoulder break</p>
+
+<p class="mb-4">Entry Trigger:</p>
+<p class="mb-4">- Kagi Line turns Yang (breaks above Shoulder)</p>
+<p class="mb-4">- Volume > 1.5× average on breakout candle</p>
+
+<p class="mb-4">Position Sizing:</p>
+<p class="mb-4">- Full size if ADX > 30</p>
+<p class="mb-4">- Half size if ADX 20-30</p>
+
+<p class="mb-4">Exit Rules:</p>
+<p class="mb-4">1. Primary Exit: Kagi Line turns Yin</p>
+<p class="mb-4">2. Stop Loss: Below most recent Waist</p>
+<p class="mb-4">3. Trailing Stop: Move stop to each new Waist as trend progresses</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<h3 id="failure-patterns">Failure Patterns</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pattern</td><td class="px-4 py-2 border-b border-[#2a2e39]">Description</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mitigation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">No-Draw Trap</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility < threshold, chart is silent</td><td class="px-4 py-2 border-b border-[#2a2e39]">Monitor ATR; adjust threshold</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Threshold Whipsaw</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price oscillates at exact threshold level</td><td class="px-4 py-2 border-b border-[#2a2e39]">Increase threshold by 20-30%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Volume-less Breakout</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yang forms on low volume—false signal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Require volume confirmation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Gap Through</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price gaps past Shoulder, no equilibrium test</td><td class="px-4 py-2 border-b border-[#2a2e39]">Be cautious on gap breakouts</td></tr>
+</table></div>
+
+<h3 id="psychological-traps">Psychological Traps</h3>
+
+<p class="mb-4">1. Impatience with Silence  </p>
+<p class="mb-4">   When Kagi produces no new lines, traders feel compelled to trade other signals. Silence means "wait"—respect it.</p>
+
+<p class="mb-4">2. Over-trusting the Line  </p>
+<p class="mb-4">   Just because line is Yang doesn't mean the trade is guaranteed. Still use stops.</p>
+
+<p class="mb-4">3. Ignoring Time Context  </p>
+<p class="mb-4">   A Yang line that formed over 3 months means more than one that formed over 3 days.</p>
+
+<h3 id="common-misinterpretations">Common Misinterpretations</h3>
+
+<p class="mb-4">- "Kagi predicts direction" → It *confirms* structural shifts after they occur</p>
+<p class="mb-4">- "Yang = immediately bullish" → Yang means structure is bullish, not that price will rise tomorrow</p>
+<p class="mb-4">- "Can overlay any indicator" → Time-based indicators don't align with Kagi's X-axis</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<h3 id="creator-attribution">Creator Attribution</h3>
+
+<p class="mb-4">Kagi charts are traditional Japanese methods dating to the 1870s, with no single credited inventor. They were popularized in the West by Steve Nison in his 1994 book *Beyond Candlesticks*, which introduced Kagi alongside Renko and Three-Line Break charts.</p>
+
+<h3 id="related-chart-types">Related Chart Types</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Chart Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Relationship</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Renko</td><td class="px-4 py-2 border-b border-[#2a2e39]">Similar non-time based; uses fixed box size instead of reversals</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Three-Line Break</td><td class="px-4 py-2 border-b border-[#2a2e39]">Similar; reverses when 3 prior lines are broken</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Point & Figure</td><td class="px-4 py-2 border-b border-[#2a2e39]">Similar noise filtering; uses X's and O's</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Candlestick</td><td class="px-4 py-2 border-b border-[#2a2e39]">Time-based alternative</td></tr>
+</table></div>
+
+<h3 id="recommended-readings">Recommended Readings</h3>
+
+<p class="mb-4">1. *Beyond Candlesticks* — Steve Nison</p>
+<p class="mb-4">2. *Kagi Charts* — TradeStation Documentation</p>
+<p class="mb-4">3. *Japanese Chart Analysis* — Various sources on traditional methods</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h3 id="55-related-indicators-comparison">5.5 Related Indicators Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">Kagi</td><td class="px-4 py-2 border-b border-[#2a2e39]">Renko</td><td class="px-4 py-2 border-b border-[#2a2e39]">Three-Line Break</td><td class="px-4 py-2 border-b border-[#2a2e39]">P&F</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Based On</td><td class="px-4 py-2 border-b border-[#2a2e39]">Reversal amount</td><td class="px-4 py-2 border-b border-[#2a2e39]">Box size</td><td class="px-4 py-2 border-b border-[#2a2e39]">Line count</td><td class="px-4 py-2 border-b border-[#2a2e39]">Box size</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Time Axis</td><td class="px-4 py-2 border-b border-[#2a2e39]">Non-linear</td><td class="px-4 py-2 border-b border-[#2a2e39]">Non-linear</td><td class="px-4 py-2 border-b border-[#2a2e39]">Non-linear</td><td class="px-4 py-2 border-b border-[#2a2e39]">Non-linear</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Display</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yang/Yin lines</td><td class="px-4 py-2 border-b border-[#2a2e39]">Brick color</td><td class="px-4 py-2 border-b border-[#2a2e39]">Line direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">X's/O's</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Noise Filtering</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Best For</td><td class="px-4 py-2 border-b border-[#2a2e39]">Structure analysis</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend following</td><td class="px-4 py-2 border-b border-[#2a2e39]">Reversal timing</td><td class="px-4 py-2 border-b border-[#2a2e39]">Long-term trends</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Complexity</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+</table></div>
+
+<p class="mb-4">When to Use Which:</p>
+<p class="mb-4">- Kagi — Structural trend analysis, Shoulder/Waist support/resistance</p>
+<p class="mb-4">- Renko — Simple trend following, less structural detail</p>
+<p class="mb-4">- Three-Line Break — Reversal identification</p>
+<p class="mb-4">- Point & Figure — Long-term price targets</p>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h2 id="advanced-signal-reference">Advanced Signal Reference</h2>
+
+<h3 id="threshold-matrix">Threshold Matrix</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Reversal Setting</td><td class="px-4 py-2 border-b border-[#2a2e39]">Market State</td><td class="px-4 py-2 border-b border-[#2a2e39]">Interpretation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1-2%</td><td class="px-4 py-2 border-b border-[#2a2e39]">High sensitivity</td><td class="px-4 py-2 border-b border-[#2a2e39]">More signals, more noise</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">3-4%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Balanced</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard for equities</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">5-6%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Conservative</td><td class="px-4 py-2 border-b border-[#2a2e39]">Fewer signals, higher quality</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">2-3× ATR</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility-adaptive</td><td class="px-4 py-2 border-b border-[#2a2e39]">Recommended for professionals</td></tr>
+</table></div>
+
+<h3 id="signal-patterns">Signal Patterns</h3>
+
+<h4 id="yang-formation-buy-signal">Yang Formation (Buy Signal)</h4>
+
+<p class="mb-4">This signal detects the structural shift from bearish (Yin) to bullish (Yang) when price breaks above the previous Shoulder level. The transition represents a fundamental change in market structure, filtered from noise by the reversal threshold. Studies show Kagi-filtered signals reduce false breakouts significantly compared to candlestick patterns.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def kagi_yang_signal(lines, current_price):
+&nbsp;&nbsp;&nbsp;&nbsp;if len(lines) &lt; 2:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return False
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;current_line = lines[-1]
+&nbsp;&nbsp;&nbsp;&nbsp;previous_shoulder = find_previous_shoulder(lines)
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;# Yang forms when price breaks above previous shoulder
+&nbsp;&nbsp;&nbsp;&nbsp;if current_line.LineType == &quot;Yin&quot; and current_price &gt; previous_shoulder:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return True  # Transition to Yang
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return False
+</code></pre>
+
+<h4 id="yin-formation-sell-signal">Yin Formation (Sell Signal)</h4>
+
+<p class="mb-4">This pattern detects the structural shift from bullish (Yang) to bearish (Yin) when price breaks below the previous Waist level. This breakdown indicates support failure and suggests exiting long positions or initiating shorts. The Kagi structure ensures only significant reversals trigger signals.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def kagi_yin_signal(lines, current_price):
+&nbsp;&nbsp;&nbsp;&nbsp;if len(lines) &lt; 2:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return False
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;current_line = lines[-1]
+&nbsp;&nbsp;&nbsp;&nbsp;previous_waist = find_previous_waist(lines)
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;# Yin forms when price breaks below previous waist
+&nbsp;&nbsp;&nbsp;&nbsp;if current_line.LineType == &quot;Yang&quot; and current_price &lt; previous_waist:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return True  # Transition to Yin
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return False
+</code></pre>
+
+<h4 id="three-buddha-pattern">Three Buddha Pattern</h4>
+
+<p class="mb-4">This pattern identifies the Head and Shoulders equivalent on Kagi charts—three peaks where the middle is highest. Because Kagi filters noise, this pattern appears more clearly than on candlestick charts. When the neckline breaks after this formation, it signals a high-probability bearish reversal.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def three_buddha_top(lines):
+&nbsp;&nbsp;&nbsp;&nbsp;# Find last 5 shoulder/waist points
+&nbsp;&nbsp;&nbsp;&nbsp;peaks = [l for l in lines if l.IsShoulder][-3:]
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if len(peaks) &lt; 3:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return False
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;# Middle peak higher than sides
+&nbsp;&nbsp;&nbsp;&nbsp;head_and_shoulders = (
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;peaks[1].EndPrice &gt; peaks[0].EndPrice and
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;peaks[1].EndPrice &gt; peaks[2].EndPrice
+&nbsp;&nbsp;&nbsp;&nbsp;)
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return head_and_shoulders
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<h4 id="bullish-structure-scanner">Bullish Structure Scanner</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Kagi_Line_Type = &quot;Yang&quot;
+AND ADX(14) &gt; 25
+AND Current_Shoulder &gt; Previous_Shoulder  // Higher highs
+AND Volume &gt; SMA(Volume, 20)
+</code></pre>
+
+<h4 id="trend-initiation-scanner">Trend Initiation Scanner</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Kagi_Line_Type changed from &quot;Yin&quot; to &quot;Yang&quot; within last 3 bars
+AND ADX(14) &gt; 20
+AND Price &gt; SMA(50)
+</code></pre>
+
+<h4 id="continuation-setup">Continuation Setup</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Kagi_Line_Type = &quot;Yang&quot;
+AND Price near most recent Waist level (within 2%)
+AND RSI(14) &gt; 40 AND RSI(14) &lt; 60  // Not oversold, not overbought
+</code></pre>
+
+<h3 id="combination-strategies">Combination Strategies</h3>
+
+<h4 id="kagi-+-adx-trend-strategy">Kagi + ADX Trend Strategy</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FILTER:
+&nbsp;&nbsp;ADX(14) &gt; 25  // Trend exists
+&nbsp;&nbsp;
+ENTRY:
+&nbsp;&nbsp;Kagi Line turns Yang
+&nbsp;&nbsp;
+STOP_LOSS:
+&nbsp;&nbsp;Below most recent Waist
+&nbsp;&nbsp;
+TAKE_PROFIT:
+&nbsp;&nbsp;Kagi Line turns Yin
+&nbsp;&nbsp;OR ADX &lt; 20 (trend dying)
+</code></pre>
+
+<h4 id="kagi-+-volume-breakout-strategy">Kagi + Volume Breakout Strategy</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SETUP:
+&nbsp;&nbsp;Kagi Line = Yin (bearish structure)
+&nbsp;&nbsp;Price consolidating near Shoulder level
+&nbsp;&nbsp;
+TRIGGER:
+&nbsp;&nbsp;Kagi Line turns Yang
+&nbsp;&nbsp;Volume &gt; 2 × SMA(Volume, 20)
+&nbsp;&nbsp;
+CONFIRMATION:
+&nbsp;&nbsp;Price holds above new Shoulder for 2+ candles
+&nbsp;&nbsp;
+STOP_LOSS:
+&nbsp;&nbsp;Below most recent Waist
+</code></pre>
+
+
+
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#algorithm" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Algorithm</a>
+<a href="#mathematical-state-transition" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Mathematical State Transition</a>
+<a href="#reversal-threshold-options" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Reversal Threshold Options</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#default-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Default Parameters</a>
+<a href="#asset-specific-recommendations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Asset-Specific Recommendations</a>
+<a href="#why-these-values" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why These Values?</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#best-conditions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Best Conditions</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#asset-class-suitability" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Asset Class Suitability</a>
+<a href="#5-entry-signals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Entry Signals</a>
+<a href="#primary-buy-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Buy Signal</a>
+<a href="#primary-sell/exit-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Sell/Exit Signal</a>
+<a href="#6-filter-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Filter Usage</a>
+<a href="#filter-rules" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Filter Rules</a>
+<a href="#recommended-pairings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Pairings</a>
+<a href="#example-combined-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Example Combined Strategy</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#lag-characteristics" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Lag Characteristics</a>
+<a href="#false-signal-scenarios" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">False Signal Scenarios</a>
+<a href="#mitigation-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Mitigation Strategies</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#the-"waist"-retest-entry" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The "Waist" Retest Entry</a>
+<a href="#three-buddha-pattern-recognition" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Three Buddha Pattern Recognition</a>
+<a href="#portfolio-selection-technique" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Portfolio Selection Technique</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#why-it-works" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why It Works</a>
+<a href="#signal-quality-improvement" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Signal Quality Improvement</a>
+<a href="#historical-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Historical Context</a>
+<a href="#3-actionable-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Strategy</a>
+<a href="#strategy-name:-"yang-breakout-confirmation"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Strategy Name: "Yang Breakout Confirmation"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#failure-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Failure Patterns</a>
+<a href="#psychological-traps" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Psychological Traps</a>
+<a href="#common-misinterpretations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common Misinterpretations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#related-chart-types" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Related Chart Types</a>
+<a href="#recommended-readings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Readings</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Matrix</a>
+<a href="#signal-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Signal Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "Kagi",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 14;
+                const result = Kagi.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/Kagi.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[{"id": "period", "label": "Period (14)", "type": "number", "value": 14, "min": 2, "max": 100}]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": true, "plots": {"main": {"label": "Kagi", "color": "#4f46e5", "type": "line"}}}
+    </script>
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code - loaded externally before this block
+
+        // 2. Configuration (XSS-safe via script type="application/json")
+        try {
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 14;
+                const result = Kagi.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+    </script>
+
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
+
+</body>
+</html>

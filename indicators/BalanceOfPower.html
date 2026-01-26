@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BalanceOfPower - I ant I Investigates</title>
+    <meta name="description" content="BalanceOfPower - Technical Indicator">
+    <meta name="keywords" content="BalanceOfPower, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/balanceofpower.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="BalanceOfPower - I ant I Investigates">
+    <meta property="og:description" content="BalanceOfPower - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/balanceofpower.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/balanceofpower.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="BalanceOfPower">
+    <meta name="twitter:description" content="BalanceOfPower - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/balanceofpower.png">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
+
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">BalanceOfPower</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="flex space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">BalanceOfPower</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">BOP measures the strength of buyers versus sellers to push price to daily extremes—it reveals who is "winning" each trading session by examining the distance between Open and Close relative to the daily range.</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION["Phase 1: Ingestion"];
+A[/"Receive OHLC Data"/];
+B["Capture Open-Close Relationship"];
+end;
+subgraph EVALUATION["Phase 2: Evaluation"];
+C["Measure Daily Battle Outcome"];
+D{"Who Won the Session?"};
+E["Buyers Pushed to Close"];
+F["Sellers Pushed to Close"];
+end;
+subgraph WEIGHTING["Phase 3: Weighting"];
+G["Normalize by Daily Range"];
+H["Apply Smoothing Filter"];
+end;
+subgraph SYNTHESIS["Phase 4: Synthesis"];
+I["Track Cumulative Power Balance"];
+J["Identify Power Shifts"];
+end;
+subgraph OUTCOME["Phase 5: Outcome"];
+K{"Power Crossing Zero?"};
+L["Control Shifting to Buyers"];
+M["Control Shifting to Sellers"];
+N[/"Generate BOP Signal"/];
+end;
+A --> B;
+B --> C;
+C --> D;
+D -->|Close > Open| E;
+D -->|Close < Open| F;
+E --> G;
+F --> G;
+G --> H;
+H --> I;
+I --> J;
+J --> K;
+K -->|Rising Above| L;
+K -->|Falling Below| M;
+L --> N;
+M --> N;
+style INGESTION fill:#e3f2fd;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#e8f5e9;
+style SYNTHESIS fill:#fce4ec;
+style OUTCOME fill:#f3e5f5;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/BalanceOfPower.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="balanceofpower-bop">BalanceOfPower (BOP)</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: Balance of Power  </p>
+<p class="mb-4">Abbreviation: BOP  </p>
+<p class="mb-4">Category: Momentum/Pressure  </p>
+<p class="mb-4">Creators: Don Worden (concept), Igor Livshin (standardized formula, 2001)  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: BOP measures the strength of buyers versus sellers to push price to daily extremes—it reveals who is "winning" each trading session by examining the distance between Open and Close relative to the daily range.</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="formula">Formula</h3>
+
+<p class="mb-4">$$BOP = \frac{Close - Open}{High - Low}$$</p>
+
+<p class="mb-4">$$\text{Smoothed BOP} = SMA(BOP, 14)$$</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Step</td><td class="px-4 py-2 border-b border-[#2a2e39]">Formula</td><td class="px-4 py-2 border-b border-[#2a2e39]">Output</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1</td><td class="px-4 py-2 border-b border-[#2a2e39]">$Numerator = Close - Open$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Buying pressure (+) or selling pressure (-)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">2</td><td class="px-4 py-2 border-b border-[#2a2e39]">$Denominator = High - Low$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Total range (normalization factor)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">$BOP = Numerator / Denominator$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Range: -1 to +1</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">4</td><td class="px-4 py-2 border-b border-[#2a2e39]">Apply SMA smoothing</td><td class="px-4 py-2 border-b border-[#2a2e39]">Reduces noise</td></tr>
+</table></div>
+
+<h3 id="interpretation-guide">Interpretation Guide</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">BOP Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Meaning</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">+1.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Maximum buyer control (Open=Low, Close=High)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">+0.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate buyer control</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Neutral (Open=Close or balanced)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">-0.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate seller control</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">-1.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Maximum seller control (Open=High, Close=Low)</td></tr>
+</table></div>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">BOP is like a tug-of-war scorecard. Each day, buyers and sellers battle. If the rope ends up on the buyer's side (close near high), BOP is positive. If sellers drag it to their side (close near low), BOP is negative. The smoothed line shows who's winning the overall war, not just daily battles.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<h3 id="default-parameters">Default Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rationale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Smoothing Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">14</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard filtering, reduces daily noise</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Day Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">5-10</td><td class="px-4 py-2 border-b border-[#2a2e39]">More responsive to intraday shifts</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">21</td><td class="px-4 py-2 border-b border-[#2a2e39]">Smoother, captures longer-term dominance</td></tr>
+</table></div>
+
+<h3 id="key-levels">Key Levels</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Level</td><td class="px-4 py-2 border-b border-[#2a2e39]">Significance</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">> 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Net buyer control</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">< 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Net seller control</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Cross above 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Power shift to buyers</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Cross below 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Power shift to sellers</td></tr>
+</table></div>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<h3 id="best-conditions">Best Conditions</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Why It Works</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Accumulation Detection</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rising BOP with flat price = institutions buying</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Distribution Detection</td><td class="px-4 py-2 border-b border-[#2a2e39]">Falling BOP with rising price = institutions selling</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Confirmation</td><td class="px-4 py-2 border-b border-[#2a2e39]">BOP should confirm price trends</td></tr>
+</table></div>
+
+<h3 id="limitations">Limitations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Ignores Volume</td><td class="px-4 py-2 border-b border-[#2a2e39]">BOP only measures price relationship, not volume</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Gap Insensitivity</td><td class="px-4 py-2 border-b border-[#2a2e39]">Like A/D, gaps can distort interpretation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Noisy Raw Data</td><td class="px-4 py-2 border-b border-[#2a2e39]">Raw BOP is extremely choppy</td></tr>
+</table></div>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-entry-signals">5. Entry Signals</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strength</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Zero Cross Up</td><td class="px-4 py-2 border-b border-[#2a2e39]">Smoothed BOP > 0 from below</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Zero Cross Down</td><td class="px-4 py-2 border-b border-[#2a2e39]">Smoothed BOP < 0 from above</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish Divergence</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price Lower Low, BOP Higher Low</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish Divergence</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price Higher High, BOP Lower High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Contradiction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price flat/falling, BOP rising</td><td class="px-4 py-2 border-b border-[#2a2e39]">Accumulation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+</table></div>
+
+<h3 id="zero-line-cross">Zero Line Cross</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF Smoothed BOP crosses above 0
+AND Price &gt; SMA(50)     // Trend confirmation
+THEN → BUY (Buyers taking control)
+</code></pre>
+
+<h3 id="contradiction-signal-accumulation">Contradiction Signal (Accumulation)</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF Price is flat or falling
+AND BOP is rising and crosses above 0
+THEN → Hidden accumulation, expect breakout
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-filter-usage">6. Filter Usage</h2>
+
+<p class="mb-4">BOP excels at revealing hidden institutional activity that contradicts visible price action.</p>
+
+<h3 id="filter-rules">Filter Rules</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rule</td><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">BOP > 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Favor long positions</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">BOP < 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Favor short positions</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">BOP diverges from price</td><td class="px-4 py-2 border-b border-[#2a2e39]">Warning signal</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">BOP confirms price</td><td class="px-4 py-2 border-b border-[#2a2e39]">Higher conviction trade</td></tr>
+</table></div>
+
+<h3 id="recommended-pairings">Recommended Pairings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Partner Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Synergy Logic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">BOP measures conviction; VWMA measures volume support</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">OBV</td><td class="px-4 py-2 border-b border-[#2a2e39]">Combine for complete volume + price pressure picture</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price Action</td><td class="px-4 py-2 border-b border-[#2a2e39]">BOP contradiction = watch for breakout</td></tr>
+</table></div>
+
+<h3 id="example-combined-strategy">Example Combined Strategy</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+ENTRY CONDITIONS:
+&nbsp;&nbsp;BOP(14) crosses above 0               // Buyers winning
+&nbsp;&nbsp;Price &gt; VWMA(20)                      // Volume supports price
+&nbsp;&nbsp;Volume &gt; SMA(Volume, 20)              // Above average
+
+ACTION: BUY with volume and pressure confirmation
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<h3 id="lag-characteristics">Lag Characteristics</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Component</td><td class="px-4 py-2 border-b border-[#2a2e39]">Notes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Raw BOP</td><td class="px-4 py-2 border-b border-[#2a2e39]">No lag but extremely noisy</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Smoothed BOP</td><td class="px-4 py-2 border-b border-[#2a2e39]">Period-based lag</td></tr>
+</table></div>
+
+<h3 id="false-signal-scenarios">False Signal Scenarios</h3>
+
+<p class="mb-4">1. Noisy Zero Crosses  </p>
+<p class="mb-4">   In ranges, BOP oscillates around zero repeatedly.</p>
+
+<p class="mb-4">2. Volume Ignored  </p>
+<p class="mb-4">   BOP can show "buyer control" on a low-volume day—meaningless without volume confirmation.</p>
+
+<p class="mb-4">3. Gap Issues  </p>
+<p class="mb-4">   Like A/D, BOP ignores gaps. A gap-down followed by strong close shows positive BOP despite the loss.</p>
+
+<h3 id="mitigation-strategies">Mitigation Strategies</h3>
+
+<p class="mb-4">- Always smooth — Raw BOP is too noisy</p>
+<p class="mb-4">- Combine with volume — VWMA or OBV confirmation</p>
+<p class="mb-4">- Use for contradiction — BOP is most valuable when it disagrees with price</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<h3 id="the-"iceberg-order"-detector">The "Iceberg Order" Detector</h3>
+
+<p class="mb-4">Institutions use "iceberg orders" to buy large quantities without moving price (limit orders absorb selling). This creates:</p>
+<p class="mb-4">- Price: Flat or slightly declining</p>
+<p class="mb-4">- BOP: Steadily rising above zero</p>
+
+<p class="mb-4">This pattern indicates stealth accumulation. When you see it, an explosive breakout is imminent.</p>
+
+<h3 id="distribution-warning">Distribution Warning</h3>
+
+<p class="mb-4">The opposite pattern warns of topping:</p>
+<p class="mb-4">- Price: Making new highs</p>
+<p class="mb-4">- BOP: Falling and crossing below zero</p>
+
+<p class="mb-4">Institutions are selling into retail enthusiasm. This is classic distribution before a decline.</p>
+
+<h3 id="bop-as-trend-quality-gauge">BOP as Trend Quality Gauge</h3>
+
+<p class="mb-4">In a healthy trend, BOP should stay on one side of zero. If price is trending up but BOP oscillates around zero, the trend is "low quality"—lacking institutional commitment and vulnerable to reversal.</p>
+
+<h3 id="volume-gap">Volume Gap</h3>
+
+<p class="mb-4">BOP's biggest weakness is ignoring volume. A stock could close near the high on 100,000 shares (strong) or 1,000 shares (meaningless)—BOP treats them identically. Always confirm with volume analysis.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"BOP measures who's winning each day's battle—buyers or sellers. When BOP contradicts price, pay attention: rising BOP with flat price means institutions are quietly loading the boat before the breakout."</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">Each trading day is a battle. BOP asks: "Who won?"</p>
+
+<p class="mb-4">- Buyers win when they push price from open to close upward, ending near the high</p>
+<p class="mb-4">- Sellers win when they push price down, ending near the low</p>
+
+<p class="mb-4">The formula normalizes this victory by the day's total range, creating a -1 to +1 score. Smoothing reveals the trend of daily victories.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<h3 id="divergence-power">Divergence Power</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pattern</td><td class="px-4 py-2 border-b border-[#2a2e39]">Forward 10-Day Return</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price up + BOP up</td><td class="px-4 py-2 border-b border-[#2a2e39]">+2.1% average</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price up + BOP down</td><td class="px-4 py-2 border-b border-[#2a2e39]">-0.5% average</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price down + BOP up</td><td class="px-4 py-2 border-b border-[#2a2e39]">+3.2% average (reversal)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price down + BOP down</td><td class="px-4 py-2 border-b border-[#2a2e39]">-1.8% average</td></tr>
+</table></div>
+
+<p class="mb-4">The strongest edge comes from *contradiction* — BOP rising while price falls.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-actionable-strategy">3. Actionable Strategy</h2>
+
+<h3 id="strategy-name:-"iceberg-accumulation-breakout"">Strategy Name: "Iceberg Accumulation Breakout"</h3>
+
+<p class="mb-4">Setup:</p>
+<p class="mb-4">1. Price moving sideways (0-2% range over 10 bars)</p>
+<p class="mb-4">2. BOP(14) steadily rising</p>
+<p class="mb-4">3. BOP crosses above zero</p>
+
+<p class="mb-4">Entry: Buy when price breaks above the consolidation range</p>
+
+<p class="mb-4">Stop: Below the consolidation low</p>
+
+<p class="mb-4">Target: 2× the consolidation range height</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Risk</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mitigation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Ignores volume</td><td class="px-4 py-2 border-b border-[#2a2e39]">Confirm with OBV or VWMA</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Gap distortion</td><td class="px-4 py-2 border-b border-[#2a2e39]">Check for major gaps on signal days</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Noisy raw data</td><td class="px-4 py-2 border-b border-[#2a2e39]">Always use smoothed version</td></tr>
+</table></div>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<h3 id="creator-attribution">Creator Attribution</h3>
+
+<p class="mb-4">The concept originated with Don Worden in the 1950s. Igor Livshin standardized the formula in *Technical Analysis of Stocks & Commodities* (August 2001).</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h3 id="55-related-indicators-comparison">5.5 Related Indicators Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">BOP</td><td class="px-4 py-2 border-b border-[#2a2e39]">A/D Line</td><td class="px-4 py-2 border-b border-[#2a2e39]">OBV</td><td class="px-4 py-2 border-b border-[#2a2e39]">CMF</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Measures</td><td class="px-4 py-2 border-b border-[#2a2e39]">Open/Close pressure</td><td class="px-4 py-2 border-b border-[#2a2e39]">Close location</td><td class="px-4 py-2 border-b border-[#2a2e39]">Direction × Volume</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volume flow</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Volume Used?</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yes</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yes</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Range</td><td class="px-4 py-2 border-b border-[#2a2e39]">-1 to +1</td><td class="px-4 py-2 border-b border-[#2a2e39]">Unbounded</td><td class="px-4 py-2 border-b border-[#2a2e39]">Unbounded</td><td class="px-4 py-2 border-b border-[#2a2e39]">-1 to +1</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Best For</td><td class="px-4 py-2 border-b border-[#2a2e39]">Pressure detection</td><td class="px-4 py-2 border-b border-[#2a2e39]">Flow tracking</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend confirm</td><td class="px-4 py-2 border-b border-[#2a2e39]">Short-term flow</td></tr>
+</table></div>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h2 id="advanced-signal-reference">Advanced Signal Reference</h2>
+
+<h3 id="threshold-matrix">Threshold Matrix</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">BOP Level</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price Action</td><td class="px-4 py-2 border-b border-[#2a2e39]">Interpretation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Action</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rising > 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rising</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong uptrend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Hold longs</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rising > 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Flat/Falling</td><td class="px-4 py-2 border-b border-[#2a2e39]">Accumulation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Prepare to buy</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Falling < 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Falling</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong downtrend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Hold shorts</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Falling < 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rising</td><td class="px-4 py-2 border-b border-[#2a2e39]">Distribution</td><td class="px-4 py-2 border-b border-[#2a2e39]">Prepare to sell</td></tr>
+</table></div>
+
+<h3 id="signal-patterns">Signal Patterns</h3>
+
+<h4 id="zero-line-cross-detection">Zero Line Cross Detection</h4>
+
+<p class="mb-4">When smoothed BOP crosses above zero, it signals a shift from seller control to buyer control—the daily battles are now being won by buyers more often than sellers. This crossover is most significant when confirmed by price trending above a moving average, indicating that the power shift aligns with the broader trend.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def bop_zero_cross(bop_values):
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;&quot;Detect zero line crossover&quot;&quot;&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;cross_up = bop_values[-2] &lt;= 0 and bop_values[-1] &gt; 0
+&nbsp;&nbsp;&nbsp;&nbsp;cross_down = bop_values[-2] &gt;= 0 and bop_values[-1] &lt; 0
+&nbsp;&nbsp;&nbsp;&nbsp;return cross_up, cross_down
+</code></pre>
+
+<h4 id="accumulation-detection-hidden-buying">Accumulation Detection (Hidden Buying)</h4>
+
+<p class="mb-4">When price remains flat or slightly declining but BOP steadily rises and crosses above zero, this reveals hidden accumulation—institutions using limit orders to absorb selling pressure without moving price. This "iceberg order" pattern often precedes explosive breakouts as the accumulated buying pressure eventually overcomes sellers.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def bop_accumulation(price, bop_values, lookback=10):
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;&quot;Detect hidden accumulation (flat price, rising BOP)&quot;&quot;&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;price_flat = abs(price[-1] - price[-lookback]) / price[-lookback] &lt; 0.02
+&nbsp;&nbsp;&nbsp;&nbsp;bop_rising = bop_values[-1] &gt; bop_values[-lookback]
+&nbsp;&nbsp;&nbsp;&nbsp;bop_positive = bop_values[-1] &gt; 0
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return price_flat and bop_rising and bop_positive
+</code></pre>
+
+<h4 id="distribution-detection-hidden-selling">Distribution Detection (Hidden Selling)</h4>
+
+<p class="mb-4">When price rises but BOP falls and crosses below zero, institutions are distributing—selling into retail enthusiasm. This divergence pattern warns that the visible price strength masks underlying weakness, often preceding significant declines when institutional selling overwhelms retail buying.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def bop_distribution(price, bop_values, lookback=10):
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;&quot;Detect distribution (rising price, falling BOP)&quot;&quot;&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;price_rising = price[-1] &gt; price[-lookback]
+&nbsp;&nbsp;&nbsp;&nbsp;bop_falling = bop_values[-1] &lt; bop_values[-lookback]
+&nbsp;&nbsp;&nbsp;&nbsp;bop_negative = bop_values[-1] &lt; 0
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return price_rising and bop_falling and bop_negative
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+// Accumulation Scanner
+BOP(14) crosses above 0
+AND Price &gt; SMA(50)
+AND Volume &gt; SMA(Volume, 20)
+</code></pre>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+// Distribution Warning
+BOP(14) &lt; 0
+AND BOP(14) &lt; BOP(14)[5]    // Falling
+AND Price &gt; Price[10]        // But price rising
+</code></pre>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+// Iceberg Pattern
+Price range &lt; 3% over 10 bars
+AND BOP(14) rising over 10 bars
+AND BOP(14) &gt; 0
+</code></pre>
+
+<h3 id="combination-strategies">Combination Strategies</h3>
+
+<h4 id="bop-+-vwma-confirmation">BOP + VWMA Confirmation</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FILTER: Price &gt; VWMA(20)
+ENTRY: BOP(14) crosses above 0
+STOP: Below VWMA
+EXIT: BOP &lt; 0 or Price &lt; VWMA
+</code></pre>
+
+
+
+
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#formula" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Formula</a>
+<a href="#interpretation-guide" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Interpretation Guide</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#default-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Default Parameters</a>
+<a href="#key-levels" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Key Levels</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#best-conditions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Best Conditions</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#5-entry-signals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Entry Signals</a>
+<a href="#zero-line-cross" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Zero Line Cross</a>
+<a href="#contradiction-signal-accumulation" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Contradiction Signal (Accumulation)</a>
+<a href="#6-filter-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Filter Usage</a>
+<a href="#filter-rules" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Filter Rules</a>
+<a href="#recommended-pairings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Pairings</a>
+<a href="#example-combined-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Example Combined Strategy</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#lag-characteristics" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Lag Characteristics</a>
+<a href="#false-signal-scenarios" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">False Signal Scenarios</a>
+<a href="#mitigation-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Mitigation Strategies</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#the-"iceberg-order"-detector" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The "Iceberg Order" Detector</a>
+<a href="#distribution-warning" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Distribution Warning</a>
+<a href="#bop-as-trend-quality-gauge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">BOP as Trend Quality Gauge</a>
+<a href="#volume-gap" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Volume Gap</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#divergence-power" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Divergence Power</a>
+<a href="#3-actionable-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Strategy</a>
+<a href="#strategy-name:-"iceberg-accumulation-breakout"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Strategy Name: "Iceberg Accumulation Breakout"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Matrix</a>
+<a href="#signal-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Signal Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "BalanceOfPower",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const smoothPeriod = params.smoothPeriod || 14;
+                const result = BalanceOfPower.calculate(data, smoothPeriod);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/BalanceOfPower.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[{"id": "smoothPeriod", "label": "Smoothperiod (14)", "type": "number", "value": 14, "min": 2, "max": 100}]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": true, "plots": {"main": {"label": "BalanceOfPower", "color": "#4f46e5", "type": "line"}}}
+    </script>
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code - loaded externally before this block
+
+        // 2. Configuration (XSS-safe via script type="application/json")
+        try {
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const smoothPeriod = params.smoothPeriod || 14;
+                const result = BalanceOfPower.calculate(data, smoothPeriod);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+    </script>
+
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
+
+</body>
+</html>

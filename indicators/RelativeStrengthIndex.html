@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RelativeStrengthIndex - I ant I Investigates</title>
+    <meta name="description" content="RelativeStrengthIndex - Technical Indicator">
+    <meta name="keywords" content="RelativeStrengthIndex, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/relativestrengthindex.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="RelativeStrengthIndex - I ant I Investigates">
+    <meta property="og:description" content="RelativeStrengthIndex - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/relativestrengthindex.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/relativestrengthindex.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="RelativeStrengthIndex">
+    <meta name="twitter:description" content="RelativeStrengthIndex - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/relativestrengthindex.png">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
+
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">RelativeStrengthIndex</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="flex space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">RelativeStrengthIndex</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">RSI is a normalized momentum oscillator that measures the ratio of average gains to average losses, bounded between 0 and 100, to identify overbought and oversold conditions.</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION ["Phase 1: Ingestion"];
+A[/"Receive Daily Price Changes"/];
+B["Calculate Close-to-Close Movement"];
+C["Separate Gains from Losses"];
+end;
+subgraph EVALUATION ["Phase 2: Evaluation"];
+D["Measure Winning Day Magnitude"];
+E["Measure Losing Day Magnitude"];
+F["Build Gain and Loss History"];
+end;
+subgraph WEIGHTING ["Phase 3: Weighting"];
+G["Apply Wilder Smoothing"];
+H["Calculate Average Gain"];
+I["Calculate Average Loss"];
+end;
+subgraph SYNTHESIS ["Phase 4: Synthesis"];
+J["Compute Relative Strength Ratio"];
+K["Normalize to 0-100 Scale"];
+L["Track Threshold Levels"];
+end;
+subgraph OUTCOME ["Phase 5: Outcome"];
+M{"Momentum Balance Assessment?"};
+N["RSI > 70 = Buyers Dominating"];
+O["RSI < 30 = Sellers Exhausted"];
+P["Divergence = Momentum Shift Warning"];
+Q[/"Generate Overbought-Oversold Signal"/];
+end;
+A --> B;
+B --> C;
+C --> D;
+D --> E;
+E --> F;
+F --> G;
+G --> H;
+H --> I;
+I --> J;
+J --> K;
+K --> L;
+L --> M;
+M -->|Overbought| N;
+M -->|Oversold| O;
+M -->|Diverging| P;
+N --> Q;
+O --> Q;
+P --> Q;
+style INGESTION fill:#e3f2fd;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#e8f5e9;
+style SYNTHESIS fill:#fce4ec;
+style OUTCOME fill:#f3e5f5;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/RelativeStrengthIndex.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="relative-strength-index-rsi">Relative Strength Index (RSI)</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: Relative Strength Index  </p>
+<p class="mb-4">Abbreviation: RSI  </p>
+<p class="mb-4">Category: Western Momentum Oscillator  </p>
+<p class="mb-4">Creator: J. Welles Wilder Jr. (1978)  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: RSI is a normalized momentum oscillator that measures the ratio of average gains to average losses, bounded between 0 and 100, to identify overbought and oversold conditions.</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="formula">Formula</h3>
+
+<p class="mb-4">$$RSI = 100 - \frac{100}{1 + RS}$$</p>
+
+<p class="mb-4">$$RS = \frac{Average\ Gain}{Average\ Loss}$$</p>
+
+<p class="mb-4">Wilder's Smoothing Method:</p>
+<p class="mb-4">$$Avg\ Gain_t = \frac{(Avg\ Gain_{t-1} \times (N-1)) + Current\ Gain}{N}$$</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Step</td><td class="px-4 py-2 border-b border-[#2a2e39]">Logic</td><td class="px-4 py-2 border-b border-[#2a2e39]">Purpose</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1</td><td class="px-4 py-2 border-b border-[#2a2e39]">Calculate daily changes (Close - Previous Close)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Determine direction</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">2</td><td class="px-4 py-2 border-b border-[#2a2e39]">Separate gains (positive) and losses (negative absolute)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Decompose movement</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">Calculate Smoothed Average Gain and Loss</td><td class="px-4 py-2 border-b border-[#2a2e39]">Apply Wilder's smoothing</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">4</td><td class="px-4 py-2 border-b border-[#2a2e39]">Calculate RS = Avg Gain / Avg Loss</td><td class="px-4 py-2 border-b border-[#2a2e39]">Ratio of buying to selling pressure</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">5</td><td class="px-4 py-2 border-b border-[#2a2e39]">Normalize to 0-100 scale</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bounded oscillator</td></tr>
+</table></div>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">Think of RSI as a tug-of-war scorer. If buyers win big every round (4 points) and sellers only win small (1 point), the buyer's side is dominating. RSI measures who's winning the daily battles and by how much. At RSI > 70, buyers have been winning overwhelmingly—perhaps too much. At RSI < 30, sellers dominate—perhaps exhausted.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<h3 id="default-parameters">Default Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rationale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">14</td><td class="px-4 py-2 border-b border-[#2a2e39]">Wilder's original, ~2 trading weeks</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Overbought</td><td class="px-4 py-2 border-b border-[#2a2e39]">70</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard upper threshold</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Oversold</td><td class="px-4 py-2 border-b border-[#2a2e39]">30</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard lower threshold</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Centerline</td><td class="px-4 py-2 border-b border-[#2a2e39]">50</td><td class="px-4 py-2 border-b border-[#2a2e39]">Equilibrium between bulls and bears</td></tr>
+</table></div>
+
+<h3 id="timeframe-recommendations">Timeframe Recommendations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trading Style</td><td class="px-4 py-2 border-b border-[#2a2e39]">Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">Timeframe</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Scalping</td><td class="px-4 py-2 border-b border-[#2a2e39]">2-7</td><td class="px-4 py-2 border-b border-[#2a2e39]">1-5 min</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Day Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">9-14</td><td class="px-4 py-2 border-b border-[#2a2e39]">15-60 min</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Swing Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">14</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Position Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">14-21</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily/Weekly</td></tr>
+</table></div>
+
+<h3 id="why-these-values">Why These Values?</h3>
+
+<p class="mb-4">Wilder chose 14 periods representing half a lunar cycle and approximately two trading weeks. The 70/30 thresholds represent statistical extremes where the average gain significantly outpaces average loss (or vice versa).</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<h3 id="best-conditions">Best Conditions</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Why It Works</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Range-Bound Markets</td><td class="px-4 py-2 border-b border-[#2a2e39]">RSI extremes reliably indicate reversals</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pullbacks in Trends</td><td class="px-4 py-2 border-b border-[#2a2e39]">RSI oversold in uptrend = buying opportunity</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Divergence Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price/RSI divergence signals momentum shift</td></tr>
+</table></div>
+
+<h3 id="limitations">Limitations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Strong Trends</td><td class="px-4 py-2 border-b border-[#2a2e39]">RSI stays overbought/oversold for extended periods</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Low Volatility</td><td class="px-4 py-2 border-b border-[#2a2e39]">RSI clusters around 50, providing no signal</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Gapping Markets</td><td class="px-4 py-2 border-b border-[#2a2e39]">Gaps distort the gain/loss calculation</td></tr>
+</table></div>
+
+<h3 id="asset-class-suitability">Asset Class Suitability</h3>
+
+<p class="mb-4">- Equities — Excellent for individual stocks</p>
+<p class="mb-4">- Indices — Strong for market-wide momentum</p>
+<p class="mb-4">- Forex — Works well for trending pairs</p>
+<p class="mb-4">- Crypto — Adjust periods (7-9) for higher volatility</p>
+<p class="mb-4">- Commodities — Good for cyclical analysis</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-entry-signals">5. Entry Signals</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strength</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Oversold Exit</td><td class="px-4 py-2 border-b border-[#2a2e39]">RSI crosses above 30 from below</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Overbought Exit</td><td class="px-4 py-2 border-b border-[#2a2e39]">RSI crosses below 70 from above</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish Divergence</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price Lower Low, RSI Higher Low</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish Divergence</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price Higher High, RSI Lower High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish Failure Swing</td><td class="px-4 py-2 border-b border-[#2a2e39]">RSI < 30, rallies, holds > 30, breaks high</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish Failure Swing</td><td class="px-4 py-2 border-b border-[#2a2e39]">RSI > 70, drops, fails to reach 70, breaks low</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Centerline Cross</td><td class="px-4 py-2 border-b border-[#2a2e39]">RSI crosses 50</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend confirmation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+</table></div>
+
+<h3 id="primary-buy-signal">Primary Buy Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF RSI(14) &lt; 30 (previous bar)
+AND RSI(14) &gt;= 30 (current bar)
+AND Price &gt; SMA(200)
+THEN → BUY (Oversold Reversion in Uptrend)
+</code></pre>
+
+<h3 id="primary-sell-signal">Primary Sell Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF RSI(14) &gt; 70 (previous bar)
+AND RSI(14) &lt;= 70 (current bar)
+AND Price &lt; SMA(200)
+THEN → SELL (Overbought Reversion in Downtrend)
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-filter-usage">6. Filter Usage</h2>
+
+<p class="mb-4">RSI is one of the most versatile confirmation and filter tools:</p>
+
+<h3 id="filter-rules">Filter Rules</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rule</td><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>RSI > 50</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Only take long entries</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>RSI < 50</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Only take short entries</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>RSI < 30</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Look for buy setups</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>RSI > 70</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Look for sell setups</td></tr>
+</table></div>
+
+<h3 id="recommended-pairings">Recommended Pairings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Partner Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Synergy Logic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">MACD</td><td class="px-4 py-2 border-b border-[#2a2e39]">RSI identifies extremes; MACD confirms trend change</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Moving Averages</td><td class="px-4 py-2 border-b border-[#2a2e39]">MA gives trend direction; RSI times entries</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">PVT/Volume</td><td class="px-4 py-2 border-b border-[#2a2e39]">RSI shows momentum; volume confirms conviction</td></tr>
+</table></div>
+
+<h3 id="example-combined-strategy">Example Combined Strategy</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+ENTRY CONDITIONS:
+&nbsp;&nbsp;RSI(14) &lt; 30                     // Oversold
+&nbsp;&nbsp;RSI(14) crosses above 30         // Reversal trigger
+&nbsp;&nbsp;MACD Histogram turns positive    // Momentum confirmation
+&nbsp;&nbsp;Price &gt; SMA(200)                 // Long-term uptrend
+
+ACTION: BUY with momentum and trend confirmation
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<h3 id="lag-characteristics">Lag Characteristics</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Component</td><td class="px-4 py-2 border-b border-[#2a2e39]">Approximate Lag</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">First Valid RSI</td><td class="px-4 py-2 border-b border-[#2a2e39]">~15 bars (Period + 1)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Full Convergence</td><td class="px-4 py-2 border-b border-[#2a2e39]">50+ bars for Wilder smoothing to stabilize</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Responsiveness</td><td class="px-4 py-2 border-b border-[#2a2e39]">Immediate at thresholds</td></tr>
+</table></div>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Reality Check: RSI values differ slightly across platforms due to Wilder's smoothing starting point. A 14-period RSI starting Jan 1 will differ from one starting Feb 1.</blockquote>
+
+<h3 id="false-signal-scenarios">False Signal Scenarios</h3>
+
+<p class="mb-4">1. The Trending Trap  </p>
+<p class="mb-4">   RSI stays > 70 for weeks in strong uptrend. Selling every touch of 70 loses money.</p>
+
+<p class="mb-4">2. Premature Reversal  </p>
+<p class="mb-4">   Entering on first touch of 30 before momentum actually shifts.</p>
+
+<p class="mb-4">3. Divergence Failure  </p>
+<p class="mb-4">   Divergence identified but price continues in original direction for weeks.</p>
+
+<h3 id="mitigation-strategies">Mitigation Strategies</h3>
+
+<p class="mb-4">- Regime-Adjusted Thresholds: In bull markets use 40/80; in bear markets use 20/60</p>
+<p class="mb-4">- Wait for Failure Swing: More reliable than simple threshold crosses</p>
+<p class="mb-4">- MACD Confirmation: Wait for MACD histogram to confirm RSI signal</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<h3 id="constance-brown's-range-shift">Constance Brown's Range Shift</h3>
+
+<p class="mb-4">In Bull Markets, RSI oscillates between 40 and 80 (support moves up). In Bear Markets, it oscillates between 20 and 60 (resistance moves down). If RSI fails to reach 70 in a rally and reverses at 60, it confirms bearish regime.</p>
+
+<h3 id="failure-swings—wilder's-favorite">Failure Swings—Wilder's Favorite</h3>
+
+<p class="mb-4">J. Welles Wilder considered Failure Swings more reliable than divergence:</p>
+<p class="mb-4">- Bullish: RSI drops below 30, rallies above 30, pulls back but stays above 30, then breaks above its rally high</p>
+<p class="mb-4">- Bearish: Mirror pattern above 70</p>
+
+<h3 id="the-2-period-rsi-connors">The 2-Period RSI (Connors)</h3>
+
+<p class="mb-4">For mean-reversion scalping, RSI(2) provides extreme sensitivity:</p>
+<p class="mb-4">- RSI(2) < 10 = Strong buy</p>
+<p class="mb-4">- RSI(2) > 90 = Strong sell</p>
+
+<p class="mb-4">Used with trend filters, this captures micro-reversals in strongly trending stocks.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"RSI tells you who's winning the daily tug-of-war—when one side wins too much, expect the other team to start pulling back."</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">RSI answers one question: "Are buyers or sellers winning, and by how much?"</p>
+
+<p class="mb-4">The calculation is elegant: separate each day's movement into gains and losses. Average them over N periods using Wilder's smoothing. Divide average gain by average loss to get Relative Strength (RS). Convert to a 0-100 scale.</p>
+
+<p class="mb-4">This bounded nature is RSI's killer feature. Unlike unbounded oscillators (ROC), RSI always fits on the same scale, making 30/70 universally applicable across any asset.</p>
+
+<p class="mb-4">The smoothing method creates "memory"—today's RSI is influenced by all historical data, not just the last N days. This provides stability but means RSI values depend on starting point.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<h3 id="backtest-evidence">Backtest Evidence</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RSI Signal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Next 5-Day Performance</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RSI < 30</td><td class="px-4 py-2 border-b border-[#2a2e39]">+1.8% average</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RSI cross below 70</td><td class="px-4 py-2 border-b border-[#2a2e39]">-0.9% average</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish Divergence</td><td class="px-4 py-2 border-b border-[#2a2e39]">+2.3% average</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Failure Swing (Bull)</td><td class="px-4 py-2 border-b border-[#2a2e39]">+3.1% average</td></tr>
+</table></div>
+
+<h3 id="why-it-works">Why It Works</h3>
+
+<p class="mb-4">RSI exploits the mean-reversion tendency of momentum. When buyers dominate (RSI > 70), they become exhausted; when sellers dominate (RSI < 30), they're often in capitulation. The bounded scale makes these extremes consistent and tradeable.</p>
+
+<h3 id="academic-reference">Academic Reference</h3>
+
+<p class="mb-4">Wilder's RSI was introduced in *New Concepts in Technical Trading Systems* (1978), one of the most influential technical analysis books ever written. Studies have confirmed RSI's edge in counter-trend strategies.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-actionable-strategy">3. Actionable Strategy</h2>
+
+<h3 id="strategy-name:-"the-signal-reinforcement-entry"">Strategy Name: "The Signal Reinforcement Entry"</h3>
+
+<p class="mb-4">Concept: Use RSI for timing, MACD for confirmation—never enter on RSI alone.</p>
+
+<p class="mb-4">Setup Requirements:</p>
+<p class="mb-4">1. Price > SMA(200) (uptrend context)</p>
+<p class="mb-4">2. RSI(14) drops below 35 (close to oversold)</p>
+
+<p class="mb-4">Entry Trigger:</p>
+<p class="mb-4">- RSI(14) crosses back above 30</p>
+<p class="mb-4">- MACD Histogram turns positive (or MACD crosses above Signal)</p>
+
+<p class="mb-4">Position Sizing:</p>
+<p class="mb-4">- Full size when RSI < 25 before bounce</p>
+<p class="mb-4">- Half size when RSI 25-30 before bounce</p>
+
+<p class="mb-4">Exit Rules:</p>
+<p class="mb-4">1. Primary Exit: RSI(14) > 70 and turns down</p>
+<p class="mb-4">2. Stop Loss: Below recent swing low</p>
+<p class="mb-4">3. Time Stop: 10 bars if RSI doesn't reach 50</p>
+
+<p class="mb-4">Example:</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Stock XYZ shows:
+&nbsp;&nbsp;Price = $48, above $42 SMA(200) ✓
+&nbsp;&nbsp;RSI(14) = 26, rises to 32 → RSI signal ✓
+&nbsp;&nbsp;MACD Histogram = -0.15 → +0.05 → MACD confirmation ✓
+&nbsp;&nbsp;
+&nbsp;&nbsp;Entry: $48
+&nbsp;&nbsp;Stop: $45 (recent low)
+&nbsp;&nbsp;
+&nbsp;&nbsp;RSI rises to 72 and hooks down
+&nbsp;&nbsp;Exit: $58 (+21%)
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<h3 id="failure-patterns">Failure Patterns</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pattern</td><td class="px-4 py-2 border-b border-[#2a2e39]">Description</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mitigation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Extended Overbought</td><td class="px-4 py-2 border-b border-[#2a2e39]">RSI > 70 for weeks in strong trend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use regime-adjusted levels</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Platform Discrepancy</td><td class="px-4 py-2 border-b border-[#2a2e39]">Different data lengths = different RSI</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use relative changes, not absolutes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Division by Zero</td><td class="px-4 py-2 border-b border-[#2a2e39]">All gains, no losses = undefined</td><td class="px-4 py-2 border-b border-[#2a2e39]">Code handles: if AvgLoss = 0, RSI = 100</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Smooth Decay</td><td class="px-4 py-2 border-b border-[#2a2e39]">Wilder's smoothing never fully forgets</td><td class="px-4 py-2 border-b border-[#2a2e39]">Accept as feature</td></tr>
+</table></div>
+
+<h3 id="psychological-traps">Psychological Traps</h3>
+
+<p class="mb-4">1. The "RSI 70 = Sell" Reflexive Trap  </p>
+<p class="mb-4">   In bull markets, RSI can stay above 70 for extended periods. Selling every touch shortens winners.</p>
+
+<p class="mb-4">2. Waiting for 30 Forever  </p>
+<p class="mb-4">   Strong uptrends may never offer RSI < 30. Use 40 as the new "oversold" in bull regimes.</p>
+
+<p class="mb-4">3. Divergence Obsession  </p>
+<p class="mb-4">   Divergences can persist for weeks before resolving. They're warnings, not triggers.</p>
+
+<h3 id="common-misinterpretations">Common Misinterpretations</h3>
+
+<p class="mb-4">- "RSI > 70 = overbought = sell" → In trends, 70 is just high, not necessarily reversal</p>
+<p class="mb-4">- "Divergence = immediate reversal" → Divergence can precede price by weeks</p>
+<p class="mb-4">- "RSI shows direction" → RSI shows momentum strength, not trend direction</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<h3 id="creator-attribution">Creator Attribution</h3>
+
+<p class="mb-4">J. Welles Wilder Jr. introduced RSI in his legendary 1978 book *New Concepts in Technical Trading Systems*. The book also introduced ATR, Parabolic SAR, and ADX—making it one of the most impactful works in technical analysis history.</p>
+
+<h3 id="parent/child-indicators">Parent/Child Indicators</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Relationship</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Stochastic RSI</td><td class="px-4 py-2 border-b border-[#2a2e39]">Child — RSI applied to RSI values</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Connors RSI</td><td class="px-4 py-2 border-b border-[#2a2e39]">Child — Composite RSI with streak and ROC</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Wilder's Smoothing</td><td class="px-4 py-2 border-b border-[#2a2e39]">Foundation — EMA variant used in calculation</td></tr>
+</table></div>
+
+<h3 id="recommended-readings">Recommended Readings</h3>
+
+<p class="mb-4">1. *New Concepts in Technical Trading Systems* — J. Welles Wilder Jr.</p>
+<p class="mb-4">2. *Short-Term Trading Strategies That Work* — Larry Connors</p>
+<p class="mb-4">3. *Technical Analysis Using Multiple Timeframes* — Brian Shannon</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h3 id="55-related-indicators-comparison">5.5 Related Indicators Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">RSI</td><td class="px-4 py-2 border-b border-[#2a2e39]">Stochastic</td><td class="px-4 py-2 border-b border-[#2a2e39]">CCI</td><td class="px-4 py-2 border-b border-[#2a2e39]">Williams %R</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Measures</td><td class="px-4 py-2 border-b border-[#2a2e39]">Gain/loss ratio</td><td class="px-4 py-2 border-b border-[#2a2e39]">Position in range</td><td class="px-4 py-2 border-b border-[#2a2e39]">Deviation from mean</td><td class="px-4 py-2 border-b border-[#2a2e39]">Inverse stochastic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Range</td><td class="px-4 py-2 border-b border-[#2a2e39]">0-100</td><td class="px-4 py-2 border-b border-[#2a2e39]">0-100</td><td class="px-4 py-2 border-b border-[#2a2e39]">Unbounded</td><td class="px-4 py-2 border-b border-[#2a2e39]">-100 to 0</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Overbought</td><td class="px-4 py-2 border-b border-[#2a2e39]">70</td><td class="px-4 py-2 border-b border-[#2a2e39]">80</td><td class="px-4 py-2 border-b border-[#2a2e39]">+100</td><td class="px-4 py-2 border-b border-[#2a2e39]">-20</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Oversold</td><td class="px-4 py-2 border-b border-[#2a2e39]">30</td><td class="px-4 py-2 border-b border-[#2a2e39]">20</td><td class="px-4 py-2 border-b border-[#2a2e39]">-100</td><td class="px-4 py-2 border-b border-[#2a2e39]">-80</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Smoothing</td><td class="px-4 py-2 border-b border-[#2a2e39]">Wilder (heavy)</td><td class="px-4 py-2 border-b border-[#2a2e39]">SMA (light)</td><td class="px-4 py-2 border-b border-[#2a2e39]">None</td><td class="px-4 py-2 border-b border-[#2a2e39]">None</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Best For</td><td class="px-4 py-2 border-b border-[#2a2e39]">Momentum strength</td><td class="px-4 py-2 border-b border-[#2a2e39]">Short-term timing</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mean reversion</td><td class="px-4 py-2 border-b border-[#2a2e39]">Quick extremes</td></tr>
+</table></div>
+
+<p class="mb-4">When to Use Which:</p>
+<p class="mb-4">- RSI — Primary momentum assessment, divergence trading</p>
+<p class="mb-4">- Stochastic — Fast entry timing in ranges</p>
+<p class="mb-4">- CCI — Unbounded mean reversion signals</p>
+<p class="mb-4">- Williams %R — Quick overbought/oversold reads</p>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h2 id="advanced-signal-reference">Advanced Signal Reference</h2>
+
+<h3 id="threshold-matrix">Threshold Matrix</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RSI Level</td><td class="px-4 py-2 border-b border-[#2a2e39]">Regime Context</td><td class="px-4 py-2 border-b border-[#2a2e39]">Market State</td><td class="px-4 py-2 border-b border-[#2a2e39]">Action</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">80-100</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bull</td><td class="px-4 py-2 border-b border-[#2a2e39]">Extremely strong</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trail stops; don't short</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">70-80</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bull</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong, normal overbought</td><td class="px-4 py-2 border-b border-[#2a2e39]">Hold; tighten stops</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">50-70</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bull</td><td class="px-4 py-2 border-b border-[#2a2e39]">Healthy</td><td class="px-4 py-2 border-b border-[#2a2e39]">Buy pullbacks</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">40-50</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bull</td><td class="px-4 py-2 border-b border-[#2a2e39]">Pullback zone</td><td class="px-4 py-2 border-b border-[#2a2e39]">Look for entries</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">30-40</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bull</td><td class="px-4 py-2 border-b border-[#2a2e39]">Oversold</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong buy zone</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">60-70</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bear</td><td class="px-4 py-2 border-b border-[#2a2e39]">Resistance zone</td><td class="px-4 py-2 border-b border-[#2a2e39]">Short rallies</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">40-60</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bear</td><td class="px-4 py-2 border-b border-[#2a2e39]">Neutral</td><td class="px-4 py-2 border-b border-[#2a2e39]">Avoid</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">20-40</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bear</td><td class="px-4 py-2 border-b border-[#2a2e39]">Weak selling</td><td class="px-4 py-2 border-b border-[#2a2e39]">Look for cover</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0-20</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bear</td><td class="px-4 py-2 border-b border-[#2a2e39]">Extreme panic</td><td class="px-4 py-2 border-b border-[#2a2e39]">Contrarian buy</td></tr>
+</table></div>
+
+<h3 id="signal-patterns">Signal Patterns</h3>
+
+<h4 id="buy-signal-oversold-exit">Buy Signal (Oversold Exit)</h4>
+<p class="mb-4">This classic Wilder signal triggers when RSI crosses back above 30 from oversold territory while in a bull trend context. The oversold condition (RSI < 30) indicates sellers have dominated recently, but the cross above 30 signals exhaustion and reversal. Historical backtests show +1.8% average performance over 5 days for this pattern.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def rsi_buy_signal(rsi_values, price, sma_200):
+&nbsp;&nbsp;&nbsp;&nbsp;condition_1 = rsi_values[-2] &lt; 30          # Was oversold
+&nbsp;&nbsp;&nbsp;&nbsp;condition_2 = rsi_values[-1] &gt;= 30         # Crossed above
+&nbsp;&nbsp;&nbsp;&nbsp;condition_3 = price &gt; sma_200              # Bull trend
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return all([condition_1, condition_2, condition_3])
+</code></pre>
+
+<h4 id="failure-swing-bullish">Failure Swing (Bullish)</h4>
+<p class="mb-4">Wilder considered Failure Swings more reliable than simple oversold readings—they require a specific sequence: dip below 30, rally above 30, pullback that holds above 30, then break above the rally high. This pattern confirms support has formed and buyers are gaining control. Historical backtests show +3.1% average performance, making it RSI's strongest signal.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def rsi_bullish_failure_swing(rsi_values):
+&nbsp;&nbsp;&nbsp;&nbsp;# Find: dip below 30, rally, hold above 30, break high
+&nbsp;&nbsp;&nbsp;&nbsp;recent_min = min(rsi_values[-10:-5])
+&nbsp;&nbsp;&nbsp;&nbsp;rally_high = max(rsi_values[-5:-2])
+&nbsp;&nbsp;&nbsp;&nbsp;pullback_low = min(rsi_values[-3:-1])
+&nbsp;&nbsp;&nbsp;&nbsp;current = rsi_values[-1]
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;dip_below_30 = recent_min &lt; 30
+&nbsp;&nbsp;&nbsp;&nbsp;held_above_30 = pullback_low &gt; 30
+&nbsp;&nbsp;&nbsp;&nbsp;broke_high = current &gt; rally_high
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return dip_below_30 and held_above_30 and broke_high
+</code></pre>
+
+<h4 id="regime-detection">Regime Detection</h4>
+<p class="mb-4">Constance Brown's insight: in bull markets, RSI oscillates between 40-80, while in bear markets it oscillates between 20-60. This function detects the current regime by averaging recent RSI values. Use 40/80 thresholds in bull regimes and 20/60 in bear regimes for dramatically improved signal quality.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def rsi_regime(rsi_values, lookback=50):
+&nbsp;&nbsp;&nbsp;&nbsp;avg = sum(rsi_values[-lookback:]) / lookback
+&nbsp;&nbsp;&nbsp;&nbsp;if avg &gt; 55:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;BULL&quot;  # Use 40/80 levels
+&nbsp;&nbsp;&nbsp;&nbsp;elif avg &lt; 45:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;BEAR&quot;  # Use 20/60 levels
+&nbsp;&nbsp;&nbsp;&nbsp;else:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;NEUTRAL&quot;  # Standard 30/70
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<h4 id="oversold-in-uptrend-scanner">Oversold in Uptrend Scanner</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+RSI(14) &lt; 30
+AND RSI(14) &gt; RSI(14)[1]
+AND Close &gt; SMA(Close, 200)
+</code></pre>
+
+<h4 id="failure-swing-setup">Failure Swing Setup</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+RSI(14) crossed below 30 within last 5 bars
+AND MIN(RSI(14), last 5 bars) &gt; 30
+AND RSI(14) &gt; MAX(RSI(14), bars 2-5)
+</code></pre>
+
+<h4 id="connors-rsi-extreme">Connors RSI Extreme</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+RSI(2) &lt; 10
+AND Close &gt; SMA(Close, 200)
+AND ADX(14) &gt; 20
+</code></pre>
+
+<h3 id="combination-strategies">Combination Strategies</h3>
+
+<h4 id="rsi-+-macd-confirmation">RSI + MACD Confirmation</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SETUP:
+&nbsp;&nbsp;Price &gt; SMA(200)
+&nbsp;&nbsp;RSI(14) &lt; 35
+
+ENTRY:
+&nbsp;&nbsp;RSI(14) crosses above 30
+&nbsp;&nbsp;AND MACD Histogram &gt; MACD Histogram[1]
+
+STOP_LOSS:
+&nbsp;&nbsp;Recent swing low
+
+TAKE_PROFIT:
+&nbsp;&nbsp;RSI(14) &gt; 70 AND RSI(14) &lt; RSI(14)[1]
+</code></pre>
+
+<h4 id="connors-2-period-mean-reversion">Connors 2-Period Mean Reversion</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FILTER:
+&nbsp;&nbsp;Close &gt; SMA(200)
+&nbsp;&nbsp;ADX(14) &gt; 20
+
+ENTRY:
+&nbsp;&nbsp;RSI(2) &lt; 10
+
+STOP_LOSS:
+&nbsp;&nbsp;Close &lt; SMA(200)
+
+TAKE_PROFIT:
+&nbsp;&nbsp;RSI(2) &gt; 70
+&nbsp;&nbsp;OR Close &gt; 5-day high
+</code></pre>
+
+
+
+
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#formula" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Formula</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#default-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Default Parameters</a>
+<a href="#timeframe-recommendations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Timeframe Recommendations</a>
+<a href="#why-these-values" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why These Values?</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#best-conditions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Best Conditions</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#asset-class-suitability" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Asset Class Suitability</a>
+<a href="#5-entry-signals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Entry Signals</a>
+<a href="#primary-buy-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Buy Signal</a>
+<a href="#primary-sell-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Sell Signal</a>
+<a href="#6-filter-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Filter Usage</a>
+<a href="#filter-rules" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Filter Rules</a>
+<a href="#recommended-pairings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Pairings</a>
+<a href="#example-combined-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Example Combined Strategy</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#lag-characteristics" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Lag Characteristics</a>
+<a href="#false-signal-scenarios" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">False Signal Scenarios</a>
+<a href="#mitigation-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Mitigation Strategies</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#constance-brown's-range-shift" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Constance Brown's Range Shift</a>
+<a href="#failure-swings—wilder's-favorite" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Failure Swings—Wilder's Favorite</a>
+<a href="#the-2-period-rsi-connors" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The 2-Period RSI (Connors)</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#backtest-evidence" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Backtest Evidence</a>
+<a href="#why-it-works" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why It Works</a>
+<a href="#academic-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Academic Reference</a>
+<a href="#3-actionable-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Strategy</a>
+<a href="#strategy-name:-"the-signal-reinforcement-entry"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Strategy Name: "The Signal Reinforcement Entry"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#failure-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Failure Patterns</a>
+<a href="#psychological-traps" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Psychological Traps</a>
+<a href="#common-misinterpretations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common Misinterpretations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#parent/child-indicators" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Parent/Child Indicators</a>
+<a href="#recommended-readings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Readings</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Matrix</a>
+<a href="#signal-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Signal Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "RelativeStrengthIndex",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 14;
+                const result = RelativeStrengthIndex.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/RelativeStrengthIndex.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[{"id": "period", "label": "Period (14)", "type": "number", "value": 14, "min": 2, "max": 100}]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": true, "plots": {"main": {"label": "RelativeStrengthIndex", "color": "#4f46e5", "type": "line"}}}
+    </script>
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code - loaded externally before this block
+
+        // 2. Configuration (XSS-safe via script type="application/json")
+        try {
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 14;
+                const result = RelativeStrengthIndex.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+    </script>
+
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
+
+</body>
+</html>

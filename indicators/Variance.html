@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variance - I ant I Investigates</title>
+    <meta name="description" content="Variance - Technical Indicator">
+    <meta name="keywords" content="Variance, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/variance.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Variance - I ant I Investigates">
+    <meta property="og:description" content="Variance - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/variance.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/variance.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Variance">
+    <meta name="twitter:description" content="Variance - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/variance.png">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
+
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">Variance</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="flex space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">Variance</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">Variance is a statistical measure of price dispersion that quantifies how far individual price observations deviate from their mean over a rolling period—the foundation of all volatility-based trading indicators.</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION["INGESTION<br/>Data Capture"];
+A["Observe closing prices<br/>(daily/periodic settlements)"];
+B["Set lookback period<br/>(statistical sample size)"];
+end;
+subgraph EVALUATION["EVALUATION<br/>Initial Assessment"];
+C["Calculate rolling mean price<br/>(center of distribution)"];
+D["Measure each price's deviation<br/>(distance from mean)"];
+end;
+subgraph WEIGHTING["WEIGHTING<br/>Normalization"];
+E["Square each deviation<br/>(eliminate negatives, amplify outliers)"];
+F["Average squared deviations<br/>(variance in price² units)"];
+end;
+subgraph SYNTHESIS["SYNTHESIS<br/>Pattern Detection"];
+G{"What is the variance level?"};
+H["High variance: Volatile market"];
+I["Low variance: Calm/compressed market"];
+J["Rising variance: Regime change"];
+end;
+subgraph OUTCOME["OUTCOME<br/>Signal Generation"];
+K["Variance spike > 2× average:<br/>Reduce position size, widen stops"];
+L["Variance at historic lows:<br/>Breakout imminent, prepare for expansion"];
+M["Variance-adjusted sizing:<br/>Target constant risk per trade"];
+end;
+A --> C;
+B --> C;
+C --> D;
+D --> E;
+E --> F;
+F --> G;
+G -->|"High"| H;
+G -->|"Low"| I;
+G -->|"Rising"| J;
+H --> K;
+I --> L;
+J --> M;
+style INGESTION fill:#e3f2fd;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#e8f5e9;
+style SYNTHESIS fill:#fce4ec;
+style OUTCOME fill:#f3e5f5;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/Variance.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="variance">Variance</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: Variance (Rolling Statistical Variance)  </p>
+<p class="mb-4">Abbreviation: VAR  </p>
+<p class="mb-4">Category: Volatility / Statistical  </p>
+<p class="mb-4">Creator: Statistical concept (18th century); Applied to trading by Harry Markowitz (Modern Portfolio Theory, 1952)  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: Variance is a statistical measure of price dispersion that quantifies how far individual price observations deviate from their mean over a rolling period—the foundation of all volatility-based trading indicators.</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="formula">Formula</h3>
+
+<p class="mb-4">$$\sigma^2 = \frac{\sum_{i=1}^{N} (Close_i - \bar{Close})^2}{N}$$</p>
+
+<p class="mb-4">Where:</p>
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Component</td><td class="px-4 py-2 border-b border-[#2a2e39]">Formula</td><td class="px-4 py-2 border-b border-[#2a2e39]">Purpose</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">$\bar{Close}$</td><td class="px-4 py-2 border-b border-[#2a2e39]">$\frac{\sum Close_i}{N}$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mean (simple average) of closes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">$(Close_i - \bar{Close})^2$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Squared deviation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Distance from mean, always positive</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">$N$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Lookback period</td><td class="px-4 py-2 border-b border-[#2a2e39]">Number of observations</td></tr>
+</table></div>
+
+<h3 id="calculation-steps">Calculation Steps</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Step</td><td class="px-4 py-2 border-b border-[#2a2e39]">Operation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Result</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1</td><td class="px-4 py-2 border-b border-[#2a2e39]">Calculate N-period SMA of Close</td><td class="px-4 py-2 border-b border-[#2a2e39]">$\bar{Close}$</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">2</td><td class="px-4 py-2 border-b border-[#2a2e39]">Subtract mean from each close</td><td class="px-4 py-2 border-b border-[#2a2e39]">Deviation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">Square each deviation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Squared Deviation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">4</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sum all squared deviations</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sum of Squares</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">5</td><td class="px-4 py-2 border-b border-[#2a2e39]">Divide by N</td><td class="px-4 py-2 border-b border-[#2a2e39]">Variance</td></tr>
+</table></div>
+
+<h3 id="notes-on-population-vs-sample-variance">Notes on Population vs. Sample Variance</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Divisor</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use Case</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Population Variance</td><td class="px-4 py-2 border-b border-[#2a2e39]">N</td><td class="px-4 py-2 border-b border-[#2a2e39]">Full dataset known (this implementation)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sample Variance</td><td class="px-4 py-2 border-b border-[#2a2e39]">N-1</td><td class="px-4 py-2 border-b border-[#2a2e39]">Estimating from sample (Bessel's correction)</td></tr>
+</table></div>
+
+<p class="mb-4">This implementation uses population variance (divide by N).</p>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">Think of variance like weather prediction accuracy. If temperatures vary from 68°F to 72°F, the "variance" is low—you can predict tomorrow with confidence. If they swing from 40°F to 90°F, variance is high—predictions are unreliable. In markets, low variance means predictable moves; high variance means expect the unexpected.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<h3 id="default-parameters">Default Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rationale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">20</td><td class="px-4 py-2 border-b border-[#2a2e39]">One trading month; balances responsiveness and stability</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Short Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">10-14</td><td class="px-4 py-2 border-b border-[#2a2e39]">More responsive to recent volatility</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Long Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">50-100</td><td class="px-4 py-2 border-b border-[#2a2e39]">Captures structural volatility regimes</td></tr>
+</table></div>
+
+<h3 id="timeframe-recommendations">Timeframe Recommendations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trading Style</td><td class="px-4 py-2 border-b border-[#2a2e39]">Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">Timeframe</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Day Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">10-20</td><td class="px-4 py-2 border-b border-[#2a2e39]">5-min to 1-hour</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Swing Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">20-30</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Position Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">50-100</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily/Weekly</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Portfolio Management</td><td class="px-4 py-2 border-b border-[#2a2e39]">252 (1 year)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Monthly</td></tr>
+</table></div>
+
+<h3 id="why-these-values">Why These Values?</h3>
+
+<p class="mb-4">The 20-period setting captures approximately one month of daily data, providing a statistically meaningful sample while remaining responsive to regime changes. For annualized volatility, multiply 20-day variance by (252/20) or use 252-day variance directly.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<h3 id="best-conditions">Best Conditions</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Why It Works</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility Regime Identification</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rising variance signals regime change</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Risk Normalization</td><td class="px-4 py-2 border-b border-[#2a2e39]">Position sizing based on volatility</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Mean Reversion Boundaries</td><td class="px-4 py-2 border-b border-[#2a2e39]">High variance = wider trading bands</td></tr>
+</table></div>
+
+<h3 id="limitations">Limitations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Single-Shock Sensitivity</td><td class="px-4 py-2 border-b border-[#2a2e39]">One extreme bar enormously impacts variance</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pure Historical Measure</td><td class="px-4 py-2 border-b border-[#2a2e39]">No predictive power; only describes past</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Scale Issues</td><td class="px-4 py-2 border-b border-[#2a2e39]">Raw variance is in price² units (hard to interpret)</td></tr>
+</table></div>
+
+<h3 id="asset-class-suitability">Asset Class Suitability</h3>
+
+<p class="mb-4">- Equities — Foundation of portfolio risk management</p>
+<p class="mb-4">- Options — Variance underlies implied volatility</p>
+<p class="mb-4">- Forex — Used in position sizing</p>
+<p class="mb-4">- Crypto — Critical for managing extreme volatility</p>
+<p class="mb-4">- All Assets — Universal statistical measure</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-entry-signals">5. Entry Signals</h2>
+
+<p class="mb-4">Variance is not typically used for entry signals directly—it's a volatility measure. However:</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Implication</td><td class="px-4 py-2 border-b border-[#2a2e39]">Action</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Variance Spike</td><td class="px-4 py-2 border-b border-[#2a2e39]">Variance > 2× SMA(Variance)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility expansion</td><td class="px-4 py-2 border-b border-[#2a2e39]">Reduce position size; widen stops</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Variance Collapse</td><td class="px-4 py-2 border-b border-[#2a2e39]">Variance < 0.5× SMA(Variance)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility contraction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Expect breakout; prepare for expansion</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Variance Regime Change</td><td class="px-4 py-2 border-b border-[#2a2e39]">Variance crosses above percentile 80</td><td class="px-4 py-2 border-b border-[#2a2e39]">High volatility regime</td><td class="px-4 py-2 border-b border-[#2a2e39]">Switch to mean-reversion strategies</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Low Variance Breakout</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price breaks range + Variance rising</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend initiation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Enter in breakout direction</td></tr>
+</table></div>
+
+<h3 id="volatility-expansion-alert">Volatility Expansion Alert</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF Variance rises above 2× its 50-day SMA
+THEN → ALERT: Volatility expansion
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reduce position sizes
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Widen stop losses
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Consider hedging
+</code></pre>
+
+<h3 id="mean-reversion-setup">Mean-Reversion Setup</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF Variance &gt; 90th percentile (6-month lookback)
+AND Price &gt; 2 StdDev above SMA(20)
+THEN → SELL (Fade the extreme)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Expect reversion to mean
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-filter-usage">6. Filter Usage</h2>
+
+<p class="mb-4">Variance excels as a position sizing engine and regime filter.</p>
+
+<h3 id="filter-rules">Filter Rules</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rule</td><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Variance > Threshold</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Reduce position size; increase risk buffer</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Variance < Threshold</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Full position size; tighter stops</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Variance Rising</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Expect wider swings; widen bands</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Variance Falling</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Consolidation; range-bound strategies</td></tr>
+</table></div>
+
+<h3 id="recommended-pairings">Recommended Pairings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Partner Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Synergy Logic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bollinger Bands</td><td class="px-4 py-2 border-b border-[#2a2e39]">BB Width = f(√Variance); volatility-adjusted bands</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">ATR</td><td class="px-4 py-2 border-b border-[#2a2e39]">Both measure volatility; variance is more sensitive</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Position Sizing Formulas</td><td class="px-4 py-2 border-b border-[#2a2e39]">Kelly, Fixed Fractional, Volatility-targeted sizing</td></tr>
+</table></div>
+
+<h3 id="example-combined-strategy">Example Combined Strategy</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+POSITION SIZING:
+&nbsp;&nbsp;Base Size = $10,000
+&nbsp;&nbsp;Target Volatility = 2% daily
+&nbsp;&nbsp;Current StdDev = √Variance(20)
+&nbsp;&nbsp;
+&nbsp;&nbsp;Position Size = Base Size × (Target Volatility / Current StdDev)
+
+EXAMPLE:
+&nbsp;&nbsp;If Current StdDev = 3%, Position = $10K × (2%/3%) = $6,667
+&nbsp;&nbsp;If Current StdDev = 1%, Position = $10K × (2%/1%) = $20,000 (cap at max)
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<h3 id="lag-characteristics">Lag Characteristics</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Component</td><td class="px-4 py-2 border-b border-[#2a2e39]">Characteristic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">First Valid Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Period bars (N)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Responsiveness</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate (depends on period)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Outlier Sensitivity</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very High (squared deviations)</td></tr>
+</table></div>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Outlier Warning: Because variance squares deviations, a single extreme bar (e.g., gap or flash crash) can dominate the entire calculation. Consider robust alternatives like MAD (Median Absolute Deviation) for outlier-prone assets.</blockquote>
+
+<h3 id="false-signal-scenarios">False Signal Scenarios</h3>
+
+<p class="mb-4">1. Single-Bar Spike  </p>
+<p class="mb-4">   One extreme move can push variance to historical highs for the entire lookback period. Watch for this artificial inflation.</p>
+
+<p class="mb-4">2. Regime Persistence Assumption  </p>
+<p class="mb-4">   Variance describes the past but doesn't predict the future. Low variance can suddenly become high (and vice versa).</p>
+
+<p class="mb-4">3. Implied vs. Realized Mismatch  </p>
+<p class="mb-4">   Options markets price in implied variance; realized variance often differs. Don't confuse the two.</p>
+
+<h3 id="mitigation-strategies">Mitigation Strategies</h3>
+
+<p class="mb-4">- Exponential Weighting: Use EWMA (Exponentially Weighted Moving Average) variance for more recent-data emphasis</p>
+<p class="mb-4">- Robust Variance: Consider trimmed variance or MAD for outlier resistance</p>
+<p class="mb-4">- Percentile Context: Interpret variance relative to its historical distribution</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<h3 id="the-variance-standard-deviation-relationship">The Variance-Standard Deviation Relationship</h3>
+
+<p class="mb-4">Most traders use Standard Deviation (√Variance) because it's in the same units as price. But variance has a key advantage: it's additive across independent assets. Portfolio variance = Sum of individual variances (under certain conditions). This makes variance the foundation of portfolio optimization.</p>
+
+<h3 id="variance-ratio-tests-vr">Variance Ratio Tests (VR)</h3>
+
+<p class="mb-4">The variance ratio tests whether price follows a random walk:</p>
+<p class="mb-4">$$VR(q) = \frac{Variance(q-period\ returns)}{q \times Variance(1-period\ returns)}$$</p>
+
+<p class="mb-4">If VR = 1, price is random walk. VR > 1 indicates trending; VR < 1 indicates mean reversion. This is a quant's edge for regime detection.</p>
+
+<h3 id="volatility-targeting-strategy">Volatility Targeting Strategy</h3>
+
+<p class="mb-4">Many hedge funds use variance for "volatility targeting":</p>
+<p class="mb-4">1. Set target volatility (e.g., 10% annualized)</p>
+<p class="mb-4">2. Calculate current realized variance (annualized)</p>
+<p class="mb-4">3. Adjust position size inversely: Position = Target Vol / Current Vol</p>
+
+<p class="mb-4">This creates consistent risk exposure regardless of market conditions.</p>
+
+<h3 id="the-"calm-before-the-storm"-pattern">The "Calm Before the Storm" Pattern</h3>
+
+<p class="mb-4">Watch for:</p>
+<p class="mb-4">- Variance at multi-month lows</p>
+<p class="mb-4">- Price consolidating in tight range</p>
+<p class="mb-4">- Bollinger Bands contracting</p>
+
+<p class="mb-4">This setup often precedes explosive moves. You don't know the direction, but you know the magnitude will be large.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"Variance is the market's heartbeat monitor—when the rhythm steadies, prepare for turbulence; when it races, calm is returning."</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">Variance answers one question: "How wildly is price swinging around its average?"</p>
+
+<p class="mb-4">Imagine you're measuring how "consistent" an athlete is:</p>
+<p class="mb-4">- Player A scores 10, 10, 10, 10 points per game (low variance)</p>
+<p class="mb-4">- Player B scores 0, 20, 5, 15 points per game (high variance)</p>
+
+<p class="mb-4">Both average 10 points, but Player A is predictable; Player B is not. Variance captures this difference mathematically.</p>
+
+<p class="mb-4">In trading terms:</p>
+<p class="mb-4">- Low variance = Price hovers near its moving average (ranging market)</p>
+<p class="mb-4">- High variance = Price swings far from its moving average (volatile market)</p>
+
+<p class="mb-4">The calculation is simple: measure how far each price is from the average, square it (to make all values positive and emphasize outliers), and average those squared deviations. The result is variance—a single number summarizing price dispersion.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<h3 id="why-it-works">Why It Works</h3>
+
+<p class="mb-4">Variance provides an edge through risk normalization:</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Strategy</td><td class="px-4 py-2 border-b border-[#2a2e39]">Without Variance Adjustment</td><td class="px-4 py-2 border-b border-[#2a2e39]">With Variance Adjustment</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Win Rate</td><td class="px-4 py-2 border-b border-[#2a2e39]">Same</td><td class="px-4 py-2 border-b border-[#2a2e39]">Same</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Risk per Trade</td><td class="px-4 py-2 border-b border-[#2a2e39]">Variable</td><td class="px-4 py-2 border-b border-[#2a2e39]">Constant</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Equity Curve</td><td class="px-4 py-2 border-b border-[#2a2e39]">Choppy</td><td class="px-4 py-2 border-b border-[#2a2e39]">Smooth</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Max Drawdown</td><td class="px-4 py-2 border-b border-[#2a2e39]">Higher</td><td class="px-4 py-2 border-b border-[#2a2e39]">Lower</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sharpe Ratio</td><td class="px-4 py-2 border-b border-[#2a2e39]">Lower</td><td class="px-4 py-2 border-b border-[#2a2e39]">Higher</td></tr>
+</table></div>
+
+<p class="mb-4">By sizing positions inversely to variance, you take smaller positions in volatile markets (when losses are bigger) and larger positions in calm markets (when losses are smaller).</p>
+
+<h3 id="backtest-evidence">Backtest Evidence</h3>
+
+<p class="mb-4">Studies on volatility-targeted portfolios show:</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Metric</td><td class="px-4 py-2 border-b border-[#2a2e39]">Constant Position Size</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility-Targeted</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Annual Return</td><td class="px-4 py-2 border-b border-[#2a2e39]">8.2%</td><td class="px-4 py-2 border-b border-[#2a2e39]">8.5%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Annual Volatility</td><td class="px-4 py-2 border-b border-[#2a2e39]">15.2%</td><td class="px-4 py-2 border-b border-[#2a2e39]">10.0%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Max Drawdown</td><td class="px-4 py-2 border-b border-[#2a2e39]">-35%</td><td class="px-4 py-2 border-b border-[#2a2e39]">-20%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sharpe Ratio</td><td class="px-4 py-2 border-b border-[#2a2e39]">0.54</td><td class="px-4 py-2 border-b border-[#2a2e39]">0.85</td></tr>
+</table></div>
+
+<p class="mb-4">Same returns, dramatically better risk-adjusted performance.</p>
+
+<h3 id="academic-reference">Academic Reference</h3>
+
+<p class="mb-4">Harry Markowitz introduced variance as the fundamental measure of investment risk in his 1952 paper "Portfolio Selection," which earned him the Nobel Prize. Modern Portfolio Theory (MPT) is built entirely on the variance-covariance framework.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-actionable-strategy">3. Actionable Strategy</h2>
+
+<h3 id="strategy-name:-"volatility-targeted-position-sizing"">Strategy Name: "Volatility-Targeted Position Sizing"</h3>
+
+<p class="mb-4">Concept: Adjust position size inversely to realized variance to maintain constant risk exposure.</p>
+
+<p class="mb-4">Indicators Required:</p>
+<p class="mb-4">- Variance(20)</p>
+<p class="mb-4">- SMA(20)</p>
+
+<p class="mb-4">Setup Requirements:</p>
+<p class="mb-4">1. Define target volatility (e.g., 2% daily)</p>
+<p class="mb-4">2. Calculate current standard deviation (√Variance)</p>
+
+<p class="mb-4">Position Sizing Formula:</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Current_StdDev = √Variance(20)
+Target_StdDev = 0.02 (2% daily)
+
+Position_Multiplier = Target_StdDev / Current_StdDev
+Position_Size = Base_Size × Position_Multiplier
+</code></pre>
+
+<p class="mb-4">Constraints:</p>
+<p class="mb-4">- Cap at 2× base size (avoid over-leveraging in low vol)</p>
+<p class="mb-4">- Floor at 0.25× base size (maintain exposure in high vol)</p>
+
+<p class="mb-4">Exit Rules:</p>
+<p class="mb-4">- Standard exit signals from primary strategy</p>
+<p class="mb-4">- No timing based on variance (it's for sizing only)</p>
+
+<p class="mb-4">Example:</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Base Position: 100 shares
+Target StdDev: 2% daily
+
+Scenario A - Low Vol:
+&nbsp;&nbsp;Current StdDev = 1%
+&nbsp;&nbsp;Multiplier = 2% / 1% = 2.0 (cap at 2.0)
+&nbsp;&nbsp;Position = 200 shares
+
+Scenario B - High Vol:
+&nbsp;&nbsp;Current StdDev = 4%
+&nbsp;&nbsp;Multiplier = 2% / 4% = 0.5
+&nbsp;&nbsp;Position = 50 shares
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<h3 id="failure-patterns">Failure Patterns</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pattern</td><td class="px-4 py-2 border-b border-[#2a2e39]">Description</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mitigation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Flash Crash Distortion</td><td class="px-4 py-2 border-b border-[#2a2e39]">Single extreme bar dominates variance</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use EWMA or robust variance</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility Clustering Lag</td><td class="px-4 py-2 border-b border-[#2a2e39]">Variance adapts slowly to regime shifts</td><td class="px-4 py-2 border-b border-[#2a2e39]">Shorten lookback or use GARCH</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Mean Reversion Assumption</td><td class="px-4 py-2 border-b border-[#2a2e39]">Assumes variance reverts to normal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Accept regime change possibility</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Squared Units</td><td class="px-4 py-2 border-b border-[#2a2e39]">Raw variance hard to interpret</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use Standard Deviation (√Variance)</td></tr>
+</table></div>
+
+<h3 id="psychological-traps">Psychological Traps</h3>
+
+<p class="mb-4">1. "Low Variance = Safe" Trap  </p>
+<p class="mb-4">   Low variance often precedes explosive moves. "Safe" can become dangerous in bars.</p>
+
+<p class="mb-4">2. Ignoring Outliers  </p>
+<p class="mb-4">   One bar outside 3 standard deviations can represent more risk than weeks of normal trading.</p>
+
+<p class="mb-4">3. Overconfidence in Normal Distribution  </p>
+<p class="mb-4">   Markets have "fat tails"—extreme moves occur far more often than variance-based models predict.</p>
+
+<h3 id="common-misinterpretations">Common Misinterpretations</h3>
+
+<p class="mb-4">- "Low variance is good" → It's calm now; storm may be coming</p>
+<p class="mb-4">- "Variance predicts direction" → It measures magnitude, not direction</p>
+<p class="mb-4">- "Same as volatility" → Volatility is usually StdDev, not variance</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<h3 id="creator-attribution">Creator Attribution</h3>
+
+<p class="mb-4">Harry Markowitz introduced variance as the risk measure in Modern Portfolio Theory (1952). The statistical concept itself dates to the 18th century (Abraham de Moivre, Carl Friedrich Gauss). Trading applications were expanded by academics and practitioners including William Sharpe (CAPM) and Fischer Black & Myron Scholes (options pricing).</p>
+
+<h3 id="parent/child-indicators">Parent/Child Indicators</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Relationship</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Deviation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Child — √Variance</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bollinger Bands</td><td class="px-4 py-2 border-b border-[#2a2e39]">Child — Uses StdDev for band width</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Historical Volatility</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sibling — Often StdDev annualized</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Covariance</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sibling — Variance between two variables</td></tr>
+</table></div>
+
+<h3 id="recommended-readings">Recommended Readings</h3>
+
+<p class="mb-4">1. "Portfolio Selection" — Harry Markowitz (1952)</p>
+<p class="mb-4">2. *A Random Walk Down Wall Street* — Burton Malkiel</p>
+<p class="mb-4">3. *Options, Futures, and Other Derivatives* — John Hull</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h3 id="55-related-indicators-comparison">5.5 Related Indicators Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">Variance</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Deviation</td><td class="px-4 py-2 border-b border-[#2a2e39]">ATR</td><td class="px-4 py-2 border-b border-[#2a2e39]">Historical Volatility</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Units</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price²</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price</td><td class="px-4 py-2 border-b border-[#2a2e39]">Percentage</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Outlier Sensitivity</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very High</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Best Use</td><td class="px-4 py-2 border-b border-[#2a2e39]">Portfolio math</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bollinger Bands</td><td class="px-4 py-2 border-b border-[#2a2e39]">Position sizing</td><td class="px-4 py-2 border-b border-[#2a2e39]">Options pricing</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Interpretation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Difficult</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td><td class="px-4 py-2 border-b border-[#2a2e39]">Easy</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Computation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Simple</td><td class="px-4 py-2 border-b border-[#2a2e39]">Simple</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td><td class="px-4 py-2 border-b border-[#2a2e39]">Simple</td></tr>
+</table></div>
+
+<p class="mb-4">When to Use Which:</p>
+<p class="mb-4">- Variance — Portfolio optimization, mathematical modeling</p>
+<p class="mb-4">- Standard Deviation — Bollinger Bands, human-readable volatility</p>
+<p class="mb-4">- ATR — Position sizing, stop placement</p>
+<p class="mb-4">- Historical Volatility — Options trading, annualized risk measurement</p>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h2 id="advanced-signal-reference">Advanced Signal Reference</h2>
+
+<h3 id="threshold-matrix">Threshold Matrix</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Variance Percentile</td><td class="px-4 py-2 border-b border-[#2a2e39]">Market State</td><td class="px-4 py-2 border-b border-[#2a2e39]">Action</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0-10th</td><td class="px-4 py-2 border-b border-[#2a2e39]">Extreme compression</td><td class="px-4 py-2 border-b border-[#2a2e39]">Breakout imminent; prepare for expansion</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">10-25th</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low volatility</td><td class="px-4 py-2 border-b border-[#2a2e39]">Range strategies; tight stops</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">25-75th</td><td class="px-4 py-2 border-b border-[#2a2e39]">Normal volatility</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard strategies</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">75-90th</td><td class="px-4 py-2 border-b border-[#2a2e39]">High volatility</td><td class="px-4 py-2 border-b border-[#2a2e39]">Reduce size; widen stops</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">90-100th</td><td class="px-4 py-2 border-b border-[#2a2e39]">Extreme expansion</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mean reversion likely; fade extremes</td></tr>
+</table></div>
+
+<h3 id="signal-patterns">Signal Patterns</h3>
+
+<h4 id="volatility-expansion-alert">Volatility Expansion Alert</h4>
+<p class="mb-4">This pattern detects when variance spikes above its historical average, signaling regime change from low to high volatility. When variance exceeds 2× its moving average, traders should reduce position sizes and widen stops; above 3× indicates extreme expansion often associated with capitulation or blow-off tops. The "calm before the storm" pattern (variance at historic lows) often precedes these expansion alerts.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def variance_expansion_alert(variance, variance_sma):
+&nbsp;&nbsp;&nbsp;&nbsp;expansion = variance &gt; 2 * variance_sma
+&nbsp;&nbsp;&nbsp;&nbsp;extreme_expansion = variance &gt; 3 * variance_sma
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if extreme_expansion:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;EXTREME_EXPANSION&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;elif expansion:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;EXPANSION&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;else:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;NORMAL&quot;
+</code></pre>
+
+<h4 id="position-sizing-calculator">Position Sizing Calculator</h4>
+<p class="mb-4">Volatility targeting uses variance to maintain consistent risk exposure across different market regimes. By sizing positions inversely to current standard deviation (√Variance), you take smaller positions in volatile markets and larger positions in calm markets. This approach improves Sharpe Ratio by 50%+ in backtests by smoothing equity curves and reducing drawdowns.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def calculate_position_size(base_size, variance, target_vol=0.02):
+&nbsp;&nbsp;&nbsp;&nbsp;current_std = math.sqrt(variance)
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if current_std == 0:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return base_size
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;multiplier = target_vol / current_std
+&nbsp;&nbsp;&nbsp;&nbsp;multiplier = max(0.25, min(2.0, multiplier))  # Cap at 0.25-2.0 range
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return base_size * multiplier
+</code></pre>
+
+<h4 id="volatility-regime-classification">Volatility Regime Classification</h4>
+<p class="mb-4">This function classifies the current volatility environment using percentile ranking against historical variance—essential for strategy selection. Low volatility (below 25th percentile) favors range-bound strategies; high volatility (above 75th) favors mean reversion; compressed regimes (below 10th) signal imminent breakouts. The classification helps traders adapt their approach to current market conditions rather than applying one-size-fits-all rules.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def classify_volatility_regime(variance, historical_variances):
+&nbsp;&nbsp;&nbsp;&nbsp;percentile = percentile_rank(variance, historical_variances)
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if percentile &lt; 10:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;COMPRESSED&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;elif percentile &lt; 25:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;LOW&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;elif percentile &lt; 75:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;NORMAL&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;elif percentile &lt; 90:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;HIGH&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;else:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;EXTREME&quot;
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<h4 id="volatility-compression-scanner">Volatility Compression Scanner</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SET Variance = Var(Close, 20)
+SET Variance_Pct = Percentile(Variance, 252)  // 1-year lookback
+
+FILTER WHERE:
+&nbsp;&nbsp;Variance_Pct &lt; 10                           // Bottom 10th percentile
+&nbsp;&nbsp;AND Range(High, Low, 20) / Close &lt; 0.05     // Tight 20-day range
+&nbsp;&nbsp;// Breakout imminent
+</code></pre>
+
+<h4 id="high-volatility-mean-reversion-scanner">High Volatility Mean-Reversion Scanner</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SET Variance = Var(Close, 20)
+SET StdDev = √Variance
+SET Distance = (Close - SMA(Close, 20)) / StdDev
+
+FILTER WHERE:
+&nbsp;&nbsp;Variance_Pct &gt; 90                           // Top 10th percentile (high vol)
+&nbsp;&nbsp;AND ABS(Distance) &gt; 2.0                     // Price 2+ StdDev from mean
+&nbsp;&nbsp;// Mean reversion trade
+</code></pre>
+
+<h3 id="combination-strategies">Combination Strategies</h3>
+
+<h4 id="variance-adjusted-bollinger-band-strategy">Variance-Adjusted Bollinger Band Strategy</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SETUP:
+&nbsp;&nbsp;StdDev = √Variance(20)
+&nbsp;&nbsp;Upper_Band = SMA(20) + (2 × StdDev)
+&nbsp;&nbsp;Lower_Band = SMA(20) - (2 × StdDev)
+
+ENTRY (LONG):
+&nbsp;&nbsp;Close &lt; Lower_Band
+&nbsp;&nbsp;AND Variance &gt; 75th percentile             // High vol (bands wide)
+
+ENTRY (SHORT):
+&nbsp;&nbsp;Close &gt; Upper_Band
+&nbsp;&nbsp;AND Variance &gt; 75th percentile             // High vol (bands wide)
+
+POSITION_SIZE:
+&nbsp;&nbsp;Inversely proportional to Variance
+
+STOP_LOSS:
+&nbsp;&nbsp;1.5 × StdDev beyond entry band
+</code></pre>
+
+<h4 id="volatility-breakout-strategy">Volatility Breakout Strategy</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FILTER:
+&nbsp;&nbsp;Variance at 20-day low                     // Compression
+
+ENTRY:
+&nbsp;&nbsp;Price breaks 20-day high or low
+&nbsp;&nbsp;AND Volume &gt; 1.5 × Average
+
+POSITION_SIZE:
+&nbsp;&nbsp;Normal (volatility is low → good entry)
+
+STOP_LOSS:
+&nbsp;&nbsp;Opposite side of breakout range
+
+EXIT:
+&nbsp;&nbsp;When Variance reaches 80th percentile      // Expansion complete
+</code></pre>
+
+
+
+
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#formula" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Formula</a>
+<a href="#calculation-steps" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Calculation Steps</a>
+<a href="#notes-on-population-vs-sample-variance" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Notes on Population vs. Sample Variance</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#default-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Default Parameters</a>
+<a href="#timeframe-recommendations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Timeframe Recommendations</a>
+<a href="#why-these-values" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why These Values?</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#best-conditions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Best Conditions</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#asset-class-suitability" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Asset Class Suitability</a>
+<a href="#5-entry-signals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Entry Signals</a>
+<a href="#volatility-expansion-alert" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Volatility Expansion Alert</a>
+<a href="#mean-reversion-setup" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Mean-Reversion Setup</a>
+<a href="#6-filter-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Filter Usage</a>
+<a href="#filter-rules" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Filter Rules</a>
+<a href="#recommended-pairings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Pairings</a>
+<a href="#example-combined-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Example Combined Strategy</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#lag-characteristics" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Lag Characteristics</a>
+<a href="#false-signal-scenarios" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">False Signal Scenarios</a>
+<a href="#mitigation-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Mitigation Strategies</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#the-variance-standard-deviation-relationship" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The Variance-Standard Deviation Relationship</a>
+<a href="#variance-ratio-tests-vr" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Variance Ratio Tests (VR)</a>
+<a href="#volatility-targeting-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Volatility Targeting Strategy</a>
+<a href="#the-"calm-before-the-storm"-pattern" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The "Calm Before the Storm" Pattern</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#why-it-works" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why It Works</a>
+<a href="#backtest-evidence" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Backtest Evidence</a>
+<a href="#academic-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Academic Reference</a>
+<a href="#3-actionable-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Strategy</a>
+<a href="#strategy-name:-"volatility-targeted-position-sizing"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Strategy Name: "Volatility-Targeted Position Sizing"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#failure-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Failure Patterns</a>
+<a href="#psychological-traps" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Psychological Traps</a>
+<a href="#common-misinterpretations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common Misinterpretations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#parent/child-indicators" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Parent/Child Indicators</a>
+<a href="#recommended-readings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Readings</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Matrix</a>
+<a href="#signal-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Signal Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "Variance",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 20;
+                const result = Variance.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/Variance.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[{"id": "period", "label": "Period (20)", "type": "number", "value": 20, "min": 2, "max": 100}]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": true, "plots": {"main": {"label": "Variance", "color": "#4f46e5", "type": "line"}}}
+    </script>
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code - loaded externally before this block
+
+        // 2. Configuration (XSS-safe via script type="application/json")
+        try {
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 20;
+                const result = Variance.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+    </script>
+
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
+
+</body>
+</html>

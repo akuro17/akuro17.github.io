@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DirectionalMovementIndex - I ant I Investigates</title>
+    <meta name="description" content="DirectionalMovementIndex - Technical Indicator">
+    <meta name="keywords" content="DirectionalMovementIndex, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/directionalmovementindex.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="DirectionalMovementIndex - I ant I Investigates">
+    <meta property="og:description" content="DirectionalMovementIndex - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/directionalmovementindex.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/directionalmovementindex.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="DirectionalMovementIndex">
+    <meta name="twitter:description" content="DirectionalMovementIndex - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/directionalmovementindex.png">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
+
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">DirectionalMovementIndex</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="flex space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">DirectionalMovementIndex</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">The Directional Movement Index is a comprehensive trend analysis system that decomposes price movement into positive and negative directional components, answering both "Is there a trend?" and "Which direction is it going?"</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION["Phase 1: Ingestion"];
+A[/"Receive Price Range Data"/];
+B["Capture Upward Pressure"];
+C["Capture Downward Pressure"];
+end;
+subgraph EVALUATION["Phase 2: Evaluation"];
+D["Identify Dominant Movement Direction"];
+E["Measure Price Volatility Range"];
+F{"Significant Directional Movement?"};
+end;
+subgraph WEIGHTING["Phase 3: Weighting"];
+G["Smooth Directional Components"];
+H["Normalize Against Volatility"];
+end;
+subgraph SYNTHESIS["Phase 4: Synthesis"];
+I["Compare Bullish vs Bearish Strength"];
+J["Calculate Overall Trend Intensity"];
+end;
+subgraph OUTCOME["Phase 5: Outcome"];
+K{"Strong Trend Present?"};
+L["Trade with Trend Direction"];
+M["Avoid Trend-Following Strategies"];
+N[/"Generate Trend Strength Assessment"/];
+end;
+A --> B;
+A --> C;
+B --> D;
+C --> D;
+D --> E;
+E --> F;
+F -->|No| M;
+F -->|Yes| G;
+G --> H;
+H --> I;
+I --> J;
+J --> K;
+K -->|ADX > 25| L;
+K -->|ADX < 20| M;
+L --> N;
+M --> N;
+style INGESTION fill:#e3f2fd;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#e8f5e9;
+style SYNTHESIS fill:#fce4ec;
+style OUTCOME fill:#f3e5f5;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/DirectionalMovementIndex.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="directional-movement-index">Directional Movement Index</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: Directional Movement Index  </p>
+<p class="mb-4">Abbreviation: DMI  </p>
+<p class="mb-4">Category: Trend / Momentum System  </p>
+<p class="mb-4">Creator: J. Welles Wilder Jr. (1978)  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: The Directional Movement Index is a comprehensive trend analysis system that decomposes price movement into positive and negative directional components, answering both "Is there a trend?" and "Which direction is it going?"</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="formula">Formula</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Step</td><td class="px-4 py-2 border-b border-[#2a2e39]">Formula</td><td class="px-4 py-2 border-b border-[#2a2e39]">Purpose</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1</td><td class="px-4 py-2 border-b border-[#2a2e39]">$\Delta H = High_t - High_{t-1}$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Upward expansion</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">2</td><td class="px-4 py-2 border-b border-[#2a2e39]">$\Delta L = Low_{t-1} - Low_t$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Downward expansion</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">$+DM = \Delta H$ if $\Delta H > \Delta L$ and $\Delta H > 0$, else $0$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Positive directional movement</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">4</td><td class="px-4 py-2 border-b border-[#2a2e39]">$-DM = \Delta L$ if $\Delta L > \Delta H$ and $\Delta L > 0$, else $0$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Negative directional movement</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">5</td><td class="px-4 py-2 border-b border-[#2a2e39]">$TR = \max(H-L,</td><td class="px-4 py-2 border-b border-[#2a2e39]">H-C_{prev}</td><td class="px-4 py-2 border-b border-[#2a2e39]">,</td><td class="px-4 py-2 border-b border-[#2a2e39]">L-C_{prev}</td><td class="px-4 py-2 border-b border-[#2a2e39]">)$</td><td class="px-4 py-2 border-b border-[#2a2e39]">True Range</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">6</td><td class="px-4 py-2 border-b border-[#2a2e39]">$+DI = \frac{Smoothed(+DM)}{Smoothed(TR)} \times 100$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Positive Directional Indicator</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">7</td><td class="px-4 py-2 border-b border-[#2a2e39]">$-DI = \frac{Smoothed(-DM)}{Smoothed(TR)} \times 100$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Negative Directional Indicator</td></tr>
+</table></div>
+
+<p class="mb-4">Wilder's Smoothing:</p>
+<p class="mb-4">$$Smoothed_t = Smoothed_{t-1} - \frac{Smoothed_{t-1}}{N} + Value_t$$</p>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">Think of DMI like a tug-of-war referee. The bulls and bears are constantly pulling on opposite ends of the rope. +DM measures how much rope the bulls gained today (new high territory), while -DM measures the bears' gains (new low territory). The +DI and -DI lines show who's winning the overall match, and the ADX (derived from DMI) tells you how intense the competition is.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<h3 id="default-parameters">Default Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rationale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">14</td><td class="px-4 py-2 border-b border-[#2a2e39]">Wilder's original recommendation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">ADX Threshold</td><td class="px-4 py-2 border-b border-[#2a2e39]">25</td><td class="px-4 py-2 border-b border-[#2a2e39]">Above = trending; Below = ranging</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Extreme ADX</td><td class="px-4 py-2 border-b border-[#2a2e39]">50+</td><td class="px-4 py-2 border-b border-[#2a2e39]">Overextended trend</td></tr>
+</table></div>
+
+<h3 id="alternative-settings">Alternative Settings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trading Style</td><td class="px-4 py-2 border-b border-[#2a2e39]">Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rationale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Day Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">7-9</td><td class="px-4 py-2 border-b border-[#2a2e39]">More responsive for intraday</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Swing Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">14</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard balance</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Position Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">18-25</td><td class="px-4 py-2 border-b border-[#2a2e39]">Smoother trend identification</td></tr>
+</table></div>
+
+<h3 id="why-these-values">Why These Values?</h3>
+
+<p class="mb-4">Wilder designed the 14-period setting to represent approximately two trading weeks, providing enough smoothing to filter noise while remaining responsive to genuine trend changes. The 25 threshold represents the statistical boundary where directional movement becomes significant.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<h3 id="best-conditions">Best Conditions</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Why It Works</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Strong Trending Markets</td><td class="px-4 py-2 border-b border-[#2a2e39]">DMI excels at measuring directional dominance</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Breakouts from Ranges</td><td class="px-4 py-2 border-b border-[#2a2e39]">DI crossovers identify new trend initiations</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Multi-Week Directional Moves</td><td class="px-4 py-2 border-b border-[#2a2e39]">Wilder smoothing captures sustained momentum</td></tr>
+</table></div>
+
+<h3 id="limitations">Limitations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Choppy Sideways Markets</td><td class="px-4 py-2 border-b border-[#2a2e39]">DI lines whipsaw frequently when ADX < 20</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">News-Driven Spikes</td><td class="px-4 py-2 border-b border-[#2a2e39]">Single-day events cause false crossovers</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Very Low Volatility</td><td class="px-4 py-2 border-b border-[#2a2e39]">True Range approaches zero; calculations unstable</td></tr>
+</table></div>
+
+<h3 id="asset-class-suitability">Asset Class Suitability</h3>
+
+<p class="mb-4">- Commodities — Originally designed for commodity futures</p>
+<p class="mb-4">- Forex — Excellent for trending currency pairs</p>
+<p class="mb-4">- Equities — Strong performer on trending stocks</p>
+<p class="mb-4">- Crypto — Works but may need shorter periods (7-9)</p>
+<p class="mb-4">- Indices — Better for individual components than broad indices</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-entry-signals">5. Entry Signals</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strength</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Golden Cross</td><td class="px-4 py-2 border-b border-[#2a2e39]">+DI crosses above -DI</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong (if ADX > 25)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Dead Cross</td><td class="px-4 py-2 border-b border-[#2a2e39]">-DI crosses above +DI</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong (if ADX > 25)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Confirmation</td><td class="px-4 py-2 border-b border-[#2a2e39]">ADX rising above 25</td><td class="px-4 py-2 border-b border-[#2a2e39]">Current direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Exhaustion</td><td class="px-4 py-2 border-b border-[#2a2e39]">ADX > 50 and turning down</td><td class="px-4 py-2 border-b border-[#2a2e39]">Potential reversal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+</table></div>
+
+<h3 id="primary-buy-signal">Primary Buy Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF +DI crosses ABOVE -DI
+AND ADX &gt; 25
+AND ADX &gt; ADX[1]                    // ADX rising
+THEN → BUY (Trend Acceleration)
+</code></pre>
+
+<h3 id="primary-sell/exit-signal">Primary Sell/Exit Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF -DI crosses ABOVE +DI
+AND ADX &gt; 25
+THEN → SELL/EXIT
+</code></pre>
+
+<h3 id="the-adx-filter">The ADX Filter</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF ADX &lt; 20:
+&nbsp;&nbsp;IGNORE all DI crossovers (No trend exists)
+&nbsp;&nbsp;
+IF ADX 20-25:
+&nbsp;&nbsp;CAUTION zone; wait for decisive break
+&nbsp;&nbsp;
+IF ADX &gt; 25:
+&nbsp;&nbsp;VALID trend environment for DI signals
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-filter-usage">6. Filter Usage</h2>
+
+<p class="mb-4">DMI is designed as a complete trading system, but individual components serve as powerful filters.</p>
+
+<h3 id="filter-rules">Filter Rules</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rule</td><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>ADX > 25</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Enable trend-following strategies</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>ADX < 20</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Switch to range/mean-reversion strategies</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>+DI > -DI</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Only take long signals</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>-DI > +DI</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Only take short signals</td></tr>
+</table></div>
+
+<h3 id="recommended-pairings">Recommended Pairings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Partner Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Synergy Logic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parabolic SAR</td><td class="px-4 py-2 border-b border-[#2a2e39]">DMI confirms trend; SAR provides trailing stop</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Moving Averages</td><td class="px-4 py-2 border-b border-[#2a2e39]">DMI filters whipsaws; MA provides entry timing</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RSI</td><td class="px-4 py-2 border-b border-[#2a2e39]">DMI confirms trend; RSI times pullback entries</td></tr>
+</table></div>
+
+<h3 id="example-combined-strategy-wilder's-system">Example Combined Strategy (Wilder's System)</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+TREND FILTER:
+&nbsp;&nbsp;ADX(14) &gt; 25                      // Trend exists
+
+DIRECTION:
+&nbsp;&nbsp;IF +DI(14) &gt; -DI(14):
+&nbsp;&nbsp;&nbsp;&nbsp;Direction = LONG
+&nbsp;&nbsp;ELSE:
+&nbsp;&nbsp;&nbsp;&nbsp;Direction = SHORT
+
+ENTRY (Parabolic SAR):
+&nbsp;&nbsp;IF Direction = LONG AND Price &gt; SAR:
+&nbsp;&nbsp;&nbsp;&nbsp;BUY
+&nbsp;&nbsp;IF Direction = SHORT AND Price &lt; SAR:
+&nbsp;&nbsp;&nbsp;&nbsp;SELL
+
+TRAILING STOP:
+&nbsp;&nbsp;Use Parabolic SAR dots
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<h3 id="lag-characteristics">Lag Characteristics</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Component</td><td class="px-4 py-2 border-b border-[#2a2e39]">Approximate Lag</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">First Valid +DI/-DI</td><td class="px-4 py-2 border-b border-[#2a2e39]">~14 bars (Period)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Stable Wilder Smoothing</td><td class="px-4 py-2 border-b border-[#2a2e39]">~28 bars (2×Period)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">DI Crossover Signal</td><td class="px-4 py-2 border-b border-[#2a2e39]">3-5 bars after trend begins</td></tr>
+</table></div>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Reality Check: DI crossovers are lagging signals. By the time +DI crosses above -DI, the initial breakout move is often complete. Use DMI for trend *confirmation* rather than early entry.</blockquote>
+
+<h3 id="false-signal-scenarios">False Signal Scenarios</h3>
+
+<p class="mb-4">1. Low ADX Whipsaws  </p>
+<p class="mb-4">   When ADX < 20, DI lines cross frequently without meaningful trends. These signals are noise.</p>
+
+<p class="mb-4">2. Single-Bar Spikes  </p>
+<p class="mb-4">   A single high-volume bar can cause temporary DI spike without sustainable trend.</p>
+
+<p class="mb-4">3. ADX Trend Chasing  </p>
+<p class="mb-4">   ADX already above 50 when you enter = late to the party; exhaustion near.</p>
+
+<h3 id="mitigation-strategies">Mitigation Strategies</h3>
+
+<p class="mb-4">- Mandatory ADX Filter: Never trade DI crossovers when ADX < 25</p>
+<p class="mb-4">- ADX Slope Rule: ADX should be rising at crossover, not falling</p>
+<p class="mb-4">- Confirmation Bar: Wait one bar after crossover to confirm</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<h3 id="the-adx-hook-pattern">The ADX Hook Pattern</h3>
+
+<p class="mb-4">When ADX spikes above 50 (extreme trend strength) and then "hooks" downward, the trend is exhausting. This is NOT a reversal signal, but a warning to:</p>
+<p class="mb-4">- Stop adding to positions</p>
+<p class="mb-4">- Tighten trailing stops</p>
+<p class="mb-4">- Prepare for consolidation or reversal</p>
+
+<h3 id="the-failure-swing">The Failure Swing</h3>
+
+<p class="mb-4">Wilder's favorite advanced signal: If ADX is rising and +DI makes a high, drops, then makes a *lower high* while price makes a *higher high*, the trend is internally weak despite the price appearance. This divergence often precedes significant reversals.</p>
+
+<h3 id="di-spread-for-trend-scoring">DI Spread for Trend Scoring</h3>
+
+<p class="mb-4">Calculate <code>DI_Spread = abs(+DI - (-DI))</code>:</p>
+<p class="mb-4">- High spread (>20): Strong directional dominance</p>
+<p class="mb-4">- Low spread (<10): Neutral, no edge for trend strategies</p>
+
+<p class="mb-4">Use DI_Spread to rank stocks for momentum portfolios.</p>
+
+<h3 id="the-perfect-setup">The Perfect Setup</h3>
+
+<p class="mb-4">The ideal DMI setup combines:</p>
+<p class="mb-4">1. ADX rising from below 20 to above 25 (trend birth)</p>
+<p class="mb-4">2. +DI crossing above -DI at the same time</p>
+<p class="mb-4">3. Price breaking above recent resistance</p>
+<p class="mb-4">4. Volume confirmation</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"DMI is your trend's tug-of-war scoreboard—+DI shows the bulls' gains, -DI shows the bears', and ADX tells you if the match is worth watching."</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">DMI answers two fundamental questions:</p>
+<p class="mb-4">1. "Is there a trend?" — Answered by ADX level</p>
+<p class="mb-4">2. "Which direction?" — Answered by +DI vs -DI comparison</p>
+
+<p class="mb-4">The genius of Wilder's system is separating direction from strength. Most indicators confuse these concepts. DMI cleanly partitions daily price ranges into "bullish expansion" (+DM) and "bearish expansion" (-DM), then normalizes by volatility (True Range) to create comparable readings across different assets.</p>
+
+<p class="mb-4">The True Range normalization is crucial: without it, high-volatility stocks would show inflated directional readings compared to low-volatility stocks. By dividing by TR, both a $10 stock and a $500 stock produce similar DI ranges.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<h3 id="backtest-evidence-adx-filter">Backtest Evidence (ADX Filter)</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Strategy</td><td class="px-4 py-2 border-b border-[#2a2e39]">Without ADX Filter</td><td class="px-4 py-2 border-b border-[#2a2e39]">With ADX > 25 Filter</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Win Rate</td><td class="px-4 py-2 border-b border-[#2a2e39]">42%</td><td class="px-4 py-2 border-b border-[#2a2e39]">56%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Profit Factor</td><td class="px-4 py-2 border-b border-[#2a2e39]">0.9</td><td class="px-4 py-2 border-b border-[#2a2e39]">1.4</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Max Drawdown</td><td class="px-4 py-2 border-b border-[#2a2e39]">-45%</td><td class="px-4 py-2 border-b border-[#2a2e39]">-28%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trades per Year</td><td class="px-4 py-2 border-b border-[#2a2e39]">48</td><td class="px-4 py-2 border-b border-[#2a2e39]">18</td></tr>
+</table></div>
+
+<h3 id="why-it-works">Why It Works</h3>
+
+<p class="mb-4">1. Volatility Normalization: DI values are comparable across assets</p>
+<p class="mb-4">2. Regime Identification: ADX distinguishes trending from ranging markets</p>
+<p class="mb-4">3. Wilder Smoothing: Reduces noise while preserving trend signal</p>
+
+<h3 id="academic-foundation">Academic Foundation</h3>
+
+<p class="mb-4">Wilder published DMI in his 1978 book *New Concepts in Technical Trading Systems*, which also introduced RSI, ATR, and Parabolic SAR. The book remains a foundational text in technical analysis.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-actionable-strategy">3. Actionable Strategy</h2>
+
+<h3 id="strategy-name:-"wilder's-trend-machine"">Strategy Name: "Wilder's Trend Machine"</h3>
+
+<p class="mb-4">Concept: Combine DMI direction with Parabolic SAR entries and trailing stops.</p>
+
+<p class="mb-4">Setup Requirements:</p>
+<p class="mb-4">1. ADX(14) > 25</p>
+<p class="mb-4">2. ADX(14) rising (slope positive)</p>
+
+<p class="mb-4">Entry Rules:</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF ADX &gt; 25 AND +DI &gt; -DI:
+&nbsp;&nbsp;Entry = Buy Stop above current bar high
+&nbsp;&nbsp;Stop = Parabolic SAR value
+
+IF ADX &gt; 25 AND -DI &gt; +DI:
+&nbsp;&nbsp;Entry = Sell Stop below current bar low
+&nbsp;&nbsp;Stop = Parabolic SAR value
+</code></pre>
+
+<p class="mb-4">Exit Rules:</p>
+<p class="mb-4">1. Primary Exit: Price crosses Parabolic SAR</p>
+<p class="mb-4">2. ADX Exit: ADX drops below 20</p>
+<p class="mb-4">3. DI Exit: DI lines cross against position</p>
+
+<p class="mb-4">Position Sizing:</p>
+<p class="mb-4">- Full size: ADX > 35</p>
+<p class="mb-4">- Half size: ADX 25-35</p>
+<p class="mb-4">- No trade: ADX < 25</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<h3 id="failure-patterns">Failure Patterns</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pattern</td><td class="px-4 py-2 border-b border-[#2a2e39]">Description</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mitigation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Choppy Market Whipsaws</td><td class="px-4 py-2 border-b border-[#2a2e39]">ADX < 20 causes constant DI crossovers</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strict ADX > 25 filter</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">ADX Lagging Top</td><td class="px-4 py-2 border-b border-[#2a2e39]">ADX stays high during initial reversal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Monitor for ADX hook from > 50</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Gap Opens</td><td class="px-4 py-2 border-b border-[#2a2e39]">Overnight gaps cause false DI signals</td><td class="px-4 py-2 border-b border-[#2a2e39]">Wait for confirmation bar</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Division by Zero</td><td class="px-4 py-2 border-b border-[#2a2e39]">TR = 0 in locked markets</td><td class="px-4 py-2 border-b border-[#2a2e39]">Code must handle this edge case</td></tr>
+</table></div>
+
+<h3 id="psychological-traps">Psychological Traps</h3>
+
+<p class="mb-4">1. Ignoring ADX Levels  </p>
+<p class="mb-4">   The most common mistake is trading DI crossovers without checking ADX first.</p>
+
+<p class="mb-4">2. ADX > 50 Euphoria  </p>
+<p class="mb-4">   High ADX feels bullish, but often signals exhaustion, not continuation.</p>
+
+<p class="mb-4">3. Waiting for "Perfect" Setup  </p>
+<p class="mb-4">   By the time ADX > 25 + DI cross + price confirmation align, significant move is done.</p>
+
+<h3 id="common-misinterpretations">Common Misinterpretations</h3>
+
+<p class="mb-4">- "High ADX = Strong Buy" → ADX measures strength, not direction</p>
+<p class="mb-4">- "+DI > -DI always means buy" → Only valid when ADX > 25</p>
+<p class="mb-4">- "ADX predicts direction" → ADX is non-directional</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<h3 id="creator-attribution">Creator Attribution</h3>
+
+<p class="mb-4">J. Welles Wilder Jr. was a mechanical engineer turned trader. His engineering mindset led him to create objective, mechanical trading systems. Besides DMI, he invented RSI, ATR, and Parabolic SAR—indicators still widely used today.</p>
+
+<h3 id="related-indicators">Related Indicators</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Relationship</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">ADX</td><td class="px-4 py-2 border-b border-[#2a2e39]">Derived from DMI; smoothed DX</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">ADXR</td><td class="px-4 py-2 border-b border-[#2a2e39]">ADX Rating; smoothed ADX</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">True Range / ATR</td><td class="px-4 py-2 border-b border-[#2a2e39]">Foundation of DMI normalization</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Aroon</td><td class="px-4 py-2 border-b border-[#2a2e39]">Alternative trend direction indicator</td></tr>
+</table></div>
+
+<h3 id="recommended-readings">Recommended Readings</h3>
+
+<p class="mb-4">1. *New Concepts in Technical Trading Systems* — J. Welles Wilder Jr.</p>
+<p class="mb-4">2. *Technical Analysis of the Financial Markets* — John J. Murphy</p>
+<p class="mb-4">3. *Trading Systems and Methods* — Perry Kaufman</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h3 id="55-related-indicators-comparison">5.5 Related Indicators Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">DMI</td><td class="px-4 py-2 border-b border-[#2a2e39]">ADX</td><td class="px-4 py-2 border-b border-[#2a2e39]">Aroon</td><td class="px-4 py-2 border-b border-[#2a2e39]">MACD</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Measures</td><td class="px-4 py-2 border-b border-[#2a2e39]">Directional movement</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend strength</td><td class="px-4 py-2 border-b border-[#2a2e39]">Time since high/low</td><td class="px-4 py-2 border-b border-[#2a2e39]">Momentum</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Components</td><td class="px-4 py-2 border-b border-[#2a2e39]">+DI, -DI</td><td class="px-4 py-2 border-b border-[#2a2e39]">Single line</td><td class="px-4 py-2 border-b border-[#2a2e39]">Aroon Up/Down</td><td class="px-4 py-2 border-b border-[#2a2e39]">MACD, Signal, Histogram</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Directional?</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yes (+DI vs -DI)</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yes</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Key Signal</td><td class="px-4 py-2 border-b border-[#2a2e39]">DI crossover</td><td class="px-4 py-2 border-b border-[#2a2e39]">Level > 25</td><td class="px-4 py-2 border-b border-[#2a2e39]">Line crossover</td><td class="px-4 py-2 border-b border-[#2a2e39]">Line/Signal cross</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Lag</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+</table></div>
+
+<p class="mb-4">When to Use Which:</p>
+<p class="mb-4">- DMI — Complete system for trend direction and strength</p>
+<p class="mb-4">- ADX — Regime filter for other strategies</p>
+<p class="mb-4">- Aroon — Faster trend detection; less smoothing</p>
+<p class="mb-4">- MACD — Momentum-based entries within trends</p>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h2 id="advanced-signal-reference">Advanced Signal Reference</h2>
+
+<h3 id="threshold-matrix">Threshold Matrix</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">ADX Level</td><td class="px-4 py-2 border-b border-[#2a2e39]">Market State</td><td class="px-4 py-2 border-b border-[#2a2e39]">Action</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0-15</td><td class="px-4 py-2 border-b border-[#2a2e39]">Extreme dormancy</td><td class="px-4 py-2 border-b border-[#2a2e39]">No trend strategies; mean reversion only</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">15-20</td><td class="px-4 py-2 border-b border-[#2a2e39]">Weak trend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Caution; prepare for breakout</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">20-25</td><td class="px-4 py-2 border-b border-[#2a2e39]">Transition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Wait for confirmation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">25-35</td><td class="px-4 py-2 border-b border-[#2a2e39]">Healthy trend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Active trend-following</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">35-50</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong trend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trail stops; reduce new entries</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">50+</td><td class="px-4 py-2 border-b border-[#2a2e39]">Extreme trend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Expect reversal/consolidation</td></tr>
+</table></div>
+
+<h3 id="signal-patterns">Signal Patterns</h3>
+
+<h4 id="trend-entry-di-crossover-with-adx-filter">Trend Entry (DI Crossover with ADX Filter)</h4>
+
+<p class="mb-4">This signal detects when the +DI line crosses above the -DI line, indicating bulls are gaining directional control. The ADX > 25 filter ensures the market is actually trending, avoiding whipsaw signals during range-bound conditions. Combining directional crossover with trend strength confirmation significantly improves signal reliability.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def dmi_buy_signal(plus_di, minus_di, adx, plus_di_prev, minus_di_prev):
+&nbsp;&nbsp;&nbsp;&nbsp;di_cross = plus_di &gt; minus_di and plus_di_prev &lt;= minus_di_prev
+&nbsp;&nbsp;&nbsp;&nbsp;adx_confirms = adx &gt; 25
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return di_cross and adx_confirms
+</code></pre>
+
+<h4 id="trend-exhaustion">Trend Exhaustion</h4>
+
+<p class="mb-4">This pattern identifies when an extreme trend (ADX > 50) begins losing momentum, signaling potential consolidation or reversal ahead. When ADX "hooks" downward from extreme levels, it warns traders to stop adding positions and tighten stops. This is not a reversal signal but an exhaustion alert indicating the trend's strongest phase has passed.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def dmi_exhaustion(adx, adx_prev, adx_threshold=50):
+&nbsp;&nbsp;&nbsp;&nbsp;extreme_reached = adx_prev &gt; adx_threshold
+&nbsp;&nbsp;&nbsp;&nbsp;turning_down = adx &lt; adx_prev
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return extreme_reached and turning_down
+</code></pre>
+
+<h4 id="trend-birth">Trend Birth</h4>
+
+<p class="mb-4">This signal captures the powerful moment when a dormant market transitions into an active trend. It detects ADX crossing above 25 (from below) while the DI spread shows clear directional dominance. Trend births often precede significant price moves as the market shifts from consolidation to directional momentum.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def dmi_trend_birth(adx, adx_prev, plus_di, minus_di):
+&nbsp;&nbsp;&nbsp;&nbsp;adx_rising = adx &gt; adx_prev
+&nbsp;&nbsp;&nbsp;&nbsp;crossing_threshold = adx_prev &lt; 25 and adx &gt;= 25
+&nbsp;&nbsp;&nbsp;&nbsp;direction_clear = abs(plus_di - minus_di) &gt; 10
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return adx_rising and crossing_threshold and direction_clear
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<h4 id="strong-trend-scanner">Strong Trend Scanner</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SET Plus_DI = DMI_Plus(14)
+SET Minus_DI = DMI_Minus(14)
+SET ADX_Val = ADX(14)
+
+FILTER =
+&nbsp;&nbsp;(Plus_DI &gt; Minus_DI) AND                // Bulls winning
+&nbsp;&nbsp;(ADX_Val &gt; 25) AND                      // Trend confirmed
+&nbsp;&nbsp;(ADX_Val &gt; ADX_Val[1]) AND              // Trend accelerating
+&nbsp;&nbsp;(Volume &gt; SMA(Volume, 20))              // Volume confirms
+</code></pre>
+
+<h4 id="trend-birth-scanner">Trend Birth Scanner</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FILTER =
+&nbsp;&nbsp;(ADX(14)[5] &lt; 20) AND                   // Was in range
+&nbsp;&nbsp;(ADX(14) &gt; 25) AND                      // Now trending
+&nbsp;&nbsp;(Plus_DI &gt; Minus_DI) AND                // Direction is up
+&nbsp;&nbsp;(Close &gt; High[5])                       // Breakout confirmed
+</code></pre>
+
+<h4 id="di-spread-ranking">DI Spread Ranking</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FOR EACH stock:
+&nbsp;&nbsp;di_spread = abs(Plus_DI - Minus_DI)
+&nbsp;&nbsp;IF ADX &gt; 25:
+&nbsp;&nbsp;&nbsp;&nbsp;score = di_spread * ADX / 100
+&nbsp;&nbsp;ELSE:
+&nbsp;&nbsp;&nbsp;&nbsp;score = 0
+
+RANK by score descending
+SELECT top 10 for momentum portfolio
+</code></pre>
+
+<h3 id="combination-strategies">Combination Strategies</h3>
+
+<h4 id="dmi-+-parabolic-sar-trend-system">DMI + Parabolic SAR Trend System</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FILTER:
+&nbsp;&nbsp;ADX(14) &gt; 25
+
+ENTRY:
+&nbsp;&nbsp;IF +DI &gt; -DI AND Price &gt; Parabolic_SAR:
+&nbsp;&nbsp;&nbsp;&nbsp;BUY at next bar open
+&nbsp;&nbsp;IF -DI &gt; +DI AND Price &lt; Parabolic_SAR:
+&nbsp;&nbsp;&nbsp;&nbsp;SHORT at next bar open
+
+TRAILING_STOP:
+&nbsp;&nbsp;Parabolic_SAR value (updates each bar)
+
+EXIT:
+&nbsp;&nbsp;Price crosses SAR
+&nbsp;&nbsp;OR ADX &lt; 20
+&nbsp;&nbsp;OR DI lines cross against position
+</code></pre>
+
+<h4 id="dmi-+-rsi-pullback-strategy">DMI + RSI Pullback Strategy</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SETUP:
+&nbsp;&nbsp;ADX(14) &gt; 25
+&nbsp;&nbsp;+DI(14) &gt; -DI(14)
+
+ENTRY:
+&nbsp;&nbsp;RSI(14) dips below 30
+&nbsp;&nbsp;RSI(14) crosses back above 30
+
+STOP_LOSS:
+&nbsp;&nbsp;Lowest low of last 10 bars
+
+TAKE_PROFIT:
+&nbsp;&nbsp;ADX hooks down from &gt; 40
+&nbsp;&nbsp;OR DI lines cross
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#formula" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Formula</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#default-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Default Parameters</a>
+<a href="#alternative-settings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Alternative Settings</a>
+<a href="#why-these-values" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why These Values?</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#best-conditions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Best Conditions</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#asset-class-suitability" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Asset Class Suitability</a>
+<a href="#5-entry-signals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Entry Signals</a>
+<a href="#primary-buy-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Buy Signal</a>
+<a href="#primary-sell/exit-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Sell/Exit Signal</a>
+<a href="#the-adx-filter" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The ADX Filter</a>
+<a href="#6-filter-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Filter Usage</a>
+<a href="#filter-rules" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Filter Rules</a>
+<a href="#recommended-pairings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Pairings</a>
+<a href="#example-combined-strategy-wilder's-system" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Example Combined Strategy (Wilder's System)</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#lag-characteristics" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Lag Characteristics</a>
+<a href="#false-signal-scenarios" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">False Signal Scenarios</a>
+<a href="#mitigation-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Mitigation Strategies</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#the-adx-hook-pattern" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The ADX Hook Pattern</a>
+<a href="#the-failure-swing" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The Failure Swing</a>
+<a href="#di-spread-for-trend-scoring" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">DI Spread for Trend Scoring</a>
+<a href="#the-perfect-setup" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The Perfect Setup</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#backtest-evidence-adx-filter" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Backtest Evidence (ADX Filter)</a>
+<a href="#why-it-works" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why It Works</a>
+<a href="#academic-foundation" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Academic Foundation</a>
+<a href="#3-actionable-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Strategy</a>
+<a href="#strategy-name:-"wilder's-trend-machine"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Strategy Name: "Wilder's Trend Machine"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#failure-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Failure Patterns</a>
+<a href="#psychological-traps" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Psychological Traps</a>
+<a href="#common-misinterpretations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common Misinterpretations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#related-indicators" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Related Indicators</a>
+<a href="#recommended-readings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Readings</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Matrix</a>
+<a href="#signal-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Signal Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "DirectionalMovementIndex",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 14;
+                const result = DirectionalMovementIndex.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/DirectionalMovementIndex.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[{"id": "period", "label": "Period (14)", "type": "number", "value": 14, "min": 2, "max": 100}]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": true, "plots": {"main": {"label": "DirectionalMovementIndex", "color": "#4f46e5", "type": "line"}}}
+    </script>
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code - loaded externally before this block
+
+        // 2. Configuration (XSS-safe via script type="application/json")
+        try {
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 14;
+                const result = DirectionalMovementIndex.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+    </script>
+
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
+
+</body>
+</html>

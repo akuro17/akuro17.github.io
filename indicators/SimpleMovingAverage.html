@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SimpleMovingAverage - I ant I Investigates</title>
+    <meta name="description" content="SimpleMovingAverage - Technical Indicator">
+    <meta name="keywords" content="SimpleMovingAverage, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/simplemovingaverage.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="SimpleMovingAverage - I ant I Investigates">
+    <meta property="og:description" content="SimpleMovingAverage - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/simplemovingaverage.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/simplemovingaverage.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SimpleMovingAverage">
+    <meta name="twitter:description" content="SimpleMovingAverage - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/simplemovingaverage.png">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
+
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">SimpleMovingAverage</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="flex space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">SimpleMovingAverage</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">The Simple Moving Average is the arithmetic mean of prices over a specified period, creating a smoothed line that reveals the underlying trend direction.</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION["INGESTION<br/>Data Capture"];
+A["Observe closing prices<br/>(daily/periodic price data)"];
+B["Set averaging period<br/>(how far back to look)"];
+end;
+subgraph EVALUATION["EVALUATION<br/>Initial Assessment"];
+C["Sum prices over the period<br/>(accumulate recent values)"];
+D["Divide by period count<br/>(find the average price)"];
+end;
+subgraph WEIGHTING["WEIGHTING<br/>Normalization"];
+E["Each day weighted equally<br/>(no recency bias)"];
+F["Rolling window updates<br/>(add newest, drop oldest)"];
+end;
+subgraph SYNTHESIS["SYNTHESIS<br/>Pattern Detection"];
+G{"Where is price vs average?"};
+H["Price > SMA: Recent buyers profitable"];
+I["Price < SMA: Recent buyers underwater"];
+J["SMA slope rising: Uptrend confirmed"];
+end;
+subgraph OUTCOME["OUTCOME<br/>Signal Generation"];
+K["Golden Cross (50 > 200 SMA):<br/>Major bullish signal"];
+L["Death Cross (50 < 200 SMA):<br/>Major bearish signal"];
+M["Price touches rising SMA:<br/>Buy-the-dip opportunity"];
+end;
+A --> C;
+B --> C;
+C --> D;
+D --> E;
+E --> F;
+F --> G;
+G -->|"Price > SMA"| H;
+G -->|"Price < SMA"| I;
+G -->|"Check slope"| J;
+H --> K;
+I --> L;
+J --> M;
+style INGESTION fill:#e3f2fd;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#e8f5e9;
+style SYNTHESIS fill:#fce4ec;
+style OUTCOME fill:#f3e5f5;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/SimpleMovingAverage.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="simple-moving-average-sma">Simple Moving Average (SMA)</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: Simple Moving Average  </p>
+<p class="mb-4">Abbreviation: SMA / MA  </p>
+<p class="mb-4">Category: Trend Following / Overlay  </p>
+<p class="mb-4">Creator: R.H. Hooker (1901), G.U. Yule (1909 - coined term)  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: The Simple Moving Average is the arithmetic mean of prices over a specified period, creating a smoothed line that reveals the underlying trend direction.</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="formula">Formula</h3>
+
+<p class="mb-4">$$SMA_t = \frac{1}{n} \sum_{i=0}^{n-1} P_{t-i}$$</p>
+
+<p class="mb-4">Rolling Update (Efficient):</p>
+<p class="mb-4">$$SMA_{t+1} = SMA_t + \frac{P_{t+1} - P_{t-n+1}}{n}$$</p>
+
+<p class="mb-4">Where:</p>
+<p class="mb-4">- $P_t$ = Price (usually Close) at time $t$</p>
+<p class="mb-4">- $n$ = Period (number of bars to average)</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Step</td><td class="px-4 py-2 border-b border-[#2a2e39]">Logic</td><td class="px-4 py-2 border-b border-[#2a2e39]">Purpose</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1</td><td class="px-4 py-2 border-b border-[#2a2e39]">Choose period n (e.g., 20, 50, 200)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Set smoothing horizon</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">2</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sum closing prices of last n periods</td><td class="px-4 py-2 border-b border-[#2a2e39]">Accumulate data</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">Divide sum by n</td><td class="px-4 py-2 border-b border-[#2a2e39]">Calculate average</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">4</td><td class="px-4 py-2 border-b border-[#2a2e39]">Shift window forward, update sum</td><td class="px-4 py-2 border-b border-[#2a2e39]">Efficient rolling update</td></tr>
+</table></div>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">Think of the SMA as a consensus of value over the chosen period. If you're calculating a 50-day SMA, you're asking: "What's the average price everyone paid over the last 50 days?" When price is above this line, recent buyers are profitable—optimism. When below, recent buyers are underwater—pessimism.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<h3 id="default-parameters">Default Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rationale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Period (Short)</td><td class="px-4 py-2 border-b border-[#2a2e39]">20</td><td class="px-4 py-2 border-b border-[#2a2e39]">~1 trading month</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Period (Medium)</td><td class="px-4 py-2 border-b border-[#2a2e39]">50</td><td class="px-4 py-2 border-b border-[#2a2e39]">~1 quarter</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Period (Long)</td><td class="px-4 py-2 border-b border-[#2a2e39]">200</td><td class="px-4 py-2 border-b border-[#2a2e39]">~1 trading year</td></tr>
+</table></div>
+
+<h3 id="timeframe-recommendations">Timeframe Recommendations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trading Style</td><td class="px-4 py-2 border-b border-[#2a2e39]">SMA Periods</td><td class="px-4 py-2 border-b border-[#2a2e39]">Timeframe</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Scalping</td><td class="px-4 py-2 border-b border-[#2a2e39]">5, 9, 20</td><td class="px-4 py-2 border-b border-[#2a2e39]">1-5 min</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Day Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">9, 20, 50</td><td class="px-4 py-2 border-b border-[#2a2e39]">15-60 min</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Swing Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">20, 50, 200</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Position Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">50, 200</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily/Weekly</td></tr>
+</table></div>
+
+<h3 id="why-these-values">Why These Values?</h3>
+
+<p class="mb-4">- 20: Approximately one trading month (22 trading days)</p>
+<p class="mb-4">- 50: Approximately one quarter—institutional favorite</p>
+<p class="mb-4">- 200: Approximately one year—the definitive long-term trend line, widely watched by institutions</p>
+
+<p class="mb-4">The 50 and 200 SMAs are so universally monitored that they become self-fulfilling: traders react when price approaches them.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<h3 id="best-conditions">Best Conditions</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Why It Works</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Strong Linear Trends</td><td class="px-4 py-2 border-b border-[#2a2e39]">SMA smoothly tracks price direction</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pullback Entries</td><td class="px-4 py-2 border-b border-[#2a2e39]">SMA acts as dynamic support/resistance</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Crossover Signals</td><td class="px-4 py-2 border-b border-[#2a2e39]">Clear trend change identification</td></tr>
+</table></div>
+
+<h3 id="limitations">Limitations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sideways Markets</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price whipsaws across SMA repeatedly</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Fast Moves</td><td class="px-4 py-2 border-b border-[#2a2e39]">SMA lags significantly behind price</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Gaps</td><td class="px-4 py-2 border-b border-[#2a2e39]">SMA distorted by outlier data points</td></tr>
+</table></div>
+
+<h3 id="asset-class-suitability">Asset Class Suitability</h3>
+
+<p class="mb-4">- Equities — Foundation of stock analysis</p>
+<p class="mb-4">- Indices — Benchmark trend measurement</p>
+<p class="mb-4">- Forex — Good for trend identification</p>
+<p class="mb-4">- Crypto — Works but consider adaptive MAs for volatility</p>
+<p class="mb-4">- Commodities — Useful for long-term trends</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-entry-signals">5. Entry Signals</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strength</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Golden Cross</td><td class="px-4 py-2 border-b border-[#2a2e39]">SMA(50) crosses above SMA(200)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Death Cross</td><td class="px-4 py-2 border-b border-[#2a2e39]">SMA(50) crosses below SMA(200)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price Cross Up</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price crosses above SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price Cross Down</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price crosses below SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">The Kiss</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price touches rising SMA and bounces</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rejection</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price touches falling SMA and drops</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+</table></div>
+
+<h3 id="primary-buy-signal">Primary Buy Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF SMA(50) crosses above SMA(200)
+AND SMA(200) slope &gt; 0 (or flat)
+AND ADX &gt; 20
+THEN → GOLDEN CROSS BUY
+</code></pre>
+
+<h3 id="primary-sell-signal">Primary Sell Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF SMA(50) crosses below SMA(200)
+AND SMA(200) slope &lt; 0 (or flat)
+AND ADX &gt; 20
+THEN → DEATH CROSS SELL
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-filter-usage">6. Filter Usage</h2>
+
+<p class="mb-4">SMA is the most fundamental trend filter in technical analysis:</p>
+
+<h3 id="filter-rules">Filter Rules</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rule</td><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Price > SMA(200)</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Only take long entries</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Price < SMA(200)</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Only take short entries</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>SMA Slope > 0</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend is bullish</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>SMA Slope < 0</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend is bearish</td></tr>
+</table></div>
+
+<h3 id="recommended-pairings">Recommended Pairings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Partner Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Synergy Logic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Stochastic</td><td class="px-4 py-2 border-b border-[#2a2e39]">SMA defines trend; Stochastic times entries</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RSI</td><td class="px-4 py-2 border-b border-[#2a2e39]">SMA confirms direction; RSI identifies extremes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">ADX</td><td class="px-4 py-2 border-b border-[#2a2e39]">ADX confirms trend strength; SMA defines direction</td></tr>
+</table></div>
+
+<h3 id="example-combined-strategy">Example Combined Strategy</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FILTER CONDITIONS:
+&nbsp;&nbsp;Price &gt; SMA(200)                     // Bull market
+&nbsp;&nbsp;SMA(50) &gt; SMA(200)                   // Confirmed uptrend
+
+ENTRY TRIGGER:
+&nbsp;&nbsp;Price pulls back to SMA(50)          // Value zone
+&nbsp;&nbsp;Stochastic crosses up from &lt; 20      // Momentum turns
+&nbsp;&nbsp;
+ACTION: BUY the pullback
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<h3 id="lag-characteristics">Lag Characteristics</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Component</td><td class="px-4 py-2 border-b border-[#2a2e39]">Approximate Lag</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">First Valid Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">n-1 bars</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Identification</td><td class="px-4 py-2 border-b border-[#2a2e39]">n/2 bars (on average)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Crossover Signals</td><td class="px-4 py-2 border-b border-[#2a2e39]">Significant lag (weeks for 50/200)</td></tr>
+</table></div>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Reality Check: The SMA's lag is both its feature and bug. It filters noise but also misses early trend changes. A 200-day SMA might not signal a bear market until it's already 15% down.</blockquote>
+
+<h3 id="false-signal-scenarios">False Signal Scenarios</h3>
+
+<p class="mb-4">1. The Whipsaw Zone  </p>
+<p class="mb-4">   In ranging markets, price crosses the SMA repeatedly, triggering losses on both sides.</p>
+
+<p class="mb-4">2. The Late Crossover  </p>
+<p class="mb-4">   Golden Cross fires after a major move has already occurred—entering at the top.</p>
+
+<p class="mb-4">3. Gap Distortion  </p>
+<p class="mb-4">   A large gap skews the SMA for the entire period until it exits the window.</p>
+
+<h3 id="mitigation-strategies">Mitigation Strategies</h3>
+
+<p class="mb-4">- Require Slope — Only trade if SMA is angled >5 degrees</p>
+<p class="mb-4">- Separation Filter — Wait for 50 and 200 to separate by 3%+ before trading</p>
+<p class="mb-4">- ADX Filter — Require ADX > 20 to confirm trending conditions</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<h3 id="granville's-8-rules">Granville's 8 Rules</h3>
+
+<p class="mb-4">Joseph Granville defined 8 classic SMA trading rules, still valid today:</p>
+
+<p class="mb-4">Buy Rules:</p>
+<p class="mb-4">1. SMA trending up, price crosses above = Buy</p>
+<p class="mb-4">2. Price dips below rising SMA, then quickly recovers = Buy</p>
+<p class="mb-4">3. Price above SMA, approaches but bounces = Buy</p>
+<p class="mb-4">4. Price drops far below SMA = Mean reversion buy</p>
+
+<p class="mb-4">Sell Rules:</p>
+<p class="mb-4">5. SMA trending down, price crosses below = Sell</p>
+<p class="mb-4">6. Price rises above declining SMA, then quickly falls = Sell</p>
+<p class="mb-4">7. Price below SMA, rallies toward it but fails = Sell</p>
+<p class="mb-4">8. Price rises far above SMA = Mean reversion sell</p>
+
+<h3 id="the-200-day-sma-"religion"">The 200-Day SMA "Religion"</h3>
+
+<p class="mb-4">Institutional traders treat the 200 SMA as a market bible:</p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Pro Insight: When the S&P 500 is above its 200-day SMA, backtests show significantly better risk-adjusted returns for long strategies. Many hedge funds literally won't hold equities when the index is below the 200 SMA.</blockquote>
+
+<h3 id="triple-sma-system">Triple SMA System</h3>
+
+<p class="mb-4">Professional traders often use three SMAs together:</p>
+<p class="mb-4">- Fast (20): Entry timing</p>
+<p class="mb-4">- Medium (50): Intermediate trend</p>
+<p class="mb-4">- Slow (200): Major trend filter</p>
+
+<p class="mb-4">All three aligned = highest conviction trades.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"The SMA is the anchor of trend analysis—price above it means buyers are in control, price below means sellers rule."</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">The SMA answers the simplest question in trading: "What's the average price been?"</p>
+
+<p class="mb-4">By smoothing price over n periods, the SMA reveals the underlying trend hidden beneath daily noise. But its elegance is also its limitation—each day's price is weighted equally, meaning data from 50 days ago has the same influence as today's close.</p>
+
+<p class="mb-4">This equal weighting creates "lag"—the SMA turns after price has already turned. However, this same lag filters out false moves, making the SMA reliable (if slow).</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<h3 id="backtest-evidence">Backtest Evidence</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Historical Win Rate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Golden Cross (50/200)</td><td class="px-4 py-2 border-b border-[#2a2e39]">58% with +2:1 R:R</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Death Cross (50/200)</td><td class="px-4 py-2 border-b border-[#2a2e39]">54% with +1.5:1 R:R</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price > 200 SMA filter</td><td class="px-4 py-2 border-b border-[#2a2e39]">+3% annual alpha</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">"Kiss" Bounce</td><td class="px-4 py-2 border-b border-[#2a2e39]">62% continuation</td></tr>
+</table></div>
+
+<h3 id="why-it-works">Why It Works</h3>
+
+<p class="mb-4">SMAs work because they become self-fulfilling prophecies. So many traders watch the same levels (50, 200) that price reacts to them. Additionally, the SMA represents genuine value consensus—periods with higher prices have higher averages, creating natural support/resistance.</p>
+
+<h3 id="academic-reference">Academic Reference</h3>
+
+<p class="mb-4">The mathematical foundation dates to R.H. Hooker's 1901 work on "instantaneous averages." G.U. Yule coined "moving average" in 1909. Charles Dow applied the concept to markets in the 1920s. J.M. Hurst formalized cyclical analysis using MAs in the 1970s.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-actionable-strategy">3. Actionable Strategy</h2>
+
+<h3 id="strategy-name:-"the-buy-the-dip-sma-setup"">Strategy Name: "The Buy-the-Dip SMA Setup"</h3>
+
+<p class="mb-4">Concept: Use Stochastic to time entries after pullbacks to the SMA in confirmed uptrends.</p>
+
+<p class="mb-4">Setup Requirements:</p>
+<p class="mb-4">1. 50-period SMA (must be rising)</p>
+<p class="mb-4">2. Price above 50 SMA</p>
+<p class="mb-4">3. Stochastic (14, 3, 3)</p>
+
+<p class="mb-4">Entry Trigger:</p>
+<p class="mb-4">- Price pulls back to or near the 50 SMA</p>
+<p class="mb-4">- Candle low touches SMA (the "kiss")</p>
+<p class="mb-4">- Stochastic %K crosses above %D from below 20</p>
+
+<p class="mb-4">Exit Rules:</p>
+<p class="mb-4">1. Primary Exit: Stochastic enters overbought (>80) and turns down</p>
+<p class="mb-4">2. Stop Loss: Close below the 50 SMA</p>
+<p class="mb-4">3. Trailing: Move stop to each swing low</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<h3 id="failure-patterns">Failure Patterns</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pattern</td><td class="px-4 py-2 border-b border-[#2a2e39]">Description</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mitigation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">NaN Propagation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Single missing data point nullifies window</td><td class="px-4 py-2 border-b border-[#2a2e39]">Forward-fill or skip NaN</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Range Whipsaw</td><td class="px-4 py-2 border-b border-[#2a2e39]">Repeated crosses in flat market</td><td class="px-4 py-2 border-b border-[#2a2e39]">Require slope filter</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Late Entry</td><td class="px-4 py-2 border-b border-[#2a2e39]">Crossover after move is exhausted</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use faster MA for timing</td></tr>
+</table></div>
+
+<h3 id="psychological-traps">Psychological Traps</h3>
+
+<p class="mb-4">1. The "It's Above the SMA" Trap  </p>
+<p class="mb-4">   Buying just because price is above SMA, without confirming trend or timing.</p>
+
+<p class="mb-4">2. Average-Down Anchor Bias  </p>
+<p class="mb-4">   Viewing the SMA as a target price for losing positions.</p>
+
+<p class="mb-4">3. Overloading MAs  </p>
+<p class="mb-4">   Putting 5+ MAs on chart creates "paralysis by analysis."</p>
+
+<h3 id="common-misinterpretations">Common Misinterpretations</h3>
+
+<p class="mb-4">- "Price above SMA = bullish = buy now" → Timing matters</p>
+<p class="mb-4">- "Golden Cross = immediate rally" → Often already priced in</p>
+<p class="mb-4">- "SMA is support" → It's a guide, not a wall</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<h3 id="creator-attribution">Creator Attribution</h3>
+
+<p class="mb-4">Moving averages in finance were popularized by Charles Dow (Dow Theory, 1920s), formalized by G.U. Yule (1909), and modernized by J.M. Hurst (cyclic analysis, 1970s).</p>
+
+<h3 id="parent/child-indicators">Parent/Child Indicators</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Relationship</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">EMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Child — Exponentially weighted variant</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">WMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sibling — Linearly weighted variant</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bollinger Bands</td><td class="px-4 py-2 border-b border-[#2a2e39]">Child — SMA + standard deviation bands</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">MACD</td><td class="px-4 py-2 border-b border-[#2a2e39]">Child — Difference of two EMAs</td></tr>
+</table></div>
+
+<h3 id="recommended-readings">Recommended Readings</h3>
+
+<p class="mb-4">1. *Technical Analysis of the Financial Markets* — John Murphy</p>
+<p class="mb-4">2. *The 200 Day Moving Average* — Technical Analysis of Stocks & Commodities</p>
+<p class="mb-4">3. *Trading for a Living* — Alexander Elder</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h3 id="55-related-indicators-comparison">5.5 Related Indicators Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">EMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">WMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">VWAP</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Weighting</td><td class="px-4 py-2 border-b border-[#2a2e39]">Equal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Exponential</td><td class="px-4 py-2 border-b border-[#2a2e39]">Linear</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volume-weighted</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Responsiveness</td><td class="px-4 py-2 border-b border-[#2a2e39]">Slowest</td><td class="px-4 py-2 border-b border-[#2a2e39]">Fast</td><td class="px-4 py-2 border-b border-[#2a2e39]">Medium</td><td class="px-4 py-2 border-b border-[#2a2e39]">Session-based</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Lag</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low</td><td class="px-4 py-2 border-b border-[#2a2e39]">Medium</td><td class="px-4 py-2 border-b border-[#2a2e39]">N/A (cumulative)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Best For</td><td class="px-4 py-2 border-b border-[#2a2e39]">Long-term trend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Short-term signals</td><td class="px-4 py-2 border-b border-[#2a2e39]">Balanced analysis</td><td class="px-4 py-2 border-b border-[#2a2e39]">Intraday fair value</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Calculation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Simple sum</td><td class="px-4 py-2 border-b border-[#2a2e39]">Recursive</td><td class="px-4 py-2 border-b border-[#2a2e39]">Weighted sum</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price × Volume / Volume</td></tr>
+</table></div>
+
+<p class="mb-4">When to Use Which:</p>
+<p class="mb-4">- SMA — Long-term trend identification, 50/200 crossovers</p>
+<p class="mb-4">- EMA — Faster signals, MACD construction</p>
+<p class="mb-4">- WMA — Compromise between SMA and EMA</p>
+<p class="mb-4">- VWAP — Intraday institutional benchmarking</p>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h2 id="advanced-signal-reference">Advanced Signal Reference</h2>
+
+<h3 id="threshold-matrix">Threshold Matrix</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">SMA Context</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price Position</td><td class="px-4 py-2 border-b border-[#2a2e39]">Slope</td><td class="px-4 py-2 border-b border-[#2a2e39]">Action</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">200 SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Above</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rising</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bull market—favor longs</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">200 SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Above</td><td class="px-4 py-2 border-b border-[#2a2e39]">Flat</td><td class="px-4 py-2 border-b border-[#2a2e39]">Caution—momentum fading</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">200 SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Below</td><td class="px-4 py-2 border-b border-[#2a2e39]">Falling</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bear market—favor shorts</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">50/200</td><td class="px-4 py-2 border-b border-[#2a2e39]">Golden Cross</td><td class="px-4 py-2 border-b border-[#2a2e39]">Both rising</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong bull confirmation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">50/200</td><td class="px-4 py-2 border-b border-[#2a2e39]">Death Cross</td><td class="px-4 py-2 border-b border-[#2a2e39]">Both falling</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong bear confirmation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price near SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rising SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">−</td><td class="px-4 py-2 border-b border-[#2a2e39]">"Kiss" buy opportunity</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price near SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Falling SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">−</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rejection sell opportunity</td></tr>
+</table></div>
+
+<h3 id="signal-patterns">Signal Patterns</h3>
+
+<h4 id="golden/death-cross-detection">Golden/Death Cross Detection</h4>
+<p class="mb-4">The Golden Cross (50 SMA crossing above 200 SMA) and Death Cross (opposite) are among the most widely followed signals in technical analysis. Because so many institutional traders monitor these levels, they often become self-fulfilling prophecies—backtests show 58% win rate with 2:1 reward-to-risk when combined with ADX trend confirmation. The signal is strongest when both SMAs are sloping in the direction of the cross.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def ma_crossover(fast_ma, slow_ma):
+&nbsp;&nbsp;&nbsp;&nbsp;current_fast = fast_ma[-1]
+&nbsp;&nbsp;&nbsp;&nbsp;previous_fast = fast_ma[-2]
+&nbsp;&nbsp;&nbsp;&nbsp;current_slow = slow_ma[-1]
+&nbsp;&nbsp;&nbsp;&nbsp;previous_slow = slow_ma[-2]
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;# Golden Cross
+&nbsp;&nbsp;&nbsp;&nbsp;if previous_fast &lt;= previous_slow and current_fast &gt; current_slow:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;GOLDEN_CROSS&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;# Death Cross
+&nbsp;&nbsp;&nbsp;&nbsp;if previous_fast &gt;= previous_slow and current_fast &lt; current_slow:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;DEATH_CROSS&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return &quot;NO_CROSS&quot;
+</code></pre>
+
+<h4 id="granville's-"kiss"-pattern">Granville's "Kiss" Pattern</h4>
+<p class="mb-4">Joseph Granville's "Kiss" pattern occurs when price touches a rising SMA and bounces—the SMA acts as dynamic support that buyers defend. This pattern has a 62% continuation rate because it represents a pullback entry within an established trend, where institutional buyers accumulate near the perceived "fair value" represented by the moving average. The tolerance parameter accounts for minor intraday violations that don't constitute true breakdowns.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def granville_kiss(candles, sma_values, tolerance=0.02):
+&nbsp;&nbsp;&nbsp;&nbsp;# Low touches SMA, Close stays above
+&nbsp;&nbsp;&nbsp;&nbsp;current_low = candles[-1].Low
+&nbsp;&nbsp;&nbsp;&nbsp;current_close = candles[-1].Close
+&nbsp;&nbsp;&nbsp;&nbsp;sma = sma_values[-1]
+&nbsp;&nbsp;&nbsp;&nbsp;slope = sma_values[-1] - sma_values[-5]
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;touch = abs(current_low - sma) / sma &lt; tolerance
+&nbsp;&nbsp;&nbsp;&nbsp;close_above = current_close &gt; sma
+&nbsp;&nbsp;&nbsp;&nbsp;rising = slope &gt; 0
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if touch and close_above and rising:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;BULLISH_KISS&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return &quot;NO_PATTERN&quot;
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<h4 id="golden-cross-setup">Golden Cross Setup</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SMA(50) &gt; SMA(200)
+AND SMA(50)[5] &lt; SMA(200)[5]
+AND ADX(14) &gt; 20
+</code></pre>
+
+<h4 id="buy-the-dip-in-uptrend">Buy-the-Dip in Uptrend</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Close &gt; SMA(200)
+AND Low &lt;= SMA(50)
+AND Close &gt; SMA(50)
+AND SMA(50) &gt; SMA(50)[5]
+</code></pre>
+
+<h4 id="trend-alignment">Trend Alignment</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Close &gt; SMA(20)
+AND SMA(20) &gt; SMA(50)
+AND SMA(50) &gt; SMA(200)
+</code></pre>
+
+<h3 id="combination-strategies">Combination Strategies</h3>
+
+<h4 id="sma-+-stochastic-pullback">SMA + Stochastic Pullback</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FILTER:
+&nbsp;&nbsp;Close &gt; SMA(50)
+&nbsp;&nbsp;SMA(50) slope &gt; 0
+
+SETUP:
+&nbsp;&nbsp;Low touches SMA(50)
+
+TRIGGER:
+&nbsp;&nbsp;Stochastic %K crosses above %D
+&nbsp;&nbsp;AND %K &lt; 30
+
+ENTRY: BUY
+
+STOP: Close below SMA(50)
+
+EXIT: Stochastic &gt; 80 and turning down
+</code></pre>
+
+<h4 id="triple-sma-trend-system">Triple SMA Trend System</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+LONG CONDITIONS:
+&nbsp;&nbsp;SMA(20) &gt; SMA(50)
+&nbsp;&nbsp;SMA(50) &gt; SMA(200)
+&nbsp;&nbsp;Close &gt; SMA(20)
+&nbsp;&nbsp;
+SHORT CONDITIONS:
+&nbsp;&nbsp;SMA(20) &lt; SMA(50)
+&nbsp;&nbsp;SMA(50) &lt; SMA(200)
+&nbsp;&nbsp;Close &lt; SMA(20)
+
+STOP: Opposite SMA layer
+</code></pre>
+
+
+
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#formula" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Formula</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#default-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Default Parameters</a>
+<a href="#timeframe-recommendations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Timeframe Recommendations</a>
+<a href="#why-these-values" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why These Values?</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#best-conditions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Best Conditions</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#asset-class-suitability" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Asset Class Suitability</a>
+<a href="#5-entry-signals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Entry Signals</a>
+<a href="#primary-buy-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Buy Signal</a>
+<a href="#primary-sell-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Sell Signal</a>
+<a href="#6-filter-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Filter Usage</a>
+<a href="#filter-rules" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Filter Rules</a>
+<a href="#recommended-pairings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Pairings</a>
+<a href="#example-combined-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Example Combined Strategy</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#lag-characteristics" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Lag Characteristics</a>
+<a href="#false-signal-scenarios" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">False Signal Scenarios</a>
+<a href="#mitigation-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Mitigation Strategies</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#granville's-8-rules" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Granville's 8 Rules</a>
+<a href="#the-200-day-sma-"religion"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The 200-Day SMA "Religion"</a>
+<a href="#triple-sma-system" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Triple SMA System</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#backtest-evidence" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Backtest Evidence</a>
+<a href="#why-it-works" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why It Works</a>
+<a href="#academic-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Academic Reference</a>
+<a href="#3-actionable-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Strategy</a>
+<a href="#strategy-name:-"the-buy-the-dip-sma-setup"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Strategy Name: "The Buy-the-Dip SMA Setup"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#failure-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Failure Patterns</a>
+<a href="#psychological-traps" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Psychological Traps</a>
+<a href="#common-misinterpretations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common Misinterpretations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#parent/child-indicators" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Parent/Child Indicators</a>
+<a href="#recommended-readings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Readings</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Matrix</a>
+<a href="#signal-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Signal Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "SimpleMovingAverage",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 10;
+                const result = SimpleMovingAverage.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/SimpleMovingAverage.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[{"id": "period", "label": "Period (10)", "type": "number", "value": 10, "min": 2, "max": 100}]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": true, "plots": {"main": {"label": "SimpleMovingAverage", "color": "#4f46e5", "type": "line"}}}
+    </script>
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code - loaded externally before this block
+
+        // 2. Configuration (XSS-safe via script type="application/json")
+        try {
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 10;
+                const result = SimpleMovingAverage.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+    </script>
+
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
+
+</body>
+</html>

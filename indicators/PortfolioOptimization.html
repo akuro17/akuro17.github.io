@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PortfolioOptimization - I ant I Investigates</title>
+    <meta name="description" content="PortfolioOptimization - Technical Indicator">
+    <meta name="keywords" content="PortfolioOptimization, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/portfoliooptimization.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="PortfolioOptimization - I ant I Investigates">
+    <meta property="og:description" content="PortfolioOptimization - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/portfoliooptimization.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/portfoliooptimization.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PortfolioOptimization">
+    <meta name="twitter:description" content="PortfolioOptimization - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/portfoliooptimization.png">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
+
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">PortfolioOptimization</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="flex space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">PortfolioOptimization</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">Modern Portfolio Theory provides a mathematical framework for constructing portfolios that maximize expected return for a given level of risk by exploiting diversification through asset correlations.</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION["Phase 1: Ingestion"];
+A[/"Receive Asset Returns History"/];
+B["Define Target Return or Risk"];
+C["Establish Allocation Constraints"];
+end;
+subgraph EVALUATION["Phase 2: Evaluation"];
+D["Calculate Expected Returns"];
+E["Estimate Covariance Matrix"];
+F["Apply Shrinkage if Needed"];
+end;
+subgraph WEIGHTING["Phase 3: Weighting"];
+G["Set Optimization Objective"];
+H["Apply Portfolio Constraints"];
+I["Solve for Optimal Weights"];
+end;
+subgraph SYNTHESIS["Phase 4: Synthesis"];
+J["Generate Efficient Frontier"];
+K["Identify Tangency Portfolio"];
+L["Calculate Expected Risk-Return"];
+end;
+subgraph OUTCOME["Phase 5: Outcome"];
+M{"Portfolio Quality Assessment?"};
+N["On Frontier = Efficient Allocation"];
+O["Below Frontier = Suboptimal"];
+P["Maximum Sharpe = Best Risk-Return"];
+Q[/"Generate Optimal Weights Signal"/];
+end;
+A --> B;
+B --> C;
+C --> D;
+D --> E;
+E --> F;
+F --> G;
+G --> H;
+H --> I;
+I --> J;
+J --> K;
+K --> L;
+L --> M;
+M -->|Optimal| N;
+M -->|Suboptimal| O;
+M -->|Best| P;
+N --> Q;
+O --> Q;
+P --> Q;
+style INGESTION fill:#e3f2fd;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#e8f5e9;
+style SYNTHESIS fill:#fce4ec;
+style OUTCOME fill:#f3e5f5;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/PortfolioOptimization.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="portfolio-optimization-modern-portfolio-theory">Portfolio Optimization (Modern Portfolio Theory)</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: Modern Portfolio Theory / Portfolio Optimization  </p>
+<p class="mb-4">Abbreviation: MPT  </p>
+<p class="mb-4">Category: Asset Allocation / Risk Management  </p>
+<p class="mb-4">Creator: Harry Markowitz (1952), Nobel Prize in Economics (1990)  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: Modern Portfolio Theory provides a mathematical framework for constructing portfolios that maximize expected return for a given level of risk by exploiting diversification through asset correlations.</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="core-formulas">Core Formulas</h3>
+
+<p class="mb-4">Portfolio Expected Return:</p>
+<p class="mb-4">$$E(R_p) = \sum_{i=1}^{n} w_i \cdot E(R_i)$$</p>
+
+<p class="mb-4">Portfolio Variance:</p>
+<p class="mb-4">$$\sigma_p^2 = \sum_{i=1}^{n} \sum_{j=1}^{n} w_i w_j \sigma_i \sigma_j \rho_{ij}$$</p>
+
+<p class="mb-4">Or using Covariance Matrix:</p>
+<p class="mb-4">$$\sigma_p^2 = \mathbf{w}^T \mathbf{\Sigma} \mathbf{w}$$</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Variable</td><td class="px-4 py-2 border-b border-[#2a2e39]">Meaning</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">$w_i$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Weight of asset $i$ in portfolio</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">$E(R_i)$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Expected return of asset $i$</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">$\sigma_i$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard deviation of asset $i$</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">$\rho_{ij}$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Correlation between assets $i$ and $j$</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">$\mathbf{\Sigma}$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Covariance matrix of all assets</td></tr>
+</table></div>
+
+<h3 id="key-concepts">Key Concepts</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Concept</td><td class="px-4 py-2 border-b border-[#2a2e39]">Definition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Significance</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Efficient Frontier</td><td class="px-4 py-2 border-b border-[#2a2e39]">Curve of optimal portfolios</td><td class="px-4 py-2 border-b border-[#2a2e39]">Maximum return for each risk level</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Tangency Portfolio</td><td class="px-4 py-2 border-b border-[#2a2e39]">Where CAL touches frontier</td><td class="px-4 py-2 border-b border-[#2a2e39]">Maximum Sharpe Ratio portfolio</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Minimum Variance Portfolio</td><td class="px-4 py-2 border-b border-[#2a2e39]">Leftmost frontier point</td><td class="px-4 py-2 border-b border-[#2a2e39]">Lowest possible risk</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Capital Allocation Line</td><td class="px-4 py-2 border-b border-[#2a2e39]">Risk-free to tangency</td><td class="px-4 py-2 border-b border-[#2a2e39]">Borrowing/lending possibilities</td></tr>
+</table></div>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">Think of MPT like mixing ingredients for a perfect recipe. Each ingredient (asset) has its own flavor profile (expected return) and spiciness (risk). But when you combine them, the interactions matter: some ingredients complement (low correlation) while others clash (high correlation). MPT finds the perfect proportions where ingredients enhance each other, creating a dish (portfolio) that's more flavorful (return) with less overwhelming spice (risk) than any single ingredient alone.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<h3 id="common-mpt-implementations">Common MPT Implementations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Method</td><td class="px-4 py-2 border-b border-[#2a2e39]">Description</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use Case</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Mean-Variance</td><td class="px-4 py-2 border-b border-[#2a2e39]">Classic Markowitz</td><td class="px-4 py-2 border-b border-[#2a2e39]">When expected returns are reliable</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Minimum Variance</td><td class="px-4 py-2 border-b border-[#2a2e39]">Ignores expected returns</td><td class="px-4 py-2 border-b border-[#2a2e39]">When returns are uncertain</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Risk Parity</td><td class="px-4 py-2 border-b border-[#2a2e39]">Equal risk contribution</td><td class="px-4 py-2 border-b border-[#2a2e39]">Balanced risk allocation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Black-Litterman</td><td class="px-4 py-2 border-b border-[#2a2e39]">Combines views with equilibrium</td><td class="px-4 py-2 border-b border-[#2a2e39]">Incorporating active views</td></tr>
+</table></div>
+
+<h3 id="standard-parameters">Standard Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Notes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Historical Window</td><td class="px-4 py-2 border-b border-[#2a2e39]">3-5 years</td><td class="px-4 py-2 border-b border-[#2a2e39]">For covariance estimation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rebalancing Frequency</td><td class="px-4 py-2 border-b border-[#2a2e39]">Quarterly</td><td class="px-4 py-2 border-b border-[#2a2e39]">Monthly for active strategies</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Position Constraints</td><td class="px-4 py-2 border-b border-[#2a2e39]">2-25% per asset</td><td class="px-4 py-2 border-b border-[#2a2e39]">Prevents concentration</td></tr>
+</table></div>
+
+<h3 id="constraints-typically-applied">Constraints Typically Applied</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Constraint</td><td class="px-4 py-2 border-b border-[#2a2e39]">Formula</td><td class="px-4 py-2 border-b border-[#2a2e39]">Purpose</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Weights Sum to 1</td><td class="px-4 py-2 border-b border-[#2a2e39]">$\sum w_i = 1$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Full investment</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">No Short Sales</td><td class="px-4 py-2 border-b border-[#2a2e39]">$w_i \geq 0$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Long-only constraint</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Maximum Weight</td><td class="px-4 py-2 border-b border-[#2a2e39]">$w_i \leq 0.25$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Diversification enforcement</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sector Limits</td><td class="px-4 py-2 border-b border-[#2a2e39]">$\sum_{sector} w_i \leq 0.40$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sector diversification</td></tr>
+</table></div>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<h3 id="best-conditions">Best Conditions</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Why It Works</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Stable Correlations</td><td class="px-4 py-2 border-b border-[#2a2e39]">MPT relies on historical correlations persisting</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Diverse Asset Classes</td><td class="px-4 py-2 border-b border-[#2a2e39]">More opportunities for diversification</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Long Investment Horizons</td><td class="px-4 py-2 border-b border-[#2a2e39]">Short-term noise averages out</td></tr>
+</table></div>
+
+<h3 id="limitations">Limitations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Correlation Breakdown</td><td class="px-4 py-2 border-b border-[#2a2e39]">Correlations spike to 1.0 in crises</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Non-Normal Returns</td><td class="px-4 py-2 border-b border-[#2a2e39]">MPT assumes normality; reality has fat tails</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Estimation Error</td><td class="px-4 py-2 border-b border-[#2a2e39]">Small changes in inputs cause large weight shifts</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Backward-Looking</td><td class="px-4 py-2 border-b border-[#2a2e39]">Historical data may not predict future</td></tr>
+</table></div>
+
+<h3 id="when-mpt-works-best">When MPT Works Best</h3>
+
+<p class="mb-4">- Strategic Asset Allocation — Long-term policy weights</p>
+<p class="mb-4">- Institutional Portfolios — Pension funds, endowments</p>
+<p class="mb-4">- Tactical Trading — Too slow for short-term decisions</p>
+<p class="mb-4">- Crisis Periods — Correlations spike; diversification fails</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-entry-signals">5. Entry Signals</h2>
+
+<p class="mb-4">MPT is an allocation methodology, not a trading signal generator. However, it informs rebalancing decisions:</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Action</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Weight Drift > 5%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trigger rebalancing</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Correlation Shift</td><td class="px-4 py-2 border-b border-[#2a2e39]">Re-optimize with new covariance matrix</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">New Asset Available</td><td class="px-4 py-2 border-b border-[#2a2e39]">Re-run optimization with expanded universe</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Risk Tolerance Change</td><td class="px-4 py-2 border-b border-[#2a2e39]">Select different frontier point</td></tr>
+</table></div>
+
+<h3 id="rebalancing-framework">Rebalancing Framework</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+MONTHLY CHECK:
+&nbsp;&nbsp;FOR each asset:
+&nbsp;&nbsp;&nbsp;&nbsp;Drift = |Current_Weight - Target_Weight|
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;IF MAX(Drift) &gt; 5% OR SUM(ABS(Drift)) &gt; 10%:
+&nbsp;&nbsp;&nbsp;&nbsp;REBALANCE to target weights
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-filter-usage">6. Filter Usage</h2>
+
+<p class="mb-4">MPT provides the strategic backbone for portfolio construction. Tactical tools build on this foundation.</p>
+
+<h3 id="application-framework">Application Framework</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rule</td><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Use MPT for</td><td class="px-4 py-2 border-b border-[#2a2e39]">Long-term strategic allocation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Use Tactical for</td><td class="px-4 py-2 border-b border-[#2a2e39]">Short-term tilts within MPT bounds</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Reoptimize when</td><td class="px-4 py-2 border-b border-[#2a2e39]">Correlations shift > 0.2</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Risk-scale</td><td class="px-4 py-2 border-b border-[#2a2e39]">Based on volatility regime</td></tr>
+</table></div>
+
+<h3 id="recommended-pairings">Recommended Pairings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Partner Framework</td><td class="px-4 py-2 border-b border-[#2a2e39]">Synergy Logic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Risk Parity</td><td class="px-4 py-2 border-b border-[#2a2e39]">Complement MPT with equal risk weighting</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Regime Detection</td><td class="px-4 py-2 border-b border-[#2a2e39]">Adjust inputs based on market regime</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Momentum Overlays</td><td class="px-4 py-2 border-b border-[#2a2e39]">Tactical tilts within strategic bands</td></tr>
+</table></div>
+
+<h3 id="example-combined-strategy">Example Combined Strategy</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+STRATEGIC BASE (MPT):
+&nbsp;&nbsp;Run quarterly optimization
+&nbsp;&nbsp;Set target weights with ±5% bands
+&nbsp;&nbsp;
+TACTICAL OVERLAY:
+&nbsp;&nbsp;Within bands, tilt toward:
+&nbsp;&nbsp;- Momentum winners
+&nbsp;&nbsp;- Lower implied volatility assets
+&nbsp;&nbsp;
+EXECUTION:
+&nbsp;&nbsp;Rebalance when any asset exceeds bands
+&nbsp;&nbsp;OR quarterly at minimum
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<h3 id="estimation-error-issues">Estimation Error Issues</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td><td class="px-4 py-2 border-b border-[#2a2e39]">Description</td><td class="px-4 py-2 border-b border-[#2a2e39]">Solution</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Input Sensitivity</td><td class="px-4 py-2 border-b border-[#2a2e39]">Small return estimate changes → Large weight changes</td><td class="px-4 py-2 border-b border-[#2a2e39]">Constrain weights strictly</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Covariance Noise</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sample covariance is noisy</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use shrinkage estimators</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Corner Solutions</td><td class="px-4 py-2 border-b border-[#2a2e39]">Optimizer picks extreme weights</td><td class="px-4 py-2 border-b border-[#2a2e39]">Add diversification constraints</td></tr>
+</table></div>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Reality Check: Unconstrained mean-variance optimization typically produces nonsensical portfolios. Always add practical constraints (max weights, diversification requirements).</blockquote>
+
+<h3 id="common-errors">Common Errors</h3>
+
+<p class="mb-4">1. Trusting Expected Returns  </p>
+<p class="mb-4">   Small estimation errors in expected returns dominate the optimization. Consider minimum-variance or risk-parity approaches.</p>
+
+<p class="mb-4">2. Using Short History  </p>
+<p class="mb-4">   2-3 years may miss correlation regimes. Use 5+ years or stress-test with crisis periods.</p>
+
+<p class="mb-4">3. Ignoring Transaction Costs  </p>
+<p class="mb-4">   Frequent rebalancing destroys returns. Set rebalancing thresholds.</p>
+
+<p class="mb-4">4. Crisis Correlation Blindness  </p>
+<p class="mb-4">   Correlations spike during crises. Stress-test with 2008/2020 data.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<h3 id="resampled-efficiency-michaud">Resampled Efficiency (Michaud)</h3>
+
+<p class="mb-4">Standard optimization is a "point estimate"—it acts as if inputs are perfectly known. Resampled Efficiency runs thousands of Monte Carlo simulations with varied inputs, generating a "fuzzy" efficient frontier. If your portfolio lies within this cloud, it's statistically indistinguishable from optimal.</p>
+
+<h3 id="the-covariance-matrix-problem">The Covariance Matrix Problem</h3>
+
+<p class="mb-4">With N assets, you need to estimate N(N+1)/2 covariance terms. With 100 assets, that's 5,050 parameters from maybe 60 monthly observations. Solution: shrinkage estimators (Ledoit-Wolf) that blend sample covariance toward a structured estimate.</p>
+
+<h3 id="black-litterman-integration">Black-Litterman Integration</h3>
+
+<p class="mb-4">Black-Litterman solves the expected return problem by:</p>
+<p class="mb-4">1. Starting with market-implied equilibrium returns</p>
+<p class="mb-4">2. Blending investor's active "views" (e.g., "Tech will outperform 2%")</p>
+<p class="mb-4">3. Generating stable, intuitive weights</p>
+
+<p class="mb-4">This produces portfolios that tilt toward views without wild swings.</p>
+
+<h3 id="the-minimum-variance-paradox">The Minimum Variance Paradox</h3>
+
+<p class="mb-4">Research shows that minimum variance portfolios (which ignore expected returns entirely) often outperform mean-variance optimized portfolios out-of-sample. The reason: expected returns are so hard to estimate that ignoring them reduces estimation error.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"Modern Portfolio Theory is your investment GPS—it maps the efficient route between risk and return, but like any GPS, it only works if you've input the right destination and understand that road conditions change."</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">MPT answers: "What mix of assets gives me the best return for my risk tolerance?"</p>
+
+<p class="mb-4">Markowitz's revolutionary insight was that risk is not just about individual assets but how they interact. Two risky assets can combine to create a less risky portfolio if their movements are uncorrelated or negatively correlated.</p>
+
+<p class="mb-4">The Efficient Frontier visualizes this:</p>
+<p class="mb-4">- X-axis: Risk (standard deviation)</p>
+<p class="mb-4">- Y-axis: Expected Return</p>
+<p class="mb-4">- The curve: Best possible portfolios (maximum return at each risk level)</p>
+<p class="mb-4">- Below the curve: Inefficient (same risk, less return)</p>
+<p class="mb-4">- Above the curve: Impossible (no free lunch)</p>
+
+<p class="mb-4">Finding your optimal portfolio:</p>
+<p class="mb-4">1. Calculate expected returns and covariance matrix</p>
+<p class="mb-4">2. Solve for weights that maximize return for target risk (or minimize risk for target return)</p>
+<p class="mb-4">3. Apply constraints (no short sales, max weights, etc.)</p>
+<p class="mb-4">4. Select point on frontier matching your risk tolerance</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<h3 id="academic-evidence">Academic Evidence</h3>
+
+<p class="mb-4">MPT's effectiveness studies:</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Finding</td><td class="px-4 py-2 border-b border-[#2a2e39]">Research</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Diversification reduces risk without reducing expected return</td><td class="px-4 py-2 border-b border-[#2a2e39]">Markowitz (1952)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Optimal portfolios are sensitive to input estimates</td><td class="px-4 py-2 border-b border-[#2a2e39]">Michaud (1989)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Minimum variance often beats mean-variance out-of-sample</td><td class="px-4 py-2 border-b border-[#2a2e39]">Clarke et al. (2006)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Shrinkage estimators improve optimization</td><td class="px-4 py-2 border-b border-[#2a2e39]">Ledoit-Wolf (2003)</td></tr>
+</table></div>
+
+<h3 id="why-it-works">Why It Works</h3>
+
+<p class="mb-4">The edge comes from the mathematics of diversification. With N uncorrelated assets of equal variance:</p>
+
+<p class="mb-4">$$\sigma_{portfolio} = \frac{\sigma_{individual}}{\sqrt{N}}$$</p>
+
+<p class="mb-4">Portfolio volatility decreases as you add uncorrelated assets. This is a mathematical fact, not a market opinion. MPT systematically exploits this.</p>
+
+<h3 id="limitations">Limitations</h3>
+
+<p class="mb-4">- Historical correlation != Future correlation</p>
+<p class="mb-4">- Correlations approach 1.0 during crises</p>
+<p class="mb-4">- Expected return estimates are notoriously unreliable</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-actionable-strategy">3. Actionable Strategy</h2>
+
+<h3 id="strategy-name:-"robust-minimum-variance"">Strategy Name: "Robust Minimum Variance"</h3>
+
+<p class="mb-4">Concept: Build minimum variance portfolios with robust covariance estimation.</p>
+
+<p class="mb-4">Setup:</p>
+<p class="mb-4">1. Universe: Core asset classes (Equities, Bonds, Commodities, REITs)</p>
+<p class="mb-4">2. Covariance: Ledoit-Wolf shrinkage estimator on 5-year monthly data</p>
+<p class="mb-4">3. Constraints: 5% minimum, 40% maximum per asset class</p>
+
+<p class="mb-4">Optimization:</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+MINIMIZE: w^T Σ w
+SUBJECT TO:
+&nbsp;&nbsp;Σw = 1
+&nbsp;&nbsp;w &gt;= 0.05
+&nbsp;&nbsp;w &lt;= 0.40
+</code></pre>
+
+<p class="mb-4">Rebalancing:</p>
+<p class="mb-4">- Quarterly recalculation</p>
+<p class="mb-4">- Trade only if drift > 5%</p>
+<p class="mb-4">- Transaction cost threshold: $Cost < 0.5% of rebalanced amount</p>
+
+<p class="mb-4">Example:</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Quarterly Optimization Result:
+&nbsp;&nbsp;US Equities: 25%
+&nbsp;&nbsp;Int&#x27;l Equities: 20%
+&nbsp;&nbsp;US Bonds: 30%
+&nbsp;&nbsp;Int&#x27;l Bonds: 15%
+&nbsp;&nbsp;Commodities: 10%
+&nbsp;&nbsp;
+Annual Turnover Target: &lt; 20%
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<h3 id="failure-patterns">Failure Patterns</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pattern</td><td class="px-4 py-2 border-b border-[#2a2e39]">Description</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mitigation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Input Estimation Error</td><td class="px-4 py-2 border-b border-[#2a2e39]">Small errors → Large weight swings</td><td class="px-4 py-2 border-b border-[#2a2e39]">Constrain weights; use shrinkage</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Crisis Correlation Spike</td><td class="px-4 py-2 border-b border-[#2a2e39]">Diversification fails when needed most</td><td class="px-4 py-2 border-b border-[#2a2e39]">Stress-test; hold cash buffer</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Over-Optimization</td><td class="px-4 py-2 border-b border-[#2a2e39]">Model fits noise, not signal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Out-of-sample testing; simpler models</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Static Inputs</td><td class="px-4 py-2 border-b border-[#2a2e39]">World changes; model doesn't</td><td class="px-4 py-2 border-b border-[#2a2e39]">Periodic re-estimation; regime models</td></tr>
+</table></div>
+
+<h3 id="psychological-traps">Psychological Traps</h3>
+
+<p class="mb-4">1. The "Optimal" Illusion  </p>
+<p class="mb-4">   MPT outputs look precise but are riddled with estimation error. Treat weights as guide ranges, not exact targets.</p>
+
+<p class="mb-4">2. Complexity Bias  </p>
+<p class="mb-4">   More sophisticated models don't always perform better. Minimum variance often beats mean-variance.</p>
+
+<p class="mb-4">3. Post-Crisis False Confidence  </p>
+<p class="mb-4">   Correlations measured during calm periods don't reflect crisis behavior.</p>
+
+<h3 id="common-misinterpretations">Common Misinterpretations</h3>
+
+<p class="mb-4">- "MPT gives the 'best' portfolio" → It gives the best given your inputs, which may be wrong</p>
+<p class="mb-4">- "More assets = more diversification" → Only if uncorrelated; 10 tech stocks ≠ diversified</p>
+<p class="mb-4">- "Just run once and forget" → Markets change; re-optimize periodically</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<h3 id="creator-attribution">Creator Attribution</h3>
+
+<p class="mb-4">Harry Markowitz published "Portfolio Selection" in the *Journal of Finance* (1952), establishing the mathematical foundation. He shared the 1990 Nobel Prize in Economics with Merton Miller and William Sharpe for their contributions to financial economics.</p>
+
+<h3 id="related-frameworks">Related Frameworks</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Framework</td><td class="px-4 py-2 border-b border-[#2a2e39]">Relationship</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">CAPM</td><td class="px-4 py-2 border-b border-[#2a2e39]">Child — Derives from MPT; pricing implications</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Black-Litterman</td><td class="px-4 py-2 border-b border-[#2a2e39]">Evolution — Combines MPT with investor views</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Risk Parity</td><td class="px-4 py-2 border-b border-[#2a2e39]">Alternative — Equal risk contribution across assets</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Factor Models</td><td class="px-4 py-2 border-b border-[#2a2e39]">Extension — MPT applied to risk factors</td></tr>
+</table></div>
+
+<h3 id="recommended-readings">Recommended Readings</h3>
+
+<p class="mb-4">1. *Portfolio Selection* — Harry Markowitz (1952 paper)</p>
+<p class="mb-4">2. *Active Portfolio Management* — Grinold & Kahn</p>
+<p class="mb-4">3. *Efficient Asset Management* — Richard Michaud</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h3 id="55-related-indicators-comparison">5.5 Related Indicators Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mean-Variance</td><td class="px-4 py-2 border-b border-[#2a2e39]">Minimum Variance</td><td class="px-4 py-2 border-b border-[#2a2e39]">Risk Parity</td><td class="px-4 py-2 border-b border-[#2a2e39]">Black-Litterman</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Uses Expected Returns</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yes</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yes (equilibrium+views)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sensitivity to Inputs</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Best For</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong return views</td><td class="px-4 py-2 border-b border-[#2a2e39]">Uncertain returns</td><td class="px-4 py-2 border-b border-[#2a2e39]">Equal risk budget</td><td class="px-4 py-2 border-b border-[#2a2e39]">Active views</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Complexity</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td></tr>
+</table></div>
+
+<p class="mb-4">When to Use Which:</p>
+<p class="mb-4">- Mean-Variance — When you have confidence in return estimates</p>
+<p class="mb-4">- Minimum Variance — When returns are uncertain; focus on risk reduction</p>
+<p class="mb-4">- Risk Parity — When equal risk contribution is goal</p>
+<p class="mb-4">- Black-Litterman — When blending views with market equilibrium</p>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h2 id="advanced-signal-reference">Advanced Signal Reference</h2>
+
+<h3 id="optimization-methods">Optimization Methods</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Method</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use Case</td><td class="px-4 py-2 border-b border-[#2a2e39]">Complexity</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Quadratic Programming</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Mean-Variance</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">SLSQP (SciPy)</td><td class="px-4 py-2 border-b border-[#2a2e39]">General constrained optimization</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Monte Carlo Simulation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Resampled frontiers</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Convex Optimization (CVXPY)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Complex constraints</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td></tr>
+</table></div>
+
+<h3 id="code-patterns">Code Patterns</h3>
+
+<h4 id="mean-variance-optimization">Mean-Variance Optimization</h4>
+<p class="mb-4">This is the core Markowitz optimization that finds the portfolio weights minimizing variance for a given target return. The optimization uses quadratic programming to solve the constrained minimization problem with weight bounds preventing excessive concentration. Always add practical constraints (max 40% per asset) as unconstrained optimization produces extreme, unstable allocations.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+import numpy as np
+from scipy.optimize import minimize
+
+def mean_variance_optimize(returns, cov_matrix, target_return):
+&nbsp;&nbsp;&nbsp;&nbsp;n = len(returns)
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;def objective(w):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return np.dot(w.T, np.dot(cov_matrix, w))  # Minimize variance
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;constraints = [
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&#x27;type&#x27;: &#x27;eq&#x27;, &#x27;fun&#x27;: lambda w: np.sum(w) - 1},           # Weights sum to 1
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&#x27;type&#x27;: &#x27;eq&#x27;, &#x27;fun&#x27;: lambda w: np.dot(w, returns) - target_return}  # Target return
+&nbsp;&nbsp;&nbsp;&nbsp;]
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;bounds = [(0, 0.4) for _ in range(n)]  # 0-40% per asset
+&nbsp;&nbsp;&nbsp;&nbsp;initial_weights = np.array([1/n] * n)
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;result = minimize(objective, initial_weights, method=&#x27;SLSQP&#x27;,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bounds=bounds, constraints=constraints)
+&nbsp;&nbsp;&nbsp;&nbsp;return result.x
+</code></pre>
+
+<h4 id="minimum-variance-portfolio">Minimum Variance Portfolio</h4>
+<p class="mb-4">The minimum variance portfolio ignores expected returns entirely, focusing solely on risk minimization—often outperforming mean-variance optimization out-of-sample. This approach is preferred when return estimates are uncertain since it eliminates the largest source of estimation error. Research shows this "simpler" approach frequently beats complex optimization in real-world applications.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def minimum_variance_portfolio(cov_matrix, max_weight=0.4):
+&nbsp;&nbsp;&nbsp;&nbsp;n = cov_matrix.shape[0]
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;def objective(w):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return np.dot(w.T, np.dot(cov_matrix, w))
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;constraints = [{&#x27;type&#x27;: &#x27;eq&#x27;, &#x27;fun&#x27;: lambda w: np.sum(w) - 1}]
+&nbsp;&nbsp;&nbsp;&nbsp;bounds = [(0, max_weight) for _ in range(n)]
+&nbsp;&nbsp;&nbsp;&nbsp;initial_weights = np.array([1/n] * n)
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;result = minimize(objective, initial_weights, method=&#x27;SLSQP&#x27;,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bounds=bounds, constraints=constraints)
+&nbsp;&nbsp;&nbsp;&nbsp;return result.x
+</code></pre>
+
+<h4 id="efficient-frontier-generation">Efficient Frontier Generation</h4>
+<p class="mb-4">The efficient frontier maps all optimal portfolios from minimum variance to maximum return, showing the trade-off between risk and reward. Each point on the curve represents the best possible return for that level of risk—portfolios below the curve are inefficient. The tangency portfolio (where a line from the risk-free rate touches the frontier) represents the maximum Sharpe Ratio portfolio.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def generate_efficient_frontier(returns, cov_matrix, n_portfolios=100):
+&nbsp;&nbsp;&nbsp;&nbsp;min_return = min(returns)
+&nbsp;&nbsp;&nbsp;&nbsp;max_return = max(returns)
+&nbsp;&nbsp;&nbsp;&nbsp;target_returns = np.linspace(min_return, max_return, n_portfolios)
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;frontier = []
+&nbsp;&nbsp;&nbsp;&nbsp;for target in target_returns:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;weights = mean_variance_optimize(returns, cov_matrix, target)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;portfolio_vol = np.sqrt(np.dot(weights.T, np.dot(cov_matrix, weights)))
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;frontier.append((portfolio_vol, target, weights))
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return frontier
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<h4 id="allocation-drift-alert">Allocation Drift Alert</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FOR each asset:
+&nbsp;&nbsp;Drift = ABS(Current_Weight - Optimal_Weight)
+&nbsp;&nbsp;
+IF MAX(Drift) &gt; 5%:
+&nbsp;&nbsp;TRIGGER Rebalance Signal
+</code></pre>
+
+<h4 id="correlation-shift-detection">Correlation Shift Detection</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Rolling_Correlation_60d vs Rolling_Correlation_252d
+IF |Diff| &gt; 0.2:
+&nbsp;&nbsp;TRIGGER Covariance Re-estimation
+</code></pre>
+
+<h3 id="combination-strategies">Combination Strategies</h3>
+
+<h4 id="mpt-+-momentum-overlay">MPT + Momentum Overlay</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+STRATEGIC BASE:
+&nbsp;&nbsp;Run quarterly MPT optimization
+&nbsp;&nbsp;Set target weights within ±10% bands
+&nbsp;&nbsp;
+TACTICAL LAYER:
+&nbsp;&nbsp;Calculate 12-1 month momentum for each asset
+&nbsp;&nbsp;Overweight top quintile by 5%
+&nbsp;&nbsp;Underweight bottom quintile by 5%
+&nbsp;&nbsp;(Within strategic bands)
+&nbsp;&nbsp;
+REBALANCE:
+&nbsp;&nbsp;Monthly momentum update
+&nbsp;&nbsp;Quarterly strategic recalculation
+</code></pre>
+
+<h4 id="risk-regime-integration">Risk-Regime Integration</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+REGIME DETECTION:
+&nbsp;&nbsp;IF VIX &lt; 15: regime = &quot;Calm&quot;
+&nbsp;&nbsp;IF VIX 15-25: regime = &quot;Normal&quot;  
+&nbsp;&nbsp;IF VIX &gt; 25: regime = &quot;Stress&quot;
+&nbsp;&nbsp;
+MPT ADJUSTMENT:
+&nbsp;&nbsp;Calm: Use standard covariance
+&nbsp;&nbsp;Normal: Use shrinkage covariance
+&nbsp;&nbsp;Stress: Use crisis covariance (2008/2020 blend)
+</code></pre>
+
+
+
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#core-formulas" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Core Formulas</a>
+<a href="#key-concepts" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Key Concepts</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#common-mpt-implementations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common MPT Implementations</a>
+<a href="#standard-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Standard Parameters</a>
+<a href="#constraints-typically-applied" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Constraints Typically Applied</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#best-conditions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Best Conditions</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#when-mpt-works-best" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">When MPT Works Best</a>
+<a href="#5-entry-signals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Entry Signals</a>
+<a href="#rebalancing-framework" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Rebalancing Framework</a>
+<a href="#6-filter-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Filter Usage</a>
+<a href="#application-framework" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Application Framework</a>
+<a href="#recommended-pairings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Pairings</a>
+<a href="#example-combined-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Example Combined Strategy</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#estimation-error-issues" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Estimation Error Issues</a>
+<a href="#common-errors" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common Errors</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#resampled-efficiency-michaud" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Resampled Efficiency (Michaud)</a>
+<a href="#the-covariance-matrix-problem" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The Covariance Matrix Problem</a>
+<a href="#black-litterman-integration" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Black-Litterman Integration</a>
+<a href="#the-minimum-variance-paradox" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The Minimum Variance Paradox</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#academic-evidence" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Academic Evidence</a>
+<a href="#why-it-works" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why It Works</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#3-actionable-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Strategy</a>
+<a href="#strategy-name:-"robust-minimum-variance"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Strategy Name: "Robust Minimum Variance"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#failure-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Failure Patterns</a>
+<a href="#psychological-traps" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Psychological Traps</a>
+<a href="#common-misinterpretations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common Misinterpretations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#related-frameworks" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Related Frameworks</a>
+<a href="#recommended-readings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Readings</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#optimization-methods" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Optimization Methods</a>
+<a href="#code-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Code Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "PortfolioOptimization",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 14;
+                const result = PortfolioOptimization.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/PortfolioOptimization.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[{"id": "period", "label": "Period (14)", "type": "number", "value": 14, "min": 2, "max": 100}]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": true, "plots": {"main": {"label": "PortfolioOptimization", "color": "#4f46e5", "type": "line"}}}
+    </script>
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code - loaded externally before this block
+
+        // 2. Configuration (XSS-safe via script type="application/json")
+        try {
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 14;
+                const result = PortfolioOptimization.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+    </script>
+
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
+
+</body>
+</html>

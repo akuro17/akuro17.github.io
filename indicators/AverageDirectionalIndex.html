@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AverageDirectionalIndex - I ant I Investigates</title>
+    <meta name="description" content="AverageDirectionalIndex - Technical Indicator">
+    <meta name="keywords" content="AverageDirectionalIndex, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/averagedirectionalindex.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="AverageDirectionalIndex - I ant I Investigates">
+    <meta property="og:description" content="AverageDirectionalIndex - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/averagedirectionalindex.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/averagedirectionalindex.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AverageDirectionalIndex">
+    <meta name="twitter:description" content="AverageDirectionalIndex - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/averagedirectionalindex.png">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
+
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">AverageDirectionalIndex</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="flex space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">AverageDirectionalIndex</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">ADX is the definitive trend-strength indicator that tells you *how strong* a trend is (but not which direction)—it's the market's "speedometer" that separates trending from ranging environments.</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION["Phase 1: Ingestion"];
+A[/"Receive Price Movement Data"/];
+B["Capture Directional Impulses"];
+end;
+subgraph EVALUATION["Phase 2: Evaluation"];
+C["Identify Upward Thrust Days"];
+D["Identify Downward Thrust Days"];
+E["Measure Total Volatility"];
+end;
+subgraph WEIGHTING["Phase 3: Weighting"];
+F["Smooth Directional Readings"];
+G["Calculate Relative Strength of Each Direction"];
+end;
+subgraph SYNTHESIS["Phase 4: Synthesis"];
+H["Compare Buyer vs Seller Dominance"];
+I["Derive Trend Intensity Score"];
+end;
+subgraph OUTCOME["Phase 5: Outcome"];
+J{"Trend Strong Enough?"};
+K["Trending Market - Follow Trend"];
+L["Ranging Market - Mean Revert"];
+M[/"Generate ADX Signal"/];
+end;
+A --> B;
+B --> C;
+B --> D;
+B --> E;
+C --> F;
+D --> F;
+E --> F;
+F --> G;
+G --> H;
+H --> I;
+I --> J;
+J -->|ADX > 25| K;
+J -->|ADX < 20| L;
+K --> M;
+L --> M;
+style INGESTION fill:#e3f2fd;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#e8f5e9;
+style SYNTHESIS fill:#fce4ec;
+style OUTCOME fill:#f3e5f5;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/AverageDirectionalIndex.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="averagedirectionalindex-adx">AverageDirectionalIndex (ADX)</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: Average Directional Index  </p>
+<p class="mb-4">Abbreviation: ADX  </p>
+<p class="mb-4">Category: Trend Strength  </p>
+<p class="mb-4">Creator: J. Welles Wilder Jr. (1978)  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: ADX is the definitive trend-strength indicator that tells you *how strong* a trend is (but not which direction)—it's the market's "speedometer" that separates trending from ranging environments.</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="formula">Formula</h3>
+
+<p class="mb-4">$$+DI = \frac{Smoothed(+DM)}{Smoothed(TR)} \times 100$$</p>
+
+<p class="mb-4">$$-DI = \frac{Smoothed(-DM)}{Smoothed(TR)} \times 100$$</p>
+
+<p class="mb-4">$$DX = \frac{|+DI - (-DI)|}{+DI + (-DI)} \times 100$$</p>
+
+<p class="mb-4">$$ADX = Wilder\ Smoothing(DX, n)$$</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Step</td><td class="px-4 py-2 border-b border-[#2a2e39]">Formula</td><td class="px-4 py-2 border-b border-[#2a2e39]">Purpose</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1</td><td class="px-4 py-2 border-b border-[#2a2e39]">$+DM = H_t - H_{t-1}$ (if > -DM and > 0)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Positive directional movement</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">2</td><td class="px-4 py-2 border-b border-[#2a2e39]">$-DM = L_{t-1} - L_t$ (if > +DM and > 0)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Negative directional movement</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">$TR = \max(H-L,</td><td class="px-4 py-2 border-b border-[#2a2e39]">H-C_{prev}</td><td class="px-4 py-2 border-b border-[#2a2e39]">,</td><td class="px-4 py-2 border-b border-[#2a2e39]">L-C_{prev}</td><td class="px-4 py-2 border-b border-[#2a2e39]">)$</td><td class="px-4 py-2 border-b border-[#2a2e39]">True Range</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">4</td><td class="px-4 py-2 border-b border-[#2a2e39]">Smooth DM and TR with Wilder method</td><td class="px-4 py-2 border-b border-[#2a2e39]">14-period smoothing</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">5</td><td class="px-4 py-2 border-b border-[#2a2e39]">Calculate +DI and -DI</td><td class="px-4 py-2 border-b border-[#2a2e39]">Directional indicators</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">6</td><td class="px-4 py-2 border-b border-[#2a2e39]">Calculate DX from DI difference</td><td class="px-4 py-2 border-b border-[#2a2e39]">Raw directional index</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">7</td><td class="px-4 py-2 border-b border-[#2a2e39]">Smooth DX to get ADX</td><td class="px-4 py-2 border-b border-[#2a2e39]">Final trend strength</td></tr>
+</table></div>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">ADX is a speedometer for the market. A reading of 15 means the market is barely moving (no trend). A reading of 50 means the market is racing (strong trend). Like a speedometer, it doesn't tell you *which direction* you're going—just how fast. Use +DI/-DI for direction.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<h3 id="default-parameters">Default Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rationale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">14</td><td class="px-4 py-2 border-b border-[#2a2e39]">Wilder's original recommendation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Weak Trend</td><td class="px-4 py-2 border-b border-[#2a2e39]">< 20</td><td class="px-4 py-2 border-b border-[#2a2e39]">Market is ranging</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trending Threshold</td><td class="px-4 py-2 border-b border-[#2a2e39]">> 25</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend exists</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Strong Trend</td><td class="px-4 py-2 border-b border-[#2a2e39]">> 40</td><td class="px-4 py-2 border-b border-[#2a2e39]">Powerful trend</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Extreme</td><td class="px-4 py-2 border-b border-[#2a2e39]">> 50</td><td class="px-4 py-2 border-b border-[#2a2e39]">Overheated, watch for exhaustion</td></tr>
+</table></div>
+
+<h3 id="timeframe-recommendations">Timeframe Recommendations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trading Style</td><td class="px-4 py-2 border-b border-[#2a2e39]">Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">Notes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Day Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">7-10</td><td class="px-4 py-2 border-b border-[#2a2e39]">Faster response</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Swing Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">14</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Position Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">20-25</td><td class="px-4 py-2 border-b border-[#2a2e39]">More stable readings</td></tr>
+</table></div>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<h3 id="best-conditions">Best Conditions</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Why It Works</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Confirmation</td><td class="px-4 py-2 border-b border-[#2a2e39]">ADX > 25 validates trend-following strategies</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Strategy Selection</td><td class="px-4 py-2 border-b border-[#2a2e39]">ADX < 20 = mean reversion; ADX > 25 = trend following</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Breakout Confirmation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rising ADX confirms genuine breakouts</td></tr>
+</table></div>
+
+<h3 id="limitations">Limitations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Non-Directional</td><td class="px-4 py-2 border-b border-[#2a2e39]">ADX doesn't tell you bull vs. bear</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Lag</td><td class="px-4 py-2 border-b border-[#2a2e39]">Requires 2× Period bars before reliable</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Extreme Readings</td><td class="px-4 py-2 border-b border-[#2a2e39]">High ADX can mean trend ending, not beginning</td></tr>
+</table></div>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-entry-signals">5. Entry Signals</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strength</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">DI Cross Up</td><td class="px-4 py-2 border-b border-[#2a2e39]">+DI crosses above -DI</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">DI Cross Down</td><td class="px-4 py-2 border-b border-[#2a2e39]">-DI crosses above +DI</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Confirmation</td><td class="px-4 py-2 border-b border-[#2a2e39]">ADX > 25 and rising</td><td class="px-4 py-2 border-b border-[#2a2e39]">Either (per DI)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">ADX Hook</td><td class="px-4 py-2 border-b border-[#2a2e39]">ADX > 50 and turns down</td><td class="px-4 py-2 border-b border-[#2a2e39]">Exit signal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Birth</td><td class="px-4 py-2 border-b border-[#2a2e39]">ADX rises from < 20</td><td class="px-4 py-2 border-b border-[#2a2e39]">New trend starting</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+</table></div>
+
+<h3 id="primary-buy-signal">Primary Buy Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF +DI crosses above -DI
+AND ADX &gt; 25
+AND ADX is rising (ADX &gt; ADX[1])
+THEN → BUY (Confirmed uptrend)
+</code></pre>
+
+<h3 id="adx-hook-exit-signal">ADX Hook Exit Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF ADX &gt; 50
+AND ADX &lt; ADX[1] (ADX turning down)
+THEN → EXIT (Trend exhaustion)
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-filter-usage">6. Filter Usage</h2>
+
+<p class="mb-4">ADX is the ultimate regime filter for selecting appropriate trading strategies.</p>
+
+<h3 id="filter-rules">Filter Rules</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">ADX Level</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strategy Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Example</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">< 20</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mean reversion</td><td class="px-4 py-2 border-b border-[#2a2e39]">RSI oversold/overbought</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">20-25</td><td class="px-4 py-2 border-b border-[#2a2e39]">Wait</td><td class="px-4 py-2 border-b border-[#2a2e39]">No clear edge</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">> 25</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend following</td><td class="px-4 py-2 border-b border-[#2a2e39]">MA crossovers, breakouts</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">> 40</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong trend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trailing stops only</td></tr>
+</table></div>
+
+<h3 id="recommended-pairings">Recommended Pairings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Partner Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Synergy Logic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parabolic SAR</td><td class="px-4 py-2 border-b border-[#2a2e39]">ADX validates environment; SAR provides trailing stops</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Moving Averages</td><td class="px-4 py-2 border-b border-[#2a2e39]">ADX filters whipsaws on MA crosses</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RSI</td><td class="px-4 py-2 border-b border-[#2a2e39]">When ADX < 20, use RSI mean reversion</td></tr>
+</table></div>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<h3 id="lag-characteristics">Lag Characteristics</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Component</td><td class="px-4 py-2 border-b border-[#2a2e39]">Approximate Delay</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">First DI values</td><td class="px-4 py-2 border-b border-[#2a2e39]">Period bars</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">First ADX value</td><td class="px-4 py-2 border-b border-[#2a2e39]">2× Period bars (~28 bars for 14)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal reliability</td><td class="px-4 py-2 border-b border-[#2a2e39]">~100 bars for full convergence</td></tr>
+</table></div>
+
+<h3 id="false-signal-scenarios">False Signal Scenarios</h3>
+
+<p class="mb-4">1. Sub-25 DI Crosses  </p>
+<p class="mb-4">   DI crossovers when ADX < 20 are noise, not signals.</p>
+
+<p class="mb-4">2. High ADX Trap  </p>
+<p class="mb-4">   ADX at 60 doesn't mean "buy more"—it often precedes exhaustion.</p>
+
+<p class="mb-4">3. Direction Confusion  </p>
+<p class="mb-4">   Rising ADX means "trend strengthening" but could be bearish if -DI > +DI.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<h3 id="the-adx-pillow-setup">The ADX Pillow Setup</h3>
+
+<p class="mb-4">After a long downtrend, if price flattens and ADX drops below 15 (extreme dormancy), the ADX acts like a "pillow" for price. When price suddenly breaks out and ADX turns up from this sub-15 level, expect a massive multi-month trend. The longer the compression, the bigger the eventual move.</p>
+
+<h3 id="the-hook-exit">The Hook Exit</h3>
+
+<p class="mb-4">When ADX rises above 40-50 and then hooks down (slope turns negative), immediately tighten stops or exit. The trend's acceleration phase is over. This "Hook" signal often appears 5-10 bars before price shows any weakness.</p>
+
+<h3 id="adx-as-a-position-sizing-tool">ADX as a Position Sizing Tool</h3>
+
+<p class="mb-4">Many professionals use ADX for dynamic position sizing:</p>
+<p class="mb-4">- ADX 25-30: Normal position</p>
+<p class="mb-4">- ADX 30-40: Increased position (trend confirmed)</p>
+<p class="mb-4">- ADX 40-50: Reduce position (late to the party)</p>
+<p class="mb-4">- ADX > 50: Minimum position (trend exhausting)</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"ADX is the gatekeeper that answers the most important question in trading: Should I be trend-following or mean-reverting right now? Above 25, follow trends. Below 20, fade extremes."</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">ADX doesn't care about direction—only intensity. Think of it as measuring the "decisiveness" of the market. A high ADX means buyers OR sellers are clearly winning. A low ADX means nobody's in control.</p>
+
+<p class="mb-4">The Three Components:</p>
+<p class="mb-4">1. +DI (Green line): Buying pressure strength</p>
+<p class="mb-4">2. -DI (Red line): Selling pressure strength</p>
+<p class="mb-4">3. ADX (Black line): How much one side dominates</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<p class="mb-4">Strategies filtered by ADX significantly outperform unfiltered versions:</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Strategy</td><td class="px-4 py-2 border-b border-[#2a2e39]">Without ADX Filter</td><td class="px-4 py-2 border-b border-[#2a2e39]">With ADX > 25 Filter</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">MA Crossover</td><td class="px-4 py-2 border-b border-[#2a2e39]">48% win rate</td><td class="px-4 py-2 border-b border-[#2a2e39]">58% win rate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Breakout</td><td class="px-4 py-2 border-b border-[#2a2e39]">45% win rate</td><td class="px-4 py-2 border-b border-[#2a2e39]">62% win rate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RSI (Mean Rev)</td><td class="px-4 py-2 border-b border-[#2a2e39]">52% win rate</td><td class="px-4 py-2 border-b border-[#2a2e39]">55% (ADX < 20)</td></tr>
+</table></div>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-actionable-strategy">3. Actionable Strategy</h2>
+
+<h3 id="strategy-name:-"adx-trend-entry-with-parabolic-sar"">Strategy Name: "ADX Trend Entry with Parabolic SAR"</h3>
+
+<p class="mb-4">Setup:</p>
+<p class="mb-4">1. ADX(14) > 25 and rising</p>
+<p class="mb-4">2. +DI(14) > -DI(14)</p>
+
+<p class="mb-4">Entry: Price crosses above Parabolic SAR</p>
+
+<p class="mb-4">Trail: Use SAR dots as trailing stop</p>
+
+<p class="mb-4">Exit: Price crosses below SAR OR ADX < 25</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Risk</td><td class="px-4 py-2 border-b border-[#2a2e39]">Description</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mitigation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Late Entry</td><td class="px-4 py-2 border-b border-[#2a2e39]">By ADX > 25, move has started</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use DI cross for timing</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Exhaustion Miss</td><td class="px-4 py-2 border-b border-[#2a2e39]">High ADX looks bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Watch for Hook</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Non-Directional</td><td class="px-4 py-2 border-b border-[#2a2e39]">ADX = 50 could be bear market</td><td class="px-4 py-2 border-b border-[#2a2e39]">Always check DI</td></tr>
+</table></div>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<h3 id="creator-attribution">Creator Attribution</h3>
+
+<p class="mb-4">J. Welles Wilder Jr. introduced ADX in his 1978 book *New Concepts in Technical Trading Systems*. A mechanical engineer turned trader, Wilder's indicators (RSI, ATR, Parabolic SAR) remain industry standards.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h3 id="55-related-indicators-comparison">5.5 Related Indicators Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">ADX</td><td class="px-4 py-2 border-b border-[#2a2e39]">ADXR</td><td class="px-4 py-2 border-b border-[#2a2e39]">Aroon</td><td class="px-4 py-2 border-b border-[#2a2e39]">ATR</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Measures</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend strength</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend durability</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend age</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Directional?</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yes</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Best For</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strategy selection</td><td class="px-4 py-2 border-b border-[#2a2e39]">Exit timing</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend detection</td><td class="px-4 py-2 border-b border-[#2a2e39]">Position sizing</td></tr>
+</table></div>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h2 id="advanced-signal-reference">Advanced Signal Reference</h2>
+
+<h3 id="threshold-matrix">Threshold Matrix</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">ADX Level</td><td class="px-4 py-2 border-b border-[#2a2e39]">Market State</td><td class="px-4 py-2 border-b border-[#2a2e39]">Recommended Strategy</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0-15</td><td class="px-4 py-2 border-b border-[#2a2e39]">Extreme dormancy</td><td class="px-4 py-2 border-b border-[#2a2e39]">Wait; prepare for breakout</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">15-20</td><td class="px-4 py-2 border-b border-[#2a2e39]">Weak/No trend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mean reversion (RSI, Stoch)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">20-25</td><td class="px-4 py-2 border-b border-[#2a2e39]">Emerging trend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Watch closely; prepare entries</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">25-40</td><td class="px-4 py-2 border-b border-[#2a2e39]">Confirmed trend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend following active</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">40-50</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong trend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trail stops; no new entries</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">50+</td><td class="px-4 py-2 border-b border-[#2a2e39]">Overheated</td><td class="px-4 py-2 border-b border-[#2a2e39]">Expect exhaustion soon</td></tr>
+</table></div>
+
+<h3 id="signal-patterns">Signal Patterns</h3>
+
+<h4 id="adx-trend-entry-signal">ADX Trend Entry Signal</h4>
+
+<p class="mb-4">The ideal ADX entry combines four conditions: ADX above 25 (confirming a trend exists), rising ADX (trend strengthening), +DI above -DI (bullish direction), and a fresh +DI/-DI crossover. This combination captures the moment when a confirmed trend gains fresh directional momentum, providing the highest probability entries.</p>
+
+<h4 id="adx-hook-exit-signal">ADX Hook Exit Signal</h4>
+
+<p class="mb-4">When ADX rises above 50 (extreme trend strength) and then begins declining, this "Hook" pattern warns of trend exhaustion. The trend has peaked in intensity and will likely slow or reverse. Professional traders use this signal to exit positions 5-10 bars before price shows visible weakness.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def adx_trend_entry(adx, plus_di, minus_di):
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;&quot;Primary ADX trend-following entry&quot;&quot;&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;trend_exists = adx[-1] &gt; 25
+&nbsp;&nbsp;&nbsp;&nbsp;trend_rising = adx[-1] &gt; adx[-2]
+&nbsp;&nbsp;&nbsp;&nbsp;bullish = plus_di[-1] &gt; minus_di[-1]
+&nbsp;&nbsp;&nbsp;&nbsp;di_cross = plus_di[-2] &lt;= minus_di[-2] and plus_di[-1] &gt; minus_di[-1]
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return trend_exists and trend_rising and bullish and di_cross
+
+def adx_hook_exit(adx):
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;&quot;ADX Hook exhaustion signal&quot;&quot;&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;was_extreme = any(x &gt; 50 for x in adx[-5:])
+&nbsp;&nbsp;&nbsp;&nbsp;turning_down = adx[-1] &lt; adx[-2]
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return was_extreme and turning_down
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+// Trend Entry Scanner
+ADX(14) &gt; 25
+AND ADX(14) &gt; ADX(14)[1]           // Rising
+AND PLUS_DI(14) crosses above MINUS_DI(14)
+</code></pre>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+// Trend Birth Scanner  
+ADX(14) &lt; 20 within last 5 bars
+AND ADX(14) &gt; 22 today
+</code></pre>
+
+<h3 id="combination-strategies">Combination Strategies</h3>
+
+<h4 id="adx-+-parabolic-sar">ADX + Parabolic SAR</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FILTER: ADX(14) &gt; 25
+ENTRY: Price crosses above SAR AND +DI &gt; -DI
+TRAIL: SAR dots
+EXIT: Price &lt; SAR OR ADX &lt; 25
+</code></pre>
+
+
+
+
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#formula" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Formula</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#default-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Default Parameters</a>
+<a href="#timeframe-recommendations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Timeframe Recommendations</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#best-conditions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Best Conditions</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#5-entry-signals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Entry Signals</a>
+<a href="#primary-buy-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Buy Signal</a>
+<a href="#adx-hook-exit-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">ADX Hook Exit Signal</a>
+<a href="#6-filter-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Filter Usage</a>
+<a href="#filter-rules" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Filter Rules</a>
+<a href="#recommended-pairings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Pairings</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#lag-characteristics" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Lag Characteristics</a>
+<a href="#false-signal-scenarios" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">False Signal Scenarios</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#the-adx-pillow-setup" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The ADX Pillow Setup</a>
+<a href="#the-hook-exit" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The Hook Exit</a>
+<a href="#adx-as-a-position-sizing-tool" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">ADX as a Position Sizing Tool</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#3-actionable-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Strategy</a>
+<a href="#strategy-name:-"adx-trend-entry-with-parabolic-sar"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Strategy Name: "ADX Trend Entry with Parabolic SAR"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Matrix</a>
+<a href="#signal-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Signal Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "AverageDirectionalIndex",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 14;
+                const result = AverageDirectionalIndex.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/AverageDirectionalIndex.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[{"id": "period", "label": "Period (14)", "type": "number", "value": 14, "min": 2, "max": 100}]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": true, "plots": {"main": {"label": "AverageDirectionalIndex", "color": "#4f46e5", "type": "line"}}}
+    </script>
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code - loaded externally before this block
+
+        // 2. Configuration (XSS-safe via script type="application/json")
+        try {
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 14;
+                const result = AverageDirectionalIndex.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+    </script>
+
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
+
+</body>
+</html>

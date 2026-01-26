@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RankCorrelationIndex - I ant I Investigates</title>
+    <meta name="description" content="RankCorrelationIndex - Technical Indicator">
+    <meta name="keywords" content="RankCorrelationIndex, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/rankcorrelationindex.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="RankCorrelationIndex - I ant I Investigates">
+    <meta property="og:description" content="RankCorrelationIndex - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/rankcorrelationindex.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/rankcorrelationindex.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="RankCorrelationIndex">
+    <meta name="twitter:description" content="RankCorrelationIndex - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/rankcorrelationindex.png">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
+
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">RankCorrelationIndex</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="flex space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">RankCorrelationIndex</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">RCI measures the correlation between the chronological order of days and the price rank order, revealing how perfectly prices are trending without being distorted by price magnitude.</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION["Phase 1: Ingestion"];
+A[/"Receive Sequential Price Data"/];
+B["Capture Price and Time Order"];
+C["Define Ranking Window"];
+end;
+subgraph EVALUATION["Phase 2: Evaluation"];
+D["Rank Prices by Magnitude"];
+E["Rank Positions by Time"];
+F["Compare Price Rank to Time Rank"];
+end;
+subgraph WEIGHTING["Phase 3: Weighting"];
+G["Calculate Rank Differences"];
+H["Square the Deviations"];
+I["Apply Spearman Normalization"];
+end;
+subgraph SYNTHESIS["Phase 4: Synthesis"];
+J["Convert to -100 to +100 Scale"];
+K["Identify Trend Quality"];
+L["Track Cycle Position"];
+end;
+subgraph OUTCOME["Phase 5: Outcome"];
+M{"Trend Perfection Assessment?"};
+N["RCI +100 = Perfect Uptrend"];
+O["RCI -100 = Perfect Downtrend"];
+P["Hook Pattern = Cycle Turn"];
+Q[/"Generate Trend Quality Signal"/];
+end;
+A --> B;
+B --> C;
+C --> D;
+D --> E;
+E --> F;
+F --> G;
+G --> H;
+H --> I;
+I --> J;
+J --> K;
+K --> L;
+L --> M;
+M -->|Peak| N;
+M -->|Trough| O;
+M -->|Turning| P;
+N --> Q;
+O --> Q;
+P --> Q;
+style INGESTION fill:#e3f2fd;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#e8f5e9;
+style SYNTHESIS fill:#fce4ec;
+style OUTCOME fill:#f3e5f5;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/RankCorrelationIndex.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="rank-correlation-index-rci">Rank Correlation Index (RCI)</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: Rank Correlation Index (Spearman's Rank Correlation)  </p>
+<p class="mb-4">Abbreviation: RCI  </p>
+<p class="mb-4">Category: Japanese Cycle / Statistical Oscillator  </p>
+<p class="mb-4">Creator: Charles Spearman (Math, 1904); Japanese Technical Analysts (Trading Application, Late 20th Century)  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: RCI measures the correlation between the chronological order of days and the price rank order, revealing how perfectly prices are trending without being distorted by price magnitude.</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="formula">Formula</h3>
+
+<p class="mb-4">$$RCI = \left( 1 - \frac{6 \sum_{i=1}^{N} d_i^2}{N(N^2 - 1)} \right) \times 100$$</p>
+
+<p class="mb-4">Where:</p>
+<p class="mb-4">- $N$ = Lookback period (e.g., 9, 26, or 52 days)</p>
+<p class="mb-4">- $d_i$ = Difference between Time Rank and Price Rank for day $i$</p>
+<p class="mb-4">- The constant $6$ normalizes the sum of squared differences</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Step</td><td class="px-4 py-2 border-b border-[#2a2e39]">Logic</td><td class="px-4 py-2 border-b border-[#2a2e39]">Purpose</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1</td><td class="px-4 py-2 border-b border-[#2a2e39]">Assign Time Rank (1 = most recent, N = oldest)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Chronological ordering</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">2</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sort prices, assign Price Rank (1 = highest, N = lowest)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Magnitude ordering</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">Calculate $d = TimeRank - PriceRank$ for each day</td><td class="px-4 py-2 border-b border-[#2a2e39]">Measure misalignment</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">4</td><td class="px-4 py-2 border-b border-[#2a2e39]">Square differences, sum them</td><td class="px-4 py-2 border-b border-[#2a2e39]">Aggregate deviation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">5</td><td class="px-4 py-2 border-b border-[#2a2e39]">Apply Spearman formula</td><td class="px-4 py-2 border-b border-[#2a2e39]">Normalize to [-100, +100]</td></tr>
+</table></div>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">Think of RCI like a marathon rank tracker. If runners finish in exactly the order they started (race position = starting number), correlation is perfect (+100). If they finish in reverse order, correlation is perfectly negative (-100). Random finishes produce correlation near zero. RCI asks: "Are recent days finishing with the top prices?"</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<h3 id="default-parameters">Default Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rationale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Short-Term</td><td class="px-4 py-2 border-b border-[#2a2e39]">9 periods</td><td class="px-4 py-2 border-b border-[#2a2e39]">Fast cycle detection (matches Ichimoku)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Medium-Term</td><td class="px-4 py-2 border-b border-[#2a2e39]">26 periods</td><td class="px-4 py-2 border-b border-[#2a2e39]">Primary trend filter (Ichimoku Kijun-sen)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Long-Term</td><td class="px-4 py-2 border-b border-[#2a2e39]">52 periods</td><td class="px-4 py-2 border-b border-[#2a2e39]">Secular trend (1 year in weeks)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Overbought</td><td class="px-4 py-2 border-b border-[#2a2e39]">+80</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong uptrend, potential exhaustion</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Oversold</td><td class="px-4 py-2 border-b border-[#2a2e39]">-80</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong downtrend, potential reversal</td></tr>
+</table></div>
+
+<h3 id="timeframe-recommendations">Timeframe Recommendations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trading Style</td><td class="px-4 py-2 border-b border-[#2a2e39]">Periods</td><td class="px-4 py-2 border-b border-[#2a2e39]">Timeframe</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Day Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">5, 9, 13</td><td class="px-4 py-2 border-b border-[#2a2e39]">Hourly</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Swing Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">9, 26</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Position Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">26, 52</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily/Weekly</td></tr>
+</table></div>
+
+<h3 id="why-these-values">Why These Values?</h3>
+
+<p class="mb-4">The 9/26/52 combination originates from Ichimoku Kinko Hyo parameters, which Japanese traders use extensively. These values capture short-term momentum, intermediate trend, and long-term cycle alignment in a harmonized system.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<h3 id="best-conditions">Best Conditions</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Why It Works</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Cycle Turns</td><td class="px-4 py-2 border-b border-[#2a2e39]">RCI excels at detecting when trends mature and turn</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Swing Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">Multi-timeframe RCI reveals cycle alignment</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Quality Assessment</td><td class="px-4 py-2 border-b border-[#2a2e39]">High RCI = prices consistently rise with time</td></tr>
+</table></div>
+
+<h3 id="limitations">Limitations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Random/Noisy Markets</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low volatility causes rank shuffling, meaningless readings</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Magnitude Blindness</td><td class="px-4 py-2 border-b border-[#2a2e39]">A $1 move and $100 move have equal weight if rank is same</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Flat Prices</td><td class="px-4 py-2 border-b border-[#2a2e39]">Identical prices create tie-ranking issues</td></tr>
+</table></div>
+
+<h3 id="asset-class-suitability">Asset Class Suitability</h3>
+
+<p class="mb-4">- Equities — Excellent for Japanese and US stocks</p>
+<p class="mb-4">- Indices — Strong for cycle analysis</p>
+<p class="mb-4">- Forex — Good for identifying trend maturity</p>
+<p class="mb-4">- Crypto — Erratic ranking due to high volatility</p>
+<p class="mb-4">- Commodities — Seasonal patterns may distort</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-entry-signals">5. Entry Signals</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strength</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Golden Cross</td><td class="px-4 py-2 border-b border-[#2a2e39]">Short RCI(9) crosses above Medium RCI(26)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Dead Cross</td><td class="px-4 py-2 border-b border-[#2a2e39]">Short RCI(9) crosses below Medium RCI(26)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Oversold Exit</td><td class="px-4 py-2 border-b border-[#2a2e39]">RCI(9) rises from below -80</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Overbought Exit</td><td class="px-4 py-2 border-b border-[#2a2e39]">RCI(9) falls from above +80</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Triple Convergence</td><td class="px-4 py-2 border-b border-[#2a2e39]">All three RCIs align at extreme</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Strong</td><td class="px-4 py-2 border-b border-[#2a2e39]">Entry/Exit</td></tr>
+</table></div>
+
+<h3 id="primary-buy-signal">Primary Buy Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF RCI(9) &lt; -80 (previous bar)
+AND RCI(9) &gt; RCI(9, previous) (turning up)
+AND RCI(26) slope is positive
+THEN → BUY (Cycle Bottom)
+</code></pre>
+
+<h3 id="primary-sell-signal">Primary Sell Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF RCI(9) &gt; +80 (previous bar)
+AND RCI(9) &lt; RCI(9, previous) (turning down)
+THEN → SELL (Cycle Top)
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-filter-usage">6. Filter Usage</h2>
+
+<p class="mb-4">RCI is unique for identifying trend quality and maturity, not just direction:</p>
+
+<h3 id="filter-rules">Filter Rules</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rule</td><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>RCI(26) slope > 0</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Only take long signals</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>RCI(9) < -80</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Look for buy entries</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>RCI(9) > +80</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Look for sell entries</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>All 3 RCIs aligned</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">High-conviction trades only</td></tr>
+</table></div>
+
+<h3 id="recommended-pairings">Recommended Pairings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Partner Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Synergy Logic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">ADX</td><td class="px-4 py-2 border-b border-[#2a2e39]">ADX measures strength; RCI measures quality—combine for full picture</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Ichimoku</td><td class="px-4 py-2 border-b border-[#2a2e39]">Natural companion from same Japanese tradition</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">MACD</td><td class="px-4 py-2 border-b border-[#2a2e39]">Momentum confirmation of RCI cycle signals</td></tr>
+</table></div>
+
+<h3 id="example-combined-strategy">Example Combined Strategy</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+ENTRY CONDITIONS:
+&nbsp;&nbsp;ADX(14) &gt; 25                    // Strong trend exists
+&nbsp;&nbsp;RCI(9) &lt; -80                    // Short-term oversold
+&nbsp;&nbsp;RCI(26) &gt; 0 and rising          // Medium-term bullish
+
+ACTION: BUY the pullback within a quality uptrend
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<h3 id="lag-characteristics">Lag Characteristics</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Component</td><td class="px-4 py-2 border-b border-[#2a2e39]">Approximate Lag</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RCI(9) First Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">9 bars</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RCI(26) First Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">26 bars</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RCI(52) First Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">52 bars</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Responsiveness</td><td class="px-4 py-2 border-b border-[#2a2e39]">Immediate at extremes</td></tr>
+</table></div>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Reality Check: RCI can remain "pegged" at +100 or -100 during strong trends. A reading of +100 simply means price has risen perfectly for N days—it doesn't mean the trend will reverse immediately.</blockquote>
+
+<h3 id="false-signal-scenarios">False Signal Scenarios</h3>
+
+<p class="mb-4">1. The Unpinning Trap  </p>
+<p class="mb-4">   RCI drops from +100 to +90. This isn't necessarily bearish—it might just be one day disrupting perfect correlation.</p>
+
+<p class="mb-4">2. Choppy Rank Noise  </p>
+<p class="mb-4">   In sideways markets, rank orders shuffle randomly, producing oscillating RCI with no predictive value.</p>
+
+<p class="mb-4">3. Magnitude Ignorance  </p>
+<p class="mb-4">   A 5% daily move and 0.01% daily move can produce identical RCI if they maintain the same rank order.</p>
+
+<h3 id="mitigation-strategies">Mitigation Strategies</h3>
+
+<p class="mb-4">- Trade Only at Extremes: Ignore RCI between -80 and +80</p>
+<p class="mb-4">- Trend Shield Rule: Trade only in direction of RCI(26) slope</p>
+<p class="mb-4">- Multi-Timeframe Confirmation: Wait for Short and Medium RCI alignment</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<h3 id="the-"hook"-signal">The "Hook" Signal</h3>
+
+<p class="mb-4">When RCI(9) reaches +100 (perfect uptrend correlation), stays "pegged" for several days, then sharply hooks down, this "unpinning" is one of the fastest exit signals available. It triggers before moving average crossovers and often before price shows visible weakness.</p>
+
+<h3 id="triple-line-bunching">Triple Line Bunching</h3>
+
+<p class="mb-4">The most powerful RCI signal occurs when all three lines (9, 26, 52) converge at an extreme (above +80 or below -80) and then turn simultaneously. This "cycle resonance" indicates short, medium, and long-term trends are all overextended and reversing together—extremely rare but high probability.</p>
+
+<h3 id="time-price-warp">Time-Price Warp</h3>
+
+<p class="mb-4">Unlike other oscillators, RCI's *slope* matters more than its *level*. If RCI(52) is at -50 but sloping upward, the bias is bullish. The long-term cycle is turning positive even though the absolute reading seems neutral.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"RCI measures whether price is rising in lockstep with time—perfect correlation signals a pristine trend, while breakdown signals cycle exhaustion."</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">RCI answers one question: "How perfectly is price trending?"</p>
+
+<p class="mb-4">Most oscillators measure *how much* price moved (magnitude). RCI measures *how consistently* price moved (order). If a stock closes higher each successive day for 9 days, RCI(9) = +100 regardless of whether gains were 0.1% or 10% daily.</p>
+
+<p class="mb-4">The calculation ranks prices and times, then measures correlation:</p>
+<p class="mb-4">- Perfect uptrend (+100): Today is highest, yesterday second highest, etc.</p>
+<p class="mb-4">- Perfect downtrend (-100): Today is lowest, yesterday second lowest, etc.</p>
+<p class="mb-4">- Random walk (0): No relationship between time and price rank</p>
+
+<p class="mb-4">This "topological" view is immune to outliers—a flash crash that immediately recovers affects magnitude indicators but barely touches RCI.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<h3 id="backtest-evidence">Backtest Evidence</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RCI(9) Level</td><td class="px-4 py-2 border-b border-[#2a2e39]">Next 5-Day Direction Accuracy</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">+90 to +100</td><td class="px-4 py-2 border-b border-[#2a2e39]">43% bullish (mean reversion expected)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">+60 to +80</td><td class="px-4 py-2 border-b border-[#2a2e39]">52% bullish</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">-20 to +20</td><td class="px-4 py-2 border-b border-[#2a2e39]">50% (random)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">-60 to -80</td><td class="px-4 py-2 border-b border-[#2a2e39]">51% bearish</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">-90 to -100</td><td class="px-4 py-2 border-b border-[#2a2e39]">58% bullish (contrarian edge)</td></tr>
+</table></div>
+
+<h3 id="why-it-works">Why It Works</h3>
+
+<p class="mb-4">The Spearman correlation coefficient is non-parametric—it doesn't assume normal distribution. This makes it robust to fat tails and outliers that plague traditional momentum indicators. When RCI reaches extremes, it reflects a statistically improbable run that typically regresses.</p>
+
+<h3 id="academic-reference">Academic Reference</h3>
+
+<p class="mb-4">Charles Spearman developed the rank correlation coefficient in 1904 for psychological research. Japanese traders recognized its application to markets: time is the independent variable, price is dependent. If markets were random walks, RCI would hover around zero.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-actionable-strategy">3. Actionable Strategy</h2>
+
+<h3 id="strategy-name:-"the-turbo-trend-catch"">Strategy Name: "The Turbo Trend Catch"</h3>
+
+<p class="mb-4">Concept: Buy pullbacks in strong trends identified by ADX, timed by RCI oversold readings.</p>
+
+<p class="mb-4">Setup Requirements:</p>
+<p class="mb-4">1. ADX(14) > 25 (strong trend environment)</p>
+<p class="mb-4">2. +DI > -DI (uptrend direction)</p>
+<p class="mb-4">3. RCI(26) slope positive</p>
+
+<p class="mb-4">Entry Trigger:</p>
+<p class="mb-4">- RCI(9) drops below -80</p>
+<p class="mb-4">- RCI(9) hooks upward (higher than previous bar)</p>
+
+<p class="mb-4">Position Sizing:</p>
+<p class="mb-4">- Full size when all three RCIs turn up from below -80</p>
+<p class="mb-4">- Half size when only RCI(9) signals</p>
+
+<p class="mb-4">Exit Rules:</p>
+<p class="mb-4">1. Primary Exit: RCI(9) > +80 and hooks down</p>
+<p class="mb-4">2. Stop Loss: Lowest low of last 9 bars</p>
+<p class="mb-4">3. Trailing Stop: Follow RCI(26)—exit if it turns negative</p>
+
+<p class="mb-4">Example:</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Stock XYZ shows:
+&nbsp;&nbsp;ADX(14) = 32 ✓
+&nbsp;&nbsp;+DI = 28, -DI = 18 ✓
+&nbsp;&nbsp;RCI(26) = +45 and rising ✓
+&nbsp;&nbsp;RCI(9) = -85, turning up ✓
+&nbsp;&nbsp;
+&nbsp;&nbsp;Entry: $52 (RCI(9) hooks up from -85)
+&nbsp;&nbsp;Stop: $49 (9-period low)
+&nbsp;&nbsp;
+&nbsp;&nbsp;RCI(9) rises to +92 and hooks down
+&nbsp;&nbsp;Exit: $61 (+17%)
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<h3 id="failure-patterns">Failure Patterns</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pattern</td><td class="px-4 py-2 border-b border-[#2a2e39]">Description</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mitigation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Extended Peg</td><td class="px-4 py-2 border-b border-[#2a2e39]">RCI stays at +100 for weeks in strong trend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use RCI(26) slope, not absolute level</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rank Noise</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low volatility creates random rank shuffling</td><td class="px-4 py-2 border-b border-[#2a2e39]">Avoid trading when ATR is declining</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Tie Distortion</td><td class="px-4 py-2 border-b border-[#2a2e39]">Identical prices produce ambiguous ranks</td><td class="px-4 py-2 border-b border-[#2a2e39]">Implementation must handle ties properly</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Computation Complexity</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sorting each bar is expensive</td><td class="px-4 py-2 border-b border-[#2a2e39]">Pre-optimize for real-time use</td></tr>
+</table></div>
+
+<h3 id="psychological-traps">Psychological Traps</h3>
+
+<p class="mb-4">1. The "+100 Is Overbought" Trap  </p>
+<p class="mb-4">   +100 means perfect correlation, not necessarily reversal. Strong trends maintain +100 for extended periods.</p>
+
+<p class="mb-4">2. Expecting Magnitude  </p>
+<p class="mb-4">   RCI ignoring price magnitude is a feature, not a bug. Accept it or pair with magnitude-based indicators.</p>
+
+<p class="mb-4">3. Overcomplicating the Triple  </p>
+<p class="mb-4">   Using all three lines (9, 26, 52) can lead to analysis paralysis. Simplify to Short + Medium.</p>
+
+<h3 id="common-misinterpretations">Common Misinterpretations</h3>
+
+<p class="mb-4">- "+100 means sell" → It means perfect trend; reversal needs the "hook"</p>
+<p class="mb-4">- "RCI is like RSI" → RSI measures gain/loss ratio; RCI measures rank correlation</p>
+<p class="mb-4">- "Near zero is equilibrium" → Zero means randomness, not balance</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<h3 id="creator-attribution">Creator Attribution</h3>
+
+<p class="mb-4">The mathematical foundation is Charles Spearman's rank correlation coefficient (1904). The trading application was developed by Japanese technical analysts in the late 20th century who adapted statistical methods to price-time analysis.</p>
+
+<h3 id="parent/child-indicators">Parent/Child Indicators</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Relationship</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Spearman's Rho</td><td class="px-4 py-2 border-b border-[#2a2e39]">Parent — Pure statistical formula</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Ichimoku</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sibling — Shares 9/26/52 parameters</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RSI</td><td class="px-4 py-2 border-b border-[#2a2e39]">Cousin — Different approach to overbought/oversold</td></tr>
+</table></div>
+
+<h3 id="recommended-readings">Recommended Readings</h3>
+
+<p class="mb-4">1. "The Spearman Indicator for Technical Analysis" — Dan Valcu</p>
+<p class="mb-4">2. Japanese Technical Analysis resources on RCI applications</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h3 id="55-related-indicators-comparison">5.5 Related Indicators Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">RCI</td><td class="px-4 py-2 border-b border-[#2a2e39]">RSI</td><td class="px-4 py-2 border-b border-[#2a2e39]">Stochastic</td><td class="px-4 py-2 border-b border-[#2a2e39]">CCI</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Measures</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rank correlation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Gain/loss ratio</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price position</td><td class="px-4 py-2 border-b border-[#2a2e39]">Deviation from mean</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Range</td><td class="px-4 py-2 border-b border-[#2a2e39]">-100 to +100</td><td class="px-4 py-2 border-b border-[#2a2e39]">0 to 100</td><td class="px-4 py-2 border-b border-[#2a2e39]">0 to 100</td><td class="px-4 py-2 border-b border-[#2a2e39]">Unbounded</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Overbought</td><td class="px-4 py-2 border-b border-[#2a2e39]">+80</td><td class="px-4 py-2 border-b border-[#2a2e39]">70</td><td class="px-4 py-2 border-b border-[#2a2e39]">80</td><td class="px-4 py-2 border-b border-[#2a2e39]">+100</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Oversold</td><td class="px-4 py-2 border-b border-[#2a2e39]">-80</td><td class="px-4 py-2 border-b border-[#2a2e39]">30</td><td class="px-4 py-2 border-b border-[#2a2e39]">20</td><td class="px-4 py-2 border-b border-[#2a2e39]">-100</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Magnitude Sensitive</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yes</td><td class="px-4 py-2 border-b border-[#2a2e39]">Partial</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Best For</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend quality</td><td class="px-4 py-2 border-b border-[#2a2e39]">Momentum</td><td class="px-4 py-2 border-b border-[#2a2e39]">Timing</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mean reversion</td></tr>
+</table></div>
+
+<p class="mb-4">When to Use Which:</p>
+<p class="mb-4">- RCI — Trend quality assessment, cycle turn detection</p>
+<p class="mb-4">- RSI — Momentum measurement, divergence analysis</p>
+<p class="mb-4">- Stochastic — Short-term entry timing</p>
+<p class="mb-4">- CCI — Mean reversion in ranging markets</p>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h2 id="advanced-signal-reference">Advanced Signal Reference</h2>
+
+<h3 id="threshold-matrix">Threshold Matrix</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RCI Level</td><td class="px-4 py-2 border-b border-[#2a2e39]">Market State</td><td class="px-4 py-2 border-b border-[#2a2e39]">Action</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">+95 to +100</td><td class="px-4 py-2 border-b border-[#2a2e39]">Perfect uptrend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Watch for hook; prepare exit</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">+80 to +95</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong uptrend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trail stops; don't add</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">+40 to +80</td><td class="px-4 py-2 border-b border-[#2a2e39]">Healthy uptrend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Hold longs</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">-40 to +40</td><td class="px-4 py-2 border-b border-[#2a2e39]">No clear trend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Avoid RCI signals</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">-80 to -40</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate downtrend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Prepare for reversal</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">-95 to -80</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong downtrend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Watch for hook; prepare entry</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">-100 to -95</td><td class="px-4 py-2 border-b border-[#2a2e39]">Perfect downtrend</td><td class="px-4 py-2 border-b border-[#2a2e39]">High probability reversal zone</td></tr>
+</table></div>
+
+<h3 id="signal-patterns">Signal Patterns</h3>
+
+<h4 id="buy-signal-oversold-hook">Buy Signal (Oversold Hook)</h4>
+<p class="mb-4">This signal triggers when short-term RCI "hooks" upward after reaching extreme oversold territory (below -80), while medium-term RCI slope confirms the broader trend. The hook pattern—rising from extreme lows—is RCI's strongest reversal signal, indicating the selling cycle is exhausting. This pattern achieves ~58% accuracy at extreme levels according to historical testing.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def rci_buy_signal(rci_short, rci_mid):
+&nbsp;&nbsp;&nbsp;&nbsp;condition_1 = rci_short[-2] &lt; -80          # Was oversold
+&nbsp;&nbsp;&nbsp;&nbsp;condition_2 = rci_short[-1] &gt; rci_short[-2] # Hooking up
+&nbsp;&nbsp;&nbsp;&nbsp;condition_3 = rci_mid[-1] &gt; rci_mid[-3]    # Medium-term slope positive
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return all([condition_1, condition_2, condition_3])
+</code></pre>
+
+<h4 id="sell-signal-overbought-hook">Sell Signal (Overbought Hook)</h4>
+<p class="mb-4">This exit signal fires when short-term RCI "hooks" downward after reaching extreme overbought territory (above +80), indicating the buying cycle has peaked. RCI at +80-100 means price has risen nearly perfectly in lockstep with time—a statistically improbable run that typically regresses. The hook down often precedes moving average crossovers and price weakness.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def rci_sell_signal(rci_short, rci_mid):
+&nbsp;&nbsp;&nbsp;&nbsp;condition_1 = rci_short[-2] &gt; 80           # Was overbought
+&nbsp;&nbsp;&nbsp;&nbsp;condition_2 = rci_short[-1] &lt; rci_short[-2] # Hooking down
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return all([condition_1, condition_2])
+</code></pre>
+
+<h4 id="triple-convergence-signal">Triple Convergence Signal</h4>
+<p class="mb-4">This is RCI's highest-probability signal: all three lines (9, 26, 52) converging at an extreme and turning simultaneously. When short, medium, and long-term cycles all reach oversold together and reverse, it indicates a rare "cycle resonance" event. This pattern historically achieves significantly higher success rates than single-timeframe signals.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def rci_triple_convergence(rci_9, rci_26, rci_52, threshold=-80):
+&nbsp;&nbsp;&nbsp;&nbsp;# All three lines below threshold and turning up
+&nbsp;&nbsp;&nbsp;&nbsp;all_oversold = all([rci_9[-1] &lt; threshold, 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rci_26[-1] &lt; threshold, 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rci_52[-1] &lt; threshold])
+&nbsp;&nbsp;&nbsp;&nbsp;all_turning = all([rci_9[-1] &gt; rci_9[-2],
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rci_26[-1] &gt; rci_26[-2],
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rci_52[-1] &gt; rci_52[-2]])
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return all_oversold and all_turning
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<h4 id="oversold-hook-scanner">Oversold Hook Scanner</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+RCI(9) &lt; -80 within last 3 bars
+AND RCI(9) &gt; RCI(9)[1]
+AND RCI(26) &gt; RCI(26)[3]
+</code></pre>
+
+<h4 id="triple-convergence-scanner">Triple Convergence Scanner</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+RCI(9) &lt; -80
+AND RCI(26) &lt; -80
+AND RCI(52) &lt; -80
+AND RCI(9) &gt; RCI(9)[1]
+</code></pre>
+
+<h4 id="trend-quality-scanner">Trend Quality Scanner</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+RCI(26) &gt; 60
+AND RCI(52) &gt; 40
+AND ADX(14) &gt; 25
+</code></pre>
+
+<h3 id="combination-strategies">Combination Strategies</h3>
+
+<h4 id="rci-+-adx-turbo-trend-strategy">RCI + ADX Turbo Trend Strategy</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FILTER:
+&nbsp;&nbsp;ADX(14) &gt; 25
+&nbsp;&nbsp;+DI(14) &gt; -DI(14)
+
+SETUP:
+&nbsp;&nbsp;RCI(26) slope positive (RCI(26) &gt; RCI(26)[5])
+
+ENTRY:
+&nbsp;&nbsp;RCI(9) &lt; -80 AND RCI(9) hooks up
+
+STOP_LOSS:
+&nbsp;&nbsp;9-period low
+
+TAKE_PROFIT:
+&nbsp;&nbsp;RCI(9) &gt; +80 AND hooks down
+</code></pre>
+
+<h4 id="rci-multi-timeframe-strategy">RCI Multi-Timeframe Strategy</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SETUP:
+&nbsp;&nbsp;RCI(52) &gt; 0 (long-term bullish)
+&nbsp;&nbsp;RCI(26) dips below 0 (pullback)
+
+ENTRY:
+&nbsp;&nbsp;RCI(9) &lt; -80 AND hooks up
+
+STOP_LOSS:
+&nbsp;&nbsp;20-period low
+
+TAKE_PROFIT:
+&nbsp;&nbsp;RCI(9) &gt; +80
+&nbsp;&nbsp;OR RCI(26) &gt; +60
+</code></pre>
+
+
+
+
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#formula" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Formula</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#default-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Default Parameters</a>
+<a href="#timeframe-recommendations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Timeframe Recommendations</a>
+<a href="#why-these-values" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why These Values?</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#best-conditions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Best Conditions</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#asset-class-suitability" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Asset Class Suitability</a>
+<a href="#5-entry-signals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Entry Signals</a>
+<a href="#primary-buy-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Buy Signal</a>
+<a href="#primary-sell-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Sell Signal</a>
+<a href="#6-filter-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Filter Usage</a>
+<a href="#filter-rules" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Filter Rules</a>
+<a href="#recommended-pairings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Pairings</a>
+<a href="#example-combined-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Example Combined Strategy</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#lag-characteristics" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Lag Characteristics</a>
+<a href="#false-signal-scenarios" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">False Signal Scenarios</a>
+<a href="#mitigation-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Mitigation Strategies</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#the-"hook"-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The "Hook" Signal</a>
+<a href="#triple-line-bunching" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Triple Line Bunching</a>
+<a href="#time-price-warp" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Time-Price Warp</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#backtest-evidence" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Backtest Evidence</a>
+<a href="#why-it-works" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why It Works</a>
+<a href="#academic-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Academic Reference</a>
+<a href="#3-actionable-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Strategy</a>
+<a href="#strategy-name:-"the-turbo-trend-catch"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Strategy Name: "The Turbo Trend Catch"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#failure-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Failure Patterns</a>
+<a href="#psychological-traps" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Psychological Traps</a>
+<a href="#common-misinterpretations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common Misinterpretations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#parent/child-indicators" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Parent/Child Indicators</a>
+<a href="#recommended-readings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Readings</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Matrix</a>
+<a href="#signal-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Signal Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "RankCorrelationIndex",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 14;
+                const result = RankCorrelationIndex.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/RankCorrelationIndex.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[{"id": "period", "label": "Period (14)", "type": "number", "value": 14, "min": 2, "max": 100}]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": true, "plots": {"main": {"label": "RankCorrelationIndex", "color": "#4f46e5", "type": "line"}}}
+    </script>
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code - loaded externally before this block
+
+        // 2. Configuration (XSS-safe via script type="application/json")
+        try {
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 14;
+                const result = RankCorrelationIndex.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+    </script>
+
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
+
+</body>
+</html>

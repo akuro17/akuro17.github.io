@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PriceVolumeTrend - I ant I Investigates</title>
+    <meta name="description" content="PriceVolumeTrend - Technical Indicator">
+    <meta name="keywords" content="PriceVolumeTrend, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/pricevolumetrend.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="PriceVolumeTrend - I ant I Investigates">
+    <meta property="og:description" content="PriceVolumeTrend - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/pricevolumetrend.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/pricevolumetrend.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PriceVolumeTrend">
+    <meta name="twitter:description" content="PriceVolumeTrend - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/pricevolumetrend.png">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
+
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">PriceVolumeTrend</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="flex space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">PriceVolumeTrend</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">PVT is a cumulative volume indicator that weights each day's volume by the percentage price change, measuring the total "work" done by money to move price.</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION["Phase 1: Ingestion"];
+A[/"Receive Price and Volume Data"/];
+B["Capture Current and Previous Close"];
+C["Record Volume Conviction"];
+end;
+subgraph EVALUATION["Phase 2: Evaluation"];
+D["Measure Price Movement Direction"];
+E["Calculate Percentage Change"];
+F["Assess Move Intensity"];
+end;
+subgraph WEIGHTING["Phase 3: Weighting"];
+G["Weight Volume by Price Change"];
+H["Apply Effort Multiplier"];
+I["Quantify Money Work Done"];
+end;
+subgraph SYNTHESIS["Phase 4: Synthesis"];
+J["Accumulate Running Total"];
+K["Track Cumulative Effort"];
+L["Compare to Signal Line"];
+end;
+subgraph OUTCOME["Phase 5: Outcome"];
+M{"Volume-Backed Assessment?"};
+N["PVT Rising = Accumulation"];
+O["PVT Falling = Distribution"];
+P["Divergence = Hollow Rally Warning"];
+Q[/"Generate Volume-Validated Signal"/];
+end;
+A --> B;
+B --> C;
+C --> D;
+D --> E;
+E --> F;
+F --> G;
+G --> H;
+H --> I;
+I --> J;
+J --> K;
+K --> L;
+L --> M;
+M -->|Bullish| N;
+M -->|Bearish| O;
+M -->|Diverging| P;
+N --> Q;
+O --> Q;
+P --> Q;
+style INGESTION fill:#e3f2fd;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#e8f5e9;
+style SYNTHESIS fill:#fce4ec;
+style OUTCOME fill:#f3e5f5;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/PriceVolumeTrend.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="price-volume-trend-pvt">Price Volume Trend (PVT)</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: Price Volume Trend (Volume Price Trend)  </p>
+<p class="mb-4">Abbreviation: PVT / VPT  </p>
+<p class="mb-4">Category: Western Volume / Money Flow  </p>
+<p class="mb-4">Creator: J. Welles Wilder Jr. (attributed, 1960s); refined from Granville's OBV  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: PVT is a cumulative volume indicator that weights each day's volume by the percentage price change, measuring the total "work" done by money to move price.</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="formula">Formula</h3>
+
+<p class="mb-4">$$PVT_t = PVT_{t-1} + \left( Volume_t \times \frac{Close_t - Close_{t-1}}{Close_{t-1}} \right)$$</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Step</td><td class="px-4 py-2 border-b border-[#2a2e39]">Logic</td><td class="px-4 py-2 border-b border-[#2a2e39]">Purpose</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1</td><td class="px-4 py-2 border-b border-[#2a2e39]">Calculate price change percentage</td><td class="px-4 py-2 border-b border-[#2a2e39]">Determine move intensity</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">2</td><td class="px-4 py-2 border-b border-[#2a2e39]">Multiply volume by percentage</td><td class="px-4 py-2 border-b border-[#2a2e39]">Weight volume by conviction</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">Add to running total</td><td class="px-4 py-2 border-b border-[#2a2e39]">Cumulate money flow</td></tr>
+</table></div>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">Think of PVT like tracking work done moving a box. If you push a 100-pound box 5 feet (5%), the work is 100 × 0.05 = 5 units. If price rises 5% on 1 million shares, PVT adds 50,000 to the running total. Unlike OBV (which adds the entire volume regardless of move size), PVT captures *how hard* volume had to work to move price.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<h3 id="default-parameters">Default Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rationale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">PVT Line</td><td class="px-4 py-2 border-b border-[#2a2e39]">Cumulative (no period)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Running total from data start</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Line</td><td class="px-4 py-2 border-b border-[#2a2e39]">21-period EMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Industry standard for crossovers</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Smoothing</td><td class="px-4 py-2 border-b border-[#2a2e39]">3-5 period SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Optional noise reduction</td></tr>
+</table></div>
+
+<h3 id="timeframe-recommendations">Timeframe Recommendations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trading Style</td><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Line</td><td class="px-4 py-2 border-b border-[#2a2e39]">Timeframe</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Day Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">9-13 EMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Hourly</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Swing Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">21 EMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Position Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">50 EMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily/Weekly</td></tr>
+</table></div>
+
+<h3 id="why-these-values">Why These Values?</h3>
+
+<p class="mb-4">A 21-period EMA signal line balances responsiveness with noise filtration. Shorter EMAs (9-13) are used for faster trading styles, while longer periods (50+) filter for major trend changes.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<h3 id="best-conditions">Best Conditions</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Why It Works</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trending Markets</td><td class="px-4 py-2 border-b border-[#2a2e39]">PVT confirms genuine trends backed by volume</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Breakout Confirmation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volume-weighted momentum validates breakouts</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Divergence Detection</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price/PVT divergence reveals hidden weakness</td></tr>
+</table></div>
+
+<h3 id="limitations">Limitations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sideways/Choppy Markets</td><td class="px-4 py-2 border-b border-[#2a2e39]">PVT flattens, producing meaningless crossovers</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Low Volume Days</td><td class="px-4 py-2 border-b border-[#2a2e39]">PVT changes minimally regardless of price move</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Flat Price Days</td><td class="px-4 py-2 border-b border-[#2a2e39]">Zero percentage change means no PVT contribution</td></tr>
+</table></div>
+
+<h3 id="asset-class-suitability">Asset Class Suitability</h3>
+
+<p class="mb-4">- Equities — Excellent for volume-based analysis</p>
+<p class="mb-4">- Indices — Strong for broad market confirmation</p>
+<p class="mb-4">- Forex — No centralized volume; use tick volume proxy</p>
+<p class="mb-4">- Crypto — Exchange-specific volume may be misleading</p>
+<p class="mb-4">- Commodities — Open interest often more relevant</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-entry-signals">5. Entry Signals</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strength</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Cross Up</td><td class="px-4 py-2 border-b border-[#2a2e39]">PVT crosses above Signal Line</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Cross Down</td><td class="px-4 py-2 border-b border-[#2a2e39]">PVT crosses below Signal Line</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish Divergence</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price Lower Low, PVT Higher Low</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish Divergence</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price Higher High, PVT Lower High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Zero Cross</td><td class="px-4 py-2 border-b border-[#2a2e39]">PVT crosses above/below 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Shift</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+</table></div>
+
+<h3 id="primary-buy-signal">Primary Buy Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF PVT &lt; Signal_Line (previous bar)
+AND PVT &gt;= Signal_Line (current bar)
+AND Price &gt; SMA(50)
+THEN → BUY (Volume-Supported Uptrend)
+</code></pre>
+
+<h3 id="primary-sell-signal">Primary Sell Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF PVT &gt; Signal_Line (previous bar)
+AND PVT &lt;= Signal_Line (current bar)
+THEN → SELL (Volume-Supported Downtrend)
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-filter-usage">6. Filter Usage</h2>
+
+<p class="mb-4">PVT excels at validating signals from other indicators:</p>
+
+<h3 id="filter-rules">Filter Rules</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rule</td><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>PVT > Signal Line</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Confirm bullish entries</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>PVT rising</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend has volume backing</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>PVT diverging from price</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Warning of trend exhaustion</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Volume > 20-day avg</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Only trust high-volume PVT moves</td></tr>
+</table></div>
+
+<h3 id="recommended-pairings">Recommended Pairings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Partner Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Synergy Logic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RSI</td><td class="px-4 py-2 border-b border-[#2a2e39]">RSI times entries; PVT confirms volume backing</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Moving Averages</td><td class="px-4 py-2 border-b border-[#2a2e39]">MA gives direction; PVT validates strength</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Breakout Patterns</td><td class="px-4 py-2 border-b border-[#2a2e39]">PVT confirms breakout legitimacy</td></tr>
+</table></div>
+
+<h3 id="example-combined-strategy">Example Combined Strategy</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+ENTRY CONDITIONS:
+&nbsp;&nbsp;Price breaks above resistance
+&nbsp;&nbsp;PVT &gt; Signal Line (21 EMA)
+&nbsp;&nbsp;PVT makes new high (confirms price breakout)
+&nbsp;&nbsp;Volume &gt; 20-day average
+
+ACTION: BUY breakout with full volume validation
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<h3 id="lag-characteristics">Lag Characteristics</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Component</td><td class="px-4 py-2 border-b border-[#2a2e39]">Approximate Lag</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">First Valid PVT</td><td class="px-4 py-2 border-b border-[#2a2e39]">2 bars (needs previous close)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Line</td><td class="px-4 py-2 border-b border-[#2a2e39]">21+ bars for EMA stabilization</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Divergence Recognition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Multiple swing points needed</td></tr>
+</table></div>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Reality Check: PVT is cumulative—its absolute value depends on the data start date. Two platforms may show different PVT levels but identical slopes and crossovers.</blockquote>
+
+<h3 id="false-signal-scenarios">False Signal Scenarios</h3>
+
+<p class="mb-4">1. The Hollow Rally  </p>
+<p class="mb-4">   Price rises but PVT fails to make new highs—the move lacks volume conviction.</p>
+
+<p class="mb-4">2. Division by Zero  </p>
+<p class="mb-4">   If previous close is zero (rare), calculation fails. Always handle edge cases.</p>
+
+<p class="mb-4">3. Cumulative Drift  </p>
+<p class="mb-4">   Over long periods, small errors compound. Reset or use relative comparisons.</p>
+
+<h3 id="mitigation-strategies">Mitigation Strategies</h3>
+
+<p class="mb-4">- Divergence Focus: Prioritize divergence signals over raw crossovers</p>
+<p class="mb-4">- Volume Threshold: Ignore PVT moves on below-average volume days</p>
+<p class="mb-4">- Trend Filter: Only trade PVT signals in direction of 200 SMA</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<h3 id="the-"validation-lag"-technique">The "Validation Lag" Technique</h3>
+
+<p class="mb-4">Use PVT to validate breakouts: If price breaks resistance but PVT is below its previous high (from the last time price was at this level), the breakout is likely a "bull trap" with low conviction volume. If PVT breaks out *before* price, smart money is accumulating.</p>
+
+<h3 id="the-volume-momentum-marriage">The Volume-Momentum Marriage</h3>
+
+<p class="mb-4">Combine PVT (volume conviction) with RSI (price momentum):</p>
+<p class="mb-4">- PVT divergence + RSI divergence = High-probability reversal</p>
+<p class="mb-4">- PVT confirmation + RSI recovery from oversold = Strong entry</p>
+
+<h3 id="comparison-to-obv">Comparison to OBV</h3>
+
+<p class="mb-4">OBV adds/subtracts entire volume on up/down days. A 0.01% gain and 10% gain both add the same volume. PVT is more precise—the 10% move adds 1000× more "work" to the cumulative total.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"PVT measures how much work volume had to do to move price—when price rises on thin volume, PVT reveals the hollow foundation."</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">PVT answers one question: "Is this price move backed by real money?"</p>
+
+<p class="mb-4">Volume alone doesn't tell the whole story. 10 million shares traded on a 0.1% price change is very different from 10 million shares on a 5% change. PVT captures this by multiplying volume by the percentage move, then adding to a running total.</p>
+
+<p class="mb-4">The math: <code>Volume × (Today's Close - Yesterday's Close) / Yesterday's Close</code></p>
+
+<p class="mb-4">This creates a "money effort" metric:</p>
+<p class="mb-4">- Big moves on high volume → Large PVT changes</p>
+<p class="mb-4">- Small moves on high volume → Small PVT changes</p>
+<p class="mb-4">- Any move on low volume → Minimal PVT impact</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<h3 id="backtest-evidence">Backtest Evidence</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">PVT Signal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Continuation Rate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">PVT confirms price breakout</td><td class="px-4 py-2 border-b border-[#2a2e39]">68%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">PVT diverges from price</td><td class="px-4 py-2 border-b border-[#2a2e39]">72% reversal rate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">PVT crosses signal line</td><td class="px-4 py-2 border-b border-[#2a2e39]">55% (alone)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">PVT + RSI confirmation</td><td class="px-4 py-2 border-b border-[#2a2e39]">65%</td></tr>
+</table></div>
+
+<h3 id="why-it-works">Why It Works</h3>
+
+<p class="mb-4">PVT's edge comes from revealing institutional activity. Large players can't hide their volume—when they accumulate, PVT rises even if price is flat. When they distribute, PVT falls despite price stability. This "footprint" creates tradable divergences.</p>
+
+<h3 id="physics-analogy">Physics Analogy</h3>
+
+<p class="mb-4">In physics, Work = Force × Distance. In PVT:</p>
+<p class="mb-4">- Volume = Force (buying/selling pressure)</p>
+<p class="mb-4">- Price Change % = Distance (how far it moved)</p>
+<p class="mb-4">- PVT = Cumulative Work (total effort)</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-actionable-strategy">3. Actionable Strategy</h2>
+
+<h3 id="strategy-name:-"the-hollow-move-rejection"">Strategy Name: "The Hollow Move Rejection"</h3>
+
+<p class="mb-4">Concept: Short rallies that lack volume conviction using PVT divergence.</p>
+
+<p class="mb-4">Setup Requirements:</p>
+<p class="mb-4">1. Price in uptrend (above 50 SMA)</p>
+<p class="mb-4">2. Price makes new high</p>
+<p class="mb-4">3. PVT fails to make new high (divergence)</p>
+
+<p class="mb-4">Entry Trigger:</p>
+<p class="mb-4">- RSI(14) crosses below 70 from overbought</p>
+
+<p class="mb-4">Position Sizing:</p>
+<p class="mb-4">- Full size when divergence is clear across multiple highs</p>
+<p class="mb-4">- Half size on single-high divergence</p>
+
+<p class="mb-4">Exit Rules:</p>
+<p class="mb-4">1. Profit Target: PVT crosses above its 21 EMA (trend resumes)</p>
+<p class="mb-4">2. Stop Loss: New all-time high in price</p>
+<p class="mb-4">3. Time Stop: 10 bars if no movement</p>
+
+<p class="mb-4">Example:</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Stock XYZ shows:
+&nbsp;&nbsp;Price makes new high at $78 (previous $75)
+&nbsp;&nbsp;PVT = 1,250,000 (previous high = 1,400,000) → Divergence ✓
+&nbsp;&nbsp;RSI at 74, drops below 70 → ENTRY (Short)
+&nbsp;&nbsp;
+&nbsp;&nbsp;Stop: $80 (above new high)
+&nbsp;&nbsp;Target: PVT crosses signal line upward (exit trade)
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<h3 id="failure-patterns">Failure Patterns</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pattern</td><td class="px-4 py-2 border-b border-[#2a2e39]">Description</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mitigation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Ranging Drift</td><td class="px-4 py-2 border-b border-[#2a2e39]">PVT flat in sideways markets</td><td class="px-4 py-2 border-b border-[#2a2e39]">Don't trade crossovers in ranges</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Cumulative Mismatch</td><td class="px-4 py-2 border-b border-[#2a2e39]">Different data lengths = different PVT levels</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use slopes/crossovers, not absolutes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Volume Data Quality</td><td class="px-4 py-2 border-b border-[#2a2e39]">Inaccurate volume distorts PVT</td><td class="px-4 py-2 border-b border-[#2a2e39]">Verify volume source reliability</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Flat Price Zero-Effect</td><td class="px-4 py-2 border-b border-[#2a2e39]">Close = Previous Close means zero contribution</td><td class="px-4 py-2 border-b border-[#2a2e39]">Information is preserved correctly</td></tr>
+</table></div>
+
+<h3 id="psychological-traps">Psychological Traps</h3>
+
+<p class="mb-4">1. Absolute Value Obsession  </p>
+<p class="mb-4">   PVT levels are arbitrary based on data start. Focus on slopes and divergences.</p>
+
+<p class="mb-4">2. Ignoring the "Why"  </p>
+<p class="mb-4">   Low PVT on price rise isn't automatically bearish—could be low-volume day market-wide.</p>
+
+<p class="mb-4">3. Single Divergence Trading  </p>
+<p class="mb-4">   One divergence point is weak. Wait for multiple swing points to confirm.</p>
+
+<h3 id="common-misinterpretations">Common Misinterpretations</h3>
+
+<p class="mb-4">- "Higher PVT = more bullish" → Only the trend/slope matters</p>
+<p class="mb-4">- "PVT divergence = instant reversal" → It's a warning, not a trigger</p>
+<p class="mb-4">- "PVT works like OBV" → PVT is magnitude-weighted; OBV is binary</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<h3 id="creator-attribution">Creator Attribution</h3>
+
+<p class="mb-4">PVT is attributed to J. Welles Wilder Jr. (1960s), emerging as a refinement of Joseph Granville's On-Balance Volume (OBV). Some sources credit Buff Dormeier for popularizing the Volume Price Trend variant.</p>
+
+<h3 id="parent/child-indicators">Parent/Child Indicators</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Relationship</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">On-Balance Volume (OBV)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Parent — PVT is the weighted evolution</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Accumulation/Distribution Line</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sibling — Uses high-low-close weighting</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Chaikin Money Flow</td><td class="px-4 py-2 border-b border-[#2a2e39]">Cousin — Similar concept, bounded output</td></tr>
+</table></div>
+
+<h3 id="recommended-readings">Recommended Readings</h3>
+
+<p class="mb-4">1. *Volume Price Analysis* — Anna Coulling</p>
+<p class="mb-4">2. *Technical Analysis Explained* — Martin Pring</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h3 id="55-related-indicators-comparison">5.5 Related Indicators Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">PVT</td><td class="px-4 py-2 border-b border-[#2a2e39]">OBV</td><td class="px-4 py-2 border-b border-[#2a2e39]">A/D Line</td><td class="px-4 py-2 border-b border-[#2a2e39]">CMF</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Volume Weighting</td><td class="px-4 py-2 border-b border-[#2a2e39]">% price change</td><td class="px-4 py-2 border-b border-[#2a2e39]">Binary (all or nothing)</td><td class="px-4 py-2 border-b border-[#2a2e39]">CLV × Volume</td><td class="px-4 py-2 border-b border-[#2a2e39]">CLV × Volume / Sum</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Range</td><td class="px-4 py-2 border-b border-[#2a2e39]">Unbounded</td><td class="px-4 py-2 border-b border-[#2a2e39]">Unbounded</td><td class="px-4 py-2 border-b border-[#2a2e39]">Unbounded</td><td class="px-4 py-2 border-b border-[#2a2e39]">-1 to +1</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sensitivity</td><td class="px-4 py-2 border-b border-[#2a2e39]">Proportional to move</td><td class="px-4 py-2 border-b border-[#2a2e39]">Same for all moves</td><td class="px-4 py-2 border-b border-[#2a2e39]">Intraday range</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bounded oscillator</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Best For</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend validation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Simple trend confirmation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Intraday analysis</td><td class="px-4 py-2 border-b border-[#2a2e39]">Quick readings</td></tr>
+</table></div>
+
+<p class="mb-4">When to Use Which:</p>
+<p class="mb-4">- PVT — Most precise volume-momentum measurement</p>
+<p class="mb-4">- OBV — Simple, widely-used trend confirmation</p>
+<p class="mb-4">- A/D Line — Intraday range consideration</p>
+<p class="mb-4">- CMF — Bounded oscillator for quick screening</p>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h2 id="advanced-signal-reference">Advanced Signal Reference</h2>
+
+<h3 id="threshold-matrix">Threshold Matrix</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">PVT Behavior</td><td class="px-4 py-2 border-b border-[#2a2e39]">Market State</td><td class="px-4 py-2 border-b border-[#2a2e39]">Action</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rising faster than price</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong accumulation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Buy/hold</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rising with price</td><td class="px-4 py-2 border-b border-[#2a2e39]">Healthy trend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Hold</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Flat while price rises</td><td class="px-4 py-2 border-b border-[#2a2e39]">Hollow rally</td><td class="px-4 py-2 border-b border-[#2a2e39]">Warning</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Falling while price rises</td><td class="px-4 py-2 border-b border-[#2a2e39]">Distribution</td><td class="px-4 py-2 border-b border-[#2a2e39]">Exit/short</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rising while price falls</td><td class="px-4 py-2 border-b border-[#2a2e39]">Accumulation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Prepare buy</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Falling with price</td><td class="px-4 py-2 border-b border-[#2a2e39]">Confirmed downtrend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Hold short</td></tr>
+</table></div>
+
+<h3 id="signal-patterns">Signal Patterns</h3>
+
+<h4 id="buy-signal-signal-line-cross">Buy Signal (Signal Line Cross)</h4>
+<p class="mb-4">This signal triggers when PVT crosses above its signal line (typically 21-period EMA), indicating volume-weighted momentum is shifting bullish. The uptrend context filter (price > SMA 50) ensures the crossover occurs within a favorable macro environment. PVT crossovers have 55% accuracy alone but improve to 65%+ when combined with RSI confirmation.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def pvt_buy_signal(pvt_values, signal_line, price, sma_50):
+&nbsp;&nbsp;&nbsp;&nbsp;condition_1 = pvt_values[-2] &lt; signal_line[-2]  # Was below
+&nbsp;&nbsp;&nbsp;&nbsp;condition_2 = pvt_values[-1] &gt;= signal_line[-1]  # Crossed above
+&nbsp;&nbsp;&nbsp;&nbsp;condition_3 = price &gt; sma_50                     # Uptrend context
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return all([condition_1, condition_2, condition_3])
+</code></pre>
+
+<h4 id="sell-signal-bearish-divergence">Sell Signal (Bearish Divergence)</h4>
+<p class="mb-4">Bearish divergence occurs when price makes a higher high while PVT fails to confirm, indicating the rally lacks volume conviction—a "hollow rally" warning. Large moves without proportional volume effort suggest smart money is not participating in the advance. This divergence pattern has a 72% reversal rate and is one of PVT's most reliable signals.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def pvt_bearish_divergence(prices, pvt_values, lookback=20):
+&nbsp;&nbsp;&nbsp;&nbsp;# Price higher high, PVT lower high
+&nbsp;&nbsp;&nbsp;&nbsp;price_highs = [prices[i] for i in range(len(prices)-lookback, len(prices))]
+&nbsp;&nbsp;&nbsp;&nbsp;pvt_highs = [pvt_values[i] for i in range(len(pvt_values)-lookback, len(pvt_values))]
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;price_hh = prices[-1] &gt; max(price_highs[:-1])
+&nbsp;&nbsp;&nbsp;&nbsp;pvt_lh = pvt_values[-1] &lt; max(pvt_highs[:-1])
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return price_hh and pvt_lh
+</code></pre>
+
+<h4 id="volume-confirmation">Volume Confirmation</h4>
+<p class="mb-4">This filter validates PVT movements by requiring above-average volume, ensuring signals have genuine market participation. Rising PVT on low volume may be noise, but rising PVT on high volume confirms serious buying interest. Use this confirmation to separate meaningful PVT changes from random fluctuations.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def pvt_volume_confirmed(pvt_values, volume, volume_sma_20):
+&nbsp;&nbsp;&nbsp;&nbsp;pvt_rising = pvt_values[-1] &gt; pvt_values[-2]
+&nbsp;&nbsp;&nbsp;&nbsp;high_volume = volume &gt; volume_sma_20
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return pvt_rising and high_volume
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<h4 id="volume-backed-breakout-scanner">Volume-Backed Breakout Scanner</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+PVT &gt; EMA(PVT, 21)
+AND PVT &gt; Highest(PVT, 20)[1]
+AND Close &gt; Highest(Close, 20)[1]
+AND Volume &gt; SMA(Volume, 20)
+</code></pre>
+
+<h4 id="divergence-scanner">Divergence Scanner</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Close &gt; Highest(Close, 20)[1]
+AND PVT &lt; Highest(PVT, 20)[1]
+</code></pre>
+
+<h4 id="accumulation-scanner">Accumulation Scanner</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+PVT &gt; PVT[5]
+AND Close &lt; Close[5]
+</code></pre>
+
+<h3 id="combination-strategies">Combination Strategies</h3>
+
+<h4 id="pvt-+-rsi-reversal">PVT + RSI Reversal</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SETUP:
+&nbsp;&nbsp;Price makes Higher High
+&nbsp;&nbsp;PVT makes Lower High (Divergence)
+
+ENTRY:
+&nbsp;&nbsp;RSI(14) crosses below 70
+
+STOP_LOSS:
+&nbsp;&nbsp;New price high
+
+TAKE_PROFIT:
+&nbsp;&nbsp;PVT crosses above Signal Line
+&nbsp;&nbsp;OR RSI crosses below 30
+</code></pre>
+
+<h4 id="pvt-breakout-confirmation">PVT Breakout Confirmation</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FILTER:
+&nbsp;&nbsp;Price &gt; 50 SMA
+&nbsp;&nbsp;Volume &gt; 20-day average
+
+ENTRY:
+&nbsp;&nbsp;Close &gt; Resistance (breakout)
+&nbsp;&nbsp;AND PVT &gt; Previous PVT high
+&nbsp;&nbsp;AND PVT &gt; Signal Line(21)
+
+STOP_LOSS:
+&nbsp;&nbsp;Below breakout level
+
+TAKE_PROFIT:
+&nbsp;&nbsp;PVT crosses below Signal Line
+</code></pre>
+
+
+
+
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#formula" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Formula</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#default-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Default Parameters</a>
+<a href="#timeframe-recommendations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Timeframe Recommendations</a>
+<a href="#why-these-values" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why These Values?</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#best-conditions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Best Conditions</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#asset-class-suitability" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Asset Class Suitability</a>
+<a href="#5-entry-signals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Entry Signals</a>
+<a href="#primary-buy-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Buy Signal</a>
+<a href="#primary-sell-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Sell Signal</a>
+<a href="#6-filter-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Filter Usage</a>
+<a href="#filter-rules" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Filter Rules</a>
+<a href="#recommended-pairings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Pairings</a>
+<a href="#example-combined-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Example Combined Strategy</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#lag-characteristics" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Lag Characteristics</a>
+<a href="#false-signal-scenarios" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">False Signal Scenarios</a>
+<a href="#mitigation-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Mitigation Strategies</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#the-"validation-lag"-technique" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The "Validation Lag" Technique</a>
+<a href="#the-volume-momentum-marriage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The Volume-Momentum Marriage</a>
+<a href="#comparison-to-obv" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Comparison to OBV</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#backtest-evidence" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Backtest Evidence</a>
+<a href="#why-it-works" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why It Works</a>
+<a href="#physics-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Physics Analogy</a>
+<a href="#3-actionable-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Strategy</a>
+<a href="#strategy-name:-"the-hollow-move-rejection"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Strategy Name: "The Hollow Move Rejection"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#failure-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Failure Patterns</a>
+<a href="#psychological-traps" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Psychological Traps</a>
+<a href="#common-misinterpretations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common Misinterpretations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#parent/child-indicators" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Parent/Child Indicators</a>
+<a href="#recommended-readings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Readings</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Matrix</a>
+<a href="#signal-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Signal Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "PriceVolumeTrend",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 14;
+                const result = PriceVolumeTrend.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/PriceVolumeTrend.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": true, "plots": {"main": {"label": "PriceVolumeTrend", "color": "#4f46e5", "type": "line"}}}
+    </script>
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code - loaded externally before this block
+
+        // 2. Configuration (XSS-safe via script type="application/json")
+        try {
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 14;
+                const result = PriceVolumeTrend.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+    </script>
+
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
+
+</body>
+</html>

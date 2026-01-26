@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RollingSpreadZScore - I ant I Investigates</title>
+    <meta name="description" content="RollingSpreadZScore - Technical Indicator">
+    <meta name="keywords" content="RollingSpreadZScore, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/rollingspreadzscore.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="RollingSpreadZScore - I ant I Investigates">
+    <meta property="og:description" content="RollingSpreadZScore - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/rollingspreadzscore.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/rollingspreadzscore.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="RollingSpreadZScore">
+    <meta name="twitter:description" content="RollingSpreadZScore - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/rollingspreadzscore.png">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
+
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">RollingSpreadZScore</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="flex space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">RollingSpreadZScore</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">The Rolling Spread Z-Score normalizes the price spread between two assets into standard deviations from the mean, creating a universal entry/exit signal for pairs trading strategies.</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION["INGESTION<br/>Data Capture"];
+A["Observe the asset pair spread<br/>(price relationship between two assets)"];
+B["Set observation window<br/>(how far back to analyze)"];
+end;
+subgraph EVALUATION["EVALUATION<br/>Initial Assessment"];
+C["Calculate spread's average value<br/>(where the relationship normally sits)"];
+D["Measure spread variability<br/>(how much it typically fluctuates)"];
+end;
+subgraph WEIGHTING["WEIGHTING<br/>Normalization"];
+E["Compare current spread to average<br/>(is it above or below normal?)"];
+F["Express deviation in standard units<br/>(how many 'deviations' from normal?)"];
+end;
+subgraph SYNTHESIS["SYNTHESIS<br/>Pattern Detection"];
+G{"Is spread at statistical extreme?"};
+H["High positive Z: Spread stretched above mean"];
+I["High negative Z: Spread compressed below mean"];
+J["Near zero: Spread at equilibrium"];
+end;
+subgraph OUTCOME["OUTCOME<br/>Signal Generation"];
+K["Z > +2: Consider shorting the spread<br/>(expect mean reversion down)"];
+L["Z < -2: Consider longing the spread<br/>(expect mean reversion up)"];
+M["Z near 0: Exit positions<br/>(fair value reached)"];
+end;
+A --> C;
+B --> C;
+C --> D;
+D --> E;
+E --> F;
+F --> G;
+G -->|"Z > +2"| H;
+G -->|"Z < -2"| I;
+G -->|"-2 to +2"| J;
+H --> K;
+I --> L;
+J --> M;
+style INGESTION fill:#e3f2fd;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#e8f5e9;
+style SYNTHESIS fill:#fce4ec;
+style OUTCOME fill:#f3e5f5;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/RollingSpreadZScore.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="rolling-spread-z-score-zscore">Rolling Spread Z-Score (ZSCORE)</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: Rolling Spread Z-Score  </p>
+<p class="mb-4">Abbreviation: Z-Score / ZSCORE  </p>
+<p class="mb-4">Category: Statistical Arbitrage / Mean Reversion  </p>
+<p class="mb-4">Creator: Nunzio Tartaglia / Gatev, Goetzmann, and Rouwenhorst (2006)  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: The Rolling Spread Z-Score normalizes the price spread between two assets into standard deviations from the mean, creating a universal entry/exit signal for pairs trading strategies.</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="formula">Formula</h3>
+
+<p class="mb-4">$$Z_t = \frac{S_t - \mu_{S,w}}{\sigma_{S,w}}$$</p>
+
+<p class="mb-4">Where:</p>
+<p class="mb-4">- $S_t$ = Current spread value (Asset Y - β × Asset X)</p>
+<p class="mb-4">- $\mu_{S,w}$ = Rolling mean of spread over window $w$</p>
+<p class="mb-4">- $\sigma_{S,w}$ = Rolling standard deviation of spread over window $w$</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Step</td><td class="px-4 py-2 border-b border-[#2a2e39]">Logic</td><td class="px-4 py-2 border-b border-[#2a2e39]">Purpose</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1</td><td class="px-4 py-2 border-b border-[#2a2e39]">Calculate spread: S = Y - (β × X)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Construct tradeable spread</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">2</td><td class="px-4 py-2 border-b border-[#2a2e39]">Define rolling window (e.g., 20-60 periods)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Set normalization horizon</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">Calculate rolling mean of spread</td><td class="px-4 py-2 border-b border-[#2a2e39]">Find equilibrium</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">4</td><td class="px-4 py-2 border-b border-[#2a2e39]">Calculate rolling standard deviation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Measure normal volatility</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">5</td><td class="px-4 py-2 border-b border-[#2a2e39]">Normalize: (Current - Mean) / StdDev</td><td class="px-4 py-2 border-b border-[#2a2e39]">Z-Score in σ units</td></tr>
+</table></div>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">Think of the Z-Score as a rubber band meter. When the rubber band (spread) stretches 2 standard deviations above zero, it's under extreme tension—statistically likely to snap back. When it stretches 2 σ below, it's compressed and likely to spring up. The Z-Score tells you exactly how stretched the rubber band is.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<h3 id="default-parameters">Default Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rationale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Z-Score Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">20-60</td><td class="px-4 py-2 border-b border-[#2a2e39]">Match hedge ratio window or shorter</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Entry Threshold</td><td class="px-4 py-2 border-b border-[#2a2e39]">±2.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">95% confidence band</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Exit Threshold</td><td class="px-4 py-2 border-b border-[#2a2e39]">0.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mean reversion target</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Stop-Loss</td><td class="px-4 py-2 border-b border-[#2a2e39]">±3.0 to ±4.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Correlation breakdown signal</td></tr>
+</table></div>
+
+<h3 id="timeframe-recommendations">Timeframe Recommendations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trading Style</td><td class="px-4 py-2 border-b border-[#2a2e39]">Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">Entry Threshold</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">High-Frequency</td><td class="px-4 py-2 border-b border-[#2a2e39]">20</td><td class="px-4 py-2 border-b border-[#2a2e39]">±1.5</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Daily Pairs</td><td class="px-4 py-2 border-b border-[#2a2e39]">60</td><td class="px-4 py-2 border-b border-[#2a2e39]">±2.0</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Crypto Volatile</td><td class="px-4 py-2 border-b border-[#2a2e39]">30</td><td class="px-4 py-2 border-b border-[#2a2e39]">±2.5 to ±3.0</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Stable Forex</td><td class="px-4 py-2 border-b border-[#2a2e39]">60</td><td class="px-4 py-2 border-b border-[#2a2e39]">±1.5</td></tr>
+</table></div>
+
+<h3 id="why-these-values">Why These Values?</h3>
+
+<p class="mb-4">The ±2.0 threshold corresponds to roughly 95% of observations under a normal distribution. When the Z-Score exceeds this level, the spread is statistically "extreme" and ripe for mean reversion—assuming the underlying relationship remains intact.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<h3 id="best-conditions">Best Conditions</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Why It Works</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sideways Spread</td><td class="px-4 py-2 border-b border-[#2a2e39]">Z-Score oscillates cleanly between extremes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">High Correlation Pairs</td><td class="px-4 py-2 border-b border-[#2a2e39]">Statistical relationship holds</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Low Volatility Regimes</td><td class="px-4 py-2 border-b border-[#2a2e39]">Spread behaves normally around mean</td></tr>
+</table></div>
+
+<h3 id="limitations">Limitations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trending Spread</td><td class="px-4 py-2 border-b border-[#2a2e39]">Z-Score stays extreme indefinitely</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Correlation Breakdown</td><td class="px-4 py-2 border-b border-[#2a2e39]">Statistical bounds become meaningless</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Fat-Tail Events</td><td class="px-4 py-2 border-b border-[#2a2e39]">4σ moves occur more often than normal distribution predicts</td></tr>
+</table></div>
+
+<h3 id="asset-class-suitability">Asset Class Suitability</h3>
+
+<p class="mb-4">- Equity Pairs — Classic application domain</p>
+<p class="mb-4">- ETF Arbitrage — Sector/index pairs</p>
+<p class="mb-4">- Crypto Pairs — BTC/ETH with wider thresholds</p>
+<p class="mb-4">- Forex Crosses — EUR/CHF, AUD/NZD</p>
+<p class="mb-4">- Commodities — Roll dynamics complicate spreads</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-entry-signals">5. Entry Signals</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strength</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Statistical Oversold</td><td class="px-4 py-2 border-b border-[#2a2e39]">Z-Score < -2.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Long Spread</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Statistical Overbought</td><td class="px-4 py-2 border-b border-[#2a2e39]">Z-Score > +2.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Short Spread</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Mean Reversion Exit</td><td class="px-4 py-2 border-b border-[#2a2e39]">Z-Score crosses 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Close Position</td><td class="px-4 py-2 border-b border-[#2a2e39]">Target</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish Divergence</td><td class="px-4 py-2 border-b border-[#2a2e39]">Spread Lower Low, Z Higher Low</td><td class="px-4 py-2 border-b border-[#2a2e39]">Long Spread</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish Divergence</td><td class="px-4 py-2 border-b border-[#2a2e39]">Spread Higher High, Z Lower High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Short Spread</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Breakdown Alert</td><td class="px-4 py-2 border-b border-[#2a2e39]">Z-Score > ±3.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Stop Loss</td><td class="px-4 py-2 border-b border-[#2a2e39]">Warning</td></tr>
+</table></div>
+
+<h3 id="primary-long-signal">Primary Long Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF Z-Score &lt; -2.0
+AND Z-Score &gt; -3.0 (not broken)
+AND RollingCorrelation &gt; 0.80
+THEN → LONG SPREAD (Buy Y, Short β×X)
+</code></pre>
+
+<h3 id="primary-short-signal">Primary Short Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF Z-Score &gt; +2.0
+AND Z-Score &lt; +3.0 (not broken)
+AND RollingCorrelation &gt; 0.80
+THEN → SHORT SPREAD (Short Y, Buy β×X)
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-filter-usage">6. Filter Usage</h2>
+
+<p class="mb-4">The Z-Score is the primary entry signal for pairs trading, but requires quality filters:</p>
+
+<h3 id="filter-rules">Filter Rules</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rule</td><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Z > +2.0</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Short the spread</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Z < -2.0</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Long the spread</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Z between -3 and +3</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Valid trading zone</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Z crosses 0</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Exit signal</td></tr>
+</table></div>
+
+<h3 id="recommended-pairings">Recommended Pairings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Partner Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Synergy Logic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RSI (on Spread)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Adds momentum timing to statistical signal</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Half-Life</td><td class="px-4 py-2 border-b border-[#2a2e39]">Confirms mean reversion speed</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rolling Correlation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Validates relationship quality</td></tr>
+</table></div>
+
+<h3 id="example-combined-strategy">Example Combined Strategy</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+ENTRY CONDITIONS:
+&nbsp;&nbsp;Z-Score &lt; -2.0                       // Statistical oversold
+&nbsp;&nbsp;RSI(Spread, 14) &lt; 30                 // Momentum confirms
+&nbsp;&nbsp;RSI(Spread, 14) crosses above 30     // Reversal trigger
+&nbsp;&nbsp;
+ACTION: LONG SPREAD with dual confirmation
+
+EXIT:
+&nbsp;&nbsp;Z-Score &gt; 0 OR RSI &gt; 70
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<h3 id="lag-characteristics">Lag Characteristics</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Component</td><td class="px-4 py-2 border-b border-[#2a2e39]">Approximate Lag</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">First Valid Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Window period bars</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Sensitivity</td><td class="px-4 py-2 border-b border-[#2a2e39]">Immediate at thresholds</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Mean Adaptation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Gradual (rolling window)</td></tr>
+</table></div>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Reality Check: The Z-Score assumes normally distributed returns. Financial markets exhibit fat tails—4σ events happen far more often than the 0.006% predicted by normal distribution.</blockquote>
+
+<h3 id="false-signal-scenarios">False Signal Scenarios</h3>
+
+<p class="mb-4">1. The "Fat Tail" Trap  </p>
+<p class="mb-4">   Z-Score hits +2.5, you short the spread, it continues to +4.0, +5.0... The relationship has broken but Z-Score suggests "even more attractive" entry.</p>
+
+<p class="mb-4">2. Lookahead Bias  </p>
+<p class="mb-4">   Testing with a Z-Score calculated on the entire dataset rather than rolling window—produces unrealistic backtests.</p>
+
+<p class="mb-4">3. Half-Life Mismatch  </p>
+<p class="mb-4">   If the spread's mean reversion half-life exceeds your trading horizon, Z-Score signals are premature.</p>
+
+<h3 id="mitigation-strategies">Mitigation Strategies</h3>
+
+<p class="mb-4">- Calculate Half-Life — Only trade if half-life < window/2</p>
+<p class="mb-4">- Hard Stop at ±3.5 — Accept the relationship might be broken</p>
+<p class="mb-4">- Volume Confirmation — Require above-average volume on reversal candle</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<h3 id="the-"3-sigma"-rule">The "3 Sigma" Rule</h3>
+
+<p class="mb-4">Professional pairs traders treat Z-Score > ±3.0 differently than retail traders:</p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Pro Insight: At ±3.0, don't add to the position—close it. This level often indicates fundamental breakdown rather than an "even better" entry. The probability of permanent divergence rises sharply beyond ±3σ.</blockquote>
+
+<h3 id="aggressive-vs-conservative-entry">Aggressive vs. Conservative Entry</h3>
+
+<p class="mb-4">Two schools of thought:</p>
+<p class="mb-4">- Aggressive: Enter immediately when Z crosses ±2.0</p>
+<p class="mb-4">- Conservative: Wait for Z to cross back toward 0 (e.g., enter when Z goes from -2.5 to -1.8)</p>
+
+<p class="mb-4">The conservative approach filters out "falling knife" scenarios but misses some profitable trades.</p>
+
+<h3 id="half-life-integration">Half-Life Integration</h3>
+
+<p class="mb-4">Calculate the Ornstein-Uhlenbeck half-life of your spread:</p>
+
+<p class="mb-4">$$\text{Half-Life} = \frac{\ln(2)}{\lambda}$$</p>
+
+<p class="mb-4">If half-life > 30 days, the spread reverts too slowly for daily trading. Target half-life < 15 days for active strategies.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"The Z-Score is your pairs trading speedometer—when it reads ±2, the market's stretched; when it reads 0, you've arrived at fair value."</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">The Z-Score solves one critical problem: scale invariance.</p>
+
+<p class="mb-4">A $0.50 spread deviation between Google and Microsoft means something very different than $0.50 between two penny stocks. And even for the same pair, $0.50 might be "normal noise" in a volatile month but "extremely significant" in a calm month.</p>
+
+<p class="mb-4">By normalizing the spread using its own rolling standard deviation, the Z-Score converts absolute price differences into standard deviations—creating universal rules: "Trade when spread exceeds ±2σ" works regardless of the underlying asset prices.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<h3 id="backtest-evidence">Backtest Evidence</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Expected Outcome</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Entry at Z = ±2.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">65% mean reversion within 10 days</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Entry at Z = ±2.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">55% reversion but better R:R</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Exit at Z = ±3.5 (stop)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Loss limitation in ~80% of cases</td></tr>
+</table></div>
+
+<h3 id="why-it-works">Why It Works</h3>
+
+<p class="mb-4">Z-Score trading exploits the stationarity of cointegrated pairs. If two assets are genuinely cointegrated, their spread is stationary—it fluctuates around a constant mean. The Z-Score identifies when the spread is at statistical extremes of this fluctuation, where reversion probability is highest.</p>
+
+<h3 id="academic-reference">Academic Reference</h3>
+
+<p class="mb-4">The theoretical foundation comes from the Engle-Granger (1987) cointegration framework and was popularized for trading by Gatev et al. (2006) and Vidyamurthy (2004).</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-actionable-strategy">3. Actionable Strategy</h2>
+
+<h3 id="strategy-name:-"momentum-backed-reversion"">Strategy Name: "Momentum-Backed Reversion"</h3>
+
+<p class="mb-4">Concept: Don't fight momentum—wait for it to confirm the turn.</p>
+
+<p class="mb-4">Setup Requirements:</p>
+<p class="mb-4">1. Cointegrated pair with correlation > 0.80</p>
+<p class="mb-4">2. Rolling Z-Score (60-period)</p>
+<p class="mb-4">3. RSI calculated on the spread (14-period)</p>
+
+<p class="mb-4">Entry Trigger (Long Spread):</p>
+<p class="mb-4">- Z-Score drops below -2.0</p>
+<p class="mb-4">- Wait for Spread RSI to drop below 30</p>
+<p class="mb-4">- Enter when RSI crosses back above 30</p>
+
+<p class="mb-4">Entry Trigger (Short Spread):</p>
+<p class="mb-4">- Z-Score rises above +2.0</p>
+<p class="mb-4">- Wait for Spread RSI to rise above 70</p>
+<p class="mb-4">- Enter when RSI crosses back below 70</p>
+
+<p class="mb-4">Exit Rules:</p>
+<p class="mb-4">1. Primary Exit: Z-Score returns to 0</p>
+<p class="mb-4">2. Stop Loss: Z-Score exceeds ±3.5</p>
+<p class="mb-4">3. Time Stop: 15 bars if no convergence</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<h3 id="failure-patterns">Failure Patterns</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pattern</td><td class="px-4 py-2 border-b border-[#2a2e39]">Description</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mitigation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Zero Volatility</td><td class="px-4 py-2 border-b border-[#2a2e39]">σ = 0 → division error</td><td class="px-4 py-2 border-b border-[#2a2e39]">Code handle: if σ = 0, return 0</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Drifting Mean</td><td class="px-4 py-2 border-b border-[#2a2e39]">Non-stationary spread</td><td class="px-4 py-2 border-b border-[#2a2e39]">Run ADF test periodically</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Fat Tail Event</td><td class="px-4 py-2 border-b border-[#2a2e39]">5σ move destroys position</td><td class="px-4 py-2 border-b border-[#2a2e39]">Hard stop at ±3.5</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Lookahead Bias</td><td class="px-4 py-2 border-b border-[#2a2e39]">Testing on full-sample stats</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use rolling calculations only</td></tr>
+</table></div>
+
+<h3 id="psychological-traps">Psychological Traps</h3>
+
+<p class="mb-4">1. The "Averaging Down" Trap  </p>
+<p class="mb-4">   Z-Score goes from -2 to -3 to -4... trader keeps adding, convinced mean reversion is "overdue." The pair has decoupled.</p>
+
+<p class="mb-4">2. Confidence Inflation  </p>
+<p class="mb-4">   After 5 winning trades, believing Z-Score is infallible and sizing up dramatically before a loss.</p>
+
+<p class="mb-4">3. Ignoring Fundamentals  </p>
+<p class="mb-4">   Statistical signals don't know about earnings announcements, M&A news, or sector rotation.</p>
+
+<h3 id="common-misinterpretations">Common Misinterpretations</h3>
+
+<p class="mb-4">- "Z = -4 is 4x better than Z = -1" → No, -4 often means the pair is broken</p>
+<p class="mb-4">- "Z always returns to 0" → Only if the pair remains cointegrated</p>
+<p class="mb-4">- "Z-Score works on any two assets" → Requires genuine statistical relationship</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<h3 id="creator-attribution">Creator Attribution</h3>
+
+<p class="mb-4">The Z-Score normalization for pairs trading was formalized in academic literature by Gatev, Goetzmann, and Rouwenhorst (2006) but operationally developed by Tartaglia's Morgan Stanley group in the 1980s.</p>
+
+<h3 id="parent/child-indicators">Parent/Child Indicators</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Relationship</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rolling Hedge Ratio</td><td class="px-4 py-2 border-b border-[#2a2e39]">Parent — Constructs the spread</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Half-Life</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sibling — Measures reversion speed</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bollinger Bands</td><td class="px-4 py-2 border-b border-[#2a2e39]">Cousin — Similar normalization concept</td></tr>
+</table></div>
+
+<h3 id="recommended-readings">Recommended Readings</h3>
+
+<p class="mb-4">1. *Pairs Trading: Quantitative Methods* — G. Vidyamurthy</p>
+<p class="mb-4">2. *Algorithmic Trading* — Ernest Chan (Chapter on Mean Reversion)</p>
+<p class="mb-4">3. "Pairs Trading: Performance of a Relative Value Arbitrage Rule" — Gatev et al.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h3 id="55-related-indicators-comparison">5.5 Related Indicators Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">Z-Score</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bollinger %B</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Score</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Measures</td><td class="px-4 py-2 border-b border-[#2a2e39]">Spread deviation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price deviation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Generic deviation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Output Range</td><td class="px-4 py-2 border-b border-[#2a2e39]">Unbounded (±∞)</td><td class="px-4 py-2 border-b border-[#2a2e39]">0-100 typical</td><td class="px-4 py-2 border-b border-[#2a2e39]">Unbounded</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Center Point</td><td class="px-4 py-2 border-b border-[#2a2e39]">0 (Mean)</td><td class="px-4 py-2 border-b border-[#2a2e39]">0.5 (Middle Band)</td><td class="px-4 py-2 border-b border-[#2a2e39]">0 (Mean)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td><td class="px-4 py-2 border-b border-[#2a2e39]">Pairs trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">Single asset</td><td class="px-4 py-2 border-b border-[#2a2e39]">Any data</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Thresholds</td><td class="px-4 py-2 border-b border-[#2a2e39]">±2.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">0/1 (band touch)</td><td class="px-4 py-2 border-b border-[#2a2e39]">±2.0</td></tr>
+</table></div>
+
+<p class="mb-4">When to Use Which:</p>
+<p class="mb-4">- Z-Score — Pairs trading spread signals</p>
+<p class="mb-4">- Bollinger %B — Single-asset mean reversion</p>
+<p class="mb-4">- Standard Score — General statistical analysis</p>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h2 id="advanced-signal-reference">Advanced Signal Reference</h2>
+
+<h3 id="threshold-matrix">Threshold Matrix</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Z-Score Level</td><td class="px-4 py-2 border-b border-[#2a2e39]">Market State</td><td class="px-4 py-2 border-b border-[#2a2e39]">Action</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">> +3.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Extremely overbought (likely broken)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Stop-loss / Exit</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">+2.0 to +3.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Overbought</td><td class="px-4 py-2 border-b border-[#2a2e39]">Short spread</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">+0.5 to +2.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mildly elevated</td><td class="px-4 py-2 border-b border-[#2a2e39]">Monitor</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">-0.5 to +0.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">Equilibrium</td><td class="px-4 py-2 border-b border-[#2a2e39]">Exit / No position</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">-2.0 to -0.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mildly depressed</td><td class="px-4 py-2 border-b border-[#2a2e39]">Monitor</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">-3.0 to -2.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Oversold</td><td class="px-4 py-2 border-b border-[#2a2e39]">Long spread</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">< -3.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Extremely oversold (likely broken)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Stop-loss / Exit</td></tr>
+</table></div>
+
+<h3 id="signal-patterns">Signal Patterns</h3>
+
+<h4 id="standard-mean-reversion-entry">Standard Mean Reversion Entry</h4>
+<p class="mb-4">This signal triggers when Z-Score crosses back toward zero after reaching statistical extremes (±2.0), indicating the "rubber band" is snapping back. The crossing direction (from extreme toward mean) is key—don't enter on the initial push to extremes, wait for the turn. Entry at ±2.0 with correlation >0.80 achieves ~65% mean reversion within 10 days.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def zscore_entry_signal(zscore_values, threshold=2.0):
+&nbsp;&nbsp;&nbsp;&nbsp;current = zscore_values[-1]
+&nbsp;&nbsp;&nbsp;&nbsp;previous = zscore_values[-2]
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;# Long signal: crossing above -2 from below
+&nbsp;&nbsp;&nbsp;&nbsp;if previous &lt; -threshold and current &gt;= -threshold:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;LONG_SPREAD&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;# Short signal: crossing below +2 from above
+&nbsp;&nbsp;&nbsp;&nbsp;if previous &gt; threshold and current &lt;= threshold:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;SHORT_SPREAD&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return &quot;NEUTRAL&quot;
+</code></pre>
+
+<h4 id="divergence-detection">Divergence Detection</h4>
+<p class="mb-4">This powerful signal identifies when the spread makes new extremes but Z-Score doesn't confirm—indicating momentum is weakening despite price movement. Bullish divergence (spread lower low, Z higher low) suggests selling pressure is exhausting; bearish divergence (spread higher high, Z lower high) suggests buying pressure is waning. Divergence adds 10-15% to mean reversion success rates.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def zscore_divergence(spread_prices, zscore_values, lookback=10):
+&nbsp;&nbsp;&nbsp;&nbsp;spread_ll = spread_prices[-1] &lt; min(spread_prices[-lookback:-1])
+&nbsp;&nbsp;&nbsp;&nbsp;zscore_hl = zscore_values[-1] &gt; min(zscore_values[-lookback:-1])
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if spread_ll and zscore_hl:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;BULLISH_DIVERGENCE&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;spread_hh = spread_prices[-1] &gt; max(spread_prices[-lookback:-1])
+&nbsp;&nbsp;&nbsp;&nbsp;zscore_lh = zscore_values[-1] &lt; max(zscore_values[-lookback:-1])
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if spread_hh and zscore_lh:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;BEARISH_DIVERGENCE&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return &quot;NONE&quot;
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<h4 id="standard-pairs-trade-setup">Standard Pairs Trade Setup</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+ZScore &lt; -2.0
+AND ZScore &gt; -3.0
+AND RollingCorrelation(60) &gt; 0.80
+</code></pre>
+
+<h4 id="broken-pair-alert">Broken Pair Alert</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+ABS(ZScore) &gt; 3.5
+OR RollingCorrelation(60) &lt; 0.50
+</code></pre>
+
+<h4 id="mean-reversion-exit">Mean Reversion Exit</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+ZScore crosses 0
+OR (ZScore was &lt; -2 AND now &gt; -0.5)
+</code></pre>
+
+<h3 id="combination-strategies">Combination Strategies</h3>
+
+<h4 id="z-score-+-rsi-momentum-confirmation">Z-Score + RSI Momentum Confirmation</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SETUP (Long Spread):
+&nbsp;&nbsp;ZScore &lt; -2.0
+&nbsp;&nbsp;
+WAIT FOR:
+&nbsp;&nbsp;RSI(Spread, 14) &lt; 30
+&nbsp;&nbsp;RSI crosses above 30
+&nbsp;&nbsp;
+ENTRY:
+&nbsp;&nbsp;Long Y, Short β×X
+&nbsp;&nbsp;
+STOP:
+&nbsp;&nbsp;ZScore &lt; -3.5
+
+EXIT:
+&nbsp;&nbsp;ZScore &gt; 0
+&nbsp;&nbsp;OR RSI &gt; 70
+</code></pre>
+
+<h4 id="multi-timeframe-z-score">Multi-Timeframe Z-Score</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FILTER:
+&nbsp;&nbsp;Daily ZScore trend direction
+&nbsp;&nbsp;
+ENTRY:
+&nbsp;&nbsp;4H ZScore reaches ±2.0 aligned with daily direction
+&nbsp;&nbsp;
+LOGIC:
+&nbsp;&nbsp;If Daily Z trending from +2 toward 0 (bearish)
+&nbsp;&nbsp;AND 4H Z crosses above +2.0
+&nbsp;&nbsp;→ Short spread scalp
+</code></pre>
+
+
+
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#formula" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Formula</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#default-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Default Parameters</a>
+<a href="#timeframe-recommendations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Timeframe Recommendations</a>
+<a href="#why-these-values" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why These Values?</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#best-conditions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Best Conditions</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#asset-class-suitability" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Asset Class Suitability</a>
+<a href="#5-entry-signals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Entry Signals</a>
+<a href="#primary-long-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Long Signal</a>
+<a href="#primary-short-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Short Signal</a>
+<a href="#6-filter-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Filter Usage</a>
+<a href="#filter-rules" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Filter Rules</a>
+<a href="#recommended-pairings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Pairings</a>
+<a href="#example-combined-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Example Combined Strategy</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#lag-characteristics" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Lag Characteristics</a>
+<a href="#false-signal-scenarios" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">False Signal Scenarios</a>
+<a href="#mitigation-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Mitigation Strategies</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#the-"3-sigma"-rule" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The "3 Sigma" Rule</a>
+<a href="#aggressive-vs-conservative-entry" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Aggressive vs. Conservative Entry</a>
+<a href="#half-life-integration" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Half-Life Integration</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#backtest-evidence" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Backtest Evidence</a>
+<a href="#why-it-works" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why It Works</a>
+<a href="#academic-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Academic Reference</a>
+<a href="#3-actionable-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Strategy</a>
+<a href="#strategy-name:-"momentum-backed-reversion"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Strategy Name: "Momentum-Backed Reversion"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#failure-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Failure Patterns</a>
+<a href="#psychological-traps" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Psychological Traps</a>
+<a href="#common-misinterpretations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common Misinterpretations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#parent/child-indicators" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Parent/Child Indicators</a>
+<a href="#recommended-readings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Readings</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Matrix</a>
+<a href="#signal-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Signal Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "RollingSpreadZScore",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 20;
+                const result = RollingSpreadZScore.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/RollingSpreadZScore.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[{"id": "period", "label": "Period (20)", "type": "number", "value": 20, "min": 2, "max": 100}]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": true, "plots": {"main": {"label": "RollingSpreadZScore", "color": "#4f46e5", "type": "line"}}}
+    </script>
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code - loaded externally before this block
+
+        // 2. Configuration (XSS-safe via script type="application/json")
+        try {
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 20;
+                const result = RollingSpreadZScore.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+    </script>
+
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
+
+</body>
+</html>

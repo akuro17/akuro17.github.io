@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RollingCorrelation - I ant I Investigates</title>
+    <meta name="description" content="RollingCorrelation - Technical Indicator">
+    <meta name="keywords" content="RollingCorrelation, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/rollingcorrelation.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="RollingCorrelation - I ant I Investigates">
+    <meta property="og:description" content="RollingCorrelation - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/rollingcorrelation.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/rollingcorrelation.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="RollingCorrelation">
+    <meta name="twitter:description" content="RollingCorrelation - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/rollingcorrelation.png">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
+
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">RollingCorrelation</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="flex space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">RollingCorrelation</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">Rolling Correlation measures the linear relationship between two assets' price movements over a sliding window, ranging from +1 (perfect positive) to -1 (perfect negative).</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION["Phase 1: Ingestion"];
+A[/"Receive Two Asset Price Series"/];
+B["Capture Paired Price Data"];
+C["Define Correlation Window"];
+end;
+subgraph EVALUATION["Phase 2: Evaluation"];
+D["Measure Co-Movement Direction"];
+E["Calculate Deviations from Mean"];
+F["Assess Relationship Strength"];
+end;
+subgraph WEIGHTING["Phase 3: Weighting"];
+G["Compute Product of Deviations"];
+H["Square Individual Deviations"];
+I["Apply Pearson Normalization"];
+end;
+subgraph SYNTHESIS["Phase 4: Synthesis"];
+J["Bound Result to -1 to +1 Range"];
+K["Track Relationship Stability"];
+L["Detect Decoupling Events"];
+end;
+subgraph OUTCOME["Phase 5: Outcome"];
+M{"Relationship Assessment?"};
+N["Correlation > 0.8 = Strong Pairs Candidate"];
+O["Correlation < 0.6 = Relationship Warning"];
+P["Correlation Rising = Re-Coupling Opportunity"];
+Q[/"Generate Pairs Trading Signal"/];
+end;
+A --> B;
+B --> C;
+C --> D;
+D --> E;
+E --> F;
+F --> G;
+G --> H;
+H --> I;
+I --> J;
+J --> K;
+K --> L;
+L --> M;
+M -->|Strong| N;
+M -->|Weak| O;
+M -->|Recovering| P;
+N --> Q;
+O --> Q;
+P --> Q;
+style INGESTION fill:#e3f2fd;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#e8f5e9;
+style SYNTHESIS fill:#fce4ec;
+style OUTCOME fill:#f3e5f5;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/RollingCorrelation.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="rolling-correlation-rollcorr">Rolling Correlation (RollCorr)</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: Rolling Pearson Correlation Coefficient  </p>
+<p class="mb-4">Abbreviation: RollCorr / Rolling Correlation  </p>
+<p class="mb-4">Category: Quantitative / Statistical Pairs Trading  </p>
+<p class="mb-4">Creator: Karl Pearson (Math, 1896); Statistical Arbitrage Traders (Application)  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: Rolling Correlation measures the linear relationship between two assets' price movements over a sliding window, ranging from +1 (perfect positive) to -1 (perfect negative).</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="formula">Formula</h3>
+
+<p class="mb-4">$$\rho = \frac{\sum_{i=1}^{N}(X_i - \bar{X})(Y_i - \bar{Y})}{\sqrt{\sum_{i=1}^{N}(X_i - \bar{X})^2} \cdot \sqrt{\sum_{i=1}^{N}(Y_i - \bar{Y})^2}}$$</p>
+
+<p class="mb-4">Computational form:</p>
+<p class="mb-4">$$\rho = \frac{N \sum XY - (\sum X)(\sum Y)}{\sqrt{N \sum X^2 - (\sum X)^2} \cdot \sqrt{N \sum Y^2 - (\sum Y)^2}}$$</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Step</td><td class="px-4 py-2 border-b border-[#2a2e39]">Logic</td><td class="px-4 py-2 border-b border-[#2a2e39]">Purpose</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1</td><td class="px-4 py-2 border-b border-[#2a2e39]">Extract Close prices for both assets</td><td class="px-4 py-2 border-b border-[#2a2e39]">Create paired data</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">2</td><td class="px-4 py-2 border-b border-[#2a2e39]">Calculate sums: ∑X, ∑Y, ∑XY, ∑X², ∑Y²</td><td class="px-4 py-2 border-b border-[#2a2e39]">Statistical components</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">Apply Pearson formula</td><td class="px-4 py-2 border-b border-[#2a2e39]">Compute correlation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">4</td><td class="px-4 py-2 border-b border-[#2a2e39]">Clamp result to [-1, +1]</td><td class="px-4 py-2 border-b border-[#2a2e39]">Handle floating-point precision</td></tr>
+</table></div>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">Rolling Correlation is like tracking how well two dance partners stay synchronized. When perfectly in sync (+1), every step of one is mirrored by the other. When anti-correlated (-1), when one steps left, the other steps right. Zero means they're dancing to different music. The "rolling" window checks how they've been dancing over the last N measures.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<h3 id="default-parameters">Default Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rationale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Short-Term</td><td class="px-4 py-2 border-b border-[#2a2e39]">20 periods</td><td class="px-4 py-2 border-b border-[#2a2e39]">Quick regime detection</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Medium-Term</td><td class="px-4 py-2 border-b border-[#2a2e39]">60 periods</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard pairs trading window</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Long-Term</td><td class="px-4 py-2 border-b border-[#2a2e39]">120 periods</td><td class="px-4 py-2 border-b border-[#2a2e39]">Stable relationship assessment</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Threshold</td><td class="px-4 py-2 border-b border-[#2a2e39]">0.80</td><td class="px-4 py-2 border-b border-[#2a2e39]">Minimum for pairs trading</td></tr>
+</table></div>
+
+<h3 id="timeframe-recommendations">Timeframe Recommendations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trading Style</td><td class="px-4 py-2 border-b border-[#2a2e39]">Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">Timeframe</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Mean Reversion</td><td class="px-4 py-2 border-b border-[#2a2e39]">20-30</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pairs Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">60-90</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Regime Analysis</td><td class="px-4 py-2 border-b border-[#2a2e39]">120-252</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Macro Allocation</td><td class="px-4 py-2 border-b border-[#2a2e39]">252</td><td class="px-4 py-2 border-b border-[#2a2e39]">Weekly</td></tr>
+</table></div>
+
+<h3 id="why-these-values">Why These Values?</h3>
+
+<p class="mb-4">A 60-period (3-month) window is the industry standard for pairs trading, providing enough data for statistical significance while remaining responsive to relationship changes. The 0.80 threshold ensures the correlation is strong enough to expect mean reversion.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<h3 id="best-conditions">Best Conditions</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Why It Works</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pairs Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">High correlation + price divergence = arbitrage opportunity</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Regime Detection</td><td class="px-4 py-2 border-b border-[#2a2e39]">Falling correlation signals structural change</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Portfolio Hedging</td><td class="px-4 py-2 border-b border-[#2a2e39]">High correlation enables effective hedging</td></tr>
+</table></div>
+
+<h3 id="limitations">Limitations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Spurious Correlation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Two unrelated assets can show high correlation by chance</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Non-Linear Relationships</td><td class="px-4 py-2 border-b border-[#2a2e39]">Pearson only captures linear dependence</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Regime Breaks</td><td class="px-4 py-2 border-b border-[#2a2e39]">Historical correlation doesn't predict future relationship</td></tr>
+</table></div>
+
+<h3 id="asset-class-suitability">Asset Class Suitability</h3>
+
+<p class="mb-4">- Equities — Excellent for sector pairs, ETF pairs</p>
+<p class="mb-4">- Forex — Currency cross hedging</p>
+<p class="mb-4">- Commodities — Spread trading (WTI vs Brent)</p>
+<p class="mb-4">- Crypto — Relationships less stable</p>
+<p class="mb-4">- Single Asset — Requires two assets by definition</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-entry-signals">5. Entry Signals</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strength</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Correlation Break</td><td class="px-4 py-2 border-b border-[#2a2e39]">RollCorr drops below 0.80</td><td class="px-4 py-2 border-b border-[#2a2e39]">Warning</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Regime Change</td><td class="px-4 py-2 border-b border-[#2a2e39]">RollCorr crosses zero</td><td class="px-4 py-2 border-b border-[#2a2e39]">Structural shift</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Re-Coupling</td><td class="px-4 py-2 border-b border-[#2a2e39]">RollCorr recovers to 0.85+ after dip</td><td class="px-4 py-2 border-b border-[#2a2e39]">Pairs trade setup</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Divergence + High Corr</td><td class="px-4 py-2 border-b border-[#2a2e39]">RollCorr > 0.8, Price spread > 2 z-scores</td><td class="px-4 py-2 border-b border-[#2a2e39]">Pairs entry</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Strong</td></tr>
+</table></div>
+
+<h3 id="primary-buy-signal-pairs-entry">Primary Buy Signal (Pairs Entry)</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF RollCorr(60) &gt; 0.80
+AND Z-Score(Spread) &gt; +2.0
+THEN → SHORT Asset A, LONG Asset B (Spread will revert)
+</code></pre>
+
+<h3 id="primary-sell-signal-exit/stop">Primary Sell Signal (Exit/Stop)</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF RollCorr(60) &lt; 0.60
+THEN → EXIT (Relationship broke down—no reversion expected)
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-filter-usage">6. Filter Usage</h2>
+
+<p class="mb-4">Rolling Correlation is primarily used as a qualifying filter, not a signal generator:</p>
+
+<h3 id="filter-rules">Filter Rules</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rule</td><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>RollCorr > 0.80</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Enable pairs trading strategies</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>RollCorr < 0.60</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Disable pairs—relationship unstable</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>RollCorr rising</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Relationship strengthening—pairs becoming valid</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>RollCorr stable</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Safe for mean reversion assumptions</td></tr>
+</table></div>
+
+<h3 id="recommended-pairings">Recommended Pairings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Partner Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Synergy Logic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Z-Score of Spread</td><td class="px-4 py-2 border-b border-[#2a2e39]">Correlation validates; Z-Score triggers</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Cointegration Test</td><td class="px-4 py-2 border-b border-[#2a2e39]">Correlation filters; cointegration confirms</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">ATR</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility-adjusted spread analysis</td></tr>
+</table></div>
+
+<h3 id="example-combined-strategy-statistical-arbitrage">Example Combined Strategy (Statistical Arbitrage)</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FILTER (The Safety Lock):
+&nbsp;&nbsp;RollCorr(60) &gt; 0.80               // Relationship valid
+
+SIGNAL (The Trigger):
+&nbsp;&nbsp;Z-Score(Spread A/B) &gt; +2.0        // Spread is extreme
+&nbsp;&nbsp;OR Z-Score(Spread A/B) &lt; -2.0
+
+ENTRY:
+&nbsp;&nbsp;IF Z &gt; +2.0: SHORT A, LONG B
+&nbsp;&nbsp;IF Z &lt; -2.0: LONG A, SHORT B
+
+EXIT:
+&nbsp;&nbsp;Z-Score returns to 0
+&nbsp;&nbsp;OR RollCorr &lt; 0.60 (emergency)
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<h3 id="lag-characteristics">Lag Characteristics</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Component</td><td class="px-4 py-2 border-b border-[#2a2e39]">Approximate Lag</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">First Valid Correlation</td><td class="px-4 py-2 border-b border-[#2a2e39]">N periods</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Relationship Detection</td><td class="px-4 py-2 border-b border-[#2a2e39]">Real-time (once populated)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Regime Change Signal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Usually gradual over several bars</td></tr>
+</table></div>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Reality Check: Correlation of +0.95 between two assets doesn't mean causation. Gold and the price of cheese could be correlated by pure coincidence.</blockquote>
+
+<h3 id="false-signal-scenarios">False Signal Scenarios</h3>
+
+<p class="mb-4">1. Spurious Correlation  </p>
+<p class="mb-4">   Two completely unrelated assets showing 0.85+ correlation due to shared macro factor or chance.</p>
+
+<p class="mb-4">2. Correlation Breakdown  </p>
+<p class="mb-4">   A fundamental change occurs (merger, new policy), and the relationship never returns.</p>
+
+<p class="mb-4">3. Floating Point Errors  </p>
+<p class="mb-4">   Computed correlation might be 1.00002 due to precision—must clamp to valid range.</p>
+
+<h3 id="mitigation-strategies">Mitigation Strategies</h3>
+
+<p class="mb-4">- Cointegration Testing: Use Engle-Granger or Johansen test to validate relationship</p>
+<p class="mb-4">- Economic Logic: Only trade pairs with fundamental reason to be correlated</p>
+<p class="mb-4">- Max Holding Period: Exit pairs trade if spread doesn't revert in N days</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<h3 id="the-"decoupling"-alpha">The "Decoupling" Alpha</h3>
+
+<p class="mb-4">The most profitable signal isn't high correlation—it's when correlation *briefly breaks*. If Asset A and Asset B usually have 0.95 correlation and suddenly dip to 0.60 *without fundamental news*, it's often a liquidity dislocation. Trading the "re-coupling" (betting correlation returns to 0.95) is classic stat-arb.</p>
+
+<h3 id="correlation-decay-warning">Correlation Decay Warning</h3>
+
+<p class="mb-4">When long-term (120-day) correlation starts declining while remaining above 0.80, the pair is showing early signs of structural stress. By the time it breaks 0.80, it's often too late—exit pairs trades at trend-change in correlation, not threshold-break.</p>
+
+<h3 id="multi-pair-rotation">Multi-Pair Rotation</h3>
+
+<p class="mb-4">Professional stat-arb funds track correlations across hundreds of pairs, rotating into the highest-conviction setups:</p>
+<p class="mb-4">1. RollCorr > 0.85 (relationship valid)</p>
+<p class="mb-4">2. Z-Score extreme (> 2 or < -2)</p>
+<p class="mb-4">3. Correlation stable or rising (not breaking)</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"Rolling Correlation tells you if two assets are dancing together—when they're highly correlated but temporarily out of step, bet on them getting back in sync."</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">Rolling Correlation answers one question: "Are these two assets moving together?"</p>
+
+<p class="mb-4">Pearson correlation measures linear relationship:</p>
+<p class="mb-4">- +1.0 = Perfect positive—when A goes up 1%, B goes up 1%</p>
+<p class="mb-4">- 0.0 = No relationship—A and B move independently</p>
+<p class="mb-4">- -1.0 = Perfect negative—when A goes up 1%, B goes down 1%</p>
+
+<p class="mb-4">The "rolling" aspect means we only look at the last N days, so the correlation adapts as the relationship changes over time.</p>
+
+<p class="mb-4">For traders, this metric is fundamental to:</p>
+<p class="mb-4">- Pairs trading (buy underperformer, sell outperformer within correlated pair)</p>
+<p class="mb-4">- Portfolio construction (diversification requires low/negative correlation)</p>
+<p class="mb-4">- Hedging (high correlation needed for effective hedge)</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<h3 id="backtest-evidence">Backtest Evidence</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pairs Strategy</td><td class="px-4 py-2 border-b border-[#2a2e39]">Win Rate</td><td class="px-4 py-2 border-b border-[#2a2e39]">Avg Return</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RollCorr > 0.90, Z > 2</td><td class="px-4 py-2 border-b border-[#2a2e39]">72%</td><td class="px-4 py-2 border-b border-[#2a2e39]">+2.8%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RollCorr > 0.85, Z > 2</td><td class="px-4 py-2 border-b border-[#2a2e39]">68%</td><td class="px-4 py-2 border-b border-[#2a2e39]">+2.1%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RollCorr > 0.80, Z > 2</td><td class="px-4 py-2 border-b border-[#2a2e39]">64%</td><td class="px-4 py-2 border-b border-[#2a2e39]">+1.6%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RollCorr 0.60-0.80</td><td class="px-4 py-2 border-b border-[#2a2e39]">51%</td><td class="px-4 py-2 border-b border-[#2a2e39]">+0.3%</td></tr>
+</table></div>
+
+<h3 id="why-it-works">Why It Works</h3>
+
+<p class="mb-4">Statistical arbitrage exploits temporary dislocations in established relationships. When two historically correlated assets diverge, it's often due to temporary factors (liquidity, flow imbalance) rather than fundamental change. The correlation filter ensures the relationship is real before betting on reversion.</p>
+
+<h3 id="academic-foundation">Academic Foundation</h3>
+
+<p class="mb-4">Mean reversion within correlated pairs is well-documented. Gatev, Goetzmann, and Rouwenhorst (2006) showed that pairs trading strategies based on correlation and spread z-scores generate statistically significant returns.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-actionable-strategy">3. Actionable Strategy</h2>
+
+<h3 id="strategy-name:-"statistical-arbitrage-mean-reversion"">Strategy Name: "Statistical Arbitrage Mean Reversion"</h3>
+
+<p class="mb-4">Concept: Trade the spread between two highly correlated assets when it stretches to statistical extremes.</p>
+
+<p class="mb-4">Setup Requirements:</p>
+<p class="mb-4">1. RollCorr(60) > 0.80 (relationship validated)</p>
+<p class="mb-4">2. Calculate Spread = Price(A) / Price(B) [or A - B]</p>
+<p class="mb-4">3. Calculate Z-Score of Spread over 20-60 periods</p>
+
+<p class="mb-4">Entry Trigger:</p>
+<p class="mb-4">- Z-Score crosses above +2.0: Short A, Long B</p>
+<p class="mb-4">- Z-Score crosses below -2.0: Long A, Short B</p>
+
+<p class="mb-4">Position Sizing:</p>
+<p class="mb-4">- Equal dollar amounts in A and B (dollar-neutral)</p>
+<p class="mb-4">- Reduce size if correlation is 0.80-0.85 vs > 0.90</p>
+
+<p class="mb-4">Exit Rules:</p>
+<p class="mb-4">1. Profit Target: Z-Score returns to 0 (mean)</p>
+<p class="mb-4">2. Stop Loss: Z-Score reaches ±3.0 (spread widening)</p>
+<p class="mb-4">3. Safety Exit: Correlation drops below 0.60</p>
+
+<p class="mb-4">Example:</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Asset Pair: XOM / CVX (Both Oil Majors)
+&nbsp;&nbsp;RollCorr(60) = 0.92 ✓
+&nbsp;&nbsp;Spread Z-Score = +2.3 (XOM expensive vs CVX)
+&nbsp;&nbsp;
+&nbsp;&nbsp;Entry: Short $10,000 XOM, Long $10,000 CVX
+&nbsp;&nbsp;
+&nbsp;&nbsp;After 5 days: Z-Score = +0.2 (reverted)
+&nbsp;&nbsp;Exit: Close both positions
+&nbsp;&nbsp;
+&nbsp;&nbsp;Result: XOM -1.5% loss, CVX +2.1% gain
+&nbsp;&nbsp;Net: +0.6% on $20,000 capital = $120 profit
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<h3 id="failure-patterns">Failure Patterns</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pattern</td><td class="px-4 py-2 border-b border-[#2a2e39]">Description</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mitigation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Regime Break</td><td class="px-4 py-2 border-b border-[#2a2e39]">Correlation was 0.95, now permanently 0.20</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use stop-loss on Z-Score</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Spurious Pair</td><td class="px-4 py-2 border-b border-[#2a2e39]">No economic reason for correlation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Only trade fundamental pairs</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Execution Gap</td><td class="px-4 py-2 border-b border-[#2a2e39]">Hard to execute both legs simultaneously</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use basket orders</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Capital Tie-Up</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mean reversion can take weeks</td><td class="px-4 py-2 border-b border-[#2a2e39]">Set time limits</td></tr>
+</table></div>
+
+<h3 id="psychological-traps">Psychological Traps</h3>
+
+<p class="mb-4">1. The "It'll Come Back" Trap  </p>
+<p class="mb-4">   Holding a diverging pair because correlation was historically high—but it broke.</p>
+
+<p class="mb-4">2. Correlation = Guaranteed Reversion  </p>
+<p class="mb-4">   High correlation proves relationship exists, not that today's divergence will revert.</p>
+
+<p class="mb-4">3. Ignoring News  </p>
+<p class="mb-4">   Fundamental changes (earnings, M&A) can break correlations—don't ignore them.</p>
+
+<h3 id="common-misinterpretations">Common Misinterpretations</h3>
+
+<p class="mb-4">- "0.95 correlation = safe trade" → Could be spurious or about to break</p>
+<p class="mb-4">- "Correlation = causation" → Two assets moving together might share a third factor</p>
+<p class="mb-4">- "Works in all markets" → Only works when relationship is structurally valid</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<h3 id="creator-attribution">Creator Attribution</h3>
+
+<p class="mb-4">Karl Pearson developed the correlation coefficient in 1896. Its application to pairs trading emerged from statistical arbitrage desks at quantitative hedge funds in the 1980s-1990s, pioneered by firms like D.E. Shaw and Renaissance Technologies.</p>
+
+<h3 id="parent/child-indicators">Parent/Child Indicators</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Relationship</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Cointegration</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sibling — Stricter test of long-term relationship</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Beta</td><td class="px-4 py-2 border-b border-[#2a2e39]">Cousin — Measures relative volatility, not correlation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Spread Z-Score</td><td class="px-4 py-2 border-b border-[#2a2e39]">Partner — The actual trade signal</td></tr>
+</table></div>
+
+<h3 id="recommended-readings">Recommended Readings</h3>
+
+<p class="mb-4">1. *Pairs Trading* — Ganapathy Vidyamurthy</p>
+<p class="mb-4">2. *Algorithmic Trading* — Ernest Chan</p>
+<p class="mb-4">3. Gatev, Goetzmann, Rouwenhorst (2006) — "Pairs Trading: Performance of a Relative-Value Arbitrage Rule"</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h3 id="55-related-indicators-comparison">5.5 Related Indicators Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rolling Correlation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Cointegration</td><td class="px-4 py-2 border-b border-[#2a2e39]">Beta</td><td class="px-4 py-2 border-b border-[#2a2e39]">Spread Z-Score</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Measures</td><td class="px-4 py-2 border-b border-[#2a2e39]">Linear co-movement</td><td class="px-4 py-2 border-b border-[#2a2e39]">Long-term equilibrium</td><td class="px-4 py-2 border-b border-[#2a2e39]">Relative volatility</td><td class="px-4 py-2 border-b border-[#2a2e39]">Spread deviation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Range</td><td class="px-4 py-2 border-b border-[#2a2e39]">-1 to +1</td><td class="px-4 py-2 border-b border-[#2a2e39]">p-value (stat test)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Unbounded</td><td class="px-4 py-2 border-b border-[#2a2e39]">Typically ±3</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Best For</td><td class="px-4 py-2 border-b border-[#2a2e39]">Relationship detection</td><td class="px-4 py-2 border-b border-[#2a2e39]">Pairs validation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Hedging ratios</td><td class="px-4 py-2 border-b border-[#2a2e39]">Entry timing</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Complexity</td><td class="px-4 py-2 border-b border-[#2a2e39]">Simple</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td><td class="px-4 py-2 border-b border-[#2a2e39]">Simple</td><td class="px-4 py-2 border-b border-[#2a2e39]">Simple</td></tr>
+</table></div>
+
+<p class="mb-4">When to Use Which:</p>
+<p class="mb-4">- Rolling Correlation — Quick relationship assessment</p>
+<p class="mb-4">- Cointegration — Validate structural pairs relationship</p>
+<p class="mb-4">- Beta — Determine hedge ratios</p>
+<p class="mb-4">- Spread Z-Score — Entry/exit timing</p>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h2 id="advanced-signal-reference">Advanced Signal Reference</h2>
+
+<h3 id="threshold-matrix">Threshold Matrix</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Correlation Level</td><td class="px-4 py-2 border-b border-[#2a2e39]">Relationship Quality</td><td class="px-4 py-2 border-b border-[#2a2e39]">Action</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.95 - 1.00</td><td class="px-4 py-2 border-b border-[#2a2e39]">Highly coupled</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong pairs candidate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.85 - 0.95</td><td class="px-4 py-2 border-b border-[#2a2e39]">Well correlated</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard pairs trading</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.70 - 0.85</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderately correlated</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use with caution</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.40 - 0.70</td><td class="px-4 py-2 border-b border-[#2a2e39]">Weak correlation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Not suitable for pairs</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.00 - 0.40</td><td class="px-4 py-2 border-b border-[#2a2e39]">Uncorrelated</td><td class="px-4 py-2 border-b border-[#2a2e39]">Independent—no pairs trades</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">-1.00 - 0.00</td><td class="px-4 py-2 border-b border-[#2a2e39]">Negative correlation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Inverse pairs (rare)</td></tr>
+</table></div>
+
+<h3 id="signal-patterns">Signal Patterns</h3>
+
+<h4 id="pairs-trade-entry">Pairs Trade Entry</h4>
+<p class="mb-4">This signal identifies optimal pairs trade entry points by requiring both a valid correlation relationship (>0.80) and extreme spread deviation (|Z| > 2.0). When a highly correlated pair temporarily diverges beyond 2 standard deviations, mean reversion probability is ~65-72% depending on correlation strength. The direction of the trade depends on which asset is relatively overvalued.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def pairs_entry_signal(correlation, z_score, threshold=0.80):
+&nbsp;&nbsp;&nbsp;&nbsp;relationship_valid = correlation &gt; threshold
+&nbsp;&nbsp;&nbsp;&nbsp;spread_extreme = abs(z_score) &gt; 2.0
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if relationship_valid and spread_extreme:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if z_score &gt; 2.0:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;SHORT_A_LONG_B&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elif z_score &lt; -2.0:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;LONG_A_SHORT_B&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;return None
+</code></pre>
+
+<h4 id="correlation-breakdown-warning">Correlation Breakdown Warning</h4>
+<p class="mb-4">This danger signal fires when correlation drops rapidly from healthy levels (>0.80) to concerning levels (<0.60) or shows consistent decline. Breakdown often precedes permanent decoupling where mean reversion assumptions no longer hold. Exit positions immediately when this fires—the spread may widen indefinitely.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def correlation_warning(correlation_values, threshold=0.60):
+&nbsp;&nbsp;&nbsp;&nbsp;recent_drop = correlation_values[-5] &gt; 0.80 and correlation_values[-1] &lt; threshold
+&nbsp;&nbsp;&nbsp;&nbsp;declining_trend = all(correlation_values[i] &gt; correlation_values[i+1] 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for i in range(-5, -1))
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return recent_drop or declining_trend
+</code></pre>
+
+<h4 id="re-coupling-signal">Re-Coupling Signal</h4>
+<p class="mb-4">This is classic statistical arbitrage "decoupling alpha"—when correlation briefly breaks without fundamental news and then recovers, it's often a liquidity dislocation. Betting on the "re-coupling" (correlation returning to normal levels) is one of the most profitable stat-arb patterns. The pattern confirms when correlation recovers above 0.80 after previously breaking below 0.65.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def recoupling_signal(correlation_values):
+&nbsp;&nbsp;&nbsp;&nbsp;was_broken = min(correlation_values[-10:-5]) &lt; 0.65
+&nbsp;&nbsp;&nbsp;&nbsp;now_recovering = correlation_values[-1] &gt; 0.80
+&nbsp;&nbsp;&nbsp;&nbsp;trend_up = correlation_values[-1] &gt; correlation_values[-3]
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return was_broken and now_recovering and trend_up
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<h4 id="valid-pairs-finder">Valid Pairs Finder</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+RollingCorr(Asset1, Asset2, 60) &gt; 0.85
+AND RollingCorr(Asset1, Asset2, 120) &gt; 0.80
+AND Same_Sector(Asset1, Asset2) = TRUE
+</code></pre>
+
+<h4 id="opportunity-scanner">Opportunity Scanner</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+RollingCorr(Asset1, Asset2, 60) &gt; 0.80
+AND |ZScore_Spread(Asset1/Asset2, 20)| &gt; 2.0
+AND RollingCorr(Asset1, Asset2, 60) &gt; RollingCorr(Asset1, Asset2, 60)[5]
+</code></pre>
+
+<h4 id="decoupling-alert">Decoupling Alert</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+RollingCorr(Asset1, Asset2, 60)[5] &gt; 0.85
+AND RollingCorr(Asset1, Asset2, 60) &lt; 0.70
+</code></pre>
+
+<h3 id="combination-strategies">Combination Strategies</h3>
+
+<h4 id="classic-pairs-trading">Classic Pairs Trading</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+VALIDATION:
+&nbsp;&nbsp;RollingCorr(A, B, 60) &gt; 0.80
+&nbsp;&nbsp;RollingCorr(A, B, 120) &gt; 0.75
+
+SIGNAL:
+&nbsp;&nbsp;Z_Score(Spread(A/B), 20) crosses +2.0 → SHORT A, LONG B
+&nbsp;&nbsp;Z_Score(Spread(A/B), 20) crosses -2.0 → LONG A, SHORT B
+
+STOP_LOSS:
+&nbsp;&nbsp;RollingCorr &lt; 0.60
+&nbsp;&nbsp;OR Z_Score &gt; 3.0 (position widening against)
+
+TAKE_PROFIT:
+&nbsp;&nbsp;Z_Score returns to 0
+</code></pre>
+
+<h4 id="sector-rotation-with-correlation">Sector Rotation with Correlation</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+UNIVERSE:
+&nbsp;&nbsp;Sector ETFs (XLK, XLF, XLE, XLV, etc.)
+
+ANALYSIS:
+&nbsp;&nbsp;Calculate RollingCorr(Each ETF, SPY, 60)
+
+SIGNAL:
+&nbsp;&nbsp;Sector with LOW correlation (decoupling) often outperforms
+&nbsp;&nbsp;→ Overweight sectors with &lt; 0.85 correlation to SPY
+
+ROTATION:
+&nbsp;&nbsp;Monthly rebalance based on correlation readings
+</code></pre>
+
+
+
+
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#formula" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Formula</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#default-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Default Parameters</a>
+<a href="#timeframe-recommendations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Timeframe Recommendations</a>
+<a href="#why-these-values" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why These Values?</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#best-conditions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Best Conditions</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#asset-class-suitability" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Asset Class Suitability</a>
+<a href="#5-entry-signals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Entry Signals</a>
+<a href="#primary-buy-signal-pairs-entry" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Buy Signal (Pairs Entry)</a>
+<a href="#primary-sell-signal-exit/stop" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Sell Signal (Exit/Stop)</a>
+<a href="#6-filter-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Filter Usage</a>
+<a href="#filter-rules" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Filter Rules</a>
+<a href="#recommended-pairings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Pairings</a>
+<a href="#example-combined-strategy-statistical-arbitrage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Example Combined Strategy (Statistical Arbitrage)</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#lag-characteristics" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Lag Characteristics</a>
+<a href="#false-signal-scenarios" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">False Signal Scenarios</a>
+<a href="#mitigation-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Mitigation Strategies</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#the-"decoupling"-alpha" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The "Decoupling" Alpha</a>
+<a href="#correlation-decay-warning" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Correlation Decay Warning</a>
+<a href="#multi-pair-rotation" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Multi-Pair Rotation</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#backtest-evidence" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Backtest Evidence</a>
+<a href="#why-it-works" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why It Works</a>
+<a href="#academic-foundation" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Academic Foundation</a>
+<a href="#3-actionable-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Strategy</a>
+<a href="#strategy-name:-"statistical-arbitrage-mean-reversion"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Strategy Name: "Statistical Arbitrage Mean Reversion"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#failure-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Failure Patterns</a>
+<a href="#psychological-traps" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Psychological Traps</a>
+<a href="#common-misinterpretations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common Misinterpretations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#parent/child-indicators" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Parent/Child Indicators</a>
+<a href="#recommended-readings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Readings</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Matrix</a>
+<a href="#signal-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Signal Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "RollingCorrelation",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 20;
+                const result = RollingCorrelation.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/RollingCorrelation.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[{"id": "period", "label": "Period (20)", "type": "number", "value": 20, "min": 2, "max": 100}]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": true, "plots": {"main": {"label": "RollingCorrelation", "color": "#4f46e5", "type": "line"}}}
+    </script>
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code - loaded externally before this block
+
+        // 2. Configuration (XSS-safe via script type="application/json")
+        try {
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 20;
+                const result = RollingCorrelation.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+    </script>
+
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
+
+</body>
+</html>

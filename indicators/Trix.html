@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trix - I ant I Investigates</title>
+    <meta name="description" content="Trix - Technical Indicator">
+    <meta name="keywords" content="Trix, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/trix.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Trix - I ant I Investigates">
+    <meta property="og:description" content="Trix - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/trix.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/trix.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Trix">
+    <meta name="twitter:description" content="Trix - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/trix.png">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
+
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">Trix</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="flex space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">Trix</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">TRIX is a momentum oscillator that displays the percentage rate of change of a triple-exponentially smoothed moving average, acting as a powerful noise filter to expose only the most significant trend movements.</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION["INGESTION<br/>Data Capture"];
+A["Observe closing prices<br/>(daily/periodic settlements)"];
+B["Set triple smoothing period<br/>(aggressive noise filter)"];
+end;
+subgraph EVALUATION["EVALUATION<br/>Initial Assessment"];
+C["Apply three cascaded EMAs<br/>(remove all short-term noise)"];
+D["Calculate rate of change<br/>(momentum of smoothed trend)"];
+end;
+subgraph WEIGHTING["WEIGHTING<br/>Normalization"];
+E["Express as percentage change<br/>(0-centered oscillator)"];
+F["Add signal line<br/>(9-period EMA for crossovers)"];
+end;
+subgraph SYNTHESIS["SYNTHESIS<br/>Pattern Detection"];
+G{"What is the TRIX reading?"};
+H["TRIX > 0 and rising: Deep uptrend"];
+I["TRIX < 0 and falling: Deep downtrend"];
+J["TRIX crosses zero: Major trend change"];
+end;
+subgraph OUTCOME["OUTCOME<br/>Signal Generation"];
+K["TRIX crosses above zero:<br/>Major buy signal (trend reversal)"];
+L["TRIX crosses below zero:<br/>Major sell signal (trend reversal)"];
+M["Divergence from price:<br/>High-probability reversal warning"];
+end;
+A --> C;
+B --> C;
+C --> D;
+D --> E;
+E --> F;
+F --> G;
+G -->|"> 0 rising"| H;
+G -->|"< 0 falling"| I;
+G -->|"Zero cross"| J;
+H --> K;
+I --> L;
+J --> M;
+style INGESTION fill:#e3f2fd;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#e8f5e9;
+style SYNTHESIS fill:#fce4ec;
+style OUTCOME fill:#f3e5f5;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/Trix.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="trix-triple-exponential-average">TRIX (Triple Exponential Average)</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: Triple Exponential Average (TRIX)  </p>
+<p class="mb-4">Abbreviation: TRIX  </p>
+<p class="mb-4">Category: Momentum Oscillator  </p>
+<p class="mb-4">Creator: Jack Hutson (early 1980s)  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: TRIX is a momentum oscillator that displays the percentage rate of change of a triple-exponentially smoothed moving average, acting as a powerful noise filter to expose only the most significant trend movements.</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="formula">Formula</h3>
+
+<p class="mb-4">$$TRIX = \frac{EMA_3(t) - EMA_3(t-1)}{EMA_3(t-1)} \times 100$$</p>
+
+<p class="mb-4">Where the triple-smoothed $EMA_3$ is calculated as:</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Step</td><td class="px-4 py-2 border-b border-[#2a2e39]">Operation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Result</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1</td><td class="px-4 py-2 border-b border-[#2a2e39]">Calculate N-period EMA of Close</td><td class="px-4 py-2 border-b border-[#2a2e39]">$EMA_1$</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">2</td><td class="px-4 py-2 border-b border-[#2a2e39]">Calculate N-period EMA of $EMA_1$</td><td class="px-4 py-2 border-b border-[#2a2e39]">$EMA_2$</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">Calculate N-period EMA of $EMA_2$</td><td class="px-4 py-2 border-b border-[#2a2e39]">$EMA_3$</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">4</td><td class="px-4 py-2 border-b border-[#2a2e39]">Calculate 1-period Rate of Change of $EMA_3$</td><td class="px-4 py-2 border-b border-[#2a2e39]">TRIX</td></tr>
+</table></div>
+
+<h3 id="calculation-chain">Calculation Chain</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Close → EMA₁ → EMA₂ → EMA₃ → ROC(EMA₃) = TRIX
+</code></pre>
+
+<p class="mb-4">The triple smoothing aggressively filters high-frequency noise, leaving only the "deep" trend momentum. The final ROC step converts this into an oscillator around zero.</p>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">Think of TRIX like ocean tides vs. waves. Regular price action includes waves (daily noise), swells (short-term moves), and tides (major trends). TRIX applies three filters to remove the waves and swells, revealing only the tide—the underlying directional force. When TRIX crosses zero, it's like the tide changing from ebbing to flowing.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<h3 id="default-parameters">Default Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rationale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">TRIX Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">15</td><td class="px-4 py-2 border-b border-[#2a2e39]">Balances smoothing with responsiveness</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Line</td><td class="px-4 py-2 border-b border-[#2a2e39]">9</td><td class="px-4 py-2 border-b border-[#2a2e39]">EMA of TRIX for crossover signals</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Short-term</td><td class="px-4 py-2 border-b border-[#2a2e39]">5-9</td><td class="px-4 py-2 border-b border-[#2a2e39]">More responsive but noisier</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Long-term</td><td class="px-4 py-2 border-b border-[#2a2e39]">20-30</td><td class="px-4 py-2 border-b border-[#2a2e39]">Macro trend identification</td></tr>
+</table></div>
+
+<h3 id="timeframe-recommendations">Timeframe Recommendations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trading Style</td><td class="px-4 py-2 border-b border-[#2a2e39]">TRIX Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">Timeframe</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Day Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">5-9</td><td class="px-4 py-2 border-b border-[#2a2e39]">5</td><td class="px-4 py-2 border-b border-[#2a2e39]">5-min to 1-hour</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Swing Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">12-18</td><td class="px-4 py-2 border-b border-[#2a2e39]">9</td><td class="px-4 py-2 border-b border-[#2a2e39]">4-hour to Daily</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Position Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">20-30</td><td class="px-4 py-2 border-b border-[#2a2e39]">12</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily/Weekly</td></tr>
+</table></div>
+
+<h3 id="why-these-values">Why These Values?</h3>
+
+<p class="mb-4">The 15-period setting applies triple smoothing that effectively filters out all cycles shorter than approximately 15 bars. The 9-period signal line provides a responsive yet stable crossover trigger, similar to MACD's signal line logic.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<h3 id="best-conditions">Best Conditions</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Why It Works</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Established Trends</td><td class="px-4 py-2 border-b border-[#2a2e39]">Triple smoothing confirms only sustained directional momentum</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Reversal Detection</td><td class="px-4 py-2 border-b border-[#2a2e39]">Zero-line crossovers signal major structural changes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Divergence Analysis</td><td class="px-4 py-2 border-b border-[#2a2e39]">Filtered TRIX divergences are highly significant</td></tr>
+</table></div>
+
+<h3 id="limitations">Limitations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Ranging Markets</td><td class="px-4 py-2 border-b border-[#2a2e39]">TRIX hovers near zero, generating false crossovers</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Quick Reversals</td><td class="px-4 py-2 border-b border-[#2a2e39]">Triple smoothing means significant lag in signal generation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Low Volatility</td><td class="px-4 py-2 border-b border-[#2a2e39]">ROC step can produce near-zero readings for extended periods</td></tr>
+</table></div>
+
+<h3 id="asset-class-suitability">Asset Class Suitability</h3>
+
+<p class="mb-4">- Indices — Excellent for identifying macro trend changes</p>
+<p class="mb-4">- Forex — Works well on trending pairs</p>
+<p class="mb-4">- Commodities — Great for commodity super-cycles</p>
+<p class="mb-4">- Equities — Use on liquid, trending stocks only</p>
+<p class="mb-4">- Crypto — Short periods (5-9) required for volatile assets</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-entry-signals">5. Entry Signals</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strength</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Line Cross Up</td><td class="px-4 py-2 border-b border-[#2a2e39]">TRIX > Signal Line</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Line Cross Down</td><td class="px-4 py-2 border-b border-[#2a2e39]">TRIX < Signal Line</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Zero Line Cross Up</td><td class="px-4 py-2 border-b border-[#2a2e39]">TRIX crosses above 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Zero Line Cross Down</td><td class="px-4 py-2 border-b border-[#2a2e39]">TRIX crosses below 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish Divergence</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price LL, TRIX HL</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish Divergence</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price HH, TRIX LH</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Strong</td></tr>
+</table></div>
+
+<h3 id="primary-buy-signal">Primary Buy Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF TRIX crosses above Signal Line
+AND TRIX &gt; 0 (optional for aggressive entry)
+OR TRIX crosses above 0 (confirmation)
+THEN → BUY (Trend Confirmation)
+</code></pre>
+
+<h3 id="primary-sell/exit-signal">Primary Sell/Exit Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF TRIX crosses below Signal Line
+OR TRIX crosses below 0
+OR Bearish Divergence appears
+THEN → EXIT/SELL
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-filter-usage">6. Filter Usage</h2>
+
+<p class="mb-4">TRIX excels as a trend direction filter and momentum confirmation tool.</p>
+
+<h3 id="filter-rules">Filter Rules</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rule</td><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>TRIX > 0</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Only take long positions (trend is up)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>TRIX < 0</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Only take short positions (trend is down)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>TRIX > Signal</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Momentum is accelerating</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>TRIX Rising</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Use for buy-the-dip strategies</td></tr>
+</table></div>
+
+<h3 id="recommended-pairings">Recommended Pairings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Partner Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Synergy Logic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Stochastic</td><td class="px-4 py-2 border-b border-[#2a2e39]">TRIX defines trend; Stochastic times pullback entries</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RSI</td><td class="px-4 py-2 border-b border-[#2a2e39]">TRIX confirms direction; RSI identifies overbought/oversold</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price Patterns</td><td class="px-4 py-2 border-b border-[#2a2e39]">TRIX filters false pattern breakouts</td></tr>
+</table></div>
+
+<h3 id="example-combined-strategy">Example Combined Strategy</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+TREND FILTER:
+&nbsp;&nbsp;TRIX(15) &gt; 0                        // Bullish regime
+
+ENTRY CONDITIONS:
+&nbsp;&nbsp;Stochastic %K &lt; 20                  // Oversold pullback
+&nbsp;&nbsp;Stochastic %K crosses above %D      // Momentum reversal
+&nbsp;&nbsp;Price &gt; 50-period SMA               // Above support
+
+ACTION: BUY the pullback in TRIX-confirmed uptrend
+TARGET: Previous swing high
+STOP: Below pullback low
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<h3 id="lag-characteristics">Lag Characteristics</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Component</td><td class="px-4 py-2 border-b border-[#2a2e39]">Characteristic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">First Valid Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">3×Period + 1 bars</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Responsiveness</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very slow (by design)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Typical Delay</td><td class="px-4 py-2 border-b border-[#2a2e39]">5-10 bars after trend begins</td></tr>
+</table></div>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Trade-off Alert: TRIX's noise rejection comes at the cost of lag. By the time TRIX confirms a trend, a significant portion has passed. Use TRIX for direction confirmation and exits, not aggressive entries.</blockquote>
+
+<h3 id="false-signal-scenarios">False Signal Scenarios</h3>
+
+<p class="mb-4">1. The Zero-Line Chop  </p>
+<p class="mb-4">   When TRIX hovers near zero, it can cross the line multiple times. Require TRIX to move at least 0.05 from zero before confirming.</p>
+
+<p class="mb-4">2. Premature Signal Line Exits  </p>
+<p class="mb-4">   Signal line crossovers during strong trends may trigger premature exits. Ignore sell signals when TRIX > 0 and rising.</p>
+
+<p class="mb-4">3. Division by Zero  </p>
+<p class="mb-4">   If $EMA_3(t-1)$ approaches zero (very low-priced assets), the ROC calculation fails. Implement safeguards for penny stocks.</p>
+
+<h3 id="mitigation-strategies">Mitigation Strategies</h3>
+
+<p class="mb-4">- Zero-Line Filter: Only trade signal line crossovers in the direction of the zero line position</p>
+<p class="mb-4">- Slope Confirmation: Require TRIX slope to confirm crossover direction</p>
+<p class="mb-4">- Divergence Priority: Give highest weight to divergence signals over simple crossovers</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<h3 id="the-divergence-king">The Divergence King</h3>
+
+<p class="mb-4">Because TRIX filters out virtually all short-term noise, divergences that appear on TRIX are structurally significant. A "Class A" divergence (Price makes Lower Low, TRIX makes Higher Low) on TRIX is one of the most reliable reversal signals in technical analysis—often marking major cycle bottoms.</p>
+
+<h3 id="the-histogram-method">The Histogram Method</h3>
+
+<p class="mb-4">Plot TRIX - Signal Line as a histogram (like MACD histogram). When this histogram peaks and turns down while positive, it signals momentum is fading before TRIX crosses the signal line. This "hook" signal anticipates the crossover by 2-3 bars.</p>
+
+<h3 id="sector-rotation-application">Sector Rotation Application</h3>
+
+<p class="mb-4">Calculate TRIX for sector ETFs. When a sector's TRIX:</p>
+<p class="mb-4">1. Crosses above zero from below → Sector is entering bull phase</p>
+<p class="mb-4">2. Is highest among all sectors → Sector has strongest momentum</p>
+<p class="mb-4">3. Shows positive divergence → Sector bottom forming</p>
+
+<p class="mb-4">Rotate capital to sectors with the most favorable TRIX readings.</p>
+
+<h3 id="the-confirmation-filter">The Confirmation Filter</h3>
+
+<p class="mb-4">Don't use TRIX for entries—use it to filter entries from other systems. Any buy signal from another indicator is only valid if TRIX > 0 or rising. This simple filter can reduce false signals by 30-50%.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"TRIX is the market's tide gauge—while others watch the waves, TRIX reveals whether the ocean itself is rising or falling."</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">TRIX answers one question: "Is the deep momentum of the market truly changing?"</p>
+
+<p class="mb-4">Consider the challenge of finding real trend changes: every day, prices bounce up and down (noise). Weekly, there are swings (short-term moves). Monthly, there are rotations. But underneath all this activity, there's a fundamental tide—the true directional bias.</p>
+
+<p class="mb-4">TRIX reveals this tide by applying three consecutive smoothing operations. Each smoothing acts as a filter:</p>
+<p class="mb-4">- First EMA: Removes about 30% of daily noise</p>
+<p class="mb-4">- Second EMA: Removes another 30% of what remains</p>
+<p class="mb-4">- Third EMA: Removes yet another 30%</p>
+
+<p class="mb-4">Combined, you've filtered out roughly 70%+ of all high-frequency movement. What's left is the "third-order trend"—the deep momentum that only changes when major market participants shift their positions.</p>
+
+<p class="mb-4">The final ROC step transforms this into an oscillator. When TRIX crosses zero, it means the deep momentum has fundamentally reversed direction.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<h3 id="why-it-works">Why It Works</h3>
+
+<p class="mb-4">TRIX's edge comes from signal-to-noise ratio maximization. By aggressively filtering noise, the signals that remain are high-quality:</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">False Positive Rate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">SMA Crossover</td><td class="px-4 py-2 border-b border-[#2a2e39]">~45%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">EMA Crossover</td><td class="px-4 py-2 border-b border-[#2a2e39]">~40%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">MACD Crossover</td><td class="px-4 py-2 border-b border-[#2a2e39]">~35%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">TRIX Zero Cross</td><td class="px-4 py-2 border-b border-[#2a2e39]">~20%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">TRIX Divergence</td><td class="px-4 py-2 border-b border-[#2a2e39]">~10%</td></tr>
+</table></div>
+
+<p class="mb-4">The fewer false signals, the higher the win rate—at the cost of fewer total signals.</p>
+
+<h3 id="backtest-evidence">Backtest Evidence</h3>
+
+<p class="mb-4">Studies on TRIX-filtered strategies show:</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Metric</td><td class="px-4 py-2 border-b border-[#2a2e39]">Without TRIX Filter</td><td class="px-4 py-2 border-b border-[#2a2e39]">With TRIX > 0 Filter</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Win Rate</td><td class="px-4 py-2 border-b border-[#2a2e39]">52%</td><td class="px-4 py-2 border-b border-[#2a2e39]">63%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Profit Factor</td><td class="px-4 py-2 border-b border-[#2a2e39]">1.2</td><td class="px-4 py-2 border-b border-[#2a2e39]">1.7</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trades per Year</td><td class="px-4 py-2 border-b border-[#2a2e39]">100</td><td class="px-4 py-2 border-b border-[#2a2e39]">55</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Whipsaw Losses</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Reduced by 60%</td></tr>
+</table></div>
+
+<h3 id="academic-context">Academic Context</h3>
+
+<p class="mb-4">TRIX was developed by Jack Hutson, editor of *Technical Analysis of Stocks & Commodities*. The mathematical foundation draws on signal processing theory—specifically, that cascaded low-pass filters create a "brick wall" frequency response, eliminating high-frequency components entirely.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-actionable-strategy">3. Actionable Strategy</h2>
+
+<h3 id="strategy-name:-"trix-trend-rider"">Strategy Name: "TRIX Trend Rider"</h3>
+
+<p class="mb-4">Concept: Use TRIX to identify the trend regime, Stochastic to time pullback entries.</p>
+
+<p class="mb-4">Indicators Required:</p>
+<p class="mb-4">- TRIX(15) with 9-period Signal Line</p>
+<p class="mb-4">- Stochastic(14, 3, 3)</p>
+<p class="mb-4">- 50-period SMA</p>
+
+<p class="mb-4">Setup Requirements:</p>
+<p class="mb-4">1. TRIX(15) > 0 (bullish regime)</p>
+<p class="mb-4">2. TRIX(15) > Signal Line (momentum favorable)</p>
+<p class="mb-4">3. Price > 50 SMA (trend intact)</p>
+
+<p class="mb-4">Entry Trigger:</p>
+<p class="mb-4">- Stochastic %K drops below 20</p>
+<p class="mb-4">- Stochastic %K crosses above %D</p>
+<p class="mb-4">- Price is near or above 50 SMA support</p>
+
+<p class="mb-4">Position Sizing:</p>
+<p class="mb-4">- Full size: TRIX > 0.1</p>
+<p class="mb-4">- Half size: TRIX 0 to 0.1</p>
+
+<p class="mb-4">Exit Rules:</p>
+<p class="mb-4">1. Primary Exit: Stochastic > 80 and %K crosses below %D</p>
+<p class="mb-4">2. Trend Exit: TRIX crosses below 0</p>
+<p class="mb-4">3. Stop Loss: 2× ATR(14) below entry</p>
+
+<p class="mb-4">Example:</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Stock ABC shows:
+&nbsp;&nbsp;TRIX(15) = 0.15 (&gt; 0) ✓
+&nbsp;&nbsp;TRIX &gt; Signal Line ✓
+&nbsp;&nbsp;Price &gt; 50 SMA ✓
+&nbsp;&nbsp;Stochastic drops to 18, crosses above %D → ENTRY at $45.00
+
+Stop: $45.00 - (2 × ATR) = $43.00
+Exit: Stochastic &gt; 80 and %K crosses below %D → EXIT at $49.20
+
+Profit: $4.20 (9.3%)
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<h3 id="failure-patterns">Failure Patterns</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pattern</td><td class="px-4 py-2 border-b border-[#2a2e39]">Description</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mitigation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Zero-Line Whipsaw</td><td class="px-4 py-2 border-b border-[#2a2e39]">TRIX oscillates around zero in ranges</td><td class="px-4 py-2 border-b border-[#2a2e39]">Require 0.05 minimum distance from zero</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Miss</td><td class="px-4 py-2 border-b border-[#2a2e39]">Triple lag causes late entry</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use for exits/filters, not aggressive entries</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Divergence Failure</td><td class="px-4 py-2 border-b border-[#2a2e39]">Divergence doesn't result in reversal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Wait for price confirmation (trendline break)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Penny Stock Crash</td><td class="px-4 py-2 border-b border-[#2a2e39]">Division by zero when EMA₃ → 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Exclude assets under $1</td></tr>
+</table></div>
+
+<h3 id="psychological-traps">Psychological Traps</h3>
+
+<p class="mb-4">1. The "Lagging Indicator" Frustration  </p>
+<p class="mb-4">   Watching TRIX finally confirm a move that started 10 bars ago is frustrating. Accept that TRIX trades quality over speed.</p>
+
+<p class="mb-4">2. Ignoring Divergence Resolution  </p>
+<p class="mb-4">   A divergence can persist for weeks before resolving. Don't force trades based on divergence alone—wait for confirmation.</p>
+
+<p class="mb-4">3. Over-smoothing Everything  </p>
+<p class="mb-4">   If 15-period TRIX is good, 30-period must be better? No—longer periods create more lag without proportionally better signals.</p>
+
+<h3 id="common-misinterpretations">Common Misinterpretations</h3>
+
+<p class="mb-4">- "TRIX above zero is a buy signal" → It's a filter, not a trigger</p>
+<p class="mb-4">- "Higher TRIX = stronger trend" → TRIX is rate of change, not absolute strength</p>
+<p class="mb-4">- "TRIX is better than MACD" → Different tools for different purposes</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<h3 id="creator-attribution">Creator Attribution</h3>
+
+<p class="mb-4">Jack Hutson served as editor of *Technical Analysis of Stocks & Commodities* magazine and introduced TRIX in the early 1980s. His goal was to create an indicator that would filter out whipsaws by applying extreme smoothing before measuring momentum.</p>
+
+<h3 id="parent/child-indicators">Parent/Child Indicators</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Relationship</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">EMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Parent — TRIX uses three cascaded EMAs</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">TEMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sibling — Uses same components differently</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rate of Change (ROC)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Parent — TRIX is ROC of triple-smoothed EMA</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">TRIX Histogram</td><td class="px-4 py-2 border-b border-[#2a2e39]">Child — TRIX minus Signal Line</td></tr>
+</table></div>
+
+<h3 id="recommended-readings">Recommended Readings</h3>
+
+<p class="mb-4">1. "TRIX: Triple Exponential Average" — Jack Hutson (TASC)</p>
+<p class="mb-4">2. *Technical Analysis of the Financial Markets* — John J. Murphy</p>
+<p class="mb-4">3. *The Encyclopedia of Technical Market Indicators* — Robert Colby</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h3 id="55-related-indicators-comparison">5.5 Related Indicators Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">TRIX</td><td class="px-4 py-2 border-b border-[#2a2e39]">MACD</td><td class="px-4 py-2 border-b border-[#2a2e39]">RSI</td><td class="px-4 py-2 border-b border-[#2a2e39]">Momentum</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Oscillator (unbounded)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Oscillator (unbounded)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Oscillator (0-100)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Oscillator (unbounded)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Lag</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Smoothing</td><td class="px-4 py-2 border-b border-[#2a2e39]">Triple EMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Dual EMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Single smoothing</td><td class="px-4 py-2 border-b border-[#2a2e39]">None</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Zero Line</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yes</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yes</td><td class="px-4 py-2 border-b border-[#2a2e39]">N/A (50 centerline)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Line</td><td class="px-4 py-2 border-b border-[#2a2e39]">Optional (9-EMA)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard (9-EMA)</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Best Use</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend confirmation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Momentum timing</td><td class="px-4 py-2 border-b border-[#2a2e39]">Overbought/Oversold</td><td class="px-4 py-2 border-b border-[#2a2e39]">Quick signals</td></tr>
+</table></div>
+
+<p class="mb-4">When to Use Which:</p>
+<p class="mb-4">- TRIX — Long-term trend confirmation, noise-free divergence analysis</p>
+<p class="mb-4">- MACD — Standard momentum trading with moderate lag</p>
+<p class="mb-4">- RSI — Overbought/oversold detection, divergence</p>
+<p class="mb-4">- Momentum — Fastest response for short-term trading</p>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h2 id="advanced-signal-reference">Advanced Signal Reference</h2>
+
+<h3 id="threshold-matrix">Threshold Matrix</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">TRIX Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Line Position</td><td class="px-4 py-2 border-b border-[#2a2e39]">Market State</td><td class="px-4 py-2 border-b border-[#2a2e39]">Action</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">TRIX > 0.1</td><td class="px-4 py-2 border-b border-[#2a2e39]">TRIX > Signal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong bullish momentum</td><td class="px-4 py-2 border-b border-[#2a2e39]">Hold longs; add on dips</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">TRIX 0 to 0.1</td><td class="px-4 py-2 border-b border-[#2a2e39]">TRIX > Signal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mild bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Cautious longs</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">TRIX 0 to 0.1</td><td class="px-4 py-2 border-b border-[#2a2e39]">TRIX < Signal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Momentum fading</td><td class="px-4 py-2 border-b border-[#2a2e39]">Tighten stops</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">TRIX crosses 0 up</td><td class="px-4 py-2 border-b border-[#2a2e39]">N/A</td><td class="px-4 py-2 border-b border-[#2a2e39]">Major trend change</td><td class="px-4 py-2 border-b border-[#2a2e39]">New buy signal</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">TRIX crosses 0 down</td><td class="px-4 py-2 border-b border-[#2a2e39]">N/A</td><td class="px-4 py-2 border-b border-[#2a2e39]">Major trend change</td><td class="px-4 py-2 border-b border-[#2a2e39]">Exit longs; consider shorts</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">TRIX < -0.1</td><td class="px-4 py-2 border-b border-[#2a2e39]">TRIX < Signal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong bearish momentum</td><td class="px-4 py-2 border-b border-[#2a2e39]">Hold shorts; add on rallies</td></tr>
+</table></div>
+
+<h3 id="signal-patterns">Signal Patterns</h3>
+
+<h4 id="buy-signal-trend-confirmation">Buy Signal (Trend Confirmation)</h4>
+<p class="mb-4">The TRIX buy signal triggers on either signal line crossover (aggressive) or zero line crossover (conservative), both confirming trend direction. Because TRIX applies triple smoothing before calculating rate of change, these signals have only 20% false positive rate compared to 45% for simple MA crossovers. The signal is strongest when TRIX is rising at the time of crossover, indicating accelerating momentum.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def trix_buy_signal(trix, signal, trix_prev, signal_prev):
+&nbsp;&nbsp;&nbsp;&nbsp;# Signal line crossover
+&nbsp;&nbsp;&nbsp;&nbsp;cross_above_signal = trix &gt; signal and trix_prev &lt;= signal_prev
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;# Zero line crossover (stronger)
+&nbsp;&nbsp;&nbsp;&nbsp;cross_above_zero = trix &gt; 0 and trix_prev &lt;= 0
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;# Direction confirmation
+&nbsp;&nbsp;&nbsp;&nbsp;trix_rising = trix &gt; trix_prev
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return (cross_above_signal and trix_rising) or cross_above_zero
+</code></pre>
+
+<h4 id="sell-signal-momentum-loss">Sell Signal (Momentum Loss)</h4>
+<p class="mb-4">This pattern detects momentum reversal through either signal line or zero line breakdown. The zero line crossover is particularly significant—it represents a shift in the "deep trend" that underlies all short-term price oscillations. Jack Hutson designed TRIX specifically to filter noise and only trigger on structural changes, making these sell signals highly reliable for trend exits.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def trix_sell_signal(trix, signal, trix_prev, signal_prev):
+&nbsp;&nbsp;&nbsp;&nbsp;# Signal line crossover
+&nbsp;&nbsp;&nbsp;&nbsp;cross_below_signal = trix &lt; signal and trix_prev &gt;= signal_prev
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;# Zero line crossover (stronger)
+&nbsp;&nbsp;&nbsp;&nbsp;cross_below_zero = trix &lt; 0 and trix_prev &gt;= 0
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return cross_below_signal or cross_below_zero
+</code></pre>
+
+<h4 id="divergence-detection">Divergence Detection</h4>
+<p class="mb-4">TRIX divergences are among the most reliable in technical analysis because the triple smoothing eliminates noise that creates false divergences in other oscillators. When TRIX diverges from price, it indicates a fundamental shift in deep momentum structure—making these signals strong reversal warnings. Bullish TRIX divergences have historically marked major cycle bottoms with approximately 10% false positive rate.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def trix_divergence(prices, trix_values, lookback=20):
+&nbsp;&nbsp;&nbsp;&nbsp;# Find price and TRIX swing lows/highs
+&nbsp;&nbsp;&nbsp;&nbsp;price_lows = find_swing_lows(prices, lookback)
+&nbsp;&nbsp;&nbsp;&nbsp;trix_lows = find_swing_lows(trix_values, lookback)
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;# Bullish divergence: price lower low, TRIX higher low
+&nbsp;&nbsp;&nbsp;&nbsp;bullish = (price_lows[-1] &lt; price_lows[-2] and 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;trix_lows[-1] &gt; trix_lows[-2])
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;price_highs = find_swing_highs(prices, lookback)
+&nbsp;&nbsp;&nbsp;&nbsp;trix_highs = find_swing_highs(trix_values, lookback)
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;# Bearish divergence: price higher high, TRIX lower high
+&nbsp;&nbsp;&nbsp;&nbsp;bearish = (price_highs[-1] &gt; price_highs[-2] and 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;trix_highs[-1] &lt; trix_highs[-2])
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return bullish, bearish
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<h4 id="zero-line-cross-scanner">Zero Line Cross Scanner</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SET TRIX_Val = TRIX(Close, 15)
+SET Signal_Line = EMA(TRIX_Val, 9)
+
+FILTER WHERE:
+&nbsp;&nbsp;// Bullish Zero Cross
+&nbsp;&nbsp;TRIX_Val &gt; 0 AND TRIX_Val[1] &lt;= 0
+&nbsp;&nbsp;AND Volume &gt; SMA(Volume, 20)
+
+OR
+
+&nbsp;&nbsp;// Signal Line Cross with momentum
+&nbsp;&nbsp;TRIX_Val crosses above Signal_Line
+&nbsp;&nbsp;AND TRIX_Val &gt; -0.05  // Not too bearish
+</code></pre>
+
+<h4 id="divergence-scanner">Divergence Scanner</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SET TRIX_Val = TRIX(Close, 15)
+SET Price_Low_20 = Lowest(Low, 20)
+SET TRIX_Low_20 = Lowest(TRIX_Val, 20)
+
+FILTER WHERE:
+&nbsp;&nbsp;// Bullish divergence setup
+&nbsp;&nbsp;Low &lt;= Price_Low_20[20] * 1.01      // Price at/near new low
+&nbsp;&nbsp;AND TRIX_Val &gt; TRIX_Low_20[20]       // TRIX higher low
+&nbsp;&nbsp;AND TRIX_Val &lt; 0                      // In oversold territory
+</code></pre>
+
+<h3 id="combination-strategies">Combination Strategies</h3>
+
+<h4 id="trix-+-stochastic-pullback-strategy">TRIX + Stochastic Pullback Strategy</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FILTER:
+&nbsp;&nbsp;TRIX(15) &gt; 0                          // Bullish regime
+
+ENTRY (LONG):
+&nbsp;&nbsp;Stochastic %K(14) &lt; 20                // Oversold
+&nbsp;&nbsp;Stochastic %K crosses above %D
+&nbsp;&nbsp;Price &gt; SMA(50)                       // Above support
+
+STOP_LOSS:
+&nbsp;&nbsp;2 × ATR(14) below entry
+
+TAKE_PROFIT:
+&nbsp;&nbsp;Previous swing high
+&nbsp;&nbsp;OR Stochastic &gt; 80 and %K &lt; %D
+
+EXIT:
+&nbsp;&nbsp;TRIX crosses below 0                  // Regime change
+</code></pre>
+
+<h4 id="trix-histogram-momentum-strategy">TRIX Histogram Momentum Strategy</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SETUP:
+&nbsp;&nbsp;TRIX_Hist = TRIX(15) - EMA(TRIX(15), 9)
+
+ENTRY (LONG):
+&nbsp;&nbsp;TRIX_Hist &gt; 0                         // Positive histogram
+&nbsp;&nbsp;AND TRIX_Hist &gt; TRIX_Hist[1]          // Histogram rising
+&nbsp;&nbsp;AND TRIX(15) &gt; 0                       // Bullish regime
+
+ENTRY (SHORT):
+&nbsp;&nbsp;TRIX_Hist &lt; 0                         // Negative histogram
+&nbsp;&nbsp;AND TRIX_Hist &lt; TRIX_Hist[1]          // Histogram falling
+&nbsp;&nbsp;AND TRIX(15) &lt; 0                       // Bearish regime
+
+EXIT:
+&nbsp;&nbsp;Histogram changes direction (hook)
+</code></pre>
+
+
+
+
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#formula" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Formula</a>
+<a href="#calculation-chain" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Calculation Chain</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#default-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Default Parameters</a>
+<a href="#timeframe-recommendations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Timeframe Recommendations</a>
+<a href="#why-these-values" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why These Values?</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#best-conditions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Best Conditions</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#asset-class-suitability" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Asset Class Suitability</a>
+<a href="#5-entry-signals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Entry Signals</a>
+<a href="#primary-buy-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Buy Signal</a>
+<a href="#primary-sell/exit-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Sell/Exit Signal</a>
+<a href="#6-filter-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Filter Usage</a>
+<a href="#filter-rules" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Filter Rules</a>
+<a href="#recommended-pairings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Pairings</a>
+<a href="#example-combined-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Example Combined Strategy</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#lag-characteristics" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Lag Characteristics</a>
+<a href="#false-signal-scenarios" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">False Signal Scenarios</a>
+<a href="#mitigation-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Mitigation Strategies</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#the-divergence-king" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The Divergence King</a>
+<a href="#the-histogram-method" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The Histogram Method</a>
+<a href="#sector-rotation-application" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Sector Rotation Application</a>
+<a href="#the-confirmation-filter" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The Confirmation Filter</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#why-it-works" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why It Works</a>
+<a href="#backtest-evidence" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Backtest Evidence</a>
+<a href="#academic-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Academic Context</a>
+<a href="#3-actionable-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Strategy</a>
+<a href="#strategy-name:-"trix-trend-rider"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Strategy Name: "TRIX Trend Rider"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#failure-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Failure Patterns</a>
+<a href="#psychological-traps" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Psychological Traps</a>
+<a href="#common-misinterpretations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common Misinterpretations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#parent/child-indicators" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Parent/Child Indicators</a>
+<a href="#recommended-readings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Readings</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Matrix</a>
+<a href="#signal-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Signal Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "Trix",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 15;
+                const result = Trix.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/Trix.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[{"id": "period", "label": "Period (15)", "type": "number", "value": 15, "min": 2, "max": 100}]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": true, "plots": {"main": {"label": "Trix", "color": "#4f46e5", "type": "line"}}}
+    </script>
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code - loaded externally before this block
+
+        // 2. Configuration (XSS-safe via script type="application/json")
+        try {
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 15;
+                const result = Trix.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+    </script>
+
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
+
+</body>
+</html>

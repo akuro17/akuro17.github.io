@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RiskMetrics - I ant I Investigates</title>
+    <meta name="description" content="RiskMetrics - Technical Indicator">
+    <meta name="keywords" content="RiskMetrics, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/riskmetrics.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="RiskMetrics - I ant I Investigates">
+    <meta property="og:description" content="RiskMetrics - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/riskmetrics.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/riskmetrics.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="RiskMetrics">
+    <meta name="twitter:description" content="RiskMetrics - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/riskmetrics.png">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
+
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">RiskMetrics</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="flex space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">RiskMetrics</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">RiskMetrics provides a suite of portfolio risk and performance metrics including Sharpe Ratio, Sortino Ratio, Calmar Ratio, Maximum Drawdown, CAGR, Volatility, and Value at Risk (VaR), enabling comprehensive risk-adjusted evaluation.</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION["Phase 1: Ingestion"];
+A[/"Receive Portfolio Return Data"/];
+B["Capture Daily Performance"];
+C["Define Risk-Free Benchmark"];
+end;
+subgraph EVALUATION["Phase 2: Evaluation"];
+D["Measure Return Magnitude"];
+E["Separate Positive and Negative Days"];
+F["Track Peak and Trough Values"];
+end;
+subgraph WEIGHTING["Phase 3: Weighting"];
+G["Calculate Volatility as Standard Deviation"];
+H["Compute Downside Deviation"];
+I["Annualize Risk Measures"];
+end;
+subgraph SYNTHESIS["Phase 4: Synthesis"];
+J["Compute Risk-Adjusted Ratios"];
+K["Calculate Maximum Drawdown"];
+L["Estimate Value at Risk"];
+end;
+subgraph OUTCOME["Phase 5: Outcome"];
+M{"Risk-Adjusted Assessment?"};
+N["Sharpe > 1.0 = Edge Confirmed"];
+O["MaxDD > 30% = High Risk Warning"];
+P["Sortino > Sharpe = Good Downside Control"];
+Q[/"Generate Risk-Adjusted Metrics"/];
+end;
+A --> B;
+B --> C;
+C --> D;
+D --> E;
+E --> F;
+F --> G;
+G --> H;
+H --> I;
+I --> J;
+J --> K;
+K --> L;
+L --> M;
+M -->|Strong| N;
+M -->|Warning| O;
+M -->|Quality| P;
+N --> Q;
+O --> Q;
+P --> Q;
+style INGESTION fill:#e3f2fd;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#e8f5e9;
+style SYNTHESIS fill:#fce4ec;
+style OUTCOME fill:#f3e5f5;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/RiskMetrics.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="riskmetrics-portfolio-risk-analysis">RiskMetrics (Portfolio Risk Analysis)</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: RiskMetrics Portfolio Risk Analysis Suite  </p>
+<p class="mb-4">Abbreviation: RiskMetrics  </p>
+<p class="mb-4">Category: Quantitative / Portfolio Risk Management  </p>
+<p class="mb-4">Creator: J.P. Morgan (1994), Academic Risk Management Theory  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: RiskMetrics provides a suite of portfolio risk and performance metrics including Sharpe Ratio, Sortino Ratio, Calmar Ratio, Maximum Drawdown, CAGR, Volatility, and Value at Risk (VaR), enabling comprehensive risk-adjusted evaluation.</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="core-formulas">Core Formulas</h3>
+
+<p class="mb-4">Sharpe Ratio:</p>
+<p class="mb-4">$$Sharpe = \frac{R_p - R_f}{\sigma_p}$$</p>
+
+<p class="mb-4">Sortino Ratio:</p>
+<p class="mb-4">$$Sortino = \frac{R_p - R_f}{\sigma_{downside}}$$</p>
+
+<p class="mb-4">Calmar Ratio:</p>
+<p class="mb-4">$$Calmar = \frac{CAGR}{Max\ Drawdown}$$</p>
+
+<p class="mb-4">Volatility (Annualized):</p>
+<p class="mb-4">$$\sigma_{annual} = \sigma_{daily} \times \sqrt{252}$$</p>
+
+<p class="mb-4">Value at Risk (VaR):</p>
+<p class="mb-4">$$VaR = \mu - z_\alpha \times \sigma$$</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Metric</td><td class="px-4 py-2 border-b border-[#2a2e39]">Formula</td><td class="px-4 py-2 border-b border-[#2a2e39]">Purpose</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sharpe Ratio</td><td class="px-4 py-2 border-b border-[#2a2e39]">Excess Return / Total Volatility</td><td class="px-4 py-2 border-b border-[#2a2e39]">Risk-adjusted return (total risk)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sortino Ratio</td><td class="px-4 py-2 border-b border-[#2a2e39]">Excess Return / Downside Volatility</td><td class="px-4 py-2 border-b border-[#2a2e39]">Risk-adjusted return (downside only)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Calmar Ratio</td><td class="px-4 py-2 border-b border-[#2a2e39]">CAGR / Max Drawdown</td><td class="px-4 py-2 border-b border-[#2a2e39]">Return per unit of max loss</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Max Drawdown</td><td class="px-4 py-2 border-b border-[#2a2e39]">Peak-to-trough decline</td><td class="px-4 py-2 border-b border-[#2a2e39]">Worst-case scenario measurement</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">CAGR</td><td class="px-4 py-2 border-b border-[#2a2e39]">Compound Annual Growth Rate</td><td class="px-4 py-2 border-b border-[#2a2e39]">Annualized return</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility</td><td class="px-4 py-2 border-b border-[#2a2e39]">Annualized std dev of returns</td><td class="px-4 py-2 border-b border-[#2a2e39]">Measure of risk/uncertainty</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VaR</td><td class="px-4 py-2 border-b border-[#2a2e39]">Potential loss at confidence level</td><td class="px-4 py-2 border-b border-[#2a2e39]">Downside risk quantification</td></tr>
+</table></div>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">RiskMetrics is like a comprehensive car safety and performance report. Sharpe Ratio is the fuel efficiency (performance per unit of risk). Sortino focuses on braking distance (downside control). Max Drawdown is the worst accident survived. VaR estimates how bad a crash could be at a given probability.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<h3 id="default-parameters">Default Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rationale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Risk-Free Rate</td><td class="px-4 py-2 border-b border-[#2a2e39]">0-3% annualized</td><td class="px-4 py-2 border-b border-[#2a2e39]">Treasury rate proxy</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trading Days</td><td class="px-4 py-2 border-b border-[#2a2e39]">252 per year</td><td class="px-4 py-2 border-b border-[#2a2e39]">US market standard</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VaR Confidence</td><td class="px-4 py-2 border-b border-[#2a2e39]">95% (z=1.645) or 99% (z=2.326)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Industry standard</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Drawdown Peak</td><td class="px-4 py-2 border-b border-[#2a2e39]">Cumulative basis</td><td class="px-4 py-2 border-b border-[#2a2e39]">All-time high reference</td></tr>
+</table></div>
+
+<h3 id="benchmark-standards">Benchmark Standards</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Metric</td><td class="px-4 py-2 border-b border-[#2a2e39]">Poor</td><td class="px-4 py-2 border-b border-[#2a2e39]">Average</td><td class="px-4 py-2 border-b border-[#2a2e39]">Good</td><td class="px-4 py-2 border-b border-[#2a2e39]">Excellent</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sharpe Ratio</td><td class="px-4 py-2 border-b border-[#2a2e39]">< 0.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">0.5-1.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">1.0-2.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">> 2.0</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sortino Ratio</td><td class="px-4 py-2 border-b border-[#2a2e39]">< 0.8</td><td class="px-4 py-2 border-b border-[#2a2e39]">0.8-1.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">1.5-3.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">> 3.0</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Calmar Ratio</td><td class="px-4 py-2 border-b border-[#2a2e39]">< 0.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">0.5-1.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">1.0-3.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">> 3.0</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Max Drawdown</td><td class="px-4 py-2 border-b border-[#2a2e39]">> 50%</td><td class="px-4 py-2 border-b border-[#2a2e39]">30-50%</td><td class="px-4 py-2 border-b border-[#2a2e39]">15-30%</td><td class="px-4 py-2 border-b border-[#2a2e39]">< 15%</td></tr>
+</table></div>
+
+<h3 id="why-these-values">Why These Values?</h3>
+
+<p class="mb-4">A Sharpe Ratio > 1.0 indicates you're earning more than 1 unit of return per unit of risk—a meaningful edge. The 252-day annualization is standard for equities. VaR at 95% confidence is the minimum; institutional risk uses 99%.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<h3 id="best-applications">Best Applications</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td><td class="px-4 py-2 border-b border-[#2a2e39]">Why It Works</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Strategy Comparison</td><td class="px-4 py-2 border-b border-[#2a2e39]">Risk-adjusted metrics enable apples-to-apples comparison</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Portfolio Construction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Identify allocations that maximize Sharpe</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Risk Budgeting</td><td class="px-4 py-2 border-b border-[#2a2e39]">Set limits using VaR and Max Drawdown</td></tr>
+</table></div>
+
+<h3 id="limitations">Limitations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Limitation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Historical Dependency</td><td class="px-4 py-2 border-b border-[#2a2e39]">Past volatility may not predict future</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Normal Distribution Assumption</td><td class="px-4 py-2 border-b border-[#2a2e39]">Fat tails violate VaR assumptions</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Static Risk-Free Rate</td><td class="px-4 py-2 border-b border-[#2a2e39]">Real rates change over time</td></tr>
+</table></div>
+
+<h3 id="use-case-suitability">Use Case Suitability</h3>
+
+<p class="mb-4">- Hedge Funds — Core risk management toolkit</p>
+<p class="mb-4">- Mutual Funds — Performance attribution</p>
+<p class="mb-4">- Retail Portfolios — Strategy evaluation</p>
+<p class="mb-4">- Single Stock Analysis — Better suited for portfolios</p>
+<p class="mb-4">- Short-Term Trading — Designed for longer horizons</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-key-metrics-usage">5. Key Metrics Usage</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Metric</td><td class="px-4 py-2 border-b border-[#2a2e39]">Signal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Confidence</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sharpe > 1.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strategy has edge</td><td class="px-4 py-2 border-b border-[#2a2e39]">Positive</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sortino > Sharpe</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low downside volatility</td><td class="px-4 py-2 border-b border-[#2a2e39]">Positive</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Calmar > 2.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Excellent drawdown control</td><td class="px-4 py-2 border-b border-[#2a2e39]">Positive</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">MaxDD > 40%</td><td class="px-4 py-2 border-b border-[#2a2e39]">High risk strategy</td><td class="px-4 py-2 border-b border-[#2a2e39]">Warning</td><td class="px-4 py-2 border-b border-[#2a2e39]">Medium</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VaR 95% > 3%</td><td class="px-4 py-2 border-b border-[#2a2e39]">High daily risk</td><td class="px-4 py-2 border-b border-[#2a2e39]">Warning</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td></tr>
+</table></div>
+
+<h3 id="portfolio-selection-criteria">Portfolio Selection Criteria</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF Sharpe &gt; 1.0
+AND Sortino &gt; 1.5
+AND Max_Drawdown &lt; 25%
+THEN → Consider for allocation
+</code></pre>
+
+<h3 id="risk-alert-criteria">Risk Alert Criteria</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF VaR(95%) &gt; 5% daily
+OR Max_Drawdown &gt; 40%
+OR Volatility &gt; 40% annualized
+THEN → High Risk Warning
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-combined-usage">6. Combined Usage</h2>
+
+<p class="mb-4">RiskMetrics components are designed to be used together, not in isolation:</p>
+
+<h3 id="comprehensive-evaluation">Comprehensive Evaluation</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Metric</td><td class="px-4 py-2 border-b border-[#2a2e39]">Role</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">CAGR</td><td class="px-4 py-2 border-b border-[#2a2e39]">Raw return assessment</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility</td><td class="px-4 py-2 border-b border-[#2a2e39]">Total risk measurement</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sharpe</td><td class="px-4 py-2 border-b border-[#2a2e39]">Return per unit of total risk</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sortino</td><td class="px-4 py-2 border-b border-[#2a2e39]">Return per unit of downside risk</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Max Drawdown</td><td class="px-4 py-2 border-b border-[#2a2e39]">Worst-case scenario</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Calmar</td><td class="px-4 py-2 border-b border-[#2a2e39]">Return per unit of worst case</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VaR</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily risk quantification</td></tr>
+</table></div>
+
+<h3 id="recommended-analysis-flow">Recommended Analysis Flow</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+1. Calculate CAGR → Is the strategy profitable?
+2. Calculate Volatility → How bumpy is the ride?
+3. Calculate Sharpe → Is return worth the volatility?
+4. Calculate Sortino → Is downside managed better?
+5. Calculate Max Drawdown → What&#x27;s the worst that happened?
+6. Calculate Calmar → Is CAGR worth the max pain?
+7. Calculate VaR → What&#x27;s the daily risk exposure?
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<h3 id="data-requirements">Data Requirements</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Component</td><td class="px-4 py-2 border-b border-[#2a2e39]">Minimum Data</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility</td><td class="px-4 py-2 border-b border-[#2a2e39]">20+ returns</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sharpe Ratio</td><td class="px-4 py-2 border-b border-[#2a2e39]">30+ returns</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Max Drawdown</td><td class="px-4 py-2 border-b border-[#2a2e39]">50+ returns (to capture tail events)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VaR</td><td class="px-4 py-2 border-b border-[#2a2e39]">100+ returns (for statistical validity)</td></tr>
+</table></div>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Reality Check: A stellar Sharpe Ratio over 6 months means little. Evaluate over 2+ years minimum, ideally through multiple market regimes.</blockquote>
+
+<h3 id="common-pitfalls">Common Pitfalls</h3>
+
+<p class="mb-4">1. Survivorship Bias  </p>
+<p class="mb-4">   Only analyzing strategies that survived ignores those that blew up.</p>
+
+<p class="mb-4">2. Look-Ahead Bias  </p>
+<p class="mb-4">   Using future data in historical VaR calculations.</p>
+
+<p class="mb-4">3. Risk-Free Rate Assumption  </p>
+<p class="mb-4">   Using 0% when actual rates are 4% dramatically changes Sharpe.</p>
+
+<h3 id="mitigation-strategies">Mitigation Strategies</h3>
+
+<p class="mb-4">- Multi-Year Analysis: Minimum 2-3 years of data</p>
+<p class="mb-4">- Stress Testing: Apply to 2008, 2020 crisis periods</p>
+<p class="mb-4">- Rolling Metrics: Use rolling Sharpe to detect regime changes</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<h3 id="the-sharpe-decay-warning">The Sharpe Decay Warning</h3>
+
+<p class="mb-4">A strategy with historical Sharpe of 2.0 will likely realize Sharpe of 1.2-1.5 going forward due to:</p>
+<p class="mb-4">- Slippage not in backtest</p>
+<p class="mb-4">- Capacity constraints</p>
+<p class="mb-4">- Alpha decay</p>
+
+<p class="mb-4">Discount historical Sharpe by 30-40% for realistic expectations.</p>
+
+<h3 id="sortino->-sharpe-preference">Sortino > Sharpe Preference</h3>
+
+<p class="mb-4">Savvy allocators prefer Sortino because it only penalizes downside volatility. A strategy with high upside volatility (big winning days) gets unfairly penalized by Sharpe but not Sortino.</p>
+
+<h3 id="maximum-drawdown-psychology">Maximum Drawdown Psychology</h3>
+
+<p class="mb-4">Mathematically, a 50% drawdown requires a 100% gain to recover. Most investors emotionally abandon strategies during drawdowns:</p>
+<p class="mb-4">- 20% drawdown: uncomfortable</p>
+<p class="mb-4">- 30% drawdown: serious concern</p>
+<p class="mb-4">- 40%+ drawdown: panic/abandonment</p>
+
+<p class="mb-4">Design strategies with drawdown limits humans can tolerate.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"RiskMetrics tells you not just how much you made, but how much you risked to make it—and whether the ride was worth the risk."</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">RiskMetrics answers one question: "How good is this performance after accounting for risk?"</p>
+
+<p class="mb-4">Raw returns are deceiving. A 30% annual return looks great until you realize the strategy had a 50% max drawdown and 40% volatility. RiskMetrics normalizes performance for:</p>
+<p class="mb-4">- Total risk (Sharpe)</p>
+<p class="mb-4">- Downside risk (Sortino)</p>
+<p class="mb-4">- Maximum pain (Calmar)</p>
+<p class="mb-4">- Daily exposure (VaR)</p>
+
+<p class="mb-4">The suite originated at J.P. Morgan's RiskMetrics Group in 1994, developing methodologies that became industry standards for measuring Value at Risk and portfolio risk.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<h3 id="institutional-research">Institutional Research</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Metric</td><td class="px-4 py-2 border-b border-[#2a2e39]">Predictive Value</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">High Sharpe (> 1.5)</td><td class="px-4 py-2 border-b border-[#2a2e39]">65% probability of continued outperformance</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Low Max Drawdown</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strongly predictive of investor retention</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">High Calmar</td><td class="px-4 py-2 border-b border-[#2a2e39]">Best single predictor of long-term success</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VaR accuracy</td><td class="px-4 py-2 border-b border-[#2a2e39]">95% confidence historically reliable</td></tr>
+</table></div>
+
+<h3 id="why-it-works">Why It Works</h3>
+
+<p class="mb-4">Risk-adjusted metrics reveal whether returns come from skill or excessive risk-taking. A strategy that makes 20% by taking on 50% volatility is fundamentally different from one making 15% with 10% volatility—the latter is better despite lower raw returns.</p>
+
+<h3 id="academic-foundation">Academic Foundation</h3>
+
+<p class="mb-4">Modern Portfolio Theory (Markowitz, 1952) and Capital Asset Pricing Model (Sharpe, 1964) established the theoretical framework for risk-adjusted performance measurement that RiskMetrics operationalizes.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-actionable-framework">3. Actionable Framework</h2>
+
+<h3 id="framework-name:-"risk-first-selection"">Framework Name: "Risk-First Selection"</h3>
+
+<p class="mb-4">Concept: Screen strategies by risk metrics before considering returns.</p>
+
+<p class="mb-4">Selection Criteria:</p>
+<p class="mb-4">1. Max Drawdown < 25%</p>
+<p class="mb-4">2. Sharpe Ratio > 1.0</p>
+<p class="mb-4">3. Sortino Ratio > Sharpe Ratio (good downside management)</p>
+<p class="mb-4">4. Calmar Ratio > 1.5</p>
+
+<p class="mb-4">Position Sizing by Risk:</p>
+<p class="mb-4">- VaR allocation: Size positions so daily VaR < 1% of portfolio</p>
+<p class="mb-4">- Volatility targeting: Scale positions inversely to volatility</p>
+
+<p class="mb-4">Monitoring Rules:</p>
+<p class="mb-4">1. Yellow Alert: Realized Sharpe drops below 0.5</p>
+<p class="mb-4">2. Red Alert: Max Drawdown exceeds 30%</p>
+<p class="mb-4">3. Stop: Max Drawdown exceeds 40%</p>
+
+<p class="mb-4">Example:</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Strategy A: 25% CAGR, 30% Vol, 35% MaxDD
+&nbsp;&nbsp;Sharpe = 0.83, Calmar = 0.71
+&nbsp;&nbsp;
+Strategy B: 18% CAGR, 12% Vol, 15% MaxDD
+&nbsp;&nbsp;Sharpe = 1.50, Calmar = 1.20
+&nbsp;&nbsp;
+Decision: Choose Strategy B despite lower raw return
+Reason: Superior risk-adjusted metrics, survivable drawdowns
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<h3 id="failure-patterns">Failure Patterns</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pattern</td><td class="px-4 py-2 border-b border-[#2a2e39]">Description</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mitigation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Backtest Overfitting</td><td class="px-4 py-2 border-b border-[#2a2e39]">Metrics look great on historical data</td><td class="px-4 py-2 border-b border-[#2a2e39]">Out-of-sample testing</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Regime Dependency</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sharpe of 2.0 in bull market, -0.5 in bear</td><td class="px-4 py-2 border-b border-[#2a2e39]">Test across regimes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Fat Tail Events</td><td class="px-4 py-2 border-b border-[#2a2e39]">VaR underestimates tail risk</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use Conditional VaR (CVaR)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Short History</td><td class="px-4 py-2 border-b border-[#2a2e39]">Insufficient data for statistical significance</td><td class="px-4 py-2 border-b border-[#2a2e39]">Require 2+ years</td></tr>
+</table></div>
+
+<h3 id="psychological-traps">Psychological Traps</h3>
+
+<p class="mb-4">1. Sharpe Worship  </p>
+<p class="mb-4">   Chasing highest Sharpe without considering other metrics (drawdown, capacity).</p>
+
+<p class="mb-4">2. Backtest Seduction  </p>
+<p class="mb-4">   Believing historical metrics will persist perfectly.</p>
+
+<p class="mb-4">3. VaR Complacency  </p>
+<p class="mb-4">   Treating 95% VaR as maximum—it's a 1-in-20 event, which happens.</p>
+
+<h3 id="common-misinterpretations">Common Misinterpretations</h3>
+
+<p class="mb-4">- "Higher Sharpe = better strategy" → Depends on absolute return needs</p>
+<p class="mb-4">- "VaR is max loss" → It's loss at probability threshold</p>
+<p class="mb-4">- "Past Sharpe predicts future" → Alpha decays; expect degradation</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<h3 id="creator-attribution">Creator Attribution</h3>
+
+<p class="mb-4">J.P. Morgan's RiskMetrics Group (1994) systematized risk measurement for financial institutions. Individual metric creators include William Sharpe (Sharpe Ratio, 1966), Frank Sortino (Sortino Ratio, 1980s), and Terry Young (Calmar Ratio).</p>
+
+<h3 id="parent/child-metrics">Parent/Child Metrics</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Metric</td><td class="px-4 py-2 border-b border-[#2a2e39]">Relationship</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Deviation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Foundation for volatility calculations</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Beta</td><td class="px-4 py-2 border-b border-[#2a2e39]">Market-relative risk measure</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Information Ratio</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sharpe relative to benchmark</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Conditional VaR (CVaR)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Expected loss beyond VaR</td></tr>
+</table></div>
+
+<h3 id="recommended-readings">Recommended Readings</h3>
+
+<p class="mb-4">1. *Value at Risk* — Philippe Jorion</p>
+<p class="mb-4">2. *Active Portfolio Management* — Grinold & Kahn</p>
+<p class="mb-4">3. RiskMetrics Technical Document — J.P. Morgan</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h3 id="55-related-metrics-comparison">5.5 Related Metrics Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sharpe</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sortino</td><td class="px-4 py-2 border-b border-[#2a2e39]">Calmar</td><td class="px-4 py-2 border-b border-[#2a2e39]">Information Ratio</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Risk Measure</td><td class="px-4 py-2 border-b border-[#2a2e39]">Total volatility</td><td class="px-4 py-2 border-b border-[#2a2e39]">Downside only</td><td class="px-4 py-2 border-b border-[#2a2e39]">Max drawdown</td><td class="px-4 py-2 border-b border-[#2a2e39]">Tracking error</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Numerator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Excess return</td><td class="px-4 py-2 border-b border-[#2a2e39]">Excess return</td><td class="px-4 py-2 border-b border-[#2a2e39]">CAGR</td><td class="px-4 py-2 border-b border-[#2a2e39]">Active return</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Best For</td><td class="px-4 py-2 border-b border-[#2a2e39]">Overall efficiency</td><td class="px-4 py-2 border-b border-[#2a2e39]">Downside focus</td><td class="px-4 py-2 border-b border-[#2a2e39]">Drawdown analysis</td><td class="px-4 py-2 border-b border-[#2a2e39]">Benchmark comparison</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Typical Target</td><td class="px-4 py-2 border-b border-[#2a2e39]">> 1.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">> 1.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">> 1.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">> 0.5</td></tr>
+</table></div>
+
+<p class="mb-4">When to Use Which:</p>
+<p class="mb-4">- Sharpe — Standard risk-adjusted return assessment</p>
+<p class="mb-4">- Sortino — When downside control matters more than upside capping</p>
+<p class="mb-4">- Calmar — When maximum drawdown is the binding constraint</p>
+<p class="mb-4">- Information Ratio — When comparing to a benchmark</p>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h2 id="advanced-signal-reference">Advanced Signal Reference</h2>
+
+<h3 id="performance-threshold-matrix">Performance Threshold Matrix</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Metric Level</td><td class="px-4 py-2 border-b border-[#2a2e39]">Quality</td><td class="px-4 py-2 border-b border-[#2a2e39]">Institutional View</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sharpe > 2.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Excellent</td><td class="px-4 py-2 border-b border-[#2a2e39]">Top decile; allocate aggressively</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sharpe 1.0-2.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Good</td><td class="px-4 py-2 border-b border-[#2a2e39]">Above average; core allocation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sharpe 0.5-1.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Fair</td><td class="px-4 py-2 border-b border-[#2a2e39]">Average; supplement only</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sharpe < 0.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">Poor</td><td class="px-4 py-2 border-b border-[#2a2e39]">Below average; avoid</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">MaxDD < 15%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Conservative</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low-risk strategy</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">MaxDD 15-25%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard risk tolerance</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">MaxDD 25-40%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Aggressive</td><td class="px-4 py-2 border-b border-[#2a2e39]">High-risk tolerance required</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">MaxDD > 40%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Extreme</td><td class="px-4 py-2 border-b border-[#2a2e39]">Only for aggressive allocators</td></tr>
+</table></div>
+
+<h3 id="metric-calculations">Metric Calculations</h3>
+
+<h4 id="sharpe-ratio">Sharpe Ratio</h4>
+<p class="mb-4">The Sharpe Ratio is the gold standard for risk-adjusted performance, measuring excess return per unit of total volatility. A Sharpe above 1.0 indicates you're earning more than 1 unit of return per unit of risk—values above 2.0 are considered excellent but often decay 30-40% going forward. The annualization factors (√252) convert daily measurements to yearly equivalents for standardized comparison.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def calculate_sharpe(daily_returns, risk_free_rate=0.0, trading_days=252):
+&nbsp;&nbsp;&nbsp;&nbsp;if len(daily_returns) &lt; 2:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return None
+&nbsp;&nbsp;&nbsp;&nbsp;excess_returns = [r - risk_free_rate/trading_days for r in daily_returns]
+&nbsp;&nbsp;&nbsp;&nbsp;avg_excess = sum(excess_returns) / len(excess_returns)
+&nbsp;&nbsp;&nbsp;&nbsp;std_dev = calculate_std_dev(excess_returns)
+&nbsp;&nbsp;&nbsp;&nbsp;if std_dev == 0:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 0
+&nbsp;&nbsp;&nbsp;&nbsp;return (avg_excess * math.sqrt(trading_days)) / (std_dev * math.sqrt(trading_days))
+</code></pre>
+
+<h4 id="sortino-ratio">Sortino Ratio</h4>
+<p class="mb-4">The Sortino Ratio improves upon Sharpe by penalizing only downside volatility, making it superior for strategies with asymmetric returns. Upside volatility (big winning days) isn't considered risk, so strategies with occasional large gains aren't unfairly penalized. Sortino above 1.5 indicates excellent downside risk management, and savvy allocators often prefer it over Sharpe.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def calculate_sortino(daily_returns, risk_free_rate=0.0, trading_days=252):
+&nbsp;&nbsp;&nbsp;&nbsp;excess_returns = [r - risk_free_rate/trading_days for r in daily_returns]
+&nbsp;&nbsp;&nbsp;&nbsp;avg_excess = sum(excess_returns) / len(excess_returns)
+&nbsp;&nbsp;&nbsp;&nbsp;downside_returns = [min(0, r) for r in excess_returns]
+&nbsp;&nbsp;&nbsp;&nbsp;downside_std = calculate_std_dev(downside_returns)
+&nbsp;&nbsp;&nbsp;&nbsp;if downside_std == 0:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 0
+&nbsp;&nbsp;&nbsp;&nbsp;return (avg_excess * trading_days) / (downside_std * math.sqrt(trading_days))
+</code></pre>
+
+<h4 id="maximum-drawdown">Maximum Drawdown</h4>
+<p class="mb-4">Maximum Drawdown measures the largest peak-to-trough decline—the worst-case scenario an investor would have experienced. A 50% drawdown requires a 100% gain to recover, and most investors emotionally abandon strategies during 30%+ drawdowns. This metric is crucial for assessing the psychological survivability of a strategy.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def calculate_max_drawdown(cumulative_returns):
+&nbsp;&nbsp;&nbsp;&nbsp;peak = cumulative_returns[0]
+&nbsp;&nbsp;&nbsp;&nbsp;max_dd = 0
+&nbsp;&nbsp;&nbsp;&nbsp;for value in cumulative_returns:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if value &gt; peak:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;peak = value
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;drawdown = (peak - value) / peak
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if drawdown &gt; max_dd:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;max_dd = drawdown
+&nbsp;&nbsp;&nbsp;&nbsp;return max_dd * 100  # Return as percentage
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<h4 id="quality-strategy-finder">Quality Strategy Finder</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Sharpe_Ratio &gt; 1.0
+AND Sortino_Ratio &gt; 1.5
+AND Max_Drawdown &lt; 25%
+AND CAGR &gt; 10%
+</code></pre>
+
+<h4 id="low-risk-strategy-finder">Low Risk Strategy Finder</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Volatility &lt; 15%
+AND Max_Drawdown &lt; 15%
+AND Sharpe_Ratio &gt; 0.8
+</code></pre>
+
+<h4 id="risk-alert-scanner">Risk Alert Scanner</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Max_Drawdown &gt; 30%
+OR VaR_95 &gt; 5%
+OR Volatility &gt; 40%
+</code></pre>
+
+<h3 id="analysis-workflow">Analysis Workflow</h3>
+
+<h4 id="complete-risk-assessment">Complete Risk Assessment</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+1. CAGR:
+&nbsp;&nbsp;&nbsp;total_return = (end_value / start_value) - 1
+&nbsp;&nbsp;&nbsp;years = trading_days / 252
+&nbsp;&nbsp;&nbsp;CAGR = (1 + total_return)^(1/years) - 1
+
+2. VOLATILITY:
+&nbsp;&nbsp;&nbsp;daily_std = std_dev(daily_returns)
+&nbsp;&nbsp;&nbsp;annual_volatility = daily_std × sqrt(252)
+
+3. SHARPE:
+&nbsp;&nbsp;&nbsp;excess_return = CAGR - risk_free_rate
+&nbsp;&nbsp;&nbsp;Sharpe = excess_return / annual_volatility
+
+4. MAX_DRAWDOWN:
+&nbsp;&nbsp;&nbsp;track cumulative returns
+&nbsp;&nbsp;&nbsp;find maximum peak-to-trough decline
+
+5. CALMAR:
+&nbsp;&nbsp;&nbsp;Calmar = CAGR / Max_Drawdown
+
+6. VAR:
+&nbsp;&nbsp;&nbsp;VaR_95 = mean_daily - 1.645 × daily_std
+&nbsp;&nbsp;&nbsp;VaR_99 = mean_daily - 2.326 × daily_std
+</code></pre>
+
+
+
+
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#core-formulas" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Core Formulas</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#default-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Default Parameters</a>
+<a href="#benchmark-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Benchmark Standards</a>
+<a href="#why-these-values" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why These Values?</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#best-applications" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Best Applications</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#use-case-suitability" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Use Case Suitability</a>
+<a href="#5-key-metrics-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Key Metrics Usage</a>
+<a href="#portfolio-selection-criteria" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Portfolio Selection Criteria</a>
+<a href="#risk-alert-criteria" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Risk Alert Criteria</a>
+<a href="#6-combined-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Combined Usage</a>
+<a href="#comprehensive-evaluation" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Comprehensive Evaluation</a>
+<a href="#recommended-analysis-flow" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Analysis Flow</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#data-requirements" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Data Requirements</a>
+<a href="#common-pitfalls" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common Pitfalls</a>
+<a href="#mitigation-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Mitigation Strategies</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#the-sharpe-decay-warning" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The Sharpe Decay Warning</a>
+<a href="#sortino->-sharpe-preference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Sortino > Sharpe Preference</a>
+<a href="#maximum-drawdown-psychology" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Maximum Drawdown Psychology</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#institutional-research" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Institutional Research</a>
+<a href="#why-it-works" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why It Works</a>
+<a href="#academic-foundation" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Academic Foundation</a>
+<a href="#3-actionable-framework" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Framework</a>
+<a href="#framework-name:-"risk-first-selection"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Framework Name: "Risk-First Selection"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#failure-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Failure Patterns</a>
+<a href="#psychological-traps" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Psychological Traps</a>
+<a href="#common-misinterpretations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common Misinterpretations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#parent/child-metrics" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Parent/Child Metrics</a>
+<a href="#recommended-readings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Readings</a>
+<a href="#55-related-metrics-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Metrics Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#performance-threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Performance Threshold Matrix</a>
+<a href="#metric-calculations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Metric Calculations</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#analysis-workflow" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Analysis Workflow</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "RiskMetrics",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 14;
+                const result = RiskMetrics.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/RiskMetrics.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[{"id": "period", "label": "Period (14)", "type": "number", "value": 14, "min": 2, "max": 100}]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": true, "plots": {"main": {"label": "RiskMetrics", "color": "#4f46e5", "type": "line"}}}
+    </script>
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code - loaded externally before this block
+
+        // 2. Configuration (XSS-safe via script type="application/json")
+        try {
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 14;
+                const result = RiskMetrics.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+    </script>
+
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
+
+</body>
+</html>

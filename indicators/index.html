@@ -1,11 +1,1529 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <title>Indicators Index</title>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Indicators Index - I ant I Investigates</title>
+    <meta name="description" content="A comprehensive index of technical analysis indicators including Moving Averages, Oscillators, and Volume indicators.">
+    <meta name="keywords" content="technical indicators, stock analysis, trading tools">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/index.html">
+    
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Technical Indicators Index - I ant I Investigates">
+    <meta property="og:description" content="A comprehensive index of technical analysis indicators including Moving Averages, Oscillators, and Volume indicators.">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/index.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/index.png">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Technical Indicators Index">
+    <meta name="twitter:description" content="A comprehensive index of technical analysis indicators including Moving Averages, Oscillators, and Volume indicators.">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/index.png">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+        {}
+    </script>
+    
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    
+    <!-- Structured Data for SEO/AI (ItemList) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "itemListElement": [
+        
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "Article",
+            "name": "ADXR",
+            "description": "ADXR is the smoothed \"rating\" of trend momentum that measures how sustainable the current trend strength is compared to its recent history.",
+            "url": "ADXR.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "Article",
+            "name": "AccelerationOscillator",
+            "description": "The Acceleration Oscillator measures the acceleration (or deceleration) of market momentum—it's the second derivative of price, telling you when momentum itself is speeding up or slowing down.",
+            "url": "AccelerationOscillator.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@type": "Article",
+            "name": "AccumulationDistributionLine",
+            "description": "The A/D Line tracks cumulative \"smart money\" flow by measuring whether volume is flowing into (accumulation) or out of (distribution) a security based on where price closes within its daily range.",
+            "url": "AccumulationDistributionLine.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "item": {
+            "@type": "Article",
+            "name": "ArnaudLegouxMovingAverage",
+            "description": "ALMA is a Gaussian-weighted moving average that solves the classic smoothness vs. responsiveness dilemma—it's as smooth as an SMA but responds as quickly as an EMA.",
+            "url": "ArnaudLegouxMovingAverage.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "item": {
+            "@type": "Article",
+            "name": "Aroon",
+            "description": "Aroon measures the *time* since the last significant high or low, revealing whether a trend is fresh and strong or old and exhausted—it's a \"trend age detector.\"",
+            "url": "Aroon.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "item": {
+            "@type": "Article",
+            "name": "AverageDirectionalIndex",
+            "description": "ADX is the definitive trend-strength indicator that tells you *how strong* a trend is (but not which direction)—it's the market's \"speedometer\" that separates trending from ranging environments.",
+            "url": "AverageDirectionalIndex.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "item": {
+            "@type": "Article",
+            "name": "AverageTrueRange",
+            "description": "ATR measures pure market volatility—the average \"breathing room\" price needs each period—making it essential for position sizing, stop-loss placement, and volatility-based strategies.",
+            "url": "AverageTrueRange.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 8,
+          "item": {
+            "@type": "Article",
+            "name": "AwesomeOscillator",
+            "description": "The Awesome Oscillator measures market momentum by comparing recent price action (5-bar) to longer-term price action (34-bar), displayed as a histogram that shows whether buyers or sellers are in control.",
+            "url": "AwesomeOscillator.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 9,
+          "item": {
+            "@type": "Article",
+            "name": "BalanceOfPower",
+            "description": "BOP measures the strength of buyers versus sellers to push price to daily extremes—it reveals who is \"winning\" each trading session by examining the distance between Open and Close relative to the daily range.",
+            "url": "BalanceOfPower.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 10,
+          "item": {
+            "@type": "Article",
+            "name": "BandWidth",
+            "description": "BandWidth measures the \"fatness\" of Bollinger Bands, quantifying volatility as a percentage—low BandWidth signals a \"Squeeze\" (compressed volatility ready to explode), while high BandWidth signals a \"Bulge\" (expanded volatility nearing exhaustion).",
+            "url": "BandWidth.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 11,
+          "item": {
+            "@type": "Article",
+            "name": "BlackLitterman",
+            "description": "The Black-Litterman Model blends market equilibrium returns with investor views to produce a stable, intuitive set of expected returns for mean-variance portfolio optimization—solving the traditional optimizer's garbage-in-garbage-out problem.",
+            "url": "BlackLitterman.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 12,
+          "item": {
+            "@type": "Article",
+            "name": "BollingerBands",
+            "description": "Bollinger Bands are a volatility-adaptive envelope around price that defines what is statistically \"high\" or \"low\" on a relative basis, telling you when markets are stretched or compressed.",
+            "url": "BollingerBands.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 13,
+          "item": {
+            "@type": "Article",
+            "name": "BollingerBandsPercentB",
+            "description": "%B quantifies where price sits within the Bollinger Bands—0.0 at the lower band, 0.5 at the middle, 1.0 at the upper—transforming the visual bands into a precise numerical oscillator for systematic trading.",
+            "url": "BollingerBandsPercentB.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 14,
+          "item": {
+            "@type": "Article",
+            "name": "ChaikinMoneyFlow",
+            "description": "Chaikin Money Flow measures buying and selling pressure over a period by calculating a volume-weighted average of where prices close within their daily range—positive values indicate accumulation (institutional buying), negative values indicate distribution (institutional selling).",
+            "url": "ChaikinMoneyFlow.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 15,
+          "item": {
+            "@type": "Article",
+            "name": "ChaikinOscillator",
+            "description": "The Chaikin Oscillator is \"MACD for volume\"—it measures the momentum of the Accumulation/Distribution Line by taking the difference between a fast (3-period) and slow (10-period) EMA of the A/D Line, revealing acceleration or deceleration in money flow.",
+            "url": "ChaikinOscillator.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 16,
+          "item": {
+            "@type": "Article",
+            "name": "ChaikinVolatility",
+            "description": "Chaikin Volatility measures the rate of change of the average trading range—positive values indicate volatility is expanding (market getting excited), negative values indicate volatility is contracting (market getting bored).",
+            "url": "ChaikinVolatility.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 17,
+          "item": {
+            "@type": "Article",
+            "name": "ChandeMomentumOscillator",
+            "description": "The Chande Momentum Oscillator measures the net speed of price change by directly comparing the sum of gains to the sum of losses—producing an unsmoothed, highly responsive oscillator that ranges from -100 to +100.",
+            "url": "ChandeMomentumOscillator.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 18,
+          "item": {
+            "@type": "Article",
+            "name": "ChoppinessIndex",
+            "description": "The Choppiness Index measures whether the market is trending or choppy (ranging) by comparing price path length to actual displacement—high values mean sideways chop, low values mean a clean trend.",
+            "url": "ChoppinessIndex.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 19,
+          "item": {
+            "@type": "Article",
+            "name": "ClassicPivotPoints",
+            "description": "Classic Pivot Points use yesterday's High, Low, and Close to calculate today's central pivot and three levels of support (S1-S3) and resistance (R1-R3)—a self-fulfilling prophecy framework because millions of traders watch these exact levels.",
+            "url": "ClassicPivotPoints.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 20,
+          "item": {
+            "@type": "Article",
+            "name": "CommodityChannelIndex",
+            "description": "The Commodity Channel Index measures how far the current Typical Price has deviated from its average—breaking above +100 signals an impulse breakout, while readings inside ±100 represent statistical \"noise.\"",
+            "url": "CommodityChannelIndex.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 21,
+          "item": {
+            "@type": "Article",
+            "name": "CoppockCurve",
+            "description": "The Coppock Curve is a weighted moving average of combined rates of change, designed to identify major buying opportunities following significant market corrections by measuring the \"end of mourning\" in investor psychology.",
+            "url": "CoppockCurve.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 22,
+          "item": {
+            "@type": "Article",
+            "name": "CovarianceMatrix",
+            "description": "The Covariance Matrix is the mathematical engine of Modern Portfolio Theory that quantifies how assets move together, enabling the calculation of portfolio risk and the construction of diversified portfolios.",
+            "url": "CovarianceMatrix.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 23,
+          "item": {
+            "@type": "Article",
+            "name": "DirectionalMovementIndex",
+            "description": "The Directional Movement Index is a comprehensive trend analysis system that decomposes price movement into positive and negative directional components, answering both \"Is there a trend?\" and \"Which direction is it going?\"",
+            "url": "DirectionalMovementIndex.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 24,
+          "item": {
+            "@type": "Article",
+            "name": "DisplacedMovingAverage",
+            "description": "The Displaced Moving Average is a standard moving average shifted forward (or backward) in time, creating a dynamic support/resistance level that filters out whipsaws by requiring price to move with conviction before generating signals.",
+            "url": "DisplacedMovingAverage.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 25,
+          "item": {
+            "@type": "Article",
+            "name": "DoubleExponentialMovingAverage",
+            "description": "DEMA is a lag-reduced moving average using the formula 2×EMA - EMA(EMA) to cancel out inherent lag, producing a trend line that hugs price closely.",
+            "url": "DoubleExponentialMovingAverage.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 26,
+          "item": {
+            "@type": "Article",
+            "name": "DynamicLookbackPeriodFeature",
+            "description": "The Dynamic Lookback Period Feature automatically adjusts indicator parameters based on real-time market volatility, making indicators faster in high-volatility environments and slower in calm markets.",
+            "url": "DynamicLookbackPeriodFeature.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 27,
+          "item": {
+            "@type": "Article",
+            "name": "EaseOfMovement",
+            "description": "Ease of Movement measures how easily price moves relative to volume, identifying whether buyers or sellers are in control with minimal effort.",
+            "url": "EaseOfMovement.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 28,
+          "item": {
+            "@type": "Article",
+            "name": "EfficientFrontier",
+            "description": "The Efficient Frontier is the set of optimal portfolios that offer the highest expected return for a given level of risk, forming the upper boundary of all possible portfolio combinations.",
+            "url": "EfficientFrontier.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 29,
+          "item": {
+            "@type": "Article",
+            "name": "ElderImpulseSystem",
+            "description": "The Elder Impulse System is a bar-coloring technique that combines EMA trend direction with MACD-Histogram momentum to classify each bar as bullish (green), bearish (red), or neutral (blue), acting as a trading \"censorship\" mechanism.",
+            "url": "ElderImpulseSystem.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 30,
+          "item": {
+            "@type": "Article",
+            "name": "ElderRay",
+            "description": "Elder Ray measures Bull Power (deviation of highs from EMA) and Bear Power (deviation of lows from EMA) to quantify the strength of buyers and sellers relative to the consensus value.",
+            "url": "ElderRay.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 31,
+          "item": {
+            "@type": "Article",
+            "name": "Envelope",
+            "description": "Trading Envelopes plot two bands at fixed percentage distances above and below a moving average to define the statistically \"normal\" trading range and identify overbought/oversold conditions.",
+            "url": "Envelope.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 32,
+          "item": {
+            "@type": "Article",
+            "name": "ExponentialMovingAverage",
+            "description": "The Exponential Moving Average is a weighted moving average that places exponentially greater emphasis on recent prices, enabling earlier detection of trend changes compared to the Simple Moving Average.",
+            "url": "ExponentialMovingAverage.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 33,
+          "item": {
+            "@type": "Article",
+            "name": "FactorAnalysis",
+            "description": "Factor Analysis aggregates multiple market drivers—such as Momentum, Value, and Volatility—into a composite score that identifies assets with structural advantages across several dimensions simultaneously.",
+            "url": "FactorAnalysis.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 34,
+          "item": {
+            "@type": "Article",
+            "name": "FisherTransform",
+            "description": "The Fisher Transform mathematically normalizes non-Gaussian price data into an approximate Gaussian distribution, creating sharp turning points that identify reversals with minimal lag.",
+            "url": "FisherTransform.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 35,
+          "item": {
+            "@type": "Article",
+            "name": "ForceIndex",
+            "description": "The Force Index measures the power behind price moves by combining direction, magnitude, and volume—revealing whether bulls or bears truly control the market.",
+            "url": "ForceIndex.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 36,
+          "item": {
+            "@type": "Article",
+            "name": "FractalDimensionIndex",
+            "description": "The Fractal Dimension Index measures the geometric complexity of price movement to distinguish between trending markets (linear) and ranging markets (chaotic), acting as a regime filter rather than a directional signal.",
+            "url": "FractalDimensionIndex.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 37,
+          "item": {
+            "@type": "Article",
+            "name": "GeometricMovingAverage",
+            "description": "The Geometric Moving Average calculates the n-th root of the product of prices, providing a trend line that dampens outlier spikes and accurately tracks compound growth trajectories.",
+            "url": "GeometricMovingAverage.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 38,
+          "item": {
+            "@type": "Article",
+            "name": "HighLowBand",
+            "description": "High-Low Bands create a dynamic channel using smoothed averages of High and Low prices, defining trend boundaries and serving as trailing stop levels.",
+            "url": "HighLowBand.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 39,
+          "item": {
+            "@type": "Article",
+            "name": "HistoricalVolatility",
+            "description": "Historical Volatility measures the annualized standard deviation of logarithmic price returns, quantifying how wildly prices have fluctuated in the recent past.",
+            "url": "HistoricalVolatility.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 40,
+          "item": {
+            "@type": "Article",
+            "name": "HullMovingAverage",
+            "description": "The Hull Moving Average uses weighted moving averages and square-root smoothing to virtually eliminate lag while maintaining smoothness, creating a trend line that often appears to lead price action.",
+            "url": "HullMovingAverage.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 41,
+          "item": {
+            "@type": "Article",
+            "name": "Ichimoku",
+            "description": "Ichimoku is a comprehensive technical analysis system that defines support, resistance, trend direction, and momentum in a single glance through five interrelated components and a projected \"cloud\" of equilibrium.",
+            "url": "Ichimoku.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 42,
+          "item": {
+            "@type": "Article",
+            "name": "Kagi",
+            "description": "Kagi charts are time-independent price charts that filter out market noise by only recording significant price reversals, using thick (Yang) and thin (Yin) lines to indicate bullish and bearish structural states.",
+            "url": "Kagi.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 43,
+          "item": {
+            "@type": "Article",
+            "name": "KaufmanAdaptiveMovingAverage",
+            "description": "KAMA is an intelligent moving average that automatically adjusts its sensitivity based on market noise—speeding up during trends and slowing down during sideways chop to minimize false signals.",
+            "url": "KaufmanAdaptiveMovingAverage.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 44,
+          "item": {
+            "@type": "Article",
+            "name": "KeltnerChannel",
+            "description": "Keltner Channels are volatility-based envelopes set above and below an EMA using Average True Range (ATR), providing a stable framework for identifying trend breakouts and mean-reversion opportunities.",
+            "url": "KeltnerChannel.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 45,
+          "item": {
+            "@type": "Article",
+            "name": "LeastSquaresMovingAverage",
+            "description": "LSMA calculates the endpoint of the linear regression line over a lookback period, creating a moving average that reduces lag by \"leaning into\" the trend direction.",
+            "url": "LeastSquaresMovingAverage.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 46,
+          "item": {
+            "@type": "Article",
+            "name": "LinRegSlopeIndicator",
+            "description": "The Linear Regression Slope measures the rate of change (gradient) of the best-fit regression line over a period, quantifying both the direction and intensity of the prevailing trend.",
+            "url": "LinRegSlopeIndicator.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 47,
+          "item": {
+            "@type": "Article",
+            "name": "LinearRegression",
+            "description": "The Linear Regression indicator plots the \"fair value\" of price based on the best-fit line, often with standard deviation channels to identify statistically overextended conditions.",
+            "url": "LinearRegression.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 48,
+          "item": {
+            "@type": "Article",
+            "name": "MassIndex",
+            "description": "The Mass Index identifies trend reversals by detecting \"range bulges\"—when volatility expands then contracts—signaling that the current trend's energy is exhausting.",
+            "url": "MassIndex.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 49,
+          "item": {
+            "@type": "Article",
+            "name": "Momentum",
+            "description": "Momentum is the simplest measure of price change velocity, calculated as the *difference* between the current price and the price N periods ago, showing how fast and in which direction price is moving.",
+            "url": "Momentum.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 50,
+          "item": {
+            "@type": "Article",
+            "name": "MoneyFlowIndex",
+            "description": "MFI is a \"Volume-Weighted RSI\" that measures buying and selling pressure by incorporating both price change direction and volume, creating an oscillator bounded between 0 and 100.",
+            "url": "MoneyFlowIndex.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 51,
+          "item": {
+            "@type": "Article",
+            "name": "MovingAverageConvergenceDivergence",
+            "description": "MACD transforms the relationship between two exponential moving averages into a momentum oscillator that reveals both trend direction and the acceleration of price movement.",
+            "url": "MovingAverageConvergenceDivergence.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 52,
+          "item": {
+            "@type": "Article",
+            "name": "MovingAverageDeviationRate",
+            "description": "The Disparity Index measures the percentage distance between the current price and a moving average, quantifying how \"stretched\" the market is and signaling potential mean reversion opportunities.",
+            "url": "MovingAverageDeviationRate.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 53,
+          "item": {
+            "@type": "Article",
+            "name": "NegativeVolumeIndex",
+            "description": "NVI tracks price changes exclusively on low-volume days, revealing the hidden accumulation patterns of informed \"smart money\" investors who prefer to operate when the crowd is quiet.",
+            "url": "NegativeVolumeIndex.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 54,
+          "item": {
+            "@type": "Article",
+            "name": "OnBalanceVolume",
+            "description": "OBV is a cumulative volume indicator that adds volume on up-days and subtracts it on down-days, revealing the hidden flow of \"smart money\" before price moves.",
+            "url": "OnBalanceVolume.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 55,
+          "item": {
+            "@type": "Article",
+            "name": "ParabolicSAR",
+            "description": "Parabolic SAR plots a trailing stop that accelerates toward price as a trend matures, forcing an exit when the price touches the dots—and immediately reversing position.",
+            "url": "ParabolicSAR.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 56,
+          "item": {
+            "@type": "Article",
+            "name": "ParkinsonVolatilityIndicator",
+            "description": "Parkinson Volatility uses the daily high-low range instead of closing prices to provide a more efficient estimate of asset volatility, capturing intraday information that close-to-close methods miss.",
+            "url": "ParkinsonVolatilityIndicator.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 57,
+          "item": {
+            "@type": "Article",
+            "name": "PointAndFigure",
+            "description": "Point and Figure charting eliminates time entirely to focus solely on significant price movements, using columns of X's (rising prices) and O's (falling prices) to reveal pure supply and demand dynamics.",
+            "url": "PointAndFigure.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 58,
+          "item": {
+            "@type": "Article",
+            "name": "PortfolioMetrics",
+            "description": "Portfolio Metrics quantify investment performance relative to risk, enabling comparison of different strategies by measuring how much return is generated per unit of risk taken.",
+            "url": "PortfolioMetrics.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 59,
+          "item": {
+            "@type": "Article",
+            "name": "PortfolioOptimization",
+            "description": "Modern Portfolio Theory provides a mathematical framework for constructing portfolios that maximize expected return for a given level of risk by exploiting diversification through asset correlations.",
+            "url": "PortfolioOptimization.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 60,
+          "item": {
+            "@type": "Article",
+            "name": "PositiveVolumeIndex",
+            "description": "PVI tracks price changes exclusively on high-volume days, revealing the behavior of the \"crowd\" or retail traders who tend to dominate active trading sessions.",
+            "url": "PositiveVolumeIndex.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 61,
+          "item": {
+            "@type": "Article",
+            "name": "PriceVolumeTrend",
+            "description": "PVT is a cumulative volume indicator that weights each day's volume by the percentage price change, measuring the total \"work\" done by money to move price.",
+            "url": "PriceVolumeTrend.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 62,
+          "item": {
+            "@type": "Article",
+            "name": "PsychologicalLine",
+            "description": "PSY measures the ratio of rising periods to total periods, quantifying crowd sentiment persistence to identify overbought/oversold extremes.",
+            "url": "PsychologicalLine.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 63,
+          "item": {
+            "@type": "Article",
+            "name": "Qstick",
+            "description": "Qstick is the moving average of the difference between Close and Open prices, quantifying whether candlestick bodies are predominantly bullish or bearish.",
+            "url": "Qstick.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 64,
+          "item": {
+            "@type": "Article",
+            "name": "RankCorrelationIndex",
+            "description": "RCI measures the correlation between the chronological order of days and the price rank order, revealing how perfectly prices are trending without being distorted by price magnitude.",
+            "url": "RankCorrelationIndex.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 65,
+          "item": {
+            "@type": "Article",
+            "name": "RateOfChange",
+            "description": "ROC is the simplest momentum indicator, measuring the percentage change in price between today and N periods ago to reveal price velocity.",
+            "url": "RateOfChange.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 66,
+          "item": {
+            "@type": "Article",
+            "name": "RelativeStrengthIndex",
+            "description": "RSI is a normalized momentum oscillator that measures the ratio of average gains to average losses, bounded between 0 and 100, to identify overbought and oversold conditions.",
+            "url": "RelativeStrengthIndex.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 67,
+          "item": {
+            "@type": "Article",
+            "name": "Renko",
+            "description": "Renko is a time-independent charting method that plots \"bricks\" only when price moves by a predefined amount, filtering out market noise to reveal pure trend structure.",
+            "url": "Renko.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 68,
+          "item": {
+            "@type": "Article",
+            "name": "RiskMetrics",
+            "description": "RiskMetrics provides a suite of portfolio risk and performance metrics including Sharpe Ratio, Sortino Ratio, Calmar Ratio, Maximum Drawdown, CAGR, Volatility, and Value at Risk (VaR), enabling comprehensive risk-adjusted evaluation.",
+            "url": "RiskMetrics.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 69,
+          "item": {
+            "@type": "Article",
+            "name": "RollingCorrelation",
+            "description": "Rolling Correlation measures the linear relationship between two assets' price movements over a sliding window, ranging from +1 (perfect positive) to -1 (perfect negative).",
+            "url": "RollingCorrelation.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 70,
+          "item": {
+            "@type": "Article",
+            "name": "RollingHedgeRatioFeature",
+            "description": "The Rolling Hedge Ratio is the dynamic beta coefficient calculated via rolling OLS regression between two cointegrated assets, determining the optimal position sizing for a market-neutral pairs trade.",
+            "url": "RollingHedgeRatioFeature.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 71,
+          "item": {
+            "@type": "Article",
+            "name": "RollingSpreadZScore",
+            "description": "The Rolling Spread Z-Score normalizes the price spread between two assets into standard deviations from the mean, creating a universal entry/exit signal for pairs trading strategies.",
+            "url": "RollingSpreadZScore.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 72,
+          "item": {
+            "@type": "Article",
+            "name": "SchaffTrendCycle",
+            "description": "The Schaff Trend Cycle is a double-smoothed stochastic oscillator applied to MACD values, designed to identify trend cycles faster than traditional MACD while avoiding the noise of standard stochastics.",
+            "url": "SchaffTrendCycle.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 73,
+          "item": {
+            "@type": "Article",
+            "name": "ShannonEntropyIndicator",
+            "description": "Shannon Entropy quantifies the randomness (unpredictability) of price returns, distinguishing between orderly trending markets and chaotic noise-driven conditions.",
+            "url": "ShannonEntropyIndicator.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 74,
+          "item": {
+            "@type": "Article",
+            "name": "SimpleMovingAverage",
+            "description": "The Simple Moving Average is the arithmetic mean of prices over a specified period, creating a smoothed line that reveals the underlying trend direction.",
+            "url": "SimpleMovingAverage.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 75,
+          "item": {
+            "@type": "Article",
+            "name": "StandardDeviation",
+            "description": "Standard Deviation measures the dispersion of price around its mean, quantifying market volatility as a single numeric value.",
+            "url": "StandardDeviation.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 76,
+          "item": {
+            "@type": "Article",
+            "name": "Stochastic",
+            "description": "The Stochastic Oscillator measures where the current close sits relative to the high-low range over a defined period, identifying overbought and oversold conditions.",
+            "url": "Stochastic.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 77,
+          "item": {
+            "@type": "Article",
+            "name": "StochasticMomentumIndex",
+            "description": "The Stochastic Momentum Index measures closing price distance from the midpoint of the high-low range, producing a centered oscillator (-100 to +100) that reduces noise compared to traditional stochastics.",
+            "url": "StochasticMomentumIndex.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 78,
+          "item": {
+            "@type": "Article",
+            "name": "SuperTrend",
+            "description": "SuperTrend is a volatility-based trailing stop indicator that tracks above price during downtrends and below price during uptrends, flipping when price closes beyond the trail.",
+            "url": "SuperTrend.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 79,
+          "item": {
+            "@type": "Article",
+            "name": "ThreeLineBreak",
+            "description": "Three Line Break is a non-time-based charting technique that only adds a new block when price closes beyond the high or low of the previous N blocks, filtering out noise and revealing pure price structure.",
+            "url": "ThreeLineBreak.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 80,
+          "item": {
+            "@type": "Article",
+            "name": "TriangularMovingAverage",
+            "description": "TRIMA is a double-smoothed moving average that assigns the heaviest weight to the center of the lookback period, creating an exceptionally stable line that represents the \"true center of gravity\" of price action.",
+            "url": "TriangularMovingAverage.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 81,
+          "item": {
+            "@type": "Article",
+            "name": "TripleBarrierLabelingFeature",
+            "description": "TBM is a path-dependent labeling technique for supervised machine learning that classifies trade outcomes based on which of three barriers—profit target, stop loss, or time limit—the price touches first.",
+            "url": "TripleBarrierLabelingFeature.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 82,
+          "item": {
+            "@type": "Article",
+            "name": "TripleExponentialMovingAverage",
+            "description": "TEMA is a composite moving average that mathematically subtracts lag from the smoothing process, creating an ultra-responsive trend indicator that tracks price almost in real-time.",
+            "url": "TripleExponentialMovingAverage.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 83,
+          "item": {
+            "@type": "Article",
+            "name": "Trix",
+            "description": "TRIX is a momentum oscillator that displays the percentage rate of change of a triple-exponentially smoothed moving average, acting as a powerful noise filter to expose only the most significant trend movements.",
+            "url": "Trix.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 84,
+          "item": {
+            "@type": "Article",
+            "name": "UltimateOscillator",
+            "description": "The Ultimate Oscillator is a multi-timeframe momentum indicator that combines buying pressure across three different periods to capture trend momentum while avoiding the premature saturation common in single-period oscillators.",
+            "url": "UltimateOscillator.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 85,
+          "item": {
+            "@type": "Article",
+            "name": "UpDownVolumeRatioIndicator",
+            "description": "UDVR is a market breadth indicator that compares the total volume traded on \"up days\" versus \"down days\" over a lookback period, revealing whether money is flowing into (accumulation) or out of (distribution) an asset.",
+            "url": "UpDownVolumeRatioIndicator.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 86,
+          "item": {
+            "@type": "Article",
+            "name": "Variance",
+            "description": "Variance is a statistical measure of price dispersion that quantifies how far individual price observations deviate from their mean over a rolling period—the foundation of all volatility-based trading indicators.",
+            "url": "Variance.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 87,
+          "item": {
+            "@type": "Article",
+            "name": "VolumeMovingAverage",
+            "description": "VMA is a simple moving average applied to trading volume that establishes a baseline for \"normal\" activity, allowing traders to identify when institutional players are accumulating, distributing, or sitting on the sidelines.",
+            "url": "VolumeMovingAverage.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 88,
+          "item": {
+            "@type": "Article",
+            "name": "VolumeWeightedAveragePrice",
+            "description": "VWAP is the cumulative average price weighted by volume, representing the \"fair value\" at which most trading activity occurred—the benchmark institutional traders use to measure execution quality.",
+            "url": "VolumeWeightedAveragePrice.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 89,
+          "item": {
+            "@type": "Article",
+            "name": "VolumeWeightedMovingAverage",
+            "description": "VWMA is a moving average that weights each price by its corresponding volume, giving more influence to periods with higher trading activity—revealing where institutional money placed its bets.",
+            "url": "VolumeWeightedMovingAverage.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 90,
+          "item": {
+            "@type": "Article",
+            "name": "VortexIndicator",
+            "description": "The Vortex Indicator is a directional trend indicator that identifies the start of a new trend and its direction by measuring the \"flow\" of upward and downward diagonal price energy.",
+            "url": "VortexIndicator.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 91,
+          "item": {
+            "@type": "Article",
+            "name": "WeightedMovingAverage",
+            "description": "The Weighted Moving Average is a trend-following indicator that assigns linearly decreasing weights to price data, placing greater emphasis on recent prices to reduce lag compared to a Simple Moving Average.",
+            "url": "WeightedMovingAverage.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 92,
+          "item": {
+            "@type": "Article",
+            "name": "WilderSmoothing",
+            "description": "Wilder's Smoothing is a specific exponential moving average method using α = 1/N, making it significantly slower and more stable than standard EMAs.",
+            "url": "WilderSmoothing.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 93,
+          "item": {
+            "@type": "Article",
+            "name": "WilliamsPercentR",
+            "description": "Williams %R is a momentum oscillator that measures the current closing price relative to the highest high over a lookback period, oscillating between 0 and -100 to identify overbought and oversold conditions.",
+            "url": "WilliamsPercentR.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 94,
+          "item": {
+            "@type": "Article",
+            "name": "WilliamsVixFix",
+            "description": "The Williams Vix Fix is a synthetic volatility indicator that replicates VIX behavior for any asset by measuring the percentage deviation of the current Low from the Highest Close, identifying fear spikes that typically mark market bottoms.",
+            "url": "WilliamsVixFix.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 95,
+          "item": {
+            "@type": "Article",
+            "name": "YangZhangVolatilityIndicator",
+            "description": "The Yang-Zhang Volatility Estimator is a sophisticated statistical measure of historical volatility that incorporates overnight gaps and intraday ranges, providing drift-independent accuracy even in strongly trending markets.",
+            "url": "YangZhangVolatilityIndicator.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 96,
+          "item": {
+            "@type": "Article",
+            "name": "ZScore",
+            "description": "The Z-Score measures the distance of the current price from its mean in units of standard deviation, normalizing price data for statistical comparison and identification of significant deviations.",
+            "url": "ZScore.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 97,
+          "item": {
+            "@type": "Article",
+            "name": "ZeroLagExponentialMovingAverage",
+            "description": "The Zero Lag Exponential Moving Average is a modified EMA designed to eliminate lag by tracking \"de-lagged\" data, calculated as Price + (Price - Price[Lag]), rather than raw price.",
+            "url": "ZeroLagExponentialMovingAverage.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 98,
+          "item": {
+            "@type": "Article",
+            "name": "ZigZag",
+            "description": "The ZigZag Indicator is a noise filter that connects significant price points (Swing Highs and Swing Lows) with straight lines, ignoring price movements smaller than a specified deviation.",
+            "url": "ZigZag.html"
+          }
+        }
+        
+      ]
+    }
+    </script>
+
 </head>
-<body>
-    <h1>Technical Indicators</h1>
-    <p>List of all indicators will be generated here.</p>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">Index</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                    
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    
+    <div class="min-h-screen p-6 md:p-12 lg:p-16 max-w-5xl mx-auto flex flex-col">
+        <!-- Header Section -->
+        <header class="mb-16 border-b border-slate-200 pb-8">
+            <nav aria-label="Breadcrumb" class="mb-4">
+                <ol class="flex text-xs font-mono text-slate-500 tracking-widest uppercase">
+                    <li><a href="#" class="hover:text-indigo-600 transition-colors">Home</a></li>
+                    <li class="mx-2">/</li>
+                    <li aria-current="page" class="text-slate-800 font-bold">Indicators</li>
+                </ol>
+            </nav>
+            
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 mb-6">
+                Technical<br>Indicators
+            </h1>
+            <p class="text-slate-600 text-lg max-w-2xl leading-relaxed">
+                A curated directory of market analysis tools. Explore trend-following, momentum, and volatility indicators designed for modern financial analysis.
+            </p>
+        </header>
+
+        <!-- Controls Section (Search & Filter) -->
+        <section aria-labelledby="filter-heading" class="mb-16">
+            <h2 id="filter-heading" class="sr-only">Filter Indicators</h2>
+            
+            <div class="flex flex-col lg:flex-row gap-10 items-start lg:items-end">
+                <!-- Search Input -->
+                <div class="w-full lg:w-5/12">
+                    <form role="search" onsubmit="return false;">
+                        <label for="searchInput" class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+                            Filter by Name or Keyword
+                        </label>
+                        <div class="relative">
+                            <input type="text" id="searchInput" 
+                                class="w-full bg-transparent border-b-2 border-slate-300 py-3 text-2xl font-medium text-slate-900 focus:outline-none focus:border-indigo-600 transition-colors placeholder-slate-300"
+                                placeholder="e.g. RSI, Moving Average..."
+                                aria-describedby="search-desc">
+                            <!-- Loading Indicator (Hidden by default) -->
+                            <div id="searchSpinner" class="hidden absolute right-0 top-4">
+                                <svg class="animate-spin h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <p id="search-desc" class="sr-only">Type to filter the list of indicators below.</p>
+                    </form>
+                </div>
+                
+                <!-- Category Toggles -->
+                <div class="w-full lg:w-7/12">
+                    <span class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-3" id="category-label">
+                        Category
+                    </span>
+                    <div class="flex flex-wrap gap-x-6 gap-y-3" role="group" aria-labelledby="category-label" id="categoryFilters">
+                        <!-- Filters injected via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Status Region for Screen Readers -->
+        <div aria-live="polite" aria-atomic="true" class="sr-only" id="a11y-status"></div>
+
+        <!-- Indicators List Section -->
+        <main class="flex-grow">
+            <div id="resultsContainer" class="space-y-16">
+                <!-- Content injected via JS -->
+            </div>
+            
+            <!-- No Results State -->
+            <div id="noResults" class="hidden py-20 border-t border-slate-100">
+                <p class="text-2xl font-bold text-slate-300 mb-2">No indicators found.</p>
+                <p class="text-slate-500">Try adjusting your search terms or clearing the category filter.</p>
+                <button onclick="resetFilters()" class="mt-6 text-indigo-600 font-medium hover:text-indigo-800 underline underline-offset-4 decoration-2">
+                    Reset all filters
+                </button>
+            </div>
+        </main>
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2026 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "Index",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = ``;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    
+    <script>
+        // --- 1. Data Source (Injected via Jinja2) ---
+        const indicators = [{"id": "adxr", "name": "ADXR", "abbr": "ADXR", "category": "Trend", "raw_category": "Trend Strength", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "ADXR is the smoothed \"rating\" of trend momentum that measures how sustainable the current trend strength is compared to its recent history.", "link": "ADXR.html"}, {"id": "accelerationoscillator", "name": "AccelerationOscillator", "abbr": "AC", "category": "Momentum", "raw_category": "Momentum Oscillator", "tags": ["volatility", "momentum", "trend"], "desc": "The Acceleration Oscillator measures the acceleration (or deceleration) of market momentum\u2014it's the second derivative of price, telling you when momentum itself is speeding up or slowing down.", "link": "AccelerationOscillator.html"}, {"id": "accumulationdistributionline", "name": "AccumulationDistributionLine", "abbr": "A/D Line, ADL", "category": "Volume", "raw_category": "Volume", "tags": ["volume", "momentum", "trend"], "desc": "The A/D Line tracks cumulative \"smart money\" flow by measuring whether volume is flowing into (accumulation) or out of (distribution) a security based on where price closes within its daily range.", "link": "AccumulationDistributionLine.html"}, {"id": "arnaudlegouxmovingaverage", "name": "ArnaudLegouxMovingAverage", "abbr": "ALMA", "category": "Trend", "raw_category": "Moving Average", "tags": ["volatility", "momentum", "trend"], "desc": "ALMA is a Gaussian-weighted moving average that solves the classic smoothness vs. responsiveness dilemma\u2014it's as smooth as an SMA but responds as quickly as an EMA.", "link": "ArnaudLegouxMovingAverage.html"}, {"id": "aroon", "name": "Aroon", "abbr": "Aroon", "category": "Trend", "raw_category": "Trend", "tags": ["volatility", "momentum", "trend"], "desc": "Aroon measures the *time* since the last significant high or low, revealing whether a trend is fresh and strong or old and exhausted\u2014it's a \"trend age detector.\"", "link": "Aroon.html"}, {"id": "averagedirectionalindex", "name": "AverageDirectionalIndex", "abbr": "ADX", "category": "Trend", "raw_category": "Trend Strength", "tags": ["volatility", "momentum", "trend"], "desc": "ADX is the definitive trend-strength indicator that tells you *how strong* a trend is (but not which direction)\u2014it's the market's \"speedometer\" that separates trending from ranging environments.", "link": "AverageDirectionalIndex.html"}, {"id": "averagetruerange", "name": "AverageTrueRange", "abbr": "ATR", "category": "Volatility", "raw_category": "Volatility", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "ATR measures pure market volatility\u2014the average \"breathing room\" price needs each period\u2014making it essential for position sizing, stop-loss placement, and volatility-based strategies.", "link": "AverageTrueRange.html"}, {"id": "awesomeoscillator", "name": "AwesomeOscillator", "abbr": "AO", "category": "Momentum", "raw_category": "Momentum", "tags": ["momentum", "trend"], "desc": "The Awesome Oscillator measures market momentum by comparing recent price action (5-bar) to longer-term price action (34-bar), displayed as a histogram that shows whether buyers or sellers are in control.", "link": "AwesomeOscillator.html"}, {"id": "balanceofpower", "name": "BalanceOfPower", "abbr": "BOP", "category": "Momentum", "raw_category": "Momentum/Pressure", "tags": ["volume", "momentum", "trend"], "desc": "BOP measures the strength of buyers versus sellers to push price to daily extremes\u2014it reveals who is \"winning\" each trading session by examining the distance between Open and Close relative to the daily range.", "link": "BalanceOfPower.html"}, {"id": "bandwidth", "name": "BandWidth", "abbr": "BandWidth, %B Width", "category": "Volatility", "raw_category": "Volatility", "tags": ["volatility", "volume", "trend"], "desc": "BandWidth measures the \"fatness\" of Bollinger Bands, quantifying volatility as a percentage\u2014low BandWidth signals a \"Squeeze\" (compressed volatility ready to explode), while high BandWidth signals a \"Bulge\" (expanded volatility nearing exhaustion).", "link": "BandWidth.html"}, {"id": "blacklitterman", "name": "BlackLitterman", "abbr": "BL", "category": "Other", "raw_category": "Portfolio Optimization / Asset Allocation", "tags": ["volatility", "momentum"], "desc": "The Black-Litterman Model blends market equilibrium returns with investor views to produce a stable, intuitive set of expected returns for mean-variance portfolio optimization\u2014solving the traditional optimizer's garbage-in-garbage-out problem.", "link": "BlackLitterman.html"}, {"id": "bollingerbands", "name": "BollingerBands", "abbr": "BB", "category": "Volatility", "raw_category": "Volatility Overlay", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "Bollinger Bands are a volatility-adaptive envelope around price that defines what is statistically \"high\" or \"low\" on a relative basis, telling you when markets are stretched or compressed.", "link": "BollingerBands.html"}, {"id": "bollingerbandspercentb", "name": "BollingerBandsPercentB", "abbr": "%B (or BBR - Bollinger Bands Ratio)", "category": "Volatility", "raw_category": "Momentum / Volatility Oscillator", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "%B quantifies where price sits within the Bollinger Bands\u20140.0 at the lower band, 0.5 at the middle, 1.0 at the upper\u2014transforming the visual bands into a precise numerical oscillator for systematic trading.", "link": "BollingerBandsPercentB.html"}, {"id": "chaikinmoneyflow", "name": "ChaikinMoneyFlow", "abbr": "CMF", "category": "Volume", "raw_category": "Volume Oscillator", "tags": ["volatility", "volume", "trend"], "desc": "Chaikin Money Flow measures buying and selling pressure over a period by calculating a volume-weighted average of where prices close within their daily range\u2014positive values indicate accumulation (institutional buying), negative values indicate distribution (institutional selling).", "link": "ChaikinMoneyFlow.html"}, {"id": "chaikinoscillator", "name": "ChaikinOscillator", "abbr": "CHO (or CO)", "category": "Volume", "raw_category": "Momentum of Volume", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "The Chaikin Oscillator is \"MACD for volume\"\u2014it measures the momentum of the Accumulation/Distribution Line by taking the difference between a fast (3-period) and slow (10-period) EMA of the A/D Line, revealing acceleration or deceleration in money flow.", "link": "ChaikinOscillator.html"}, {"id": "chaikinvolatility", "name": "ChaikinVolatility", "abbr": "CV", "category": "Volatility", "raw_category": "Volatility", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "Chaikin Volatility measures the rate of change of the average trading range\u2014positive values indicate volatility is expanding (market getting excited), negative values indicate volatility is contracting (market getting bored).", "link": "ChaikinVolatility.html"}, {"id": "chandemomentumoscillator", "name": "ChandeMomentumOscillator", "abbr": "CMO", "category": "Momentum", "raw_category": "Momentum Oscillator", "tags": ["momentum", "trend"], "desc": "The Chande Momentum Oscillator measures the net speed of price change by directly comparing the sum of gains to the sum of losses\u2014producing an unsmoothed, highly responsive oscillator that ranges from -100 to +100.", "link": "ChandeMomentumOscillator.html"}, {"id": "choppinessindex", "name": "ChoppinessIndex", "abbr": "CHOP", "category": "Trend", "raw_category": "Trend Quality / Fractal Dimension", "tags": ["volatility", "momentum", "trend"], "desc": "The Choppiness Index measures whether the market is trending or choppy (ranging) by comparing price path length to actual displacement\u2014high values mean sideways chop, low values mean a clean trend.", "link": "ChoppinessIndex.html"}, {"id": "classicpivotpoints", "name": "ClassicPivotPoints", "abbr": "PP, Pivot", "category": "Support/Resistance", "raw_category": "Support & Resistance", "tags": ["volume", "momentum", "trend"], "desc": "Classic Pivot Points use yesterday's High, Low, and Close to calculate today's central pivot and three levels of support (S1-S3) and resistance (R1-R3)\u2014a self-fulfilling prophecy framework because millions of traders watch these exact levels.", "link": "ClassicPivotPoints.html"}, {"id": "commoditychannelindex", "name": "CommodityChannelIndex", "abbr": "CCI", "category": "Momentum", "raw_category": "Momentum / Cyclical Oscillator", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "The Commodity Channel Index measures how far the current Typical Price has deviated from its average\u2014breaking above +100 signals an impulse breakout, while readings inside \u00b1100 represent statistical \"noise.\"", "link": "CommodityChannelIndex.html"}, {"id": "coppockcurve", "name": "CoppockCurve", "abbr": "CC", "category": "Momentum", "raw_category": "Momentum Oscillator (Long-Term)", "tags": ["momentum", "trend"], "desc": "The Coppock Curve is a weighted moving average of combined rates of change, designed to identify major buying opportunities following significant market corrections by measuring the \"end of mourning\" in investor psychology.", "link": "CoppockCurve.html"}, {"id": "covariancematrix", "name": "CovarianceMatrix", "abbr": "\u03a3 (Sigma)", "category": "Other", "raw_category": "Statistical / Risk Management", "tags": ["volatility", "momentum", "trend"], "desc": "The Covariance Matrix is the mathematical engine of Modern Portfolio Theory that quantifies how assets move together, enabling the calculation of portfolio risk and the construction of diversified portfolios.", "link": "CovarianceMatrix.html"}, {"id": "directionalmovementindex", "name": "DirectionalMovementIndex", "abbr": "DMI", "category": "Trend", "raw_category": "Trend / Momentum System", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "The Directional Movement Index is a comprehensive trend analysis system that decomposes price movement into positive and negative directional components, answering both \"Is there a trend?\" and \"Which direction is it going?\"", "link": "DirectionalMovementIndex.html"}, {"id": "displacedmovingaverage", "name": "DisplacedMovingAverage", "abbr": "DMA", "category": "Trend", "raw_category": "Trend / Support & Resistance", "tags": ["volatility", "momentum", "trend"], "desc": "The Displaced Moving Average is a standard moving average shifted forward (or backward) in time, creating a dynamic support/resistance level that filters out whipsaws by requiring price to move with conviction before generating signals.", "link": "DisplacedMovingAverage.html"}, {"id": "doubleexponentialmovingaverage", "name": "DoubleExponentialMovingAverage", "abbr": "DEMA", "category": "Trend", "raw_category": "Trend Following / Lag Reduction", "tags": ["volume", "momentum", "trend"], "desc": "DEMA is a lag-reduced moving average using the formula 2\u00d7EMA - EMA(EMA) to cancel out inherent lag, producing a trend line that hugs price closely.", "link": "DoubleExponentialMovingAverage.html"}, {"id": "dynamiclookbackperiodfeature", "name": "DynamicLookbackPeriodFeature", "abbr": "DLPF", "category": "Other", "raw_category": "Adaptive / Meta-Indicator", "tags": ["volatility"], "desc": "The Dynamic Lookback Period Feature automatically adjusts indicator parameters based on real-time market volatility, making indicators faster in high-volatility environments and slower in calm markets.", "link": "DynamicLookbackPeriodFeature.html"}, {"id": "easeofmovement", "name": "EaseOfMovement", "abbr": "EMV (or EOM)", "category": "Volume", "raw_category": "Volume / Price Efficiency", "tags": ["volume", "momentum", "trend"], "desc": "Ease of Movement measures how easily price moves relative to volume, identifying whether buyers or sellers are in control with minimal effort.", "link": "EaseOfMovement.html"}, {"id": "efficientfrontier", "name": "EfficientFrontier", "abbr": "EF", "category": "Other", "raw_category": "Portfolio Optimization", "tags": ["volatility", "momentum"], "desc": "The Efficient Frontier is the set of optimal portfolios that offer the highest expected return for a given level of risk, forming the upper boundary of all possible portfolio combinations.", "link": "EfficientFrontier.html"}, {"id": "elderimpulsesystem", "name": "ElderImpulseSystem", "abbr": "EIS", "category": "Trend", "raw_category": "Trend / Momentum Composite", "tags": ["momentum", "trend"], "desc": "The Elder Impulse System is a bar-coloring technique that combines EMA trend direction with MACD-Histogram momentum to classify each bar as bullish (green), bearish (red), or neutral (blue), acting as a trading \"censorship\" mechanism.", "link": "ElderImpulseSystem.html"}, {"id": "elderray", "name": "ElderRay", "abbr": "ER", "category": "Momentum", "raw_category": "Momentum / Power Balance", "tags": ["volume", "momentum", "trend"], "desc": "Elder Ray measures Bull Power (deviation of highs from EMA) and Bear Power (deviation of lows from EMA) to quantify the strength of buyers and sellers relative to the consensus value.", "link": "ElderRay.html"}, {"id": "envelope", "name": "Envelope", "abbr": "ENV", "category": "Volatility", "raw_category": "Overlay / Band / Channel", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "Trading Envelopes plot two bands at fixed percentage distances above and below a moving average to define the statistically \"normal\" trading range and identify overbought/oversold conditions.", "link": "Envelope.html"}, {"id": "exponentialmovingaverage", "name": "ExponentialMovingAverage", "abbr": "EMA", "category": "Trend", "raw_category": "Trend Following / Smoothing", "tags": ["momentum", "trend"], "desc": "The Exponential Moving Average is a weighted moving average that places exponentially greater emphasis on recent prices, enabling earlier detection of trend changes compared to the Simple Moving Average.", "link": "ExponentialMovingAverage.html"}, {"id": "factoranalysis", "name": "FactorAnalysis", "abbr": "FACT", "category": "Other", "raw_category": "Fundamental / Quantitative / Econometric", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "Factor Analysis aggregates multiple market drivers\u2014such as Momentum, Value, and Volatility\u2014into a composite score that identifies assets with structural advantages across several dimensions simultaneously.", "link": "FactorAnalysis.html"}, {"id": "fishertransform", "name": "FisherTransform", "abbr": "FISH", "category": "Momentum", "raw_category": "Oscillator / Leading Indicator / DSP", "tags": ["volatility", "momentum", "trend"], "desc": "The Fisher Transform mathematically normalizes non-Gaussian price data into an approximate Gaussian distribution, creating sharp turning points that identify reversals with minimal lag.", "link": "FisherTransform.html"}, {"id": "forceindex", "name": "ForceIndex", "abbr": "EFI", "category": "Volume", "raw_category": "Momentum / Volume / Oscillator", "tags": ["volume", "momentum", "trend"], "desc": "The Force Index measures the power behind price moves by combining direction, magnitude, and volume\u2014revealing whether bulls or bears truly control the market.", "link": "ForceIndex.html"}, {"id": "fractaldimensionindex", "name": "FractalDimensionIndex", "abbr": "FDI", "category": "Volatility", "raw_category": "Market State / Volatility / Chaos Theory", "tags": ["volatility", "trend"], "desc": "The Fractal Dimension Index measures the geometric complexity of price movement to distinguish between trending markets (linear) and ranging markets (chaotic), acting as a regime filter rather than a directional signal.", "link": "FractalDimensionIndex.html"}, {"id": "geometricmovingaverage", "name": "GeometricMovingAverage", "abbr": "GMA", "category": "Trend", "raw_category": "Trend Following / Smoothing", "tags": ["momentum", "trend"], "desc": "The Geometric Moving Average calculates the n-th root of the product of prices, providing a trend line that dampens outlier spikes and accurately tracks compound growth trajectories.", "link": "GeometricMovingAverage.html"}, {"id": "highlowband", "name": "HighLowBand", "abbr": "HLB", "category": "Trend", "raw_category": "Trend / Channel / Support & Resistance", "tags": ["volatility", "volume", "trend"], "desc": "High-Low Bands create a dynamic channel using smoothed averages of High and Low prices, defining trend boundaries and serving as trailing stop levels.", "link": "HighLowBand.html"}, {"id": "historicalvolatility", "name": "HistoricalVolatility", "abbr": "HV", "category": "Volatility", "raw_category": "Volatility / Risk Management", "tags": ["volatility", "trend"], "desc": "Historical Volatility measures the annualized standard deviation of logarithmic price returns, quantifying how wildly prices have fluctuated in the recent past.", "link": "HistoricalVolatility.html"}, {"id": "hullmovingaverage", "name": "HullMovingAverage", "abbr": "HMA", "category": "Trend", "raw_category": "Trend Following / Zero Lag", "tags": ["momentum", "trend"], "desc": "The Hull Moving Average uses weighted moving averages and square-root smoothing to virtually eliminate lag while maintaining smoothness, creating a trend line that often appears to lead price action.", "link": "HullMovingAverage.html"}, {"id": "ichimoku", "name": "Ichimoku", "abbr": "Ichimoku", "category": "Volatility", "raw_category": "Trend Following / Support & Resistance Overlay", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "Ichimoku is a comprehensive technical analysis system that defines support, resistance, trend direction, and momentum in a single glance through five interrelated components and a projected \"cloud\" of equilibrium.", "link": "Ichimoku.html"}, {"id": "kagi", "name": "Kagi", "abbr": "Kagi", "category": "Other", "raw_category": "Price Action / Non-Time-Based Chart Style", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "Kagi charts are time-independent price charts that filter out market noise by only recording significant price reversals, using thick (Yang) and thin (Yin) lines to indicate bullish and bearish structural states.", "link": "Kagi.html"}, {"id": "kaufmanadaptivemovingaverage", "name": "KaufmanAdaptiveMovingAverage", "abbr": "KAMA", "category": "Trend", "raw_category": "Adaptive Trend Indicator", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "KAMA is an intelligent moving average that automatically adjusts its sensitivity based on market noise\u2014speeding up during trends and slowing down during sideways chop to minimize false signals.", "link": "KaufmanAdaptiveMovingAverage.html"}, {"id": "keltnerchannel", "name": "KeltnerChannel", "abbr": "KC", "category": "Volatility", "raw_category": "Volatility Channel / Trend Overlay", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "Keltner Channels are volatility-based envelopes set above and below an EMA using Average True Range (ATR), providing a stable framework for identifying trend breakouts and mean-reversion opportunities.", "link": "KeltnerChannel.html"}, {"id": "leastsquaresmovingaverage", "name": "LeastSquaresMovingAverage", "abbr": "LSMA (also called Linear Regression Moving Average)", "category": "Trend", "raw_category": "Trend Following / Regression", "tags": ["momentum", "trend"], "desc": "LSMA calculates the endpoint of the linear regression line over a lookback period, creating a moving average that reduces lag by \"leaning into\" the trend direction.", "link": "LeastSquaresMovingAverage.html"}, {"id": "linregslopeindicator", "name": "LinRegSlopeIndicator", "abbr": "LRS / LinReg Slope", "category": "Momentum", "raw_category": "Momentum Oscillator", "tags": ["momentum", "trend"], "desc": "The Linear Regression Slope measures the rate of change (gradient) of the best-fit regression line over a period, quantifying both the direction and intensity of the prevailing trend.", "link": "LinRegSlopeIndicator.html"}, {"id": "linearregression", "name": "LinearRegression", "abbr": "LR / LinReg", "category": "Volatility", "raw_category": "Statistical Overlay", "tags": ["trend"], "desc": "The Linear Regression indicator plots the \"fair value\" of price based on the best-fit line, often with standard deviation channels to identify statistically overextended conditions.", "link": "LinearRegression.html"}, {"id": "massindex", "name": "MassIndex", "abbr": "MI / MASS", "category": "Volatility", "raw_category": "Volatility Reversal", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "The Mass Index identifies trend reversals by detecting \"range bulges\"\u2014when volatility expands then contracts\u2014signaling that the current trend's energy is exhausting.", "link": "MassIndex.html"}, {"id": "momentum", "name": "Momentum", "abbr": "MOM / MTM", "category": "Momentum", "raw_category": "Momentum Oscillator", "tags": ["volume", "momentum", "trend"], "desc": "Momentum is the simplest measure of price change velocity, calculated as the *difference* between the current price and the price N periods ago, showing how fast and in which direction price is moving.", "link": "Momentum.html"}, {"id": "moneyflowindex", "name": "MoneyFlowIndex", "abbr": "MFI", "category": "Volume", "raw_category": "Volume-Weighted Momentum Oscillator", "tags": ["volume", "momentum", "trend"], "desc": "MFI is a \"Volume-Weighted RSI\" that measures buying and selling pressure by incorporating both price change direction and volume, creating an oscillator bounded between 0 and 100.", "link": "MoneyFlowIndex.html"}, {"id": "movingaverageconvergencedivergence", "name": "MovingAverageConvergenceDivergence", "abbr": "MACD", "category": "Trend", "raw_category": "Momentum / Trend Following", "tags": ["volatility", "momentum", "trend"], "desc": "MACD transforms the relationship between two exponential moving averages into a momentum oscillator that reveals both trend direction and the acceleration of price movement.", "link": "MovingAverageConvergenceDivergence.html"}, {"id": "movingaveragedeviationrate", "name": "MovingAverageDeviationRate", "abbr": "MAD, Disparity Index, BIAS", "category": "Momentum", "raw_category": "Momentum / Mean Reversion", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "The Disparity Index measures the percentage distance between the current price and a moving average, quantifying how \"stretched\" the market is and signaling potential mean reversion opportunities.", "link": "MovingAverageDeviationRate.html"}, {"id": "negativevolumeindex", "name": "NegativeVolumeIndex", "abbr": "NVI", "category": "Volume", "raw_category": "Volume / Smart Money Flow", "tags": ["volume", "momentum", "trend"], "desc": "NVI tracks price changes exclusively on low-volume days, revealing the hidden accumulation patterns of informed \"smart money\" investors who prefer to operate when the crowd is quiet.", "link": "NegativeVolumeIndex.html"}, {"id": "onbalancevolume", "name": "OnBalanceVolume", "abbr": "OBV", "category": "Volume", "raw_category": "Volume / Momentum", "tags": ["volume", "momentum", "trend"], "desc": "OBV is a cumulative volume indicator that adds volume on up-days and subtracts it on down-days, revealing the hidden flow of \"smart money\" before price moves.", "link": "OnBalanceVolume.html"}, {"id": "parabolicsar", "name": "ParabolicSAR", "abbr": "PSAR, SAR", "category": "Trend", "raw_category": "Trend Following / Trailing Stop", "tags": ["volatility", "momentum", "trend"], "desc": "Parabolic SAR plots a trailing stop that accelerates toward price as a trend matures, forcing an exit when the price touches the dots\u2014and immediately reversing position.", "link": "ParabolicSAR.html"}, {"id": "parkinsonvolatilityindicator", "name": "ParkinsonVolatilityIndicator", "abbr": "Parkinson Vol, PARK", "category": "Volatility", "raw_category": "Volatility / Risk Measurement", "tags": ["volatility", "volume", "trend"], "desc": "Parkinson Volatility uses the daily high-low range instead of closing prices to provide a more efficient estimate of asset volatility, capturing intraday information that close-to-close methods miss.", "link": "ParkinsonVolatilityIndicator.html"}, {"id": "pointandfigure", "name": "PointAndFigure", "abbr": "P&F, PnF", "category": "Other", "raw_category": "Non-Time-Series Chart / Price Filter", "tags": ["volatility", "volume", "trend"], "desc": "Point and Figure charting eliminates time entirely to focus solely on significant price movements, using columns of X's (rising prices) and O's (falling prices) to reveal pure supply and demand dynamics.", "link": "PointAndFigure.html"}, {"id": "portfoliometrics", "name": "PortfolioMetrics", "abbr": "PORT", "category": "Other", "raw_category": "Risk / Portfolio Analysis", "tags": ["volatility", "momentum", "trend"], "desc": "Portfolio Metrics quantify investment performance relative to risk, enabling comparison of different strategies by measuring how much return is generated per unit of risk taken.", "link": "PortfolioMetrics.html"}, {"id": "portfoliooptimization", "name": "PortfolioOptimization", "abbr": "MPT", "category": "Other", "raw_category": "Asset Allocation / Risk Management", "tags": ["volatility", "momentum"], "desc": "Modern Portfolio Theory provides a mathematical framework for constructing portfolios that maximize expected return for a given level of risk by exploiting diversification through asset correlations.", "link": "PortfolioOptimization.html"}, {"id": "positivevolumeindex", "name": "PositiveVolumeIndex", "abbr": "PVI", "category": "Volume", "raw_category": "Volume / Crowd Sentiment", "tags": ["volume", "trend"], "desc": "PVI tracks price changes exclusively on high-volume days, revealing the behavior of the \"crowd\" or retail traders who tend to dominate active trading sessions.", "link": "PositiveVolumeIndex.html"}, {"id": "pricevolumetrend", "name": "PriceVolumeTrend", "abbr": "PVT / VPT", "category": "Volume", "raw_category": "Western Volume / Money Flow", "tags": ["volume", "momentum", "trend"], "desc": "PVT is a cumulative volume indicator that weights each day's volume by the percentage price change, measuring the total \"work\" done by money to move price.", "link": "PriceVolumeTrend.html"}, {"id": "psychologicalline", "name": "PsychologicalLine", "abbr": "PSY", "category": "Momentum", "raw_category": "Japanese Sentiment / Contrarian Oscillator", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "PSY measures the ratio of rising periods to total periods, quantifying crowd sentiment persistence to identify overbought/oversold extremes.", "link": "PsychologicalLine.html"}, {"id": "qstick", "name": "Qstick", "abbr": "Qstick", "category": "Other", "raw_category": "Quantitative / Candlestick Quantifier", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "Qstick is the moving average of the difference between Close and Open prices, quantifying whether candlestick bodies are predominantly bullish or bearish.", "link": "Qstick.html"}, {"id": "rankcorrelationindex", "name": "RankCorrelationIndex", "abbr": "RCI", "category": "Momentum", "raw_category": "Japanese Cycle / Statistical Oscillator", "tags": ["volatility", "momentum", "trend"], "desc": "RCI measures the correlation between the chronological order of days and the price rank order, revealing how perfectly prices are trending without being distorted by price magnitude.", "link": "RankCorrelationIndex.html"}, {"id": "rateofchange", "name": "RateOfChange", "abbr": "ROC", "category": "Momentum", "raw_category": "Western Momentum Oscillator", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "ROC is the simplest momentum indicator, measuring the percentage change in price between today and N periods ago to reveal price velocity.", "link": "RateOfChange.html"}, {"id": "relativestrengthindex", "name": "RelativeStrengthIndex", "abbr": "RSI", "category": "Momentum", "raw_category": "Western Momentum Oscillator", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "RSI is a normalized momentum oscillator that measures the ratio of average gains to average losses, bounded between 0 and 100, to identify overbought and oversold conditions.", "link": "RelativeStrengthIndex.html"}, {"id": "renko", "name": "Renko", "abbr": "N/A (Chart Type)", "category": "Other", "raw_category": "Japanese Structural / Noise Filtration", "tags": ["volatility", "volume", "trend"], "desc": "Renko is a time-independent charting method that plots \"bricks\" only when price moves by a predefined amount, filtering out market noise to reveal pure trend structure.", "link": "Renko.html"}, {"id": "riskmetrics", "name": "RiskMetrics", "abbr": "RiskMetrics", "category": "Other", "raw_category": "Quantitative / Portfolio Risk Management", "tags": ["volatility"], "desc": "RiskMetrics provides a suite of portfolio risk and performance metrics including Sharpe Ratio, Sortino Ratio, Calmar Ratio, Maximum Drawdown, CAGR, Volatility, and Value at Risk (VaR), enabling comprehensive risk-adjusted evaluation.", "link": "RiskMetrics.html"}, {"id": "rollingcorrelation", "name": "RollingCorrelation", "abbr": "RollCorr / Rolling Correlation", "category": "Other", "raw_category": "Quantitative / Statistical Pairs Trading", "tags": ["volatility", "trend"], "desc": "Rolling Correlation measures the linear relationship between two assets' price movements over a sliding window, ranging from +1 (perfect positive) to -1 (perfect negative).", "link": "RollingCorrelation.html"}, {"id": "rollinghedgeratiofeature", "name": "RollingHedgeRatioFeature", "abbr": "RHR / Beta", "category": "Other", "raw_category": "Statistical Arbitrage / Pairs Trading", "tags": ["volatility", "volume", "trend"], "desc": "The Rolling Hedge Ratio is the dynamic beta coefficient calculated via rolling OLS regression between two cointegrated assets, determining the optimal position sizing for a market-neutral pairs trade.", "link": "RollingHedgeRatioFeature.html"}, {"id": "rollingspreadzscore", "name": "RollingSpreadZScore", "abbr": "Z-Score / ZSCORE", "category": "Momentum", "raw_category": "Statistical Arbitrage / Mean Reversion", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "The Rolling Spread Z-Score normalizes the price spread between two assets into standard deviations from the mean, creating a universal entry/exit signal for pairs trading strategies.", "link": "RollingSpreadZScore.html"}, {"id": "schafftrendcycle", "name": "SchaffTrendCycle", "abbr": "STC", "category": "Momentum", "raw_category": "Cyclical Oscillator / Momentum", "tags": ["volatility", "momentum", "trend"], "desc": "The Schaff Trend Cycle is a double-smoothed stochastic oscillator applied to MACD values, designed to identify trend cycles faster than traditional MACD while avoiding the noise of standard stochastics.", "link": "SchaffTrendCycle.html"}, {"id": "shannonentropyindicator", "name": "ShannonEntropyIndicator", "abbr": "Entropy / ENTROPY", "category": "Other", "raw_category": "Market Statistics / Regime Classification", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "Shannon Entropy quantifies the randomness (unpredictability) of price returns, distinguishing between orderly trending markets and chaotic noise-driven conditions.", "link": "ShannonEntropyIndicator.html"}, {"id": "simplemovingaverage", "name": "SimpleMovingAverage", "abbr": "SMA / MA", "category": "Volatility", "raw_category": "Trend Following / Overlay", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "The Simple Moving Average is the arithmetic mean of prices over a specified period, creating a smoothed line that reveals the underlying trend direction.", "link": "SimpleMovingAverage.html"}, {"id": "standarddeviation", "name": "StandardDeviation", "abbr": "StdDev / STDDEV / \u03c3", "category": "Volatility", "raw_category": "Volatility Indicator", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "Standard Deviation measures the dispersion of price around its mean, quantifying market volatility as a single numeric value.", "link": "StandardDeviation.html"}, {"id": "stochastic", "name": "Stochastic", "abbr": "Stoch / %K / %D", "category": "Momentum", "raw_category": "Momentum Oscillator", "tags": ["volatility", "momentum", "trend"], "desc": "The Stochastic Oscillator measures where the current close sits relative to the high-low range over a defined period, identifying overbought and oversold conditions.", "link": "Stochastic.html"}, {"id": "stochasticmomentumindex", "name": "StochasticMomentumIndex", "abbr": "SMI / Ergodic", "category": "Momentum", "raw_category": "Momentum Oscillator", "tags": ["volume", "momentum", "trend"], "desc": "The Stochastic Momentum Index measures closing price distance from the midpoint of the high-low range, producing a centered oscillator (-100 to +100) that reduces noise compared to traditional stochastics.", "link": "StochasticMomentumIndex.html"}, {"id": "supertrend", "name": "SuperTrend", "abbr": "ST / SuperTrend", "category": "Trend", "raw_category": "Trend Following / Trailing Stop", "tags": ["volatility", "trend"], "desc": "SuperTrend is a volatility-based trailing stop indicator that tracks above price during downtrends and below price during uptrends, flipping when price closes beyond the trail.", "link": "SuperTrend.html"}, {"id": "threelinebreak", "name": "ThreeLineBreak", "abbr": "TLB / 3LB", "category": "Trend", "raw_category": "Japanese Non-Time Charting / Trend Reversal", "tags": ["volume", "momentum", "trend"], "desc": "Three Line Break is a non-time-based charting technique that only adds a new block when price closes beyond the high or low of the previous N blocks, filtering out noise and revealing pure price structure.", "link": "ThreeLineBreak.html"}, {"id": "triangularmovingaverage", "name": "TriangularMovingAverage", "abbr": "TRIMA (also TMA)", "category": "Trend", "raw_category": "Trend / Smoothing", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "TRIMA is a double-smoothed moving average that assigns the heaviest weight to the center of the lookback period, creating an exceptionally stable line that represents the \"true center of gravity\" of price action.", "link": "TriangularMovingAverage.html"}, {"id": "triplebarrierlabelingfeature", "name": "TripleBarrierLabelingFeature", "abbr": "TBM", "category": "Other", "raw_category": "Machine Learning / Feature Engineering", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "TBM is a path-dependent labeling technique for supervised machine learning that classifies trade outcomes based on which of three barriers\u2014profit target, stop loss, or time limit\u2014the price touches first.", "link": "TripleBarrierLabelingFeature.html"}, {"id": "tripleexponentialmovingaverage", "name": "TripleExponentialMovingAverage", "abbr": "TEMA", "category": "Trend", "raw_category": "Trend / Smoothing / Lag Reduction", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "TEMA is a composite moving average that mathematically subtracts lag from the smoothing process, creating an ultra-responsive trend indicator that tracks price almost in real-time.", "link": "TripleExponentialMovingAverage.html"}, {"id": "trix", "name": "Trix", "abbr": "TRIX", "category": "Momentum", "raw_category": "Momentum Oscillator", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "TRIX is a momentum oscillator that displays the percentage rate of change of a triple-exponentially smoothed moving average, acting as a powerful noise filter to expose only the most significant trend movements.", "link": "Trix.html"}, {"id": "ultimateoscillator", "name": "UltimateOscillator", "abbr": "UO", "category": "Momentum", "raw_category": "Momentum Oscillator", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "The Ultimate Oscillator is a multi-timeframe momentum indicator that combines buying pressure across three different periods to capture trend momentum while avoiding the premature saturation common in single-period oscillators.", "link": "UltimateOscillator.html"}, {"id": "updownvolumeratioindicator", "name": "UpDownVolumeRatioIndicator", "abbr": "UDVR (also U/D Ratio)", "category": "Volume", "raw_category": "Volume / Market Breadth", "tags": ["volume", "momentum", "trend"], "desc": "UDVR is a market breadth indicator that compares the total volume traded on \"up days\" versus \"down days\" over a lookback period, revealing whether money is flowing into (accumulation) or out of (distribution) an asset.", "link": "UpDownVolumeRatioIndicator.html"}, {"id": "variance", "name": "Variance", "abbr": "VAR", "category": "Volatility", "raw_category": "Volatility / Statistical", "tags": ["volatility", "volume", "trend"], "desc": "Variance is a statistical measure of price dispersion that quantifies how far individual price observations deviate from their mean over a rolling period\u2014the foundation of all volatility-based trading indicators.", "link": "Variance.html"}, {"id": "volumemovingaverage", "name": "VolumeMovingAverage", "abbr": "VMA (also Vol MA, Vol SMA)", "category": "Volume", "raw_category": "Volume", "tags": ["volume", "momentum", "trend"], "desc": "VMA is a simple moving average applied to trading volume that establishes a baseline for \"normal\" activity, allowing traders to identify when institutional players are accumulating, distributing, or sitting on the sidelines.", "link": "VolumeMovingAverage.html"}, {"id": "volumeweightedaverageprice", "name": "VolumeWeightedAveragePrice", "abbr": "VWAP", "category": "Volume", "raw_category": "Volume / Execution Benchmark", "tags": ["volume", "momentum", "trend"], "desc": "VWAP is the cumulative average price weighted by volume, representing the \"fair value\" at which most trading activity occurred\u2014the benchmark institutional traders use to measure execution quality.", "link": "VolumeWeightedAveragePrice.html"}, {"id": "volumeweightedmovingaverage", "name": "VolumeWeightedMovingAverage", "abbr": "VWMA", "category": "Volume", "raw_category": "Trend / Volume", "tags": ["volume", "trend"], "desc": "VWMA is a moving average that weights each price by its corresponding volume, giving more influence to periods with higher trading activity\u2014revealing where institutional money placed its bets.", "link": "VolumeWeightedMovingAverage.html"}, {"id": "vortexindicator", "name": "VortexIndicator", "abbr": "VI (VI+, VI-)", "category": "Trend", "raw_category": "Trend / Directional Movement", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "The Vortex Indicator is a directional trend indicator that identifies the start of a new trend and its direction by measuring the \"flow\" of upward and downward diagonal price energy.", "link": "VortexIndicator.html"}, {"id": "weightedmovingaverage", "name": "WeightedMovingAverage", "abbr": "WMA", "category": "Volatility", "raw_category": "Trend / Overlay", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "The Weighted Moving Average is a trend-following indicator that assigns linearly decreasing weights to price data, placing greater emphasis on recent prices to reduce lag compared to a Simple Moving Average.", "link": "WeightedMovingAverage.html"}, {"id": "wildersmoothing", "name": "WilderSmoothing", "abbr": "WilderMA, SMMA", "category": "Trend", "raw_category": "Trend / Smoothing", "tags": ["volatility", "momentum", "trend"], "desc": "Wilder's Smoothing is a specific exponential moving average method using \u03b1 = 1/N, making it significantly slower and more stable than standard EMAs.", "link": "WilderSmoothing.html"}, {"id": "williamspercentr", "name": "WilliamsPercentR", "abbr": "Williams %R, %R", "category": "Momentum", "raw_category": "Momentum / Oscillator", "tags": ["volume", "volatility", "momentum", "trend"], "desc": "Williams %R is a momentum oscillator that measures the current closing price relative to the highest high over a lookback period, oscillating between 0 and -100 to identify overbought and oversold conditions.", "link": "WilliamsPercentR.html"}, {"id": "williamsvixfix", "name": "WilliamsVixFix", "abbr": "WVF, VIX Fix", "category": "Volatility", "raw_category": "Volatility / Sentiment", "tags": ["volatility", "trend"], "desc": "The Williams Vix Fix is a synthetic volatility indicator that replicates VIX behavior for any asset by measuring the percentage deviation of the current Low from the Highest Close, identifying fear spikes that typically mark market bottoms.", "link": "WilliamsVixFix.html"}, {"id": "yangzhangvolatilityindicator", "name": "YangZhangVolatilityIndicator", "abbr": "YZ Volatility, YZ", "category": "Volatility", "raw_category": "Volatility / Statistical", "tags": ["volatility", "volume", "trend"], "desc": "The Yang-Zhang Volatility Estimator is a sophisticated statistical measure of historical volatility that incorporates overnight gaps and intraday ranges, providing drift-independent accuracy even in strongly trending markets.", "link": "YangZhangVolatilityIndicator.html"}, {"id": "zscore", "name": "ZScore", "abbr": "Z, ZS", "category": "Other", "raw_category": "Statistical / Normalization", "tags": ["momentum", "trend"], "desc": "The Z-Score measures the distance of the current price from its mean in units of standard deviation, normalizing price data for statistical comparison and identification of significant deviations.", "link": "ZScore.html"}, {"id": "zerolagexponentialmovingaverage", "name": "ZeroLagExponentialMovingAverage", "abbr": "ZLEMA", "category": "Trend", "raw_category": "Trend / Moving Average", "tags": ["momentum", "trend"], "desc": "The Zero Lag Exponential Moving Average is a modified EMA designed to eliminate lag by tracking \"de-lagged\" data, calculated as Price + (Price - Price[Lag]), rather than raw price.", "link": "ZeroLagExponentialMovingAverage.html"}, {"id": "zigzag", "name": "ZigZag", "abbr": "ZZ", "category": "Other", "raw_category": "Noise Filter / Pattern Recognition", "tags": ["volatility", "trend"], "desc": "The ZigZag Indicator is a noise filter that connects significant price points (Swing Highs and Swing Lows) with straight lines, ignoring price movements smaller than a specified deviation.", "link": "ZigZag.html"}];
+
+        // Unique Categories
+        const categories = ['All', ...new Set(indicators.map(i => i.category))];
+
+        // --- 2. State Management & URL Sync ---
+        const state = {
+            searchQuery: '',
+            selectedCategory: 'All',
+            filteredData: []
+        };
+
+        const searchInput = document.getElementById('searchInput');
+        const categoryFiltersContainer = document.getElementById('categoryFilters');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const noResultsMsg = document.getElementById('noResults');
+        const a11yStatus = document.getElementById('a11y-status');
+
+        // --- 3. Render Functions ---
+
+        function init() {
+            // Safe URL parsing
+            try {
+                const params = new URLSearchParams(window.location.search);
+                if(params.has('search')) state.searchQuery = params.get('search');
+                if(params.has('category') && categories.includes(params.get('category'))) {
+                    state.selectedCategory = params.get('category');
+                }
+            } catch (e) {
+                console.warn('URL parsing failed or restricted:', e);
+            }
+
+            if(searchInput) searchInput.value = state.searchQuery;
+
+            renderCategoryFilters();
+            applyFilter(false); // Initial render without pushing state
+        }
+
+        function renderCategoryFilters() {
+            if(!categoryFiltersContainer) return;
+            categoryFiltersContainer.innerHTML = categories.map(cat => {
+                const isActive = cat === state.selectedCategory;
+                const activeClass = "text-indigo-600 border-b-2 border-indigo-600";
+                const inactiveClass = "text-slate-400 hover:text-slate-600 border-b-2 border-transparent hover:border-slate-200";
+                
+                return `
+                    <button 
+                        type="button"
+                        onclick="setCategory('${cat}')"
+                        class="text-sm font-medium transition-all pb-1 ${isActive ? activeClass : inactiveClass}"
+                        aria-pressed="${isActive}"
+                    >
+                        ${cat}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function renderList(data) {
+            if(!resultsContainer) return;
+            resultsContainer.innerHTML = '';
+            
+            if (data.length === 0) {
+                resultsContainer.style.display = 'none';
+                noResultsMsg.classList.remove('hidden');
+                a11yStatus.textContent = "No indicators found.";
+                return;
+            }
+
+            resultsContainer.style.display = 'block';
+            noResultsMsg.classList.add('hidden');
+            a11yStatus.textContent = `Showing ${data.length} indicators.`;
+
+            // Grouping logic for Typography layout
+            const isAll = state.selectedCategory === 'All';
+            const displayData = isAll ? groupByCategory(data) : { [state.selectedCategory]: data };
+
+            // Use DocumentFragment for performance
+            const fragment = document.createDocumentFragment();
+
+            for (const [catName, items] of Object.entries(displayData)) {
+                if(items.length === 0) continue;
+
+                const section = document.createElement('section');
+                section.className = 'group';
+                section.setAttribute('aria-labelledby', `heading-${catName}`);
+                
+                // Section Header
+                const header = document.createElement('h2');
+                header.id = `heading-${catName}`;
+                header.className = 'text-xs font-mono font-bold text-slate-300 uppercase tracking-widest mb-8 border-b border-slate-100 pb-2 select-none';
+                header.textContent = catName;
+                section.appendChild(header);
+
+                // Items Grid
+                const ul = document.createElement('div'); // Using div for grid, items are articles
+                ul.className = 'grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12';
+
+                items.forEach(item => {
+                    const article = document.createElement('article');
+                    // Highlight matching text logic
+                    const highlightedName = highlightText(item.name, state.searchQuery);
+                    const highlightedDesc = highlightText(item.desc, state.searchQuery);
+
+                    article.innerHTML = `
+                        <a href="${item.link}" class="group/item block focus:outline-none">
+                            <div class="flex items-baseline justify-between mb-2">
+                                <h3 class="text-2xl font-bold text-slate-800 group-hover/item:text-indigo-600 transition-colors">
+                                    ${highlightedName}
+                                </h3>
+                                <span class="font-mono text-xs font-medium text-slate-400 ml-3 group-hover/item:text-indigo-400 transition-colors">
+                                    ${item.abbr}
+                                </span>
+                            </div>
+                            <p class="text-base text-slate-500 leading-relaxed group-hover/item:text-slate-700 transition-colors">
+                                ${highlightedDesc}
+                            </p>
+                            <div class="mt-3 flex gap-2">
+                                ${item.tags.slice(0, 3).map(tag => `<span class="text-[10px] uppercase font-bold text-slate-300 tracking-wide">#${tag}</span>`).join('')}
+                            </div>
+                        </a>
+                    `;
+                    ul.appendChild(article);
+                });
+
+                section.appendChild(ul);
+                fragment.appendChild(section);
+            }
+            
+            resultsContainer.appendChild(fragment);
+        }
+
+        // --- 4. Logic & Event Handlers ---
+
+        function groupByCategory(data) {
+            const grouped = {};
+            categories.filter(c => c !== 'All').forEach(cat => grouped[cat] = []);
+            
+            data.forEach(item => {
+                if(grouped[item.category]) grouped[item.category].push(item);
+            });
+            // Handle categories not in initial list if dynamic? 
+            // In static site, categories list is fixed from data.
+            return grouped;
+        }
+
+        function highlightText(text, query) {
+            if (!query) return text;
+            const safeQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const regex = new RegExp(`(${safeQuery})`, 'gi');
+            return text.replace(regex, '<mark class="bg-indigo-100 text-indigo-900 px-0.5 rounded-sm font-medium">$1</mark>');
+        }
+
+        window.setCategory = (cat) => {
+            state.selectedCategory = cat;
+            renderCategoryFilters();
+            applyFilter();
+        };
+
+        window.resetFilters = () => {
+            state.selectedCategory = 'All';
+            state.searchQuery = '';
+            if(searchInput) searchInput.value = '';
+            renderCategoryFilters();
+            applyFilter();
+        };
+
+        function debounce(func, wait) {
+            let timeout;
+            return function(...args) {
+                const spinner = document.getElementById('searchSpinner');
+                if(spinner) spinner.classList.remove('hidden');
+                
+                clearTimeout(timeout);
+                timeout = setTimeout(() => {
+                    func.apply(this, args);
+                    if(spinner) spinner.classList.add('hidden');
+                }, wait);
+            };
+        }
+
+        const handleSearch = debounce((e) => {
+            state.searchQuery = e.target.value.trim();
+            applyFilter();
+        }, 300);
+
+        if(searchInput) searchInput.addEventListener('input', handleSearch);
+
+        function applyFilter(updateUrl = true) {
+            const query = state.searchQuery.toLowerCase();
+            
+            state.filteredData = indicators.filter(item => {
+                const catMatch = state.selectedCategory === 'All' || item.category === state.selectedCategory;
+                
+                const textMatch = 
+                    item.name.toLowerCase().includes(query) || 
+                    item.abbr.toLowerCase().includes(query) ||
+                    item.desc.toLowerCase().includes(query) ||
+                    item.tags.some(tag => tag.toLowerCase().includes(query));
+
+                return catMatch && textMatch;
+            });
+
+            renderList(state.filteredData);
+
+            if (updateUrl) {
+                updateURL();
+            }
+        }
+
+        function updateURL() {
+            try {
+                const params = new URLSearchParams();
+                if (state.searchQuery) params.set('search', state.searchQuery);
+                if (state.selectedCategory !== 'All') params.set('category', state.selectedCategory);
+                
+                const newUrl = `${window.location.pathname}?${params.toString()}`;
+                window.history.replaceState({}, '', newUrl);
+            } catch (e) {
+                console.warn('URL state update skipped due to environment restrictions:', e);
+            }
+        }
+
+        init();
+    </script>
+
 </body>
 </html>

@@ -1,0 +1,351 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "IndicatorDocumentSchema",
+    "type": "object",
+    "required": [
+        "meta",
+        "hero",
+        "math",
+        "strategy",
+        "explanMapping",
+        "logicSteps",
+        "relatedIndicators",
+        "sourceCodes",
+        "logicMapping"
+    ],
+    "properties": {
+        "meta": {
+            "type": "object",
+            "required": [
+                "indicatorId",
+                "name",
+                "shortName",
+                "pageTitle",
+                "lastUpdated",
+                "author",
+                "tags"
+            ],
+            "properties": {
+                "indicatorId": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "shortName": {
+                    "type": "string"
+                },
+                "pageTitle": {
+                    "type": "string"
+                },
+                "lastUpdated": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "author": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "hero": {
+            "type": "object",
+            "required": [
+                "title",
+                "intro"
+            ],
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
+                "intro": {
+                    "type": "string"
+                }
+            }
+        },
+        "math": {
+            "type": "object",
+            "required": [
+                "formula_main",
+                "formula_sub"
+            ],
+            "properties": {
+                "formula_main": {
+                    "type": "string"
+                },
+                "formula_sub": {
+                    "type": "string"
+                }
+            }
+        },
+        "strategy": {
+            "type": "object",
+            "required": [
+                "primary",
+                "advanced",
+                "thresholdMatrix"
+            ],
+            "properties": {
+                "primary": {
+                    "type": "object",
+                    "properties": {
+                        "buy": {
+                            "type": "object",
+                            "properties": {
+                                "title": {
+                                    "type": "string"
+                                },
+                                "condition": {
+                                    "type": "string"
+                                },
+                                "desc": {
+                                    "type": "string"
+                                },
+                                "strength": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "sell": {
+                            "type": "object",
+                            "properties": {
+                                "title": {
+                                    "type": "string"
+                                },
+                                "condition": {
+                                    "type": "string"
+                                },
+                                "desc": {
+                                    "type": "string"
+                                },
+                                "strength": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "advanced": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "condition": {
+                                "type": "string"
+                            },
+                            "desc": {
+                                "type": "string"
+                            },
+                            "strength": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "thresholdMatrix": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "level": {
+                                "type": "string"
+                            },
+                            "regime": {
+                                "type": "string"
+                            },
+                            "state": {
+                                "type": "string"
+                            },
+                            "action": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "relatedIndicators": {
+            "type": "object",
+            "required": [
+                "columns",
+                "rows",
+                "highlightColumn"
+            ],
+            "properties": {
+                "columns": {
+                    "type": "array",
+                    "description": "Dynamic column definitions (e.g. ['RSI', 'Stochastic'])",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "rows": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "feature": {
+                                "type": "string"
+                            },
+                            "values": {
+                                "type": "array",
+                                "description": "Values corresponding to columns order",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "highlightColumn": {
+                    "type": "integer",
+                    "description": "Index of the column to highlight (0-based)"
+                }
+            }
+        },
+        "explanMapping": {
+            "type": "object",
+            "required": [
+                "parts"
+            ],
+            "properties": {
+                "parts": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "required": [
+                            "id",
+                            "label",
+                            "sections"
+                        ],
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "label": {
+                                "type": "string"
+                            },
+                            "sections": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "label": {
+                                            "type": "string"
+                                        },
+                                        "content": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "sourceCodes": {
+            "type": "object",
+            "required": [
+                "python",
+                "csharp"
+            ],
+            "properties": {
+                "python": {
+                    "type": "object",
+                    "required": [
+                        "simple",
+                        "detailed"
+                    ],
+                    "properties": {
+                        "simple": {
+                            "type": "string"
+                        },
+                        "detailed": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "csharp": {
+                    "type": "object",
+                    "required": [
+                        "simple",
+                        "detailed"
+                    ],
+                    "properties": {
+                        "simple": {
+                            "type": "string"
+                        },
+                        "detailed": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "logicMapping": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "object",
+                "properties": {
+                    "csharp": {
+                        "type": "object",
+                        "properties": {
+                            "simple": {
+                                "type": "string"
+                            },
+                            "detailed": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "python": {
+                        "type": "object",
+                        "properties": {
+                            "simple": {
+                                "type": "string"
+                            },
+                            "detailed": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "logicSteps": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "label": {
+                        "type": "string"
+                    },
+                    "desc": {
+                        "type": "string"
+                    },
+                    "flowchartLabel": {
+                        "type": "string"
+                    },
+                    "codeRef": {
+                        "type": "object"
+                    }
+                }
+            }
+        }
+    }
+}

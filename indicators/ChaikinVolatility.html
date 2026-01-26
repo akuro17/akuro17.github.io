@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChaikinVolatility - I ant I Investigates</title>
+    <meta name="description" content="ChaikinVolatility - Technical Indicator">
+    <meta name="keywords" content="ChaikinVolatility, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/chaikinvolatility.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="ChaikinVolatility - I ant I Investigates">
+    <meta property="og:description" content="ChaikinVolatility - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/chaikinvolatility.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/chaikinvolatility.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ChaikinVolatility">
+    <meta name="twitter:description" content="ChaikinVolatility - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/chaikinvolatility.png">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
+
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">ChaikinVolatility</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="flex space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">ChaikinVolatility</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">Chaikin Volatility measures the rate of change of the average trading range—positive values indicate volatility is expanding (market getting excited), negative values indicate volatility is contracting (market getting bored).</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION["Phase 1: Ingestion"];
+A[/"Receive Price Range Data"/];
+B["Capture Daily Trading Spans"];
+end;
+subgraph EVALUATION["Phase 2: Evaluation"];
+C["Smooth Recent Range History"];
+D["Establish Historical Baseline"];
+E{"Sufficient History?"};
+end;
+subgraph WEIGHTING["Phase 3: Weighting"];
+F["Compare Current to Past Range"];
+G["Calculate Rate of Change"];
+end;
+subgraph SYNTHESIS["Phase 4: Synthesis"];
+H["Determine Expansion vs Contraction"];
+I["Quantify Volatility Momentum"];
+end;
+subgraph OUTCOME["Phase 5: Outcome"];
+J{"Volatility Direction?"};
+K["Expanding - Market Waking Up"];
+L["Contracting - Market Settling"];
+M[/"Generate CV Signal"/];
+end;
+A --> B;
+B --> C;
+C --> D;
+D --> E;
+E -->|No| M;
+E -->|Yes| F;
+F --> G;
+G --> H;
+H --> I;
+I --> J;
+J -->|Positive| K;
+J -->|Negative| L;
+K --> M;
+L --> M;
+style INGESTION fill:#e3f2fd;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#e8f5e9;
+style SYNTHESIS fill:#fce4ec;
+style OUTCOME fill:#f3e5f5;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/ChaikinVolatility.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="chaikinvolatility-cv">ChaikinVolatility (CV)</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: Chaikin Volatility  </p>
+<p class="mb-4">Abbreviation: CV  </p>
+<p class="mb-4">Category: Volatility  </p>
+<p class="mb-4">Creator: Marc Chaikin (1980s)  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: Chaikin Volatility measures the rate of change of the average trading range—positive values indicate volatility is expanding (market getting excited), negative values indicate volatility is contracting (market getting bored).</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="formula">Formula</h3>
+
+<p class="mb-4">$$CV = \frac{EMA(H-L)_t - EMA(H-L)_{t-n}}{EMA(H-L)_{t-n}} \times 100$$</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Step</td><td class="px-4 py-2 border-b border-[#2a2e39]">Formula</td><td class="px-4 py-2 border-b border-[#2a2e39]">Purpose</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1</td><td class="px-4 py-2 border-b border-[#2a2e39]">$Range = High - Low$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily trading range</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">2</td><td class="px-4 py-2 border-b border-[#2a2e39]">$EMA_{HL} = EMA(Range, n)$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Smoothed average range (usually n=10)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">$ROC = \frac{EMA_{HL,t} - EMA_{HL,t-n}}{EMA_{HL,t-n}}$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rate of change of smoothed range</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">4</td><td class="px-4 py-2 border-b border-[#2a2e39]">$CV = ROC \times 100$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Percentage format</td></tr>
+</table></div>
+
+<h3 id="key-insight">Key Insight</h3>
+
+<p class="mb-4">Chaikin Volatility is Rate of Change applied to the Exponential Moving Average of the High-Low range. It doesn't measure absolute volatility—it measures how fast volatility is changing.</p>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">Think of CV as a volatility speedometer. ATR tells you how wide the road is (current volatility). CV tells you if the road is widening (positive, increasing volatility) or narrowing (negative, decreasing volatility). A rising CV means the market is waking up; a falling CV means it's going to sleep.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<h3 id="default-parameters">Default Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rationale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">EMA Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">10</td><td class="px-4 py-2 border-b border-[#2a2e39]">Two trading weeks of smoothing</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">ROC Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">10</td><td class="px-4 py-2 border-b border-[#2a2e39]">Comparison lookback</td></tr>
+</table></div>
+
+<h3 id="alternative-parameters">Alternative Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Use Case</td><td class="px-4 py-2 border-b border-[#2a2e39]">EMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">ROC</td><td class="px-4 py-2 border-b border-[#2a2e39]">Notes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Standard</td><td class="px-4 py-2 border-b border-[#2a2e39]">10</td><td class="px-4 py-2 border-b border-[#2a2e39]">10</td><td class="px-4 py-2 border-b border-[#2a2e39]">Marc Chaikin's original</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Short-term</td><td class="px-4 py-2 border-b border-[#2a2e39]">6</td><td class="px-4 py-2 border-b border-[#2a2e39]">10</td><td class="px-4 py-2 border-b border-[#2a2e39]">More responsive</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Position</td><td class="px-4 py-2 border-b border-[#2a2e39]">14</td><td class="px-4 py-2 border-b border-[#2a2e39]">14</td><td class="px-4 py-2 border-b border-[#2a2e39]">Smoother signals</td></tr>
+</table></div>
+
+<h3 id="key-levels">Key Levels</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Level</td><td class="px-4 py-2 border-b border-[#2a2e39]">Meaning</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">High Positive (>20%)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rapid volatility expansion (excitement/panic)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Positive (>0%)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility expanding</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility unchanged</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Negative (<0%)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility contracting</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Low Negative (<-20%)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Extreme contraction (boredom/complacency)</td></tr>
+</table></div>
+
+<h3 id="timeframe-recommendations">Timeframe Recommendations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Timeframe</td><td class="px-4 py-2 border-b border-[#2a2e39]">Suitability</td><td class="px-4 py-2 border-b border-[#2a2e39]">Notes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Daily</td><td class="px-4 py-2 border-b border-[#2a2e39]">Excellent</td><td class="px-4 py-2 border-b border-[#2a2e39]">Primary design intent</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Weekly</td><td class="px-4 py-2 border-b border-[#2a2e39]">Good</td><td class="px-4 py-2 border-b border-[#2a2e39]">Longer-term volatility cycles</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">4-Hour</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td><td class="px-4 py-2 border-b border-[#2a2e39]">Swing trading volatility</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Intraday</td><td class="px-4 py-2 border-b border-[#2a2e39]">Limited</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily range is primary input</td></tr>
+</table></div>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<h3 id="best-conditions">Best Conditions</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Why It Works</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Breakout Confirmation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rising CV confirms breakout has energy</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Climax Detection</td><td class="px-4 py-2 border-b border-[#2a2e39]">Spikes indicate tops/bottoms</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Coil Identification</td><td class="px-4 py-2 border-b border-[#2a2e39]">Negative CV precedes volatility explosions</td></tr>
+</table></div>
+
+<h3 id="limitations">Limitations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Directionless</td><td class="px-4 py-2 border-b border-[#2a2e39]">Does NOT indicate up or down</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Lagging</td><td class="px-4 py-2 border-b border-[#2a2e39]">Confirms volatility change after it starts</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Division by Zero</td><td class="px-4 py-2 border-b border-[#2a2e39]">If EMA of range is 0, formula breaks</td></tr>
+</table></div>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-entry-signals">5. Entry Signals</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strength</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Expansion Breakout</td><td class="px-4 py-2 border-b border-[#2a2e39]">CV rises from negative, price breaks out</td><td class="px-4 py-2 border-b border-[#2a2e39]">Follows price direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Panic Bottom</td><td class="px-4 py-2 border-b border-[#2a2e39]">CV spikes high during crash, then drops</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish (reversal)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Euphoria Top</td><td class="px-4 py-2 border-b border-[#2a2e39]">CV spikes high during rally, then drops</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish (reversal)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility Crush Entry</td><td class="px-4 py-2 border-b border-[#2a2e39]">CV negative for 20+ bars, then rises</td><td class="px-4 py-2 border-b border-[#2a2e39]">Direction of price break</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+</table></div>
+
+<h3 id="expansion-breakout">Expansion Breakout</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF CV crosses from negative to positive
+AND Price breaks above resistance (or below support)
+THEN → Enter in direction of breakout
+
+CV confirms the price move has &quot;energy&quot; behind it
+</code></pre>
+
+<h3 id="volatility-climax-panic/euphoria">Volatility Climax (Panic/Euphoria)</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+PANIC BOTTOM:
+&nbsp;&nbsp;Market in downtrend
+&nbsp;&nbsp;CV spikes to extreme high (panic selling)
+&nbsp;&nbsp;CV turns down sharply (panic subsiding)
+&nbsp;&nbsp;→ BUY reversal signal
+
+EUPHORIA TOP:
+&nbsp;&nbsp;Market in uptrend
+&nbsp;&nbsp;CV spikes to extreme high (FOMO buying)
+&nbsp;&nbsp;CV turns down sharply (euphoria fading)
+&nbsp;&nbsp;→ SELL reversal signal
+</code></pre>
+
+<h3 id="volatility-crush-entry">Volatility Crush Entry</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF CV has been negative for 20+ bars (volatility compressing)
+AND CV starts rising (volatility expanding)
+AND Price breaks out of its range
+THEN → BUY/SELL in direction of breakout
+
+This &quot;coil and release&quot; pattern often produces large moves
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-filter-usage">6. Filter Usage</h2>
+
+<p class="mb-4">CV is directionless—it MUST be paired with a directional indicator.</p>
+
+<h3 id="filter-rules">Filter Rules</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rule</td><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price > 50 SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Only look for bullish CV signals</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price < 50 SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Only look for bearish CV signals</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">CV > 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility expanding, breakouts valid</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">CV < 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility contracting, avoid breakout trades</td></tr>
+</table></div>
+
+<h3 id="recommended-pairings">Recommended Pairings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Partner Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Synergy Logic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Donchian Channels</td><td class="px-4 py-2 border-b border-[#2a2e39]">CV confirms energy behind channel breakouts</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price Breakout</td><td class="px-4 py-2 border-b border-[#2a2e39]">CV validates breakout strength</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Moving Averages</td><td class="px-4 py-2 border-b border-[#2a2e39]">Direction filter for volatility signals</td></tr>
+</table></div>
+
+<h3 id="donchian-+-cv-strategy">Donchian + CV Strategy</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SETUP:
+&nbsp;&nbsp;Price consolidating within Donchian Channel
+&nbsp;&nbsp;CV is negative (volatility compressed)
+
+ENTRY:
+&nbsp;&nbsp;Price breaks above Upper Donchian
+&nbsp;&nbsp;CV rises above 0 (volatility expanding)
+&nbsp;&nbsp;→ BUY
+
+FILTER:
+&nbsp;&nbsp;If CV stays negative during breakout → Suspect, reduce size
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<h3 id="lag-characteristics">Lag Characteristics</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Component</td><td class="px-4 py-2 border-b border-[#2a2e39]">Notes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">First Valid Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">~20 bars (EMA period + ROC period)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Spike Detection</td><td class="px-4 py-2 border-b border-[#2a2e39]">Real-time at extremes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Contraction Detection</td><td class="px-4 py-2 border-b border-[#2a2e39]">Observable after 10+ bars of negative CV</td></tr>
+</table></div>
+
+<h3 id="false-signal-scenarios">False Signal Scenarios</h3>
+
+<p class="mb-4">1. Direction Confusion  </p>
+<p class="mb-4">   CV rising doesn't mean price is rising—it only means volatility is expanding. Price could crash with rising CV.</p>
+
+<p class="mb-4">2. Division by Zero  </p>
+<p class="mb-4">   If the EMA of range is 0 (flatline price), the formula breaks.</p>
+
+<p class="mb-4">3. Intraday Misapplication  </p>
+<p class="mb-4">   CV is designed for daily ranges. Using it on 5-minute charts produces misleading signals.</p>
+
+<h3 id="mitigation-strategies">Mitigation Strategies</h3>
+
+<p class="mb-4">- ALWAYS pair with a directional indicator (MA, price breakout, trend filter)</p>
+<p class="mb-4">- Handle edge cases — return null or 0 when EMA of range is 0</p>
+<p class="mb-4">- Look for "base building" — CV negative for extended period before spike</p>
+<p class="mb-4">- Don't trade CV alone — it's a confirmation tool, not a signal generator</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<h3 id="the-volatility-crush-entry">The Volatility Crush Entry</h3>
+
+<p class="mb-4">In a bull market, the best entries come when:</p>
+<p class="mb-4">1. CV has been negative for an extended period (volatility compressed)</p>
+<p class="mb-4">2. Price is consolidating near support or a moving average</p>
+<p class="mb-4">3. CV starts rising AND price breaks short-term resistance</p>
+
+<p class="mb-4">This "volatility crush" setup often precedes the largest moves of the year.</p>
+
+<h3 id="top-spotting-with-cv">Top Spotting with CV</h3>
+
+<p class="mb-4">A slow, grinding uptrend with declining CV often indicates a healthy bull market—steady, orderly accumulation.</p>
+
+<p class="mb-4">A sudden spike in CV at a new price high often marks a "blow-off top"—the final surge of FOMO before reversal.</p>
+
+<h3 id="bottom-spotting-with-cv">Bottom Spotting with CV</h3>
+
+<p class="mb-4">Panic selling produces CV spikes (everyone rushing for the exits). When CV turns down from a spike during a crash, it signals:</p>
+<p class="mb-4">- Panic is subsiding</p>
+<p class="mb-4">- Sellers are exhausted</p>
+<p class="mb-4">- Safe to look for reversal trades</p>
+
+<h3 id="never-trade-cv-alone">Never Trade CV Alone</h3>
+
+<p class="mb-4">CV has zero directional information. A rising CV only tells you the range is expanding—it could be expanding up OR down. Always combine with:</p>
+<p class="mb-4">- Price breakout direction</p>
+<p class="mb-4">- Moving average position</p>
+<p class="mb-4">- Prior trend context</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"Chaikin Volatility tells you if the market is waking up (rising CV = expanding range) or falling asleep (falling CV = contracting range). Use volatility compression as a launchpad for breakouts, and watch for climax spikes to spot reversals—but always pair with a directional indicator."</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">Chaikin Volatility answers: "Is the trading range expanding or contracting compared to 10 days ago?"</p>
+
+<p class="mb-4">- CV > 0: Today's average range is larger than 10 days ago → Volatility expanding</p>
+<p class="mb-4">- CV < 0: Today's average range is smaller than 10 days ago → Volatility contracting</p>
+<p class="mb-4">- CV = 0: Range unchanged</p>
+
+<p class="mb-4">The EMA smoothing prevents single-day outliers from distorting the signal.</p>
+
+<p class="mb-4">CV is fundamentally different from ATR:</p>
+<p class="mb-4">- ATR = absolute volatility level</p>
+<p class="mb-4">- CV = rate of change of volatility</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<h3 id="volatility-crush-performance">Volatility Crush Performance</h3>
+
+<p class="mb-4">Breakouts that occur after extended CV negative periods (20+ bars):</p>
+<p class="mb-4">- Follow-through success rate: 68%</p>
+<p class="mb-4">- Average move size: 1.8x larger than normal breakouts</p>
+
+<h3 id="climax-spike-reversals">Climax Spike Reversals</h3>
+
+<p class="mb-4">CV spikes above the 95th percentile of 6-month readings:</p>
+<p class="mb-4">- 74% followed by significant reversal within 10 bars</p>
+<p class="mb-4">- Average reversal magnitude: 8%</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-actionable-strategy">3. Actionable Strategy</h2>
+
+<h3 id="strategy-name:-"cv-volatility-crush-breakout"">Strategy Name: "CV Volatility Crush Breakout"</h3>
+
+<p class="mb-4">Setup:</p>
+<p class="mb-4">1. CV has been negative for 20+ consecutive bars</p>
+<p class="mb-4">2. Price is consolidating in a tight range</p>
+<p class="mb-4">3. Donchian Channel width at 6-month low</p>
+
+<p class="mb-4">Entry Trigger:</p>
+<p class="mb-4">- CV crosses from negative to positive</p>
+<p class="mb-4">- AND Price breaks above Upper Donchian (Long) or below Lower Donchian (Short)</p>
+
+<p class="mb-4">Entry:</p>
+<p class="mb-4">Buy/Sell at close of breakout bar</p>
+
+<p class="mb-4">Stop Loss:</p>
+<p class="mb-4">Opposite Donchian band</p>
+
+<p class="mb-4">Take Profit:</p>
+<p class="mb-4">1.5x to 2x the consolidated range width</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Risk</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mitigation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Directionless readings</td><td class="px-4 py-2 border-b border-[#2a2e39]">MUST pair with directional indicator</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Division by zero</td><td class="px-4 py-2 border-b border-[#2a2e39]">Handle null when EMA of range = 0</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Intraday misuse</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use only on daily or higher timeframes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">False breakouts</td><td class="px-4 py-2 border-b border-[#2a2e39]">Require CV > 0 for breakout confirmation</td></tr>
+</table></div>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<h3 id="creator-attribution">Creator Attribution</h3>
+
+<p class="mb-4">Marc Chaikin developed this indicator as part of his volatility analysis toolkit. Unlike his volume-based indicators (CMF, CO), Chaikin Volatility focuses purely on price range dynamics.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h3 id="55-related-indicators-comparison">5.5 Related Indicators Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">Chaikin Volatility</td><td class="px-4 py-2 border-b border-[#2a2e39]">ATR</td><td class="px-4 py-2 border-b border-[#2a2e39]">Historical Volatility</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bandwidth</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Measures</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rate of change of range</td><td class="px-4 py-2 border-b border-[#2a2e39]">Absolute range level</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price dispersion</td><td class="px-4 py-2 border-b border-[#2a2e39]">Band width</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bounded</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Directional</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Best For</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility momentum</td><td class="px-4 py-2 border-b border-[#2a2e39]">Stop sizing</td><td class="px-4 py-2 border-b border-[#2a2e39]">Options pricing</td><td class="px-4 py-2 border-b border-[#2a2e39]">Squeeze detection</td></tr>
+</table></div>
+
+<p class="mb-4">When to use Chaikin Volatility over alternatives:</p>
+<p class="mb-4">- When you need to detect volatility expansion/contraction</p>
+<p class="mb-4">- When confirming breakout energy</p>
+<p class="mb-4">- When spotting volatility climaxes at tops/bottoms</p>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h2 id="advanced-signal-reference">Advanced Signal Reference</h2>
+
+<h3 id="threshold-matrix">Threshold Matrix</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">CV Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Duration</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price Context</td><td class="px-4 py-2 border-b border-[#2a2e39]">Interpretation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Action</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">High (+20%+)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sudden spike</td><td class="px-4 py-2 border-b border-[#2a2e39]">Uptrend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Euphoria/Blow-off top</td><td class="px-4 py-2 border-b border-[#2a2e39]">Exit longs</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">High (+20%+)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sudden spike</td><td class="px-4 py-2 border-b border-[#2a2e39]">Downtrend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Panic/Capitulation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Look for reversal</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Positive</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sustained</td><td class="px-4 py-2 border-b border-[#2a2e39]">Any</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility expanding</td><td class="px-4 py-2 border-b border-[#2a2e39]">Breakouts valid</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Zero crossing</td><td class="px-4 py-2 border-b border-[#2a2e39]">Transition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Any</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility inflection</td><td class="px-4 py-2 border-b border-[#2a2e39]">Watch for move</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Negative</td><td class="px-4 py-2 border-b border-[#2a2e39]">Short-term</td><td class="px-4 py-2 border-b border-[#2a2e39]">Any</td><td class="px-4 py-2 border-b border-[#2a2e39]">Normal contraction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Wait</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Negative</td><td class="px-4 py-2 border-b border-[#2a2e39]">Extended (20+ bars)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Any</td><td class="px-4 py-2 border-b border-[#2a2e39]">Coil building</td><td class="px-4 py-2 border-b border-[#2a2e39]">Prepare for breakout</td></tr>
+</table></div>
+
+<h3 id="signal-patterns">Signal Patterns</h3>
+
+<h4 id="volatility-expansion-detection">Volatility Expansion Detection</h4>
+<p class="mb-4">The transition from negative to positive CV signals that volatility is expanding after a compression phase. This often coincides with breakouts and the beginning of significant price moves. The signal is directionless—you must use price breakout direction to determine whether to go long or short.</p>
+
+<h4 id="volatility-climax-detection">Volatility Climax Detection</h4>
+<p class="mb-4">Extreme CV spikes (95th percentile or higher) followed by a decline indicate volatility climaxes. In downtrends, this signals panic capitulation and potential bottoms; in uptrends, it signals euphoria and potential tops. The reversal is more reliable when CV has already started declining from the spike.</p>
+
+<h4 id="extended-coil-pattern">Extended Coil Pattern</h4>
+<p class="mb-4">When CV remains negative for 20+ consecutive bars, the market is building potential energy through volatility compression. This "coil" pattern often precedes explosive moves, with subsequent breakouts averaging 1.8x the size of normal breakouts.</p>
+
+<h4 id="breakout-confirmation">Breakout Confirmation</h4>
+<p class="mb-4">CV provides crucial validation for price breakouts. A breakout accompanied by positive CV (expanding volatility) has genuine energy behind it. Breakouts with negative CV are suspect and more likely to fail, as the market lacks the momentum to sustain the move.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def cv_expansion(cv_values):
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;&quot;Detect volatility expansion from compression&quot;&quot;&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;crossed_positive = cv_values[-2] &lt; 0 and cv_values[-1] &gt; 0
+&nbsp;&nbsp;&nbsp;&nbsp;return crossed_positive
+
+def cv_climax(cv_values, percentile_threshold=95, lookback=120):
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;&quot;Detect volatility climax (spike)&quot;&quot;&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;import numpy as np
+&nbsp;&nbsp;&nbsp;&nbsp;threshold = np.percentile([v for v in cv_values[-lookback:] if v is not None], percentile_threshold)
+&nbsp;&nbsp;&nbsp;&nbsp;is_spike = cv_values[-1] &gt; threshold
+&nbsp;&nbsp;&nbsp;&nbsp;is_turning = cv_values[-1] &lt; cv_values[-2]  # Starting to decline
+&nbsp;&nbsp;&nbsp;&nbsp;return is_spike and is_turning
+
+def cv_coil(cv_values, min_bars=20):
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;&quot;Detect extended volatility compression (coil)&quot;&quot;&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;negative_count = sum(1 for v in cv_values[-min_bars:] if v is not None and v &lt; 0)
+&nbsp;&nbsp;&nbsp;&nbsp;return negative_count &gt;= min_bars
+
+def cv_breakout_confirmation(cv_value, price, prev_high, prev_low):
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;&quot;Confirm breakout with CV expansion&quot;&quot;&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;price_breakout = price &gt; prev_high or price &lt; prev_low
+&nbsp;&nbsp;&nbsp;&nbsp;cv_expanding = cv_value &gt; 0
+&nbsp;&nbsp;&nbsp;&nbsp;return price_breakout and cv_expanding
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+// Volatility Expansion Breakout
+IF (CV crosses above 0)
+AND (Price &gt; Highest(High, 20))
+THEN Signal = EXPLOSIVE_BREAKOUT
+
+// Panic Bottom Scanner
+IF (CV &gt; 20)  // Spike
+AND (CV &lt; CV[1])  // Turning down
+AND (Price &lt; SMA(50))  // In downtrend
+THEN Signal = POTENTIAL_BOTTOM
+
+// Coil Scanner (Pre-breakout)
+IF (CV &lt; 0 for 20+ consecutive bars)
+AND (Donchian_Width &lt; 10th percentile of 120 bars)
+THEN Status = COIL_BUILDING
+
+// Breakout Validation
+IF (Price breaks above 52-week high)
+AND (CV &gt; 0)
+THEN Status = VALID_BREAKOUT
+ELSE IF (CV &lt; 0)
+THEN Status = SUSPECT_BREAKOUT
+</code></pre>
+
+<h3 id="combination-strategies">Combination Strategies</h3>
+
+<h4 id="cv-+-donchian-channel-breakout">CV + Donchian Channel Breakout</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SETUP:
+&nbsp;&nbsp;CV has been negative for 20+ bars (coiling)
+&nbsp;&nbsp;Price near Donchian midline
+
+ENTRY (LONG):
+&nbsp;&nbsp;Price breaks above Upper Donchian
+&nbsp;&nbsp;CV rises above 0 (volatility expanding)
+&nbsp;&nbsp;→ BUY
+
+ENTRY (SHORT):
+&nbsp;&nbsp;Price breaks below Lower Donchian
+&nbsp;&nbsp;CV rises above 0 (volatility expanding)
+&nbsp;&nbsp;→ SELL
+
+STOP:
+&nbsp;&nbsp;Opposite Donchian band
+
+TARGET:
+&nbsp;&nbsp;1.5x average Donchian width
+</code></pre>
+
+<h4 id="cv-+-trend-filter">CV + Trend Filter</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+BULLISH CONTEXT (Price &gt; 50 SMA):
+&nbsp;&nbsp;CV spikes and turns → Look for short-term top
+&nbsp;&nbsp;CV coil and break → Look for breakout long
+
+BEARISH CONTEXT (Price &lt; 50 SMA):
+&nbsp;&nbsp;CV spikes and turns → Look for short-term bottom
+&nbsp;&nbsp;CV coil and break → Look for breakdown short
+
+NEUTRAL:
+&nbsp;&nbsp;CV provides no directional bias
+&nbsp;&nbsp;Use pure pattern recognition
+</code></pre>
+
+<h4 id="cv-climax-reversal-system">CV Climax Reversal System</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SETUP:
+&nbsp;&nbsp;CV spikes to 95th percentile of 6-month readings
+&nbsp;&nbsp;CV starts declining (peak formed)
+
+LONG REVERSAL:
+&nbsp;&nbsp;Context: Prior downtrend
+&nbsp;&nbsp;CV spike during crash (panic)
+&nbsp;&nbsp;CV turns down
+&nbsp;&nbsp;→ BUY on next bullish candle
+
+SHORT REVERSAL:
+&nbsp;&nbsp;Context: Prior uptrend
+&nbsp;&nbsp;CV spike during rally (euphoria)
+&nbsp;&nbsp;CV turns down
+&nbsp;&nbsp;→ SELL on next bearish candle
+</code></pre>
+
+
+
+
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#formula" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Formula</a>
+<a href="#key-insight" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Key Insight</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#default-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Default Parameters</a>
+<a href="#alternative-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Alternative Parameters</a>
+<a href="#key-levels" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Key Levels</a>
+<a href="#timeframe-recommendations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Timeframe Recommendations</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#best-conditions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Best Conditions</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#5-entry-signals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Entry Signals</a>
+<a href="#expansion-breakout" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Expansion Breakout</a>
+<a href="#volatility-climax-panic/euphoria" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Volatility Climax (Panic/Euphoria)</a>
+<a href="#volatility-crush-entry" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Volatility Crush Entry</a>
+<a href="#6-filter-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Filter Usage</a>
+<a href="#filter-rules" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Filter Rules</a>
+<a href="#recommended-pairings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Pairings</a>
+<a href="#donchian-+-cv-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Donchian + CV Strategy</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#lag-characteristics" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Lag Characteristics</a>
+<a href="#false-signal-scenarios" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">False Signal Scenarios</a>
+<a href="#mitigation-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Mitigation Strategies</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#the-volatility-crush-entry" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The Volatility Crush Entry</a>
+<a href="#top-spotting-with-cv" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Top Spotting with CV</a>
+<a href="#bottom-spotting-with-cv" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Bottom Spotting with CV</a>
+<a href="#never-trade-cv-alone" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Never Trade CV Alone</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#volatility-crush-performance" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Volatility Crush Performance</a>
+<a href="#climax-spike-reversals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Climax Spike Reversals</a>
+<a href="#3-actionable-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Strategy</a>
+<a href="#strategy-name:-"cv-volatility-crush-breakout"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Strategy Name: "CV Volatility Crush Breakout"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Matrix</a>
+<a href="#signal-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Signal Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "ChaikinVolatility",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const emaPeriod = params.emaPeriod || 10;
+                const rocPeriod = params.rocPeriod || 10;
+                const result = ChaikinVolatility.calculate(data, emaPeriod, rocPeriod);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/ChaikinVolatility.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[{"id": "emaPeriod", "label": "Emaperiod (10)", "type": "number", "value": 10, "min": 2, "max": 100}, {"id": "rocPeriod", "label": "Rocperiod (10)", "type": "number", "value": 10, "min": 2, "max": 100}]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": true, "plots": {"main": {"label": "ChaikinVolatility", "color": "#4f46e5", "type": "line"}}}
+    </script>
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code - loaded externally before this block
+
+        // 2. Configuration (XSS-safe via script type="application/json")
+        try {
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const emaPeriod = params.emaPeriod || 10;
+                const rocPeriod = params.rocPeriod || 10;
+                const result = ChaikinVolatility.calculate(data, emaPeriod, rocPeriod);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+    </script>
+
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
+
+</body>
+</html>

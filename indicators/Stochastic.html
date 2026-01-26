@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stochastic - I ant I Investigates</title>
+    <meta name="description" content="Stochastic - Technical Indicator">
+    <meta name="keywords" content="Stochastic, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/stochastic.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Stochastic - I ant I Investigates">
+    <meta property="og:description" content="Stochastic - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/stochastic.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/stochastic.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Stochastic">
+    <meta name="twitter:description" content="Stochastic - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/stochastic.png">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
+
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">Stochastic</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="flex space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">Stochastic</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">The Stochastic Oscillator measures where the current close sits relative to the high-low range over a defined period, identifying overbought and oversold conditions.</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION["INGESTION<br/>Data Capture"];
+A["Observe high, low, and close prices<br/>(range and settlement data)"];
+B["Set lookback period<br/>(how many bars to analyze)"];
+end;
+subgraph EVALUATION["EVALUATION<br/>Initial Assessment"];
+C["Find highest high in window<br/>(upper boundary of range)"];
+D["Find lowest low in window<br/>(lower boundary of range)"];
+end;
+subgraph WEIGHTING["WEIGHTING<br/>Normalization"];
+E["Calculate where close sits in range<br/>(position from 0 to 100)"];
+F["Smooth with signal line<br/>(reduce noise, confirm direction)"];
+end;
+subgraph SYNTHESIS["SYNTHESIS<br/>Pattern Detection"];
+G{"What is the momentum reading?"};
+H["Above 80: Close near range highs"];
+I["Below 20: Close near range lows"];
+J["%K crosses %D: Momentum shift"];
+end;
+subgraph OUTCOME["OUTCOME<br/>Signal Generation"];
+K["%K crosses above %D below 20:<br/>Buy oversold reversal"];
+L["%K crosses below %D above 80:<br/>Sell overbought reversal"];
+M["Embedded at extremes:<br/>Strong trend, don't fade"];
+end;
+A --> C;
+B --> C;
+C --> D;
+D --> E;
+E --> F;
+F --> G;
+G -->|"> 80"| H;
+G -->|"< 20"| I;
+G -->|"Crossover"| J;
+H --> K;
+I --> L;
+J --> M;
+style INGESTION fill:#e3f2fd;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#e8f5e9;
+style SYNTHESIS fill:#fce4ec;
+style OUTCOME fill:#f3e5f5;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/Stochastic.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="stochastic-oscillator-stoch">Stochastic Oscillator (STOCH)</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: Stochastic Oscillator  </p>
+<p class="mb-4">Abbreviation: Stoch / %K / %D  </p>
+<p class="mb-4">Category: Momentum Oscillator  </p>
+<p class="mb-4">Creator: George Lane (1957)  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: The Stochastic Oscillator measures where the current close sits relative to the high-low range over a defined period, identifying overbought and oversold conditions.</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="formula">Formula</h3>
+
+<p class="mb-4">%K (Fast Line):</p>
+<p class="mb-4">$$\%K = 100 \times \frac{C_t - L_n}{H_n - L_n}$$</p>
+
+<p class="mb-4">%D (Signal Line):</p>
+<p class="mb-4">$$\%D = SMA_3(\%K)$$</p>
+
+<p class="mb-4">Where:</p>
+<p class="mb-4">- $C_t$ = Current closing price</p>
+<p class="mb-4">- $L_n$ = Lowest low over $n$ periods</p>
+<p class="mb-4">- $H_n$ = Highest high over $n$ periods</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Step</td><td class="px-4 py-2 border-b border-[#2a2e39]">Logic</td><td class="px-4 py-2 border-b border-[#2a2e39]">Purpose</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1</td><td class="px-4 py-2 border-b border-[#2a2e39]">Define period n (e.g., 14)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Set lookback window</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">2</td><td class="px-4 py-2 border-b border-[#2a2e39]">Find highest high in window</td><td class="px-4 py-2 border-b border-[#2a2e39]">Upper boundary</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">Find lowest low in window</td><td class="px-4 py-2 border-b border-[#2a2e39]">Lower boundary</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">4</td><td class="px-4 py-2 border-b border-[#2a2e39]">Calculate range: H - L</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price span</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">5</td><td class="px-4 py-2 border-b border-[#2a2e39]">Calculate position: (Close - L)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Distance from bottom</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">6</td><td class="px-4 py-2 border-b border-[#2a2e39]">Normalize: Position / Range × 100</td><td class="px-4 py-2 border-b border-[#2a2e39]">0-100 scale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">7</td><td class="px-4 py-2 border-b border-[#2a2e39]">Smooth %K with 3-period SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">%D signal line</td></tr>
+</table></div>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">Think of Stochastic as a thermometer for buying pressure. If the reading is near 100, the price is "running hot"—closing near the top of its recent range (strong buyers). If near 0, it's "running cold"—closing near the bottom (strong sellers). George Lane's key insight: "Momentum changes direction before price."</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<h3 id="default-parameters">Default Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rationale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">%K Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">14</td><td class="px-4 py-2 border-b border-[#2a2e39]">Classic balance of sensitivity</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">%D Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">Signal line smoothing</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Overbought</td><td class="px-4 py-2 border-b border-[#2a2e39]">80</td><td class="px-4 py-2 border-b border-[#2a2e39]">Upper extreme</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Oversold</td><td class="px-4 py-2 border-b border-[#2a2e39]">20</td><td class="px-4 py-2 border-b border-[#2a2e39]">Lower extreme</td></tr>
+</table></div>
+
+<h3 id="alternative-configurations">Alternative Configurations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trading Style</td><td class="px-4 py-2 border-b border-[#2a2e39]">%K</td><td class="px-4 py-2 border-b border-[#2a2e39]">%D</td><td class="px-4 py-2 border-b border-[#2a2e39]">Smoothing</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Fast (Aggressive)</td><td class="px-4 py-2 border-b border-[#2a2e39]">5</td><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">None</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Standard</td><td class="px-4 py-2 border-b border-[#2a2e39]">14</td><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">None</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Slow (Conservative)</td><td class="px-4 py-2 border-b border-[#2a2e39]">21</td><td class="px-4 py-2 border-b border-[#2a2e39]">5</td><td class="px-4 py-2 border-b border-[#2a2e39]">Extra SMA</td></tr>
+</table></div>
+
+<h3 id="why-these-values">Why These Values?</h3>
+
+<p class="mb-4">14 periods captures roughly two weeks of trading activity, providing meaningful range context. The 80/20 thresholds represent extreme zones where price is near the top or bottom 20% of its range—statistically significant territory.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<h3 id="best-conditions">Best Conditions</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Why It Works</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Range-Bound Markets</td><td class="px-4 py-2 border-b border-[#2a2e39]">Clear overbought/oversold reversals</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Pullbacks</td><td class="px-4 py-2 border-b border-[#2a2e39]">Timing entries after corrections</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Divergence Detection</td><td class="px-4 py-2 border-b border-[#2a2e39]">Momentum vs. price disagreements</td></tr>
+</table></div>
+
+<h3 id="limitations">Limitations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Strong Trends</td><td class="px-4 py-2 border-b border-[#2a2e39]">Stochastic stays overbought/oversold for extended periods</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Gap Markets</td><td class="px-4 py-2 border-b border-[#2a2e39]">Gaps distort the high-low range</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Low Volatility</td><td class="px-4 py-2 border-b border-[#2a2e39]">Stochastic clusters near 50, useless</td></tr>
+</table></div>
+
+<h3 id="asset-class-suitability">Asset Class Suitability</h3>
+
+<p class="mb-4">- Equities — Excellent for stock trading</p>
+<p class="mb-4">- Forex — Good for currency pair timing</p>
+<p class="mb-4">- Crypto — Faster periods (5-9) for high volatility</p>
+<p class="mb-4">- Commodities — Works for cyclical markets</p>
+<p class="mb-4">- Indices — Strong trends cause extended overbought</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-entry-signals">5. Entry Signals</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strength</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish Crossover</td><td class="px-4 py-2 border-b border-[#2a2e39]">%K crosses above %D below 20</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish Crossover</td><td class="px-4 py-2 border-b border-[#2a2e39]">%K crosses below %D above 80</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish Divergence</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price Lower Low, %K Higher Low</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish Divergence</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price Higher High, %K Lower High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Oversold Exit</td><td class="px-4 py-2 border-b border-[#2a2e39]">%K rises above 20</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Overbought Exit</td><td class="px-4 py-2 border-b border-[#2a2e39]">%K falls below 80</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+</table></div>
+
+<h3 id="primary-buy-signal">Primary Buy Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF %K crosses above %D
+AND %K &lt; 25 (in oversold zone)
+AND Price &gt; SMA(200)
+THEN → BUY (Momentum reversal in trend)
+</code></pre>
+
+<h3 id="primary-sell-signal">Primary Sell Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF %K crosses below %D
+AND %K &gt; 75 (in overbought zone)
+AND Price &lt; SMA(200)
+THEN → SELL (Momentum reversal in trend)
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-filter-usage">6. Filter Usage</h2>
+
+<p class="mb-4">Stochastic is a powerful timing filter for trend-following strategies:</p>
+
+<h3 id="filter-rules">Filter Rules</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rule</td><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>%K < 20</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Look for buy setups</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>%K > 80</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Look for sell setups</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>%K > 50</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish momentum</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>%K < 50</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish momentum</td></tr>
+</table></div>
+
+<h3 id="recommended-pairings">Recommended Pairings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Partner Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Synergy Logic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">SMA defines trend; Stochastic times entries</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bollinger Bands</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bands show range; Stochastic confirms reversal</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RSI</td><td class="px-4 py-2 border-b border-[#2a2e39]">Dual confirmation of momentum extreme</td></tr>
+</table></div>
+
+<h3 id="example-combined-strategy">Example Combined Strategy</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FILTER CONDITIONS:
+&nbsp;&nbsp;Price &gt; SMA(200)                     // Uptrend
+&nbsp;&nbsp;Price touches Lower Bollinger Band   // Pullback
+&nbsp;&nbsp;
+ENTRY TRIGGER:
+&nbsp;&nbsp;%K crosses above %D
+&nbsp;&nbsp;%K &lt; 20
+&nbsp;&nbsp;
+ACTION: BUY the pullback
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<h3 id="lag-characteristics">Lag Characteristics</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Component</td><td class="px-4 py-2 border-b border-[#2a2e39]">Approximate Lag</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">First Valid %K</td><td class="px-4 py-2 border-b border-[#2a2e39]">n periods</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">First Valid %D</td><td class="px-4 py-2 border-b border-[#2a2e39]">n + 2 periods</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Responsiveness</td><td class="px-4 py-2 border-b border-[#2a2e39]">Fast (leading indicator)</td></tr>
+</table></div>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Reality Check: In strong trends, Stochastic can stay above 80 (or below 20) for weeks. Selling every touch of 80 in a bull market is a recipe for losses.</blockquote>
+
+<h3 id="false-signal-scenarios">False Signal Scenarios</h3>
+
+<p class="mb-4">1. The "Embedded" Trap  </p>
+<p class="mb-4">   Stochastic stays above 80 for consecutive bars during momentum surges. Each touch seems like a sell, but price keeps rising.</p>
+
+<p class="mb-4">2. The Premature Crossover  </p>
+<p class="mb-4">   %K crosses %D at 22—just barely oversold—then price continues down.</p>
+
+<p class="mb-4">3. Range vs. Trend Confusion  </p>
+<p class="mb-4">   Using oversold buy signals in a waterfall decline.</p>
+
+<h3 id="mitigation-strategies">Mitigation Strategies</h3>
+
+<p class="mb-4">- Use "Embed" Rule — If %K > 80 for 3+ bars, cancel short signals</p>
+<p class="mb-4">- Require Trend Alignment — Only buy oversold in uptrends</p>
+<p class="mb-4">- Wait for Zone Exit — Don't enter until %K leaves the extreme zone</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<h3 id="the-"embed"-pattern">The "Embed" Pattern</h3>
+
+<p class="mb-4">George Lane's lesser-known but crucial insight:</p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Pro Insight: When %K stays above 80 for three consecutive closes, the market is "embedded"—in a super-strong trend. All overbought sell signals are invalidated until %K drops below 80. The same applies for oversold embeds below 20.</blockquote>
+
+<h3 id="hinge-pattern">Hinge Pattern</h3>
+
+<p class="mb-4">Professional traders look for the "hinge"—a flattening of the %K line:</p>
+
+<p class="mb-4">- %K is falling but suddenly flattens (horizontal)</p>
+<p class="mb-4">- This deceleration often precedes a turn</p>
+<p class="mb-4">- Enter long when %K begins rising again from the hinge</p>
+
+<p class="mb-4">The hinge is more predictive than simple crossovers because it shows actual momentum exhaustion.</p>
+
+<h3 id="pop-stochastic">Pop Stochastic</h3>
+
+<p class="mb-4">For high-probability reversals, Lane recommended the "Pop":</p>
+<p class="mb-4">1. %K "pops" sharply from <10 to >25 in one bar</p>
+<p class="mb-4">2. Indicates capitulation followed by aggressive buying</p>
+<p class="mb-4">3. Enter on the close of the "pop" candle</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"Stochastic tells you where price closed within its recent range—at the top means buyers dominated, at the bottom means sellers won."</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">Stochastic answers: "Where did price close relative to its recent trading range?"</p>
+
+<p class="mb-4">George Lane observed that in uptrends, prices tend to close near the high of the range. As trends weaken, closes drift toward the middle. Before reversals, closes migrate to the opposite extreme. The Stochastic captures this migration, often leading price turns.</p>
+
+<p class="mb-4">The indicator is called "stochastic" because it measures the momentum of price relative to its range—a concept borrowed from physics. Lane's famous quote: "Stochastic measures the momentum of price. If you visualize a rocket going up in the air, before it can turn down, it must slow down."</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<h3 id="backtest-evidence">Backtest Evidence</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Historical Performance</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Crossover at <20 (with trend)</td><td class="px-4 py-2 border-b border-[#2a2e39]">58% win rate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Crossover at >80 (with trend)</td><td class="px-4 py-2 border-b border-[#2a2e39]">54% win rate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish Divergence</td><td class="px-4 py-2 border-b border-[#2a2e39]">65% reversal within 5 bars</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Embed patterns (ignore counter-signals)</td><td class="px-4 py-2 border-b border-[#2a2e39]">+12% return improvement</td></tr>
+</table></div>
+
+<h3 id="why-it-works">Why It Works</h3>
+
+<p class="mb-4">Stochastic exploits the tendency of momentum to lead price. When price keeps making new lows but closes migrate upward within each bar's range, buyers are quietly accumulating—the reversal is often imminent. This momentum-price divergence is statistically predictive.</p>
+
+<h3 id="academic-context">Academic Context</h3>
+
+<p class="mb-4">While Lane developed Stochastic empirically in 1957, it aligns with academic research on momentum and mean reversion in asset prices. The bounded 0-100 scale provides standardized extreme readings across different assets.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-actionable-strategy">3. Actionable Strategy</h2>
+
+<h3 id="strategy-name:-"the-bollinger-band-tag-with-stochastic-confirmation"">Strategy Name: "The Bollinger Band Tag with Stochastic Confirmation"</h3>
+
+<p class="mb-4">Concept: Use Bollinger Bands for range, Stochastic for reversal confirmation.</p>
+
+<p class="mb-4">Setup Requirements:</p>
+<p class="mb-4">1. Bollinger Bands (20, 2)</p>
+<p class="mb-4">2. Stochastic (14, 3)</p>
+
+<p class="mb-4">Entry Trigger (Long):</p>
+<p class="mb-4">- Price touches or pierces lower Bollinger Band</p>
+<p class="mb-4">- %K < 20 (oversold)</p>
+<p class="mb-4">- %K crosses above %D</p>
+
+<p class="mb-4">Entry Trigger (Short):</p>
+<p class="mb-4">- Price touches or pierces upper Bollinger Band</p>
+<p class="mb-4">- %K > 80 (overbought)</p>
+<p class="mb-4">- %K crosses below %D</p>
+
+<p class="mb-4">Exit Rules:</p>
+<p class="mb-4">1. Primary Exit: Opposite Bollinger Band reached</p>
+<p class="mb-4">2. Stop Loss: Beyond the touched band</p>
+<p class="mb-4">3. Time Stop: 10 bars if no progress</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<h3 id="failure-patterns">Failure Patterns</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pattern</td><td class="px-4 py-2 border-b border-[#2a2e39]">Description</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mitigation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Flat Range</td><td class="px-4 py-2 border-b border-[#2a2e39]">High = Low → Division by zero</td><td class="px-4 py-2 border-b border-[#2a2e39]">Return %K = 50</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Extended Trends</td><td class="px-4 py-2 border-b border-[#2a2e39]">Stuck at 0 or 100</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use embed rule</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Whipsaws</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rapid crosses without follow-through</td><td class="px-4 py-2 border-b border-[#2a2e39]">Require zone exit</td></tr>
+</table></div>
+
+<h3 id="psychological-traps">Psychological Traps</h3>
+
+<p class="mb-4">1. The "Must Reverse at 80/20" Trap  </p>
+<p class="mb-4">   Assuming overbought/oversold automatically means reversal. In trends, it means strength.</p>
+
+<p class="mb-4">2. Averaging Down on Oversold  </p>
+<p class="mb-4">   Adding to losing positions because Stochastic is "even more oversold."</p>
+
+<p class="mb-4">3. Ignoring Higher Timeframes  </p>
+<p class="mb-4">   Taking daily oversold signals while weekly is in downtrend.</p>
+
+<h3 id="common-misinterpretations">Common Misinterpretations</h3>
+
+<p class="mb-4">- "%K > 80 = automatic sell" → In trends, 80 indicates strength</p>
+<p class="mb-4">- "Crossover = immediate action" → Zone context matters</p>
+<p class="mb-4">- "Stochastic shows direction" → Shows position in range, not trend</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<h3 id="creator-attribution">Creator Attribution</h3>
+
+<p class="mb-4">George Lane (1921-2004) developed the Stochastic Oscillator in the late 1950s. He was a floor trader and educator who famously said, "Stochastics measure the momentum of price... momentum changes direction before price."</p>
+
+<h3 id="parent/child-indicators">Parent/Child Indicators</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Relationship</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Slow Stochastic</td><td class="px-4 py-2 border-b border-[#2a2e39]">Child — Adds %K smoothing</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Stochastic RSI</td><td class="px-4 py-2 border-b border-[#2a2e39]">Child — Stochastic of RSI</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Williams %R</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sibling — Inverse calculation (0 at top)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">SMI</td><td class="px-4 py-2 border-b border-[#2a2e39]">Child — Centered variant (-100 to +100)</td></tr>
+</table></div>
+
+<h3 id="recommended-readings">Recommended Readings</h3>
+
+<p class="mb-4">1. *Technical Analysis of the Financial Markets* — John Murphy (Chapter 10)</p>
+<p class="mb-4">2. *Trading for a Living* — Alexander Elder</p>
+<p class="mb-4">3. George Lane's original articles in *Technical Analysis of Stocks & Commodities*</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h3 id="55-related-indicators-comparison">5.5 Related Indicators Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">Stochastic</td><td class="px-4 py-2 border-b border-[#2a2e39]">RSI</td><td class="px-4 py-2 border-b border-[#2a2e39]">Williams %R</td><td class="px-4 py-2 border-b border-[#2a2e39]">SMI</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Range</td><td class="px-4 py-2 border-b border-[#2a2e39]">0-100</td><td class="px-4 py-2 border-b border-[#2a2e39]">0-100</td><td class="px-4 py-2 border-b border-[#2a2e39]">-100 to 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">-100 to +100</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Measures</td><td class="px-4 py-2 border-b border-[#2a2e39]">Close position in range</td><td class="px-4 py-2 border-b border-[#2a2e39]">Gain/loss ratio</td><td class="px-4 py-2 border-b border-[#2a2e39]">Inverse stochastic</td><td class="px-4 py-2 border-b border-[#2a2e39]">Distance to midpoint</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Smoothing</td><td class="px-4 py-2 border-b border-[#2a2e39]">%D = SMA of %K</td><td class="px-4 py-2 border-b border-[#2a2e39]">Wilder's smoothing</td><td class="px-4 py-2 border-b border-[#2a2e39]">None</td><td class="px-4 py-2 border-b border-[#2a2e39]">Double EMA</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Overbought</td><td class="px-4 py-2 border-b border-[#2a2e39]">80</td><td class="px-4 py-2 border-b border-[#2a2e39]">70</td><td class="px-4 py-2 border-b border-[#2a2e39]">-20</td><td class="px-4 py-2 border-b border-[#2a2e39]">+40</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Oversold</td><td class="px-4 py-2 border-b border-[#2a2e39]">20</td><td class="px-4 py-2 border-b border-[#2a2e39]">30</td><td class="px-4 py-2 border-b border-[#2a2e39]">-80</td><td class="px-4 py-2 border-b border-[#2a2e39]">-40</td></tr>
+</table></div>
+
+<p class="mb-4">When to Use Which:</p>
+<p class="mb-4">- Stochastic — Quick timing in ranges</p>
+<p class="mb-4">- RSI — Momentum strength, divergence</p>
+<p class="mb-4">- Williams %R — Fast extreme readings</p>
+<p class="mb-4">- SMI — Smoother, less whipsaw</p>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h2 id="advanced-signal-reference">Advanced Signal Reference</h2>
+
+<h3 id="threshold-matrix">Threshold Matrix</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">%K Level</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Context</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bars in Zone</td><td class="px-4 py-2 border-b border-[#2a2e39]">Action</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">> 90</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bull</td><td class="px-4 py-2 border-b border-[#2a2e39]">< 3</td><td class="px-4 py-2 border-b border-[#2a2e39]">Normal overbought</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">> 80</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bull</td><td class="px-4 py-2 border-b border-[#2a2e39]">3+</td><td class="px-4 py-2 border-b border-[#2a2e39]">Embedded—ignore sell</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">60-80</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bull</td><td class="px-4 py-2 border-b border-[#2a2e39]">−</td><td class="px-4 py-2 border-b border-[#2a2e39]">Hold longs</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">50-60</td><td class="px-4 py-2 border-b border-[#2a2e39]">Any</td><td class="px-4 py-2 border-b border-[#2a2e39]">−</td><td class="px-4 py-2 border-b border-[#2a2e39]">Neutral zone</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">20-40</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bear</td><td class="px-4 py-2 border-b border-[#2a2e39]">−</td><td class="px-4 py-2 border-b border-[#2a2e39]">Hold shorts</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">< 20</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bear</td><td class="px-4 py-2 border-b border-[#2a2e39]">3+</td><td class="px-4 py-2 border-b border-[#2a2e39]">Embedded—ignore buy</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">< 10</td><td class="px-4 py-2 border-b border-[#2a2e39]">Any</td><td class="px-4 py-2 border-b border-[#2a2e39]">< 3</td><td class="px-4 py-2 border-b border-[#2a2e39]">Extreme oversold</td></tr>
+</table></div>
+
+<h3 id="signal-patterns">Signal Patterns</h3>
+
+<h4 id="crossover-detection">Crossover Detection</h4>
+<p class="mb-4">The %K/%D crossover is the Stochastic's primary trading signal, with highest reliability occurring in extreme zones. A bullish crossover in oversold territory (< 30) combined with uptrend confirmation achieves approximately 58% win rate, as momentum changes typically precede price reversals—George Lane's core insight. The zone labeling helps distinguish high-probability signals from neutral-zone noise that should generally be avoided.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def stochastic_crossover(k_values, d_values):
+&nbsp;&nbsp;&nbsp;&nbsp;current_k = k_values[-1]
+&nbsp;&nbsp;&nbsp;&nbsp;previous_k = k_values[-2]
+&nbsp;&nbsp;&nbsp;&nbsp;current_d = d_values[-1]
+&nbsp;&nbsp;&nbsp;&nbsp;previous_d = d_values[-2]
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;# Bullish crossover
+&nbsp;&nbsp;&nbsp;&nbsp;if previous_k &lt;= previous_d and current_k &gt; current_d:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;zone = &quot;OVERSOLD&quot; if current_k &lt; 30 else &quot;NEUTRAL&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return f&quot;BULLISH_{zone}&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;# Bearish crossover
+&nbsp;&nbsp;&nbsp;&nbsp;if previous_k &gt;= previous_d and current_k &lt; current_d:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;zone = &quot;OVERBOUGHT&quot; if current_k &gt; 70 else &quot;NEUTRAL&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return f&quot;BEARISH_{zone}&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return &quot;NO_CROSS&quot;
+</code></pre>
+
+<h4 id="divergence-detection">Divergence Detection</h4>
+<p class="mb-4">Stochastic divergence measures discrepancies between price momentum and the indicator's position within its range—a powerful reversal signal. Bullish divergence (price makes lower low, %K makes higher low) in oversold territory achieves 65% reversal accuracy within 5 bars because it indicates buyers are quietly accumulating even as price drops. The zone requirement (< 30 or > 70) ensures divergence occurs at meaningful extremes rather than in the noise-prone middle zone.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def stochastic_divergence(prices, k_values, lookback=10):
+&nbsp;&nbsp;&nbsp;&nbsp;price_ll = prices[-1] &lt; min(prices[-lookback:-1])
+&nbsp;&nbsp;&nbsp;&nbsp;k_hl = k_values[-1] &gt; min(k_values[-lookback:-1])
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if price_ll and k_hl and k_values[-1] &lt; 30:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;BULLISH_DIVERGENCE&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;price_hh = prices[-1] &gt; max(prices[-lookback:-1])
+&nbsp;&nbsp;&nbsp;&nbsp;k_lh = k_values[-1] &lt; max(k_values[-lookback:-1])
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if price_hh and k_lh and k_values[-1] &gt; 70:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;BEARISH_DIVERGENCE&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return &quot;NONE&quot;
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<h4 id="bullish-reversal-setup">Bullish Reversal Setup</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+%K crosses above %D
+AND %K &lt; 25
+AND Close &gt; SMA(200)
+</code></pre>
+
+<h4 id="embed-detection-strong-trend">Embed Detection (Strong Trend)</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+%K &gt; 80 for 3 consecutive bars
+→ Strong uptrend, don&#x27;t short
+</code></pre>
+
+<h4 id="divergence-scanner">Divergence Scanner</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Close makes 10-day Lower Low
+AND %K makes 10-day Higher Low
+AND %K &lt; 30
+</code></pre>
+
+<h3 id="combination-strategies">Combination Strategies</h3>
+
+<h4 id="stochastic-+-bollinger-band-bounce">Stochastic + Bollinger Band Bounce</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SETUP:
+&nbsp;&nbsp;Low touches Lower Bollinger Band
+&nbsp;&nbsp;%K &lt; 20
+
+TRIGGER:
+&nbsp;&nbsp;%K crosses above %D
+
+ENTRY: BUY
+
+STOP: Below Lower Bollinger Band
+
+EXIT: 
+&nbsp;&nbsp;Upper Bollinger Band touched
+&nbsp;&nbsp;OR %K &gt; 80 and crosses below %D
+</code></pre>
+
+<h4 id="multi-timeframe-stochastic">Multi-Timeframe Stochastic</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FILTER:
+&nbsp;&nbsp;Weekly %K &gt; 50 (bullish weekly)
+
+ENTRY:
+&nbsp;&nbsp;Daily %K &lt; 20
+&nbsp;&nbsp;Daily %K crosses above %D
+
+LOGIC:
+&nbsp;&nbsp;Take daily oversold signals only when weekly supports direction
+</code></pre>
+
+
+
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#formula" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Formula</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#default-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Default Parameters</a>
+<a href="#alternative-configurations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Alternative Configurations</a>
+<a href="#why-these-values" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why These Values?</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#best-conditions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Best Conditions</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#asset-class-suitability" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Asset Class Suitability</a>
+<a href="#5-entry-signals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Entry Signals</a>
+<a href="#primary-buy-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Buy Signal</a>
+<a href="#primary-sell-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Sell Signal</a>
+<a href="#6-filter-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Filter Usage</a>
+<a href="#filter-rules" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Filter Rules</a>
+<a href="#recommended-pairings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Pairings</a>
+<a href="#example-combined-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Example Combined Strategy</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#lag-characteristics" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Lag Characteristics</a>
+<a href="#false-signal-scenarios" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">False Signal Scenarios</a>
+<a href="#mitigation-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Mitigation Strategies</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#the-"embed"-pattern" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The "Embed" Pattern</a>
+<a href="#hinge-pattern" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Hinge Pattern</a>
+<a href="#pop-stochastic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Pop Stochastic</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#backtest-evidence" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Backtest Evidence</a>
+<a href="#why-it-works" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why It Works</a>
+<a href="#academic-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Academic Context</a>
+<a href="#3-actionable-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Strategy</a>
+<a href="#strategy-name:-"the-bollinger-band-tag-with-stochastic-confirmation"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Strategy Name: "The Bollinger Band Tag with Stochastic Confirmation"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#failure-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Failure Patterns</a>
+<a href="#psychological-traps" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Psychological Traps</a>
+<a href="#common-misinterpretations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common Misinterpretations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#parent/child-indicators" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Parent/Child Indicators</a>
+<a href="#recommended-readings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Readings</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Matrix</a>
+<a href="#signal-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Signal Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "Stochastic",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const kPeriod = params.kPeriod || 14;
+                const dPeriod = params.dPeriod || 3;
+                const result = Stochastic.calculate(data, kPeriod, dPeriod);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/Stochastic.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[{"id": "kPeriod", "label": "Kperiod (14)", "type": "number", "value": 14, "min": 2, "max": 100}, {"id": "dPeriod", "label": "Dperiod (3)", "type": "number", "value": 3, "min": 2, "max": 100}]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": true, "plots": {"main": {"label": "Stochastic", "color": "#4f46e5", "type": "line"}}}
+    </script>
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code - loaded externally before this block
+
+        // 2. Configuration (XSS-safe via script type="application/json")
+        try {
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const kPeriod = params.kPeriod || 14;
+                const dPeriod = params.dPeriod || 3;
+                const result = Stochastic.calculate(data, kPeriod, dPeriod);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+    </script>
+
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
+
+</body>
+</html>

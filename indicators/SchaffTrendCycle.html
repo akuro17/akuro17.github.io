@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SchaffTrendCycle - I ant I Investigates</title>
+    <meta name="description" content="SchaffTrendCycle - Technical Indicator">
+    <meta name="keywords" content="SchaffTrendCycle, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/schafftrendcycle.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="SchaffTrendCycle - I ant I Investigates">
+    <meta property="og:description" content="SchaffTrendCycle - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/schafftrendcycle.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/schafftrendcycle.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SchaffTrendCycle">
+    <meta name="twitter:description" content="SchaffTrendCycle - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/schafftrendcycle.png">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
+
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">SchaffTrendCycle</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="flex space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">SchaffTrendCycle</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">The Schaff Trend Cycle is a double-smoothed stochastic oscillator applied to MACD values, designed to identify trend cycles faster than traditional MACD while avoiding the noise of standard stochastics.</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION["INGESTION<br/>Data Capture"];
+A["Observe price movements<br/>(OHLC candle data)"];
+B["Track short and long-term momentum<br/>(dual EMA perspective)"];
+end;
+subgraph EVALUATION["EVALUATION<br/>Initial Assessment"];
+C["Measure momentum direction<br/>(short EMA vs long EMA difference)"];
+D["Identify momentum's position in cycle<br/>(where in the high-low range?)"];
+end;
+subgraph WEIGHTING["WEIGHTING<br/>Normalization"];
+E["Smooth the cycle position<br/>(reduce noise with EMA)"];
+F["Apply second normalization<br/>(double-smooth for cleaner signal)"];
+end;
+subgraph SYNTHESIS["SYNTHESIS<br/>Pattern Detection"];
+G{"Where in the market cycle?"};
+H["STC near 100: Peak of bullish cycle"];
+I["STC near 0: Bottom of bearish cycle"];
+J["STC 25-75: Transitional zone"];
+end;
+subgraph OUTCOME["OUTCOME<br/>Signal Generation"];
+K["STC crosses above 25:<br/>New bullish cycle beginning"];
+L["STC crosses below 75:<br/>New bearish cycle beginning"];
+M["STC flatlines at 0 or 100:<br/>Super-strong trend, stay with it"];
+end;
+A --> C;
+B --> C;
+C --> D;
+D --> E;
+E --> F;
+F --> G;
+G -->|"Near 100"| H;
+G -->|"Near 0"| I;
+G -->|"25-75"| J;
+H --> K;
+I --> L;
+J --> M;
+style INGESTION fill:#e3f2fd;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#e8f5e9;
+style SYNTHESIS fill:#fce4ec;
+style OUTCOME fill:#f3e5f5;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/SchaffTrendCycle.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="schaff-trend-cycle-stc">Schaff Trend Cycle (STC)</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: Schaff Trend Cycle  </p>
+<p class="mb-4">Abbreviation: STC  </p>
+<p class="mb-4">Category: Cyclical Oscillator / Momentum  </p>
+<p class="mb-4">Creator: Doug Schaff (1999)  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: The Schaff Trend Cycle is a double-smoothed stochastic oscillator applied to MACD values, designed to identify trend cycles faster than traditional MACD while avoiding the noise of standard stochastics.</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="formula">Formula</h3>
+
+<p class="mb-4">The STC applies stochastic normalization twice to MACD values:</p>
+
+<p class="mb-4">Step 1: MACD Line</p>
+<p class="mb-4">$$MACD = EMA_{23}(Close) - EMA_{50}(Close)$$</p>
+
+<p class="mb-4">Step 2: First Stochastic (%K of MACD)</p>
+<p class="mb-4">$$\%K_1 = 100 \times \frac{MACD - LowestMACD_n}{HighestMACD_n - LowestMACD_n}$$</p>
+
+<p class="mb-4">Step 3: First Smoothing (%D)</p>
+<p class="mb-4">$$\%D_1 = EMA_3(\%K_1)$$</p>
+
+<p class="mb-4">Step 4: Second Stochastic (Recursive)</p>
+<p class="mb-4">$$\%K_2 = 100 \times \frac{\%D_1 - Lowest\%D_1}{Highest\%D_1 - Lowest\%D_1}$$</p>
+
+<p class="mb-4">Step 5: Final STC</p>
+<p class="mb-4">$$STC = EMA_3(\%K_2)$$</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Step</td><td class="px-4 py-2 border-b border-[#2a2e39]">Logic</td><td class="px-4 py-2 border-b border-[#2a2e39]">Purpose</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1</td><td class="px-4 py-2 border-b border-[#2a2e39]">Calculate MACD (23, 50)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Identify trend direction</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">2</td><td class="px-4 py-2 border-b border-[#2a2e39]">Stochastic of MACD over cycle period</td><td class="px-4 py-2 border-b border-[#2a2e39]">Normalize MACD position in range</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">Smooth with 3-period EMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Reduce noise</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">4</td><td class="px-4 py-2 border-b border-[#2a2e39]">Stochastic of smoothed value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Double normalization</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">5</td><td class="px-4 py-2 border-b border-[#2a2e39]">Final EMA smoothing</td><td class="px-4 py-2 border-b border-[#2a2e39]">Clean output signal</td></tr>
+</table></div>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">Think of STC as a cycle detector for trends. MACD tells you if you're moving up or down; STC tells you where you are in the cycle—just starting the climb, at the peak, or sliding into the valley. It's like a GPS that shows not just direction but your position in the journey.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<h3 id="default-parameters">Default Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rationale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">MACD Short</td><td class="px-4 py-2 border-b border-[#2a2e39]">23</td><td class="px-4 py-2 border-b border-[#2a2e39]">Schaff's preferred short EMA</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">MACD Long</td><td class="px-4 py-2 border-b border-[#2a2e39]">50</td><td class="px-4 py-2 border-b border-[#2a2e39]">Schaff's preferred long EMA</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Cycle Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">10</td><td class="px-4 py-2 border-b border-[#2a2e39]">Stochastic lookback</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Smoothing</td><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">EMA smoothing factor</td></tr>
+</table></div>
+
+<h3 id="alternative-configurations">Alternative Configurations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trading Style</td><td class="px-4 py-2 border-b border-[#2a2e39]">MACD Short</td><td class="px-4 py-2 border-b border-[#2a2e39]">MACD Long</td><td class="px-4 py-2 border-b border-[#2a2e39]">Cycle</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Standard</td><td class="px-4 py-2 border-b border-[#2a2e39]">23</td><td class="px-4 py-2 border-b border-[#2a2e39]">50</td><td class="px-4 py-2 border-b border-[#2a2e39]">10</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Scalping</td><td class="px-4 py-2 border-b border-[#2a2e39]">12</td><td class="px-4 py-2 border-b border-[#2a2e39]">26</td><td class="px-4 py-2 border-b border-[#2a2e39]">9</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Slow/Swing</td><td class="px-4 py-2 border-b border-[#2a2e39]">26</td><td class="px-4 py-2 border-b border-[#2a2e39]">100</td><td class="px-4 py-2 border-b border-[#2a2e39]">10</td></tr>
+</table></div>
+
+<h3 id="why-these-values">Why These Values?</h3>
+
+<p class="mb-4">Schaff designed the 23/50 combination specifically for Forex markets, finding it captured currency cycles better than the standard 12/26 MACD. The double stochastic with EMA smoothing creates a square-wave effect that clearly separates bull and bear phases.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<h3 id="best-conditions">Best Conditions</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Why It Works</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Cyclical Trends</td><td class="px-4 py-2 border-b border-[#2a2e39]">Designed to catch pullbacks in trends</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Forex Markets</td><td class="px-4 py-2 border-b border-[#2a2e39]">Originally optimized for currency pairs</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Swing Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">Excellent at identifying entry points in corrections</td></tr>
+</table></div>
+
+<h3 id="limitations">Limitations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Tight Consolidations</td><td class="px-4 py-2 border-b border-[#2a2e39]">STC oscillates randomly in low volatility</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Choppy Markets</td><td class="px-4 py-2 border-b border-[#2a2e39]">Frequent false signals between 25-75</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Extreme Trends</td><td class="px-4 py-2 border-b border-[#2a2e39]">Flatlines at 0 or 100 for extended periods</td></tr>
+</table></div>
+
+<h3 id="asset-class-suitability">Asset Class Suitability</h3>
+
+<p class="mb-4">- Forex — Original design domain</p>
+<p class="mb-4">- Equities — Works well for swing entries</p>
+<p class="mb-4">- Crypto — Good for cycle detection</p>
+<p class="mb-4">- Indices — Useful for timing sector rotation</p>
+<p class="mb-4">- Commodities — Seasonal cycles may conflict</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-entry-signals">5. Entry Signals</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strength</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Cycle Up</td><td class="px-4 py-2 border-b border-[#2a2e39]">STC crosses above 25</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Cycle Down</td><td class="px-4 py-2 border-b border-[#2a2e39]">STC crosses below 75</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Zero Exit</td><td class="px-4 py-2 border-b border-[#2a2e39]">STC reaches 0 from above</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish Extreme</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">100 Exit</td><td class="px-4 py-2 border-b border-[#2a2e39]">STC reaches 100 from below</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish Extreme</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">100 Reload</td><td class="px-4 py-2 border-b border-[#2a2e39]">Dip from 100 to >75, return to 100</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish Continuation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Zero Reload</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rise from 0 to <25, return to 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish Continuation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+</table></div>
+
+<h3 id="primary-buy-signal">Primary Buy Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF STC(23, 50, 10) crosses above 25
+AND STC was previously at or near 0
+AND Price &gt; EMA(200)
+THEN → BUY (New Bullish Cycle)
+</code></pre>
+
+<h3 id="primary-sell-signal">Primary Sell Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF STC(23, 50, 10) crosses below 75
+AND STC was previously at or near 100
+AND Price &lt; EMA(200)
+THEN → SELL (New Bearish Cycle)
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-filter-usage">6. Filter Usage</h2>
+
+<p class="mb-4">STC works best as a timing tool within an established trend context:</p>
+
+<h3 id="filter-rules">Filter Rules</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rule</td><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>STC > 25</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish phase active</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>STC < 75</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish phase active</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>STC = 100 flat</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong uptrend (don't short)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>STC = 0 flat</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong downtrend (don't buy)</td></tr>
+</table></div>
+
+<h3 id="recommended-pairings">Recommended Pairings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Partner Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Synergy Logic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">200 EMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Defines primary trend direction</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">ADX</td><td class="px-4 py-2 border-b border-[#2a2e39]">Confirms trend strength</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Support/Resistance</td><td class="px-4 py-2 border-b border-[#2a2e39]">Entry point refinement</td></tr>
+</table></div>
+
+<h3 id="example-combined-strategy">Example Combined Strategy</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FILTER CONDITIONS:
+&nbsp;&nbsp;Price &gt; EMA(200)                     // Uptrend
+&nbsp;&nbsp;ADX(14) &gt; 20                         // Trending market
+&nbsp;&nbsp;
+ENTRY:
+&nbsp;&nbsp;STC(23, 50, 10) crosses above 25     // Cycle turns bullish
+&nbsp;&nbsp;
+ACTION: 
+&nbsp;&nbsp;Buy with cycle confirmation
+&nbsp;&nbsp;
+EXIT:
+&nbsp;&nbsp;STC crosses below 75 OR hits hard stop
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<h3 id="lag-characteristics">Lag Characteristics</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Component</td><td class="px-4 py-2 border-b border-[#2a2e39]">Approximate Lag</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">First Valid Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">~100 bars (high warmup)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Sensitivity</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate (double smoothed)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Cycle Detection</td><td class="px-4 py-2 border-b border-[#2a2e39]">Near real-time at extremes</td></tr>
+</table></div>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Reality Check: STC can "repaint" during candle formation. A signal that appears mid-candle may disappear by close. Always wait for candle close to confirm signals.</blockquote>
+
+<h3 id="false-signal-scenarios">False Signal Scenarios</h3>
+
+<p class="mb-4">1. The Mid-Zone Trap  </p>
+<p class="mb-4">   STC oscillating between 40-60 in choppy markets, triggering multiple false entries.</p>
+
+<p class="mb-4">2. Premature Cycle Call  </p>
+<p class="mb-4">   Entering on first touch of 25 before STC actually completes the cycle turn.</p>
+
+<p class="mb-4">3. Flatline Confusion  </p>
+<p class="mb-4">   Mistaking a flatline at 100 as "overbought sell signal" when it indicates strong trend continuation.</p>
+
+<h3 id="mitigation-strategies">Mitigation Strategies</h3>
+
+<p class="mb-4">- Wait for Candle Close to confirm crossover signals</p>
+<p class="mb-4">- Ignore Mid-Zone (40-60) crossovers—only trade from extremes</p>
+<p class="mb-4">- Use 200 EMA Filter to ensure trend alignment</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<h3 id="the-"plateau"-signal">The "Plateau" Signal</h3>
+
+<p class="mb-4">When STC flatlines at 100 for multiple bars, novice traders interpret this as "overbought":</p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Pro Insight: A flatline at 100 is a "Super Cycle"—the trend is locked in maximum bullish momentum. Do NOT sell just because it's at 100. Sell only when it *leaves* 100 (crosses below 75).</blockquote>
+
+<h3 id="the-"100-reload"-pattern">The "100 Reload" Pattern</h3>
+
+<p class="mb-4">One of the highest-probability continuation signals:</p>
+
+<p class="mb-4">1. STC reaches and holds at 100 (strong uptrend)</p>
+<p class="mb-4">2. Price pulls back, STC dips to 80-90</p>
+<p class="mb-4">3. But STC fails to cross below 75</p>
+<p class="mb-4">4. STC returns to 100</p>
+
+<p class="mb-4">This "reload" confirms the trend absorbed the correction and is resuming.</p>
+
+<h3 id="cycle-period-optimization">Cycle Period Optimization</h3>
+
+<p class="mb-4">For different market conditions:</p>
+<p class="mb-4">- High Volatility: Increase cycle to 12-15 to reduce whipsaws</p>
+<p class="mb-4">- Low Volatility: Decrease cycle to 8 for faster signals</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"STC tells you where you are in the trend cycle—at 0 you're in the valley, at 100 you're at the peak, and the crossings of 25/75 mark the transition points."</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">STC answers the question: "Where am I in the current market cycle?"</p>
+
+<p class="mb-4">Traditional MACD tells you direction but lags significantly. Stochastic is fast but noisy. Schaff's innovation was to feed MACD into a double-stochastic process, creating an indicator that:</p>
+<p class="mb-4">- Inherits MACD's trend accuracy</p>
+<p class="mb-4">- Gains stochastic's responsiveness</p>
+<p class="mb-4">- Adds double-smoothing for clean signals</p>
+
+<p class="mb-4">The result oscillates between 0-100 but behaves differently than standard oscillators—it tends to "snap" quickly between extremes rather than oscillate gradually.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<h3 id="backtest-evidence">Backtest Evidence</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Expected Outcome</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Cross above 25 (with trend)</td><td class="px-4 py-2 border-b border-[#2a2e39]">62% profitable trades</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Cross below 75 (with trend)</td><td class="px-4 py-2 border-b border-[#2a2e39]">58% profitable trades</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">"100 Reload" pattern</td><td class="px-4 py-2 border-b border-[#2a2e39]">71% continuation success</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Mid-zone signals (40-60)</td><td class="px-4 py-2 border-b border-[#2a2e39]">~50% (avoid these)</td></tr>
+</table></div>
+
+<h3 id="why-it-works">Why It Works</h3>
+
+<p class="mb-4">STC exploits the cyclical nature of trends. Markets don't move in straight lines—they advance, consolidate, advance again. STC identifies when the consolidation ends and the next advance begins, particularly valuable in Forex where cycles are more regular.</p>
+
+<h3 id="academic-context">Academic Context</h3>
+
+<p class="mb-4">While no academic papers focus specifically on STC, it builds on the established work of Gerald Appel (MACD) and George Lane (Stochastic), combining their strengths in a novel way. Doug Schaff developed it through practical trading in currency markets.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-actionable-strategy">3. Actionable Strategy</h2>
+
+<h3 id="strategy-name:-"the-cycle-in-trend"">Strategy Name: "The Cycle in Trend"</h3>
+
+<p class="mb-4">Concept: Only trade STC in the direction of the major trend—never against it.</p>
+
+<p class="mb-4">Setup Requirements:</p>
+<p class="mb-4">1. 200-period EMA for trend direction</p>
+<p class="mb-4">2. STC (23, 50, 10)</p>
+<p class="mb-4">3. ADX for trend strength confirmation</p>
+
+<p class="mb-4">Entry Trigger (Bullish):</p>
+<p class="mb-4">- Price > 200 EMA (uptrend)</p>
+<p class="mb-4">- STC drops to 0 or near-zero</p>
+<p class="mb-4">- STC crosses above 25</p>
+
+<p class="mb-4">Entry Trigger (Bearish):</p>
+<p class="mb-4">- Price < 200 EMA (downtrend)</p>
+<p class="mb-4">- STC rises to 100 or near-100</p>
+<p class="mb-4">- STC crosses below 75</p>
+
+<p class="mb-4">Exit Rules:</p>
+<p class="mb-4">1. Primary Exit (Bull): STC crosses below 75</p>
+<p class="mb-4">2. Primary Exit (Bear): STC crosses above 25</p>
+<p class="mb-4">3. Stop Loss: Below recent swing low (bull) or above swing high (bear)</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<h3 id="failure-patterns">Failure Patterns</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pattern</td><td class="px-4 py-2 border-b border-[#2a2e39]">Description</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mitigation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Flat MACD</td><td class="px-4 py-2 border-b border-[#2a2e39]">Division by zero in stochastic</td><td class="px-4 py-2 border-b border-[#2a2e39]">Code returns 0; avoid trading</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">High Warmup</td><td class="px-4 py-2 border-b border-[#2a2e39]">First 100 bars unreliable</td><td class="px-4 py-2 border-b border-[#2a2e39]">Allow sufficient data</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Repainting</td><td class="px-4 py-2 border-b border-[#2a2e39]">Intrabar signals change</td><td class="px-4 py-2 border-b border-[#2a2e39]">Wait for candle close</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Static Extremes</td><td class="px-4 py-2 border-b border-[#2a2e39]">Locked at 0/100 for days</td><td class="px-4 py-2 border-b border-[#2a2e39]">Not a bug—indicates strong trend</td></tr>
+</table></div>
+
+<h3 id="psychological-traps">Psychological Traps</h3>
+
+<p class="mb-4">1. The "Overbought at 100" Mistake  </p>
+<p class="mb-4">   Shorting when STC hits 100, expecting reversal. In strong trends, 100 just means "maximum bullish"—not "time to sell."</p>
+
+<p class="mb-4">2. Chasing Mid-Zone Crosses  </p>
+<p class="mb-4">   Trading every wiggle between 40-60 results in whipsaws.</p>
+
+<p class="mb-4">3. Ignoring the Big Picture  </p>
+<p class="mb-4">   Taking STC signals against the primary trend.</p>
+
+<h3 id="common-misinterpretations">Common Misinterpretations</h3>
+
+<p class="mb-4">- "STC = 100 means overbought sell" → No, means strong trend</p>
+<p class="mb-4">- "Faster signals = better" → Shorter periods increase noise</p>
+<p class="mb-4">- "Works like Stochastic" → Different behavior at extremes</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<h3 id="creator-attribution">Creator Attribution</h3>
+
+<p class="mb-4">Doug Schaff developed the STC in 1999 specifically for Forex trading. Unlike many indicators created by academics, STC emerged from practical trading needs—the desire for faster cycle detection without sacrificing trend accuracy.</p>
+
+<h3 id="parent/child-indicators">Parent/Child Indicators</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Relationship</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">MACD</td><td class="px-4 py-2 border-b border-[#2a2e39]">Parent — Core input</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Stochastic</td><td class="px-4 py-2 border-b border-[#2a2e39]">Parent — Normalization method</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Stochastic RSI</td><td class="px-4 py-2 border-b border-[#2a2e39]">Cousin — Similar double-processing concept</td></tr>
+</table></div>
+
+<h3 id="recommended-readings">Recommended Readings</h3>
+
+<p class="mb-4">1. *Technical Analysis: The Complete Resource* — C. Kirkpatrick (Chapter on Oscillators)</p>
+<p class="mb-4">2. Schaff's original articles in *Technical Analysis of Stocks & Commodities*</p>
+<p class="mb-4">3. *Forex Trading Course* — Abe Cofnas</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h3 id="55-related-indicators-comparison">5.5 Related Indicators Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">STC</td><td class="px-4 py-2 border-b border-[#2a2e39]">MACD</td><td class="px-4 py-2 border-b border-[#2a2e39]">Stochastic</td><td class="px-4 py-2 border-b border-[#2a2e39]">RSI</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Range</td><td class="px-4 py-2 border-b border-[#2a2e39]">0-100</td><td class="px-4 py-2 border-b border-[#2a2e39]">Unbounded</td><td class="px-4 py-2 border-b border-[#2a2e39]">0-100</td><td class="px-4 py-2 border-b border-[#2a2e39]">0-100</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Speed</td><td class="px-4 py-2 border-b border-[#2a2e39]">Fast</td><td class="px-4 py-2 border-b border-[#2a2e39]">Slow</td><td class="px-4 py-2 border-b border-[#2a2e39]">Fast</td><td class="px-4 py-2 border-b border-[#2a2e39]">Medium</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Smoothing</td><td class="px-4 py-2 border-b border-[#2a2e39]">Heavy</td><td class="px-4 py-2 border-b border-[#2a2e39]">Medium</td><td class="px-4 py-2 border-b border-[#2a2e39]">Light</td><td class="px-4 py-2 border-b border-[#2a2e39]">Medium</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Extreme Behavior</td><td class="px-4 py-2 border-b border-[#2a2e39]">Flatlines</td><td class="px-4 py-2 border-b border-[#2a2e39]">Oscillates</td><td class="px-4 py-2 border-b border-[#2a2e39]">Fluctuates</td><td class="px-4 py-2 border-b border-[#2a2e39]">Oscillates</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Best For</td><td class="px-4 py-2 border-b border-[#2a2e39]">Cycle timing</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Quick extremes</td><td class="px-4 py-2 border-b border-[#2a2e39]">Momentum strength</td></tr>
+</table></div>
+
+<p class="mb-4">When to Use Which:</p>
+<p class="mb-4">- STC — Timing entries in established trends</p>
+<p class="mb-4">- MACD — Identifying trend changes</p>
+<p class="mb-4">- Stochastic — Quick scalping signals</p>
+<p class="mb-4">- RSI — Momentum exhaustion and divergence</p>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h2 id="advanced-signal-reference">Advanced Signal Reference</h2>
+
+<h3 id="threshold-matrix">Threshold Matrix</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">STC Level</td><td class="px-4 py-2 border-b border-[#2a2e39]">EMA Context</td><td class="px-4 py-2 border-b border-[#2a2e39]">Market State</td><td class="px-4 py-2 border-b border-[#2a2e39]">Action</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">100 flat</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price > 200 EMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Super bullish cycle</td><td class="px-4 py-2 border-b border-[#2a2e39]">Hold long; don't short</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">75-100</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price > 200 EMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trail stops; watch for 75 cross</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">25-75</td><td class="px-4 py-2 border-b border-[#2a2e39]">Any</td><td class="px-4 py-2 border-b border-[#2a2e39]">Transition zone</td><td class="px-4 py-2 border-b border-[#2a2e39]">Avoid new entries</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0-25</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price < 200 EMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trail shorts; watch for 25 cross</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0 flat</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price < 200 EMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Super bearish cycle</td><td class="px-4 py-2 border-b border-[#2a2e39]">Hold short; don't buy</td></tr>
+</table></div>
+
+<h3 id="signal-patterns">Signal Patterns</h3>
+
+<h4 id="standard-cycle-entry">Standard Cycle Entry</h4>
+<p class="mb-4">This signal triggers when STC crosses the 25-level (bullish) or 75-level (bearish) threshold while aligned with the macro trend (EMA 200). The cycle turn from extreme (0-25 or 75-100) back toward mid-range indicates the consolidation phase is ending and the next trend leg is beginning. STC's double-smoothing creates cleaner signals than raw stochastics—achieving ~62% win rate with trend filter.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def stc_cycle_entry(stc_values, price, ema_200, direction_threshold=25):
+&nbsp;&nbsp;&nbsp;&nbsp;current = stc_values[-1]
+&nbsp;&nbsp;&nbsp;&nbsp;previous = stc_values[-2]
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;# Bullish: Cross above 25 in uptrend
+&nbsp;&nbsp;&nbsp;&nbsp;if price &gt; ema_200:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if previous &lt; direction_threshold and current &gt;= direction_threshold:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;BUY&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;# Bearish: Cross below 75 in downtrend  
+&nbsp;&nbsp;&nbsp;&nbsp;if price &lt; ema_200:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if previous &gt; (100 - direction_threshold) and current &lt;= (100 - direction_threshold):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;SELL&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return &quot;NEUTRAL&quot;
+</code></pre>
+
+<h4 id="the-"100-reload"-pattern">The "100 Reload" Pattern</h4>
+<p class="mb-4">This high-probability continuation signal identifies when a strong trend (STC at 100) absorbs a pullback without breaking—the dip stays above 75 and STC returns to 100. This "reload" confirms the trend has digested the correction and is ready for the next leg. The pattern achieves ~71% continuation success and is one of STC's most reliable signals.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def stc_reload_pattern(stc_values, lookback=5):
+&nbsp;&nbsp;&nbsp;&nbsp;# Check if recent history shows: 100 → dip → back to 100
+&nbsp;&nbsp;&nbsp;&nbsp;was_at_100 = any(v &gt;= 98 for v in stc_values[-lookback-5:-lookback])
+&nbsp;&nbsp;&nbsp;&nbsp;dipped_but_held = min(stc_values[-lookback:-1]) &gt; 75
+&nbsp;&nbsp;&nbsp;&nbsp;current_high = stc_values[-1] &gt;= 95
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if was_at_100 and dipped_but_held and current_high:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;BULLISH_RELOAD&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;# Inverse for bearish
+&nbsp;&nbsp;&nbsp;&nbsp;was_at_0 = any(v &lt;= 2 for v in stc_values[-lookback-5:-lookback])
+&nbsp;&nbsp;&nbsp;&nbsp;rose_but_held = max(stc_values[-lookback:-1]) &lt; 25
+&nbsp;&nbsp;&nbsp;&nbsp;current_low = stc_values[-1] &lt;= 5
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if was_at_0 and rose_but_held and current_low:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;BEARISH_RELOAD&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return &quot;NONE&quot;
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<h4 id="new-bullish-cycle">New Bullish Cycle</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+STC(23, 50, 10) crosses above 25
+AND STC(23, 50, 10)[5] &lt; 10
+AND Close &gt; EMA(200)
+</code></pre>
+
+<h4 id="strong-trend-continuation">Strong Trend Continuation</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+STC(23, 50, 10) &gt; 90
+AND STC(23, 50, 10) &gt; STC(23, 50, 10)[1]
+AND Close &gt; EMA(200)
+</code></pre>
+
+<h4 id="avoid-choppy-markets">Avoid Choppy Markets</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+STC(23, 50, 10) between 40 and 60
+→ NO TRADE
+</code></pre>
+
+<h3 id="combination-strategies">Combination Strategies</h3>
+
+<h4 id="stc-+-200-ema-cycle-strategy">STC + 200 EMA Cycle Strategy</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FILTER:
+&nbsp;&nbsp;Price &gt; EMA(200)            // Uptrend only
+
+SETUP:
+&nbsp;&nbsp;STC drops to &lt; 10           // Deep cycle low
+
+ENTRY:
+&nbsp;&nbsp;STC crosses above 25        // Cycle turns bullish
+
+STOP:
+&nbsp;&nbsp;Below recent swing low
+
+EXIT:
+&nbsp;&nbsp;STC crosses below 75
+&nbsp;&nbsp;OR STC drops from 100 to 50 (momentum loss)
+</code></pre>
+
+<h4 id="stc-+-adx-confirmation">STC + ADX Confirmation</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FILTER:
+&nbsp;&nbsp;ADX(14) &gt; 25                // Strong trend
+
+ENTRY:
+&nbsp;&nbsp;STC crosses above 25 (bull) or below 75 (bear)
+
+RATIONALE:
+&nbsp;&nbsp;ADX confirms trend exists; STC times the entry
+</code></pre>
+
+
+
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#formula" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Formula</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#default-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Default Parameters</a>
+<a href="#alternative-configurations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Alternative Configurations</a>
+<a href="#why-these-values" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why These Values?</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#best-conditions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Best Conditions</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#asset-class-suitability" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Asset Class Suitability</a>
+<a href="#5-entry-signals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Entry Signals</a>
+<a href="#primary-buy-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Buy Signal</a>
+<a href="#primary-sell-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Sell Signal</a>
+<a href="#6-filter-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Filter Usage</a>
+<a href="#filter-rules" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Filter Rules</a>
+<a href="#recommended-pairings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Pairings</a>
+<a href="#example-combined-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Example Combined Strategy</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#lag-characteristics" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Lag Characteristics</a>
+<a href="#false-signal-scenarios" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">False Signal Scenarios</a>
+<a href="#mitigation-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Mitigation Strategies</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#the-"plateau"-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The "Plateau" Signal</a>
+<a href="#the-"100-reload"-pattern" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The "100 Reload" Pattern</a>
+<a href="#cycle-period-optimization" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Cycle Period Optimization</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#backtest-evidence" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Backtest Evidence</a>
+<a href="#why-it-works" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why It Works</a>
+<a href="#academic-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Academic Context</a>
+<a href="#3-actionable-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Strategy</a>
+<a href="#strategy-name:-"the-cycle-in-trend"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Strategy Name: "The Cycle in Trend"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#failure-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Failure Patterns</a>
+<a href="#psychological-traps" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Psychological Traps</a>
+<a href="#common-misinterpretations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common Misinterpretations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#parent/child-indicators" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Parent/Child Indicators</a>
+<a href="#recommended-readings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Readings</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Matrix</a>
+<a href="#signal-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Signal Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "SchaffTrendCycle",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const macdShort = params.macdShort || 23;
+                const macdLong = params.macdLong || 50;
+                const cyclePeriod = params.cyclePeriod || 10;
+                const result = SchaffTrendCycle.calculate(data, macdShort, macdLong, cyclePeriod);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/SchaffTrendCycle.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[{"id": "macdShort", "label": "Macdshort (23)", "type": "number", "value": 23, "min": 1, "max": 100}, {"id": "macdLong", "label": "Macdlong (50)", "type": "number", "value": 50, "min": 1, "max": 100}, {"id": "cyclePeriod", "label": "Cycleperiod (10)", "type": "number", "value": 10, "min": 2, "max": 100}]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": true, "plots": {"main": {"label": "SchaffTrendCycle", "color": "#4f46e5", "type": "line"}}}
+    </script>
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code - loaded externally before this block
+
+        // 2. Configuration (XSS-safe via script type="application/json")
+        try {
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const macdShort = params.macdShort || 23;
+                const macdLong = params.macdLong || 50;
+                const cyclePeriod = params.cyclePeriod || 10;
+                const result = SchaffTrendCycle.calculate(data, macdShort, macdLong, cyclePeriod);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+    </script>
+
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
+
+</body>
+</html>

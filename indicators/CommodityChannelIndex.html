@@ -1,258 +1,51 @@
 <!DOCTYPE html>
 <html lang="ja" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
+        <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CommodityChannelIndex - I ant I Investigates</title>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
+    <meta name="description" content="CommodityChannelIndex - Technical Indicator">
+    <meta name="keywords" content="CommodityChannelIndex, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/commoditychannelindex.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="CommodityChannelIndex - I ant I Investigates">
+    <meta property="og:description" content="CommodityChannelIndex - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/commoditychannelindex.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/commoditychannelindex.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CommodityChannelIndex">
+    <meta name="twitter:description" content="CommodityChannelIndex - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/commoditychannelindex.png">
     <!-- Structured Data for SEO -->
     <script type="application/ld+json">
-        {
-    "@context": "https://schema.org",
-    "@type": "TechArticle",
-    "headline": "CommodityChannelIndex",
-    "description": "Detailed guide for CommodityChannelIndex indicator.",
-    "author": {
-        "@type": "Organization",
-        "name": "I and I Investigates"
-    }
-}
     </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
     <!-- Styles -->
-    <!-- Styles -->
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
     <!-- KaTeX (Math) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
-    <!-- Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
 
-    <style>
-        /* =========================================
-           PORTED STYLES (From 0117 Template)
-           ========================================= */
-        :root {
-            /* Minimal Variable Set for Logic Panel */
-            --bg-card: #FFFFFF;
-            --bg-secondary: #F8FAFC; /* slate-50 */
-            --bg-hover: #F1F5F9; /* slate-100 */
-            --border-color: #E2E8F0; /* slate-200 */
-            --text-primary: #1E293B; /* slate-800 */
-            --text-muted: #64748B; /* slate-500 */
-            --accent: #4F46E5; /* indigo-600 */
-        }
-
-        /* Logic Figure Container */
-        .logic-figure {
-            margin: 0;
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 0.5rem;
-            position: relative;
-            overflow: hidden;
-            height: 600px; /* Fixed height for infinite canvas feel */
-        }
-
-        /* Infinite Canvas Wrapper */
-        .chart-scroll-wrapper {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            position: relative;
-            background-color: #FFFFFF;
-            background-image: radial-gradient(#E2E8F0 1.5px, transparent 1.5px);
-            background-size: 20px 20px;
-            cursor: grab;
-            touch-action: none;
-            user-select: none;
-        }
-        .chart-scroll-wrapper:active { cursor: grabbing; }
-
-        /* Code Panel Overlay */
-        #code-panel-overlay {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            width: 500px;
-            max-width: 90%;
-            z-index: 30;
-            background-color: var(--bg-card);
-            border-right: 1px solid var(--border-color);
-            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), width 0.3s ease;
-            transform: translateX(0);
-        }
-        #code-panel-overlay.panel-hidden {
-            transform: translateX(-100%);
-            pointer-events: none;
-        }
-        #code-panel-overlay.panel-expanded {
-            width: 100%;
-            max-width: 100%;
-        }
-
-        /* Code Content */
-        .code-panel-body {
-            background-color: #FAFAFA;
-            flex: 1;
-            overflow: auto;
-            font-family: 'Roboto Mono', monospace;
-            font-size: 0.85rem;
-            line-height: 1.5;
-            padding: 0.5rem 1rem 1rem 1rem; /* Reduced top padding */
-            white-space: pre; /* Essential for code indentation */
-        }
-        .code-content {
-            font-family: 'Roboto Mono', monospace;
-            font-size: 0.85rem;
-            line-height: 1.5;
-            padding: 1rem;
-        }
-        /* Toggle Button */
-        #code-panel-toggle-btn {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            z-index: 25;
-            background: white;
-            border: 1px solid var(--border-color);
-            border-radius: 0.5rem;
-            padding: 0.5rem;
-            cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            transition: all 0.2s;
-        }
-        #code-panel-toggle-btn:hover {
-            color: var(--accent);
-            border-color: var(--accent);
-        }
-
-        /* Active States for Panel Buttons */
-        .btn-lang-active {
-            background-color: var(--accent) !important;
-            color: white !important;
-        }
-        .btn-type-active {
-            color: var(--text-primary) !important;
-            font-weight: bold;
-            text-decoration: underline;
-            text-decoration-color: var(--accent);
-            text-decoration-thickness: 2px;
-        }
-
-        /* Custom Scrollbar for Code Blocks */
-        pre::-webkit-scrollbar, .code-panel-body::-webkit-scrollbar {
-            height: 8px; width: 8px;
-            background-color: #f1f5f9;
-        }
-        pre::-webkit-scrollbar-thumb, .code-panel-body::-webkit-scrollbar-thumb {
-            background-color: #cbd5e1;
-            border-radius: 4px;
-        }
-        pre::-webkit-scrollbar-thumb:hover, .code-panel-body::-webkit-scrollbar-thumb:hover {
-            background-color: #94a3b8;
-        }
-
-        /* Pygments Syntax Highlighting */
-        pre { line-height: 125%; }
-td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
-span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
-td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
-span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
-.highlight .hll { background-color: #ffffcc }
-.highlight .c { color: #008000 } /* Comment */
-.highlight .err { border: 1px solid #F00 } /* Error */
-.highlight .k { color: #00F } /* Keyword */
-.highlight .ch { color: #008000 } /* Comment.Hashbang */
-.highlight .cm { color: #008000 } /* Comment.Multiline */
-.highlight .cp { color: #00F } /* Comment.Preproc */
-.highlight .cpf { color: #008000 } /* Comment.PreprocFile */
-.highlight .c1 { color: #008000 } /* Comment.Single */
-.highlight .cs { color: #008000 } /* Comment.Special */
-.highlight .ge { font-style: italic } /* Generic.Emph */
-.highlight .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
-.highlight .gh { font-weight: bold } /* Generic.Heading */
-.highlight .gp { font-weight: bold } /* Generic.Prompt */
-.highlight .gs { font-weight: bold } /* Generic.Strong */
-.highlight .gu { font-weight: bold } /* Generic.Subheading */
-.highlight .kc { color: #00F } /* Keyword.Constant */
-.highlight .kd { color: #00F } /* Keyword.Declaration */
-.highlight .kn { color: #00F } /* Keyword.Namespace */
-.highlight .kp { color: #00F } /* Keyword.Pseudo */
-.highlight .kr { color: #00F } /* Keyword.Reserved */
-.highlight .kt { color: #2B91AF } /* Keyword.Type */
-.highlight .s { color: #A31515 } /* Literal.String */
-.highlight .nc { color: #2B91AF } /* Name.Class */
-.highlight .ow { color: #00F } /* Operator.Word */
-.highlight .sa { color: #A31515 } /* Literal.String.Affix */
-.highlight .sb { color: #A31515 } /* Literal.String.Backtick */
-.highlight .sc { color: #A31515 } /* Literal.String.Char */
-.highlight .dl { color: #A31515 } /* Literal.String.Delimiter */
-.highlight .sd { color: #A31515 } /* Literal.String.Doc */
-.highlight .s2 { color: #A31515 } /* Literal.String.Double */
-.highlight .se { color: #A31515 } /* Literal.String.Escape */
-.highlight .sh { color: #A31515 } /* Literal.String.Heredoc */
-.highlight .si { color: #A31515 } /* Literal.String.Interpol */
-.highlight .sx { color: #A31515 } /* Literal.String.Other */
-.highlight .sr { color: #A31515 } /* Literal.String.Regex */
-.highlight .s1 { color: #A31515 } /* Literal.String.Single */
-.highlight .ss { color: #A31515 } /* Literal.String.Symbol */
-        /* Mermaid Overrides */
-        .mermaid { transform-origin: 0 0; }
-        .noselect { user-select: none; -webkit-user-select: none; }
-
-        /* Legend Items */
-        .logic-legend {
-            border-top: 1px solid var(--border-color);
-            padding: 1rem;
-            background-color: var(--bg-card);
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1.5rem;
-            position: relative;
-            z-index: 20;
-        }
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-        .legend-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            border: 1px solid;
-        }
-        .l-ingestion { background: #E8F0FE; border-color: #4285F4; }
-        .l-evaluation { background: #FEF7E0; border-color: #FBBC04; }
-        .l-weighting { background: #F3E8FD; border-color: #A142F4; }
-        .l-synthesis { background: #E0F7FA; border-color: #12B5CB; }
-        .l-outcome { background: #E6F4EA; border-color: #34A853; }
-
-        /* TOC Active State Styling */
-        .toc-link.active {
-            color: #4f46e5;
-            border-left-color: #4f46e5;
-            background-color: #eef2ff;
-        }
-    </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
-
-    <!-- Navigation -->
+        <!-- Navigation -->
     <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
         <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
@@ -263,7 +56,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
                         </a>
                     </div>
                     <!-- Breadcrumbs (Moved Here) -->
-                    <nav class="hidden md:flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
                         <ol class="flex items-center space-x-2">
                             <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
                             <li><span class="mx-1">/</span></li>
@@ -274,7 +67,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
                     </nav>
 
                     <!-- Page Top Nav (Anchor Links) -->
-                    <div class="hidden sm:flex sm:space-x-4 items-center">
+                    <div class="flex space-x-4 items-center">
                         <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
                             Chart
                         </a>
@@ -292,7 +85,6 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
             </div>
         </div>
     </nav>
-
     <!-- Main Container: 1-Column Stack -->
     <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
         <!-- ======================================================= -->
@@ -389,7 +181,10 @@ or one per line:
                 </button>
 
                 <!-- 2. Infinite Canvas Layer -->
-                <div id="canvas-container" class="chart-scroll-wrapper">
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
                     <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
                         flowchart TD;
 subgraph INGESTION["Phase 1: Ingestion"];
@@ -486,11 +281,18 @@ style OUTCOME fill:#f3e5f5;
                         </div>
                     </div>
                     <!-- Body -->
-                    <div class="code-panel-body custom-scrollbar p-4">
-                        <div id="code-csharp-simple" class="code-content hidden"><div class="highlight"><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">1</span><span class="k">using</span> System;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">2</span><span class="k">using</span> System.Collections.Generic;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">3</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">4</span><span class="k">namespace</span> TechnicalIndicators</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">5</span>{</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">6</span>    <span class="c1">/// &lt;summary&gt;</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">7</span>    <span class="c1">/// Commodity Channel Index (CCI)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">8</span>    <span class="c1">/// &lt;/summary&gt;</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">9</span>    <span class="c1">/// &lt;remarks&gt;</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">10</span>    <span class="c1">/// Measures the difference between the current price and the historical average price relative to mean deviation.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">11</span>    <span class="c1">/// Used to identify cyclical turns in commodities (and stocks).</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">12</span>    <span class="c1">/// &lt;/remarks&gt;</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">13</span>    <span class="k">public</span> <span class="k">class</span> <span class="nc">CommodityChannelIndex</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">14</span>    {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">15</span>        <span class="k">public</span> <span class="kt">int</span> Period { <span class="k">get</span>; }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">16</span>        <span class="k">public</span> List&lt;<span class="kt">decimal?</span>&gt; Values { <span class="k">get</span>; } = <span class="k">new</span>();</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">17</span>        </div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">18</span>        <span class="c1">// Rationale: Lambert&#x27;s constant to scale results so most values fall between -100 and +100.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">19</span>        <span class="k">private</span> <span class="k">const</span> <span class="kt">decimal</span> Constant = 0.015m;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">20</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">21</span>        <span class="k">public</span> CommodityChannelIndex(<span class="kt">int</span> period = 20)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">22</span>        {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">23</span>            <span class="k">if</span> (period &lt;= 0)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">24</span>                <span class="k">throw</span> <span class="k">new</span> ArgumentOutOfRangeException(<span class="s">&quot;Period must be &gt; 0&quot;</span>);</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">25</span>            Period = period;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">26</span>        }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">27</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">28</span>        <span class="k">public</span> <span class="k">void</span> Calculate(IEnumerable&lt;CandleData&gt; candles)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">29</span>        {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">30</span>            Values.Clear();</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">31</span>            <span class="kt">var</span> candleList = <span class="k">new</span> List&lt;CandleData&gt;(candles);</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">32</span>            <span class="k">if</span> (candleList.Count == 0) <span class="k">return</span>;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">33</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">34</span>            <span class="c1">// Step 1: Calculate Typical Price (TP)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">35</span>            <span class="kt">var</span> tpValues = <span class="k">new</span> List&lt;<span class="kt">decimal</span>&gt;();</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">36</span>            <span class="k">for</span> (<span class="kt">int</span> i = 0; i &lt; candleList.Count; i++)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">37</span>            {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">38</span>                <span class="kt">decimal</span> tp = (candleList[i].High + candleList[i].Low + candleList[i].Close) / 3.0m;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">39</span>                tpValues.Add(tp);</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">40</span>            }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">41</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">42</span>            <span class="c1">// Step 2: Calculate SMA of TP and Mean Deviation</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">43</span>            <span class="k">for</span> (<span class="kt">int</span> i = 0; i &lt; candleList.Count; i++)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">44</span>            {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">45</span>                <span class="k">if</span> (i &lt; Period - 1)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">46</span>                {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">47</span>                    Values.Add(<span class="k">null</span>);</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">48</span>                    <span class="k">continue</span>;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">49</span>                }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">50</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">51</span>                <span class="c1">// SMA of Typical Price</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">52</span>                <span class="kt">decimal</span> sumTp = 0;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">53</span>                <span class="k">for</span> (<span class="kt">int</span> j = 0; j &lt; Period; j++)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">54</span>                {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">55</span>                    sumTp += tpValues[i - Period + 1 + j];</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">56</span>                }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">57</span>                <span class="kt">decimal</span> smaTp = sumTp / Period;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">58</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">59</span>                <span class="c1">// Mean Deviation (MD) = Average of Absolute Deviations</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">60</span>                <span class="kt">decimal</span> sumAbsDiff = 0;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">61</span>                <span class="k">for</span> (<span class="kt">int</span> j = 0; j &lt; Period; j++)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">62</span>                {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">63</span>                    <span class="kt">decimal</span> val = tpValues[i - Period + 1 + j];</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">64</span>                    sumAbsDiff += Math.Abs(val - smaTp);</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">65</span>                }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">66</span>                <span class="kt">decimal</span> meanDev = sumAbsDiff / Period;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">67</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">68</span>                <span class="c1">// Formula: CCI = (TP - SMA) / (0.015 * MD)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">69</span>                <span class="k">if</span> (meanDev == 0)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">70</span>                {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">71</span>                    Values.Add(0);</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">72</span>                }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">73</span>                <span class="k">else</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">74</span>                {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">75</span>                    Values.Add((tpValues[i] - smaTp) / (Constant * meanDev));</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">76</span>                }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">77</span>            }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">78</span>        }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">79</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">80</span>        <span class="k">public</span> <span class="k">static</span> List&lt;<span class="kt">decimal?</span>&gt; Calculate(IEnumerable&lt;CandleData&gt; candles, <span class="kt">int</span> period = 20)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">81</span>        {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">82</span>            <span class="kt">var</span> cci = <span class="k">new</span> CommodityChannelIndex(period);</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">83</span>            cci.Calculate(candles);</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">84</span>            <span class="k">return</span> cci.Values;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">85</span>        }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">86</span>    }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">87</span>}</div></div></div>
-                        <div id="code-csharp-detailed" class="code-content hidden"><div class="highlight"><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">1</span><span class="c1">// =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">2</span><span class="c1">// Logic Breakdown (CommodityChannelIndex)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">3</span><span class="c1">// =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">4</span><span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">5</span><span class="c1">// This document provides a &quot;Deep Dive&quot; into the internal logic of the</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">6</span><span class="c1">// Commodity Channel Index (CCI) technical indicator.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">7</span><span class="c1">// We explain *why* code is written this way and *how* data transforms</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">8</span><span class="c1">// line-by-line, targeting programming beginners.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">9</span><span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">10</span><span class="c1">// [Core Concepts]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">11</span><span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">12</span><span class="c1">// 1. Typical Price (TP) - The Representative Price</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">13</span><span class="c1">//    [Why] Closing price alone doesn&#x27;t capture the full day&#x27;s activity.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">14</span><span class="c1">//    [What] The arithmetic mean of High, Low, and Close.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">15</span><span class="c1">//    [How]  TP = (High + Low + Close) / 3</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">16</span><span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">17</span><span class="c1">// 2. Mean Deviation (MD) - Measuring Volatility</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">18</span><span class="c1">//    [Why] We need to know how &quot;abnormal&quot; the current price is compared to average.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">19</span><span class="c1">//    [What] The average of absolute differences between each TP and the SMA of TPs.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">20</span><span class="c1">//    [How]  MD = Sum(|TP_i - SMA|) / Period</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">21</span><span class="c1">//    [Note] Unlike Standard Deviation, this uses absolute difference (L1 norm),</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">22</span><span class="c1">//           making it more robust against extreme outliers.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">23</span><span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">24</span><span class="c1">// 3. Lambert&#x27;s Constant (0.015) - Scaling Factor</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">25</span><span class="c1">//    [Why] Donald Lambert designed CCI so that 70-80% of values fall within ±100.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">26</span><span class="c1">//    [What] A divisors scaling factor.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">27</span><span class="c1">//    [How]  Without this, values would be much larger (e.g., ±6000).</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">28</span><span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">29</span><span class="c1">// [Formula]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">30</span><span class="c1">// CCI = (TP - SMA_of_TP) / (0.015 * MeanDeviation)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">31</span><span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">32</span><span class="c1">// [Visual Plan]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">33</span><span class="c1">// 1. Calculate TP for every bar.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">34</span><span class="c1">// 2. For each bar, look back &#x27;Period&#x27; bars.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">35</span><span class="c1">// 3. Calculate Average (SMA) of those TPs.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">36</span><span class="c1">// 4. Calculate how far each TP in the window is from that SMA (MeanDev).</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">37</span><span class="c1">// 5. Normalize the difference (TP - SMA) by the MeanDev.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">38</span><span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">39</span><span class="c1">// =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">40</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">41</span><span class="k">using</span> System;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">42</span><span class="k">using</span> System.Collections.Generic;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">43</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">44</span><span class="k">namespace</span> TechnicalIndicators</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">45</span>{</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">46</span>    <span class="c1">// =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">47</span>    <span class="c1">// Logic Explanation: OHLCV Data Container</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">48</span>    <span class="c1">// =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">49</span>    <span class="k">public</span> <span class="k">readonly</span> <span class="k">record</span> <span class="k">struct</span> CandleData(DateTime Timestamp, <span class="kt">decimal</span> Open, <span class="kt">decimal</span> High, <span class="kt">decimal</span> Low, <span class="kt">decimal</span> Close, <span class="kt">long</span> Volume);</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">50</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">51</span>    <span class="c1">// =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">52</span>    <span class="c1">// Logic Explanation: Commodity Channel Index (CCI) Class</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">53</span>    <span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">54</span>    <span class="c1">// [Why]  Identifies cyclical turns in commodities (and stocks/forex).</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">55</span>    <span class="c1">//        Measures deviation from a statistical average.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">56</span>    <span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">57</span>    <span class="c1">// [What] Output is a single list of oscillator values.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">58</span>    <span class="c1">//        &gt; +100: Overbought/Strong trend up</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">59</span>    <span class="c1">//        &lt; -100: Oversold/Strong trend down</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">60</span>    <span class="c1">// =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">61</span>    <span class="k">public</span> <span class="k">class</span> <span class="nc">CommodityChannelIndex</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">62</span>    {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">63</span>        <span class="c1">// -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">64</span>        <span class="c1">// Logic Explanation: Configuration Constants &amp; Properties</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">65</span>        <span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">66</span>        <span class="c1">// [Period] Lookback window (standard is 20).</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">67</span>        <span class="c1">// [Constant] 0.015 (Lambert&#x27;s Constant).</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">68</span>        <span class="c1">// -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">69</span>        <span class="k">public</span> <span class="kt">int</span> Period { <span class="k">get</span>; }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">70</span>        <span class="k">public</span> List&lt;<span class="kt">decimal?</span>&gt; Values { <span class="k">get</span>; } = <span class="k">new</span>();</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">71</span>        <span class="k">private</span> <span class="k">const</span> <span class="kt">decimal</span> Constant = 0.015m;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">72</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">73</span>        <span class="c1">// =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">74</span>        <span class="c1">// Logic Explanation: Constructor</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">75</span>        <span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">76</span>        <span class="c1">// [Why]  Validate parameters before any calculation can fail.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">77</span>        <span class="c1">// [How]  Period must be &gt; 0.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">78</span>        <span class="c1">// =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">79</span>        <span class="k">public</span> CommodityChannelIndex(<span class="kt">int</span> period = 20)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">80</span>        {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">81</span>            <span class="k">if</span> (period &lt;= 0)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">82</span>                <span class="k">throw</span> <span class="k">new</span> ArgumentOutOfRangeException(<span class="k">nameof</span>(period));</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">83</span>            Period = period;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">84</span>        }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">85</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">86</span>        <span class="c1">// =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">87</span>        <span class="c1">// Logic Explanation: Main Calculation Method</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">88</span>        <span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">89</span>        <span class="c1">// [Why]  Executes the core CCI formula.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">90</span>        <span class="c1">// [How]  Phase 1: Compute all Typical Prices (TP).</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">91</span>        <span class="c1">//        Phase 2: Compute SMA and Mean Deviation for each window.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">92</span>        <span class="c1">// =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">93</span>        <span class="k">public</span> <span class="k">void</span> Calculate(IEnumerable&lt;CandleData&gt; candles)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">94</span>        {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">95</span>            <span class="c1">// -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">96</span>            <span class="c1">// Step 1: Cleanup</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">97</span>            <span class="c1">// -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">98</span>            Values.Clear();</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">99</span>            <span class="kt">var</span> candleList = <span class="k">new</span> List&lt;CandleData&gt;(candles);</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">100</span>            <span class="k">if</span> (candleList.Count == 0) <span class="k">return</span>;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">101</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">102</span>            <span class="c1">// -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">103</span>            <span class="c1">// Step 2: Pre-calculation of Typical Price (TP)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">104</span>            <span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">105</span>            <span class="c1">// [Why] (Intent)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">106</span>            <span class="c1">// Both SMA and Mean Deviation need access to historical TP values.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">107</span>            <span class="c1">// Calculating them once upfront is cleaner than recalculating repeatedly.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">108</span>            <span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">109</span>            <span class="c1">// [Math]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">110</span>            <span class="c1">// TP = (H + L + C) / 3</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">111</span>            <span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">112</span>            <span class="c1">// [Visual]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">113</span>            <span class="c1">// Candles: [C0, C1, C2, ...]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">114</span>            <span class="c1">//             ↓   ↓   ↓</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">115</span>            <span class="c1">// TPs:     [T0, T1, T2, ...]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">116</span>            <span class="c1">// -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">117</span>            <span class="kt">var</span> tpValues = <span class="k">new</span> List&lt;<span class="kt">decimal</span>&gt;();</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">118</span>            <span class="k">for</span> (<span class="kt">int</span> i = 0; i &lt; candleList.Count; i++)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">119</span>            {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">120</span>                <span class="kt">decimal</span> tp = (candleList[i].High + candleList[i].Low + candleList[i].Close) / 3.0m;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">121</span>                tpValues.Add(tp);</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">122</span>            }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">123</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">124</span>            <span class="c1">// -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">125</span>            <span class="c1">// Step 3: CCI Calculation Loop</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">126</span>            <span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">127</span>            <span class="c1">// [Why] (Intent)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">128</span>            <span class="c1">// Calculate CCI for each bar where enough history exists.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">129</span>            <span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">130</span>            <span class="c1">// [Visual]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">131</span>            <span class="c1">// Window (Period=3):</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">132</span>            <span class="c1">// i=2: [T0, T1, T2] -&gt; Calculate stats -&gt; CCI[2]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">133</span>            <span class="c1">// i=3: [T1, T2, T3] -&gt; Calculate stats -&gt; CCI[3]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">134</span>            <span class="c1">// -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">135</span>            <span class="k">for</span> (<span class="kt">int</span> i = 0; i &lt; candleList.Count; i++)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">136</span>            {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">137</span>                <span class="c1">// -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">138</span>                <span class="c1">// Step 3a: Warm-up Check</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">139</span>                <span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">140</span>                <span class="c1">// [Why] Need &#x27;Period&#x27; samples to calculate SMA and MeanDev.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">141</span>                <span class="c1">// -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">142</span>                <span class="k">if</span> (i &lt; Period - 1)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">143</span>                {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">144</span>                    Values.Add(<span class="k">null</span>);</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">145</span>                    <span class="k">continue</span>;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">146</span>                }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">147</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">148</span>                <span class="c1">// -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">149</span>                <span class="c1">// Step 3b: Calculate SMA of TP (Simple Moving Average)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">150</span>                <span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">151</span>                <span class="c1">// [Why] (Intent)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">152</span>                <span class="c1">// Determine the &quot;center line&quot; or &quot;normal price&quot; for this period.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">153</span>                <span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">154</span>                <span class="c1">// [How] (Logic)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">155</span>                <span class="c1">// Sum the last &#x27;Period&#x27; TPs and divide by Period.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">156</span>                <span class="c1">// Loop range: j goes from 0 to Period-1.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">157</span>                <span class="c1">// Access index: [i - Period + 1 + j] (Scanning the window ending at i).</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">158</span>                <span class="c1">// -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">159</span>                <span class="kt">decimal</span> sumTp = 0;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">160</span>                <span class="k">for</span> (<span class="kt">int</span> j = 0; j &lt; Period; j++)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">161</span>                {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">162</span>                    sumTp += tpValues[i - Period + 1 + j];</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">163</span>                }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">164</span>                <span class="kt">decimal</span> smaTp = sumTp / Period;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">165</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">166</span>                <span class="c1">// -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">167</span>                <span class="c1">// Step 3c: Calculate Mean Deviation (MD)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">168</span>                <span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">169</span>                <span class="c1">// [Why] (Intent)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">170</span>                <span class="c1">// Measure the average &quot;spread&quot; of prices from the SMA.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">171</span>                <span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">172</span>                <span class="c1">// [How] (Logic)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">173</span>                <span class="c1">// 1. Iterate through the same window TPs.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">174</span>                <span class="c1">// 2. Calculate absolute difference |TP - SMA|.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">175</span>                <span class="c1">// 3. Sum these differences.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">176</span>                <span class="c1">// 4. Divide by Period.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">177</span>                <span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">178</span>                <span class="c1">// [Visual]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">179</span>                <span class="c1">// SMA = 100</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">180</span>                <span class="c1">// Window: [90, 100, 110]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">181</span>                <span class="c1">// Diffs:  |90-100|=10, |100-100|=0, |110-100|=10</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">182</span>                <span class="c1">// SumAbsDiff = 20</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">183</span>                <span class="c1">// MeanDev = 20 / 3 = 6.66...</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">184</span>                <span class="c1">// -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">185</span>                <span class="kt">decimal</span> sumAbsDiff = 0;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">186</span>                <span class="k">for</span> (<span class="kt">int</span> j = 0; j &lt; Period; j++)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">187</span>                {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">188</span>                    <span class="kt">decimal</span> val = tpValues[i - Period + 1 + j];</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">189</span>                    sumAbsDiff += Math.Abs(val - smaTp);</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">190</span>                }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">191</span>                <span class="kt">decimal</span> meanDev = sumAbsDiff / Period;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">192</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">193</span>                <span class="c1">// -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">194</span>                <span class="c1">// Step 3d: Final CCI Formula</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">195</span>                <span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">196</span>                <span class="c1">// [Math]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">197</span>                <span class="c1">// CCI = (CurrentTP - SMA) / (0.015 * MeanDev)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">198</span>                <span class="c1">//</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">199</span>                <span class="c1">// [Decision]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">200</span>                <span class="c1">// Avoid division by zero if MeanDev is 0 (all prices identical).</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">201</span>                <span class="c1">// -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">202</span>                <span class="k">if</span> (meanDev == 0)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">203</span>                {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">204</span>                    Values.Add(0);</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">205</span>                }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">206</span>                <span class="k">else</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">207</span>                {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">208</span>                    <span class="kt">decimal</span> numerator = tpValues[i] - smaTp;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">209</span>                    <span class="kt">decimal</span> denominator = Constant * meanDev;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">210</span>                    Values.Add(numerator / denominator);</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">211</span>                }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">212</span>            }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">213</span>        }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">214</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">215</span>        <span class="c1">// =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">216</span>        <span class="c1">// Logic Explanation: Static Convenience Wrapper</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">217</span>        <span class="c1">// =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">218</span>        <span class="k">public</span> <span class="k">static</span> List&lt;<span class="kt">decimal?</span>&gt; Calculate(IEnumerable&lt;CandleData&gt; candles, <span class="kt">int</span> period = 20)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">219</span>        {</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">220</span>            <span class="kt">var</span> cci = <span class="k">new</span> CommodityChannelIndex(period);</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">221</span>            cci.Calculate(candles);</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">222</span>            <span class="k">return</span> cci.Values;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">223</span>        }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">224</span>    }</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">225</span>}</div></div></div>
-                        <div id="code-python-simple" class="code-content hidden"><div class="highlight"><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">1</span><span class="k">class</span> <span class="nc">CommodityChannelIndex</span>:</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">2</span>    <span class="sd">&quot;&quot;&quot;</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">3</span><span class="sd">    Commodity Channel Index (CCI)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">4</span><span class="sd">    Measures deviation from statistical average.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">5</span><span class="sd">    &quot;&quot;&quot;</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">6</span>    <span class="k">def</span> __init__(self, period=20):</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">7</span>        <span class="k">if</span> period &lt;= 0:</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">8</span>            <span class="k">raise</span> ValueError(<span class="s2">&quot;</span><span class="s2">Period must be &gt; 0</span><span class="s2">&quot;</span>)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">9</span>        self.period = period</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">10</span>        self.values = []</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">11</span>        self.constant = 0.015</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">12</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">13</span>    <span class="k">def</span> calculate(self, candles):</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">14</span>        <span class="sd">&quot;&quot;&quot; Computes CCI values. &quot;&quot;&quot;</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">15</span>        self.values.clear()</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">16</span>        <span class="k">if</span> len(candles) == 0:</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">17</span>            <span class="k">return</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">18</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">19</span>        <span class="c1"># 1. Typical Price</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">20</span>        tp_values = []</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">21</span>        <span class="k">for</span> c <span class="ow">in</span> candles:</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">22</span>            tp = (c[<span class="s1">&#x27;</span><span class="s1">high</span><span class="s1">&#x27;</span>] + c[<span class="s1">&#x27;</span><span class="s1">low</span><span class="s1">&#x27;</span>] + c[<span class="s1">&#x27;</span><span class="s1">close</span><span class="s1">&#x27;</span>]) / 3.0</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">23</span>            tp_values.append(tp)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">24</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">25</span>        <span class="c1"># 2. CCI Loop</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">26</span>        <span class="k">for</span> i <span class="ow">in</span> range(len(candles)):</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">27</span>            <span class="k">if</span> i &lt; self.period - 1:</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">28</span>                self.values.append(<span class="kc">None</span>)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">29</span>                <span class="k">continue</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">30</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">31</span>            <span class="c1"># Calculate SMA of TP</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">32</span>            window = tp_values[i - self.period + 1 : i + 1]</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">33</span>            sma_tp = sum(window) / self.period</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">34</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">35</span>            <span class="c1"># Calculate Mean Deviation</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">36</span>            sum_abs_diff = sum(abs(val - sma_tp) <span class="k">for</span> val <span class="ow">in</span> window)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">37</span>            mean_dev = sum_abs_diff / self.period</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">38</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">39</span>            <span class="k">if</span> mean_dev == 0:</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">40</span>                self.values.append(0.0)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">41</span>            <span class="k">else</span>:</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">42</span>                cci = (tp_values[i] - sma_tp) / (self.constant * mean_dev)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">43</span>                self.values.append(cci)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">44</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">45</span><span class="k">def</span> calculate(candles, period=20):</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">46</span>    cci = CommodityChannelIndex(period)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">47</span>    cci.calculate(candles)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">48</span>    <span class="k">return</span> cci.values</div></div></div>
-                        <div id="code-python-detailed" class="code-content hidden"><div class="highlight"><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">1</span><span class="c1"># =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">2</span><span class="c1"># Logic Breakdown (CommodityChannelIndex)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">3</span><span class="c1"># =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">4</span><span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">5</span><span class="c1"># This document provides a &quot;Deep Dive&quot; into the internal logic of the</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">6</span><span class="c1"># Commodity Channel Index (CCI). We explain *why* code is written this way</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">7</span><span class="c1"># and *how* data transforms line-by-line, targeting programming beginners.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">8</span><span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">9</span><span class="c1"># [Core Concepts]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">10</span><span class="c1"># 1. Typical Price (TP)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">11</span><span class="c1">#    Uses the average of High, Low, and Close for each bar.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">12</span><span class="c1">#    TP = (H + L + C) / 3</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">13</span><span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">14</span><span class="c1"># 2. Mean Deviation</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">15</span><span class="c1">#    Measures how far prices typically deviate from their average (SMA).</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">16</span><span class="c1">#    Unlike Standard Deviation (which squares errors), Mean Deviation uses absolute diffs.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">17</span><span class="c1">#    This makes it more robust to outliers (less sensitive).</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">18</span><span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">19</span><span class="c1"># 3. Lambert&#x27;s Constant (0.015)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">20</span><span class="c1">#    A scaling factor designed to put 70-80% of values within the -100 to +100 range.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">21</span><span class="c1">#    CCI = (TP - SMA) / (0.015 * MeanDev)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">22</span><span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">23</span><span class="c1"># =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">24</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">25</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">26</span><span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">27</span><span class="c1"># Type-Level Explanation: CommodityChannelIndex (class)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">28</span><span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">29</span><span class="c1"># [Why]  Encapsulates CCI calculation logic.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">30</span><span class="c1"># [What] Computes standardized deviation from trend.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">31</span><span class="c1"># [Who]  Cyclical traders, overbought/oversold detection.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">32</span><span class="c1"># [Where] Heap allocation.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">33</span><span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">34</span><span class="k">class</span> <span class="nc">CommodityChannelIndex</span>:</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">35</span>    </div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">36</span>    <span class="c1"># Constant defined by Donald Lambert</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">37</span>    CONSTANT = 0.015</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">38</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">39</span>    <span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">40</span>    <span class="c1"># Constructor: __init__</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">41</span>    <span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">42</span>    <span class="c1"># [Why]  Validate period.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">43</span>    <span class="c1"># [What] Sets lookback period (default 20).</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">44</span>    <span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">45</span>    <span class="k">def</span> __init__(self, period=20):</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">46</span>        <span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">47</span>        <span class="c1"># Logic Step 1: Validation</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">48</span>        <span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">49</span>        <span class="k">if</span> period &lt;= 0:</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">50</span>            <span class="k">raise</span> ValueError(<span class="s2">&quot;</span><span class="s2">period</span><span class="s2">&quot;</span>)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">51</span>        self.period = period</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">52</span>        self.values = []</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">53</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">54</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">55</span>    <span class="c1"># =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">56</span>    <span class="c1"># IPO: calculate</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">57</span>    <span class="c1"># =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">58</span>    <span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">59</span>    <span class="c1"># [Input]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">60</span>    <span class="c1"># - candles: list[dict]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">61</span>    <span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">62</span>    <span class="c1"># [Process]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">63</span>    <span class="c1"># 1. Compute Typical Price for ALL candles first.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">64</span>    <span class="c1"># 2. Calculate SMA of Typical Price (sliding window).</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">65</span>    <span class="c1"># 3. Calculate Mean Deviation (sliding window).</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">66</span>    <span class="c1"># 4. Apply Lambert&#x27;s Formula.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">67</span>    <span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">68</span>    <span class="c1"># [Output]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">69</span>    <span class="c1"># - None (populates self.values).</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">70</span>    <span class="c1"># =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">71</span>    <span class="k">def</span> calculate(self, candles):</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">72</span>        </div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">73</span>        <span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">74</span>        <span class="c1"># Logic Step 1: Reset &amp; Guard</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">75</span>        <span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">76</span>        self.values.clear()</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">77</span>        <span class="k">if</span> len(candles) == 0:</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">78</span>            <span class="k">return</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">79</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">80</span>        <span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">81</span>        <span class="c1"># Logic Step 2: Pre-calculate Typical Price (TP)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">82</span>        <span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">83</span>        <span class="c1"># [Why] (Intent)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">84</span>        <span class="c1"># TP is the base data series. Calculating it once upfront simplifies</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">85</span>        <span class="c1"># the main loop (Pattern: Transform -&gt; Process).</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">86</span>        <span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">87</span>        <span class="c1"># [How] (Logic)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">88</span>        <span class="c1"># TP = (H+L+C)/3</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">89</span>        <span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">90</span>        tp_values = [(c[<span class="s1">&#x27;</span><span class="s1">high</span><span class="s1">&#x27;</span>] + c[<span class="s1">&#x27;</span><span class="s1">low</span><span class="s1">&#x27;</span>] + c[<span class="s1">&#x27;</span><span class="s1">close</span><span class="s1">&#x27;</span>]) / 3 <span class="k">for</span> c <span class="ow">in</span> candles]</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">91</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">92</span>        <span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">93</span>        <span class="c1"># Logic Step 3: Main Loop</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">94</span>        <span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">95</span>        <span class="c1"># [Visual]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">96</span>        <span class="c1"># Period = 20</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">97</span>        <span class="c1"># i = 19 (First valid CCI)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">98</span>        <span class="c1"># Window of TPs: [TP0, ... TP19]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">99</span>        <span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">100</span>        <span class="k">for</span> i <span class="ow">in</span> range(len(candles)):</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">101</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">102</span>            <span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">103</span>            <span class="c1"># Logic Step 3.1: Wait for data (Insufficient History)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">104</span>            <span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">105</span>            <span class="c1"># [Condition]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">106</span>            <span class="c1"># Need &#x27;period&#x27; bars.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">107</span>            <span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">108</span>            <span class="k">if</span> i &lt; self.period - 1:</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">109</span>                self.values.append(<span class="kc">None</span>)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">110</span>                <span class="k">continue</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">111</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">112</span>            <span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">113</span>            <span class="c1"># Logic Step 3.2: Window Extraction</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">114</span>            <span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">115</span>            <span class="c1"># [What] Get the slice of TPs for the current window.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">116</span>            <span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">117</span>            window = tp_values[i - self.period + 1 : i + 1]</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">118</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">119</span>            <span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">120</span>            <span class="c1"># Logic Step 3.3: Calculate SMA of TP</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">121</span>            <span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">122</span>            <span class="c1"># [Why] (Intent)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">123</span>            <span class="c1"># Find the &quot;center&quot; or &quot;trend&quot; of the typical price.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">124</span>            <span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">125</span>            <span class="c1"># [How] (Logic)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">126</span>            <span class="c1"># Sum of TPs in window / Period.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">127</span>            <span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">128</span>            sum_tp = sum(window)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">129</span>            sma_tp = sum_tp / self.period</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">130</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">131</span>            <span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">132</span>            <span class="c1"># Logic Step 3.4: Calculate Mean Deviation</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">133</span>            <span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">134</span>            <span class="c1"># [Why] (Intent)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">135</span>            <span class="c1"># Measure &quot;average distance from the average&quot;.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">136</span>            <span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">137</span>            <span class="c1"># [Visual]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">138</span>            <span class="c1"># TP Window: [100, 105, 95] (Avg=100)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">139</span>            <span class="c1"># Diffs:     |0|,  |5|,  |-5| -&gt; 0, 5, 5</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">140</span>            <span class="c1"># MeanDev:   (0+5+5)/3 = 3.33    </span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">141</span>            <span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">142</span>            sum_abs_diff = sum(abs(val - sma_tp) <span class="k">for</span> val <span class="ow">in</span> window)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">143</span>            mean_dev = sum_abs_diff / self.period</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">144</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">145</span>            <span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">146</span>            <span class="c1"># Logic Step 3.5: Compute CCI (Lambert&#x27;s Formula)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">147</span>            <span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">148</span>            <span class="c1"># [Decision]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">149</span>            <span class="c1"># Guard against Div/0 if MeanDev is 0 (all prices identical).</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">150</span>            <span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">151</span>            <span class="c1"># [Formula]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">152</span>            <span class="c1"># (CurrentTP - SMA) / (0.015 * MeanDev)</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">153</span>            <span class="c1"># -------------------------------------------------------------</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">154</span>            <span class="k">if</span> mean_dev == 0:</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">155</span>                self.values.append(0)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">156</span>            <span class="k">else</span>:</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">157</span>                cci = (tp_values[i] - sma_tp) / (self.CONSTANT * mean_dev)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">158</span>                self.values.append(cci)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">159</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">160</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">161</span><span class="c1"># =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">162</span><span class="c1"># Static Wrapper Function</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">163</span><span class="c1"># =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">164</span><span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">165</span><span class="c1"># [Why]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">166</span><span class="c1"># Functional interface.</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">167</span><span class="c1">#</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">168</span><span class="c1"># [Pattern: 3-Step Static Wrapper]</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">169</span><span class="c1"># =============================================================================</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">170</span><span class="k">def</span> calculate(candles, period=20):</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">171</span>    <span class="c1"># 1. Instantiation</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">172</span>    cci = CommodityChannelIndex(period)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">173</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">174</span>    <span class="c1"># 2. Execution</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">175</span>    cci.calculate(candles)</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">176</span>&#8203;</div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">177</span>    <span class="c1"># 3. Extraction</span></div><div class="code-line" style="white-space: pre;"><span style="display:inline-block; width:2em; text-align:right; margin-right:1em; color:#9ca3af; user-select:none;">178</span>    <span class="k">return</span> cci.values</div></div></div>
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/CommodityChannelIndex.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
                     </div>
                 </div>
             </figure>
@@ -502,6 +304,7 @@ style OUTCOME fill:#f3e5f5;
                 <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
                 <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
                 <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
             </div>
         </section>
 
@@ -1031,7 +834,7 @@ TARGET:
                     </div>
                 </article>
                 <!-- Right: Sticky TOC -->
-                <aside class="hidden lg:block w-64 flex-shrink-0">
+                <aside class="lg:block w-64 flex-shrink-0">
                     <div class="sticky top-24">
                         <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
                             On this page
@@ -1098,7 +901,8 @@ TARGET:
 
     </div>
 
-    <!-- Footer -->
+
+        <!-- Footer -->
     <footer class="bg-white border-t border-slate-200 mt-12">
         <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
             <p class="text-center text-slate-400 text-sm">
@@ -1106,8 +910,7 @@ TARGET:
             </p>
         </div>
     </footer>
-
-    <!-- ========================================== -->
+        <!-- ========================================== -->
     <!-- 1. DATA & LOGIC INJECTION                  -->
     <!-- ========================================== -->
     <script>
@@ -1122,28 +925,16 @@ TARGET:
         window.IndicatorLogic = {
             calculate: (data, params) => {
                 const period = params.period || 20;
-                const constant = 0.015;
-                // Calculate Typical Price
-                const tp = data.map(d => (d.high + d.low + d.close) / 3);
-                const cci = data.map((d, i) => {
-                    if (i < period - 1) return null;
-                    // SMA of TP
-                    let sumTP = 0;
-                    for (let j = 0; j < period; j++) sumTP += tp[i - j];
-                    const smaTP = sumTP / period;
-                    // Mean Deviation
-                    let sumDev = 0;
-                    for (let j = 0; j < period; j++) sumDev += Math.abs(tp[i - j] - smaTP);
-                    const meanDev = sumDev / period;
-                    // CCI Formula
-                    if (meanDev === 0) return 0;
-                    return (tp[i] - smaTP) / (constant * meanDev);
-                });
-                return { cci };
+                const result = CommodityChannelIndex.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
             }
         };
         `;
-                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('PLAYGROUND_LOGIC');
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
                 if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
                     new Function(injectedCode)();
                 } else {
@@ -1161,603 +952,62 @@ TARGET:
     <!-- 2. VISUALIZATION ENGINE                    -->
     <!-- ========================================== -->
     <script>
-        mermaid.initialize({ startOnLoad: true, theme: 'neutral', securityLevel: 'loose' });
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
     </script>
-
     <!-- ========================================== -->
     <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
     <!-- ========================================== -->
-    <script src="../../assets/js/script.js" defer></script>
     <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/CommodityChannelIndex.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[{"id": "period", "label": "Period (20)", "type": "number", "value": 20, "min": 2, "max": 100}]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": false, "plots": {"cci": {"label": "CCI", "color": "#3b82f6", "type": "line"}}}
+    </script>
     <script>
         // --- 0. Indicator Data Injection ---
-        // These are populated by the generator script
-        var IndicatorLogic = {};
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
         var IndicatorConfig = [];
         var IndicatorDisplay = { isOverlay: false, plots: {} };
 
-        // 1. Library Code (e.g. class definitions)
-        // No library code for verification
+        // 1. Library Code - loaded externally before this block
 
-        // 2. Configuration
+        // 2. Configuration (XSS-safe via script type="application/json")
         try {
-            var rawConfig = '[{"id": "period", "label": "Period (20)", "type": "number", "value": 20, "min": 5, "max": 100}]';
-            if(rawConfig && !rawConfig.startsWith('{{')) IndicatorConfig = JSON.parse(rawConfig);
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
         } catch(e){ console.warn('Config parse error', e); }
 
         try {
-            var rawDisplay = '{"isOverlay": false, "plots": {"cci": {"label": "CCI", "color": "#3b82f6", "type": "line"}}}';
-            if(rawDisplay && !rawDisplay.startsWith('{{')) IndicatorDisplay = JSON.parse(rawDisplay);
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
         } catch(e){ console.warn('Display parse error', e); }
 
         // 3. Logic Adapter
         window.IndicatorLogic = {
             calculate: (data, params) => {
                 const period = params.period || 20;
-                const constant = 0.015;
-                // Calculate Typical Price
-                const tp = data.map(d => (d.high + d.low + d.close) / 3);
-                const cci = data.map((d, i) => {
-                    if (i < period - 1) return null;
-                    // SMA of TP
-                    let sumTP = 0;
-                    for (let j = 0; j < period; j++) sumTP += tp[i - j];
-                    const smaTP = sumTP / period;
-                    // Mean Deviation
-                    let sumDev = 0;
-                    for (let j = 0; j < period; j++) sumDev += Math.abs(tp[i - j] - smaTP);
-                    const meanDev = sumDev / period;
-                    // CCI Formula
-                    if (meanDev === 0) return 0;
-                    return (tp[i] - smaTP) / (constant * meanDev);
-                });
-                return { cci };
+                const result = CommodityChannelIndex.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
             }
         };
     </script>
 
-    <script>
-        // --- 1. Code Panel Logic ---
-        const AppState = {
-            activeLang: 'csharp',
-            codeType: 'simple',
-            isPanelVisible: false,  // Start hidden to show flowchart
-            isPanelExpanded: false,
-        };
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
 
-        // --- 2. Canvas State (Full Pan/Zoom from 0117) ---
-        const CanvasState = {
-            scale: 1, panX: 0, panY: 0,
-            isDragging: false, startX: 0, startY: 0,
-            minScale: 0.1, maxScale: 5.0
-        };
-
-        // Element references (populated after DOM ready)
-        let els = {};
-
-        function updateView() {
-            // 1. Code Content Visibility
-            document.querySelectorAll('.code-content').forEach(el => el.classList.add('hidden'));
-            const activeId = `code-${AppState.activeLang}-${AppState.codeType}`;
-            const activeEl = document.getElementById(activeId);
-            if (activeEl) activeEl.classList.remove('hidden');
-
-            // 2. Overlay Visibility
-            const overlay = document.getElementById('code-panel-overlay');
-            if (overlay) {
-                if (AppState.isPanelVisible) overlay.classList.remove('panel-hidden');
-                else overlay.classList.add('panel-hidden');
-
-                if (AppState.isPanelExpanded) {
-                    overlay.classList.add('panel-expanded');
-                    const iconExp = document.getElementById('icon-expand');
-                    const iconCol = document.getElementById('icon-collapse');
-                    if(iconExp) iconExp.classList.add('hidden');
-                    if(iconCol) iconCol.classList.remove('hidden');
-                } else {
-                    overlay.classList.remove('panel-expanded');
-                    const iconExp = document.getElementById('icon-expand');
-                    const iconCol = document.getElementById('icon-collapse');
-                    if(iconExp) iconExp.classList.remove('hidden');
-                    if(iconCol) iconCol.classList.add('hidden');
-                }
-            }
-
-            // 3. Button States
-            const btnCs = document.getElementById('btn-lang-csharp');
-            const btnPy = document.getElementById('btn-lang-python');
-            [btnCs, btnPy].forEach(btn => {
-                if(btn) btn.className = "px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100";
-            });
-
-            if (AppState.activeLang === 'csharp' && btnCs) {
-                btnCs.className = "px-2 py-1 text-xs rounded transition-colors btn-lang-active";
-            } else if (AppState.activeLang === 'python' && btnPy) {
-                btnPy.className = "px-2 py-1 text-xs rounded transition-colors btn-lang-active";
-            }
-
-            const btnSimple = document.getElementById('btn-type-simple');
-            const btnDetailed = document.getElementById('btn-type-detailed');
-            if(btnSimple) btnSimple.className = `text-xs transition-colors ${AppState.codeType === 'simple' ? 'btn-type-active' : 'text-slate-500 hover:text-indigo-600'}`;
-            if(btnDetailed) btnDetailed.className = `text-xs transition-colors ${AppState.codeType === 'detailed' ? 'btn-type-active' : 'text-slate-500 hover:text-indigo-600'}`;
-        }
-
-        // Global exports for inline onclick handlers
-        window.setLang = (lang) => { AppState.activeLang = lang; updateView(); }
-        window.setType = (type) => { AppState.codeType = type; updateView(); }
-        window.toggleCodePanel = () => { AppState.isPanelVisible = !AppState.isPanelVisible; updateView(); }
-        window.toggleExpand = () => { AppState.isPanelExpanded = !AppState.isPanelExpanded; updateView(); }
-        window.copyCode = async () => {
-            const activeId = `code-${AppState.activeLang}-${AppState.codeType}`;
-            const el = document.getElementById(activeId);
-            if (!el) return;
-            let text = "";
-            const lines = el.querySelectorAll('.code-line');
-            if (lines.length > 0) {
-                text = Array.from(lines).map(line => line.textContent).join('\n');
-            } else {
-                text = el.textContent;
-            }
-            try {
-                await navigator.clipboard.writeText(text);
-                const iconCopy = document.getElementById('icon-copy');
-                const iconDone = document.getElementById('icon-copy-done');
-                if (iconCopy && iconDone) {
-                    iconCopy.classList.add('hidden');
-                    iconDone.classList.remove('hidden');
-                    setTimeout(() => {
-                        iconCopy.classList.remove('hidden');
-                        iconDone.classList.add('hidden');
-                    }, 2000);
-                }
-            } catch (err) { console.error("Failed to copy:", err); }
-        }
-
-        // --- Canvas Transform Functions (Full Pan/Zoom) ---
-        // PlaygroundController (Ported from template_0117.html)
-        window.PlaygroundController = {
-            instanceChart: null,
-            showError: (msg) => {
-                console.error('Playground Error:', msg);
-                const outputEl = document.getElementById('output-data');
-                if (outputEl) outputEl.value = 'Error: ' + msg;
-            },
-            clearError: () => {},
-            init: () => {
-                try {
-                    // 1. Render Dynamic Settings if Config exists
-                    const settingsContainer = document.getElementById('settings-container');
-                    if (IndicatorConfig && Array.isArray(IndicatorConfig) && IndicatorConfig.length > 0 && settingsContainer) {
-                        settingsContainer.innerHTML = ''; // Clear default "Period"
-                        IndicatorConfig.forEach(cfg => {
-                            const div = document.createElement('div');
-                            div.className = "flex flex-col";
-                            const label = document.createElement('label');
-                            label.className = "text-xs text-slate-400 mb-1";
-                            label.textContent = cfg.label;
-                            const input = document.createElement('input');
-                            input.id = `param-${cfg.id}`;
-                            input.type = cfg.type || "number";
-                            // Light theme styling to match textarea
-                            input.className = "bg-white border border-slate-300 rounded px-2 py-1 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-shadow";
-                            input.value = cfg.value;
-                            if(cfg.min !== undefined) input.min = cfg.min;
-                            if(cfg.max !== undefined) input.max = cfg.max;
-                            // Add change listener to auto-update
-                            input.addEventListener('change', PlaygroundController.update);
-                            div.appendChild(label);
-                            div.appendChild(input);
-                            settingsContainer.appendChild(div);
-                        });
-                    }
-
-                    // 2. Generate Initial Random Sample Data (Default to Single for simplicity, or OHLCV)
-                    PlaygroundController.generateSample('ohlcv'); // Default to OHLCV for robustness
-                } catch(e) { PlaygroundController.showError(e.message); }
-            },
-            generateSample: (type) => {
-                 const sampleData = [];
-                 const count = 150; 
-                 let price = 100;
-                 if (type === 'ohlcv') {
-                    // OHLCV Generation
-                    sampleData.push("Date,Open,High,Low,Close,Volume");
-                    const now = new Date();
-                    for (let i = 0; i < count; i++) {
-                        const date = new Date(now.getTime() - (count - i) * 86400000).toISOString().split('T')[0];
-                        const trend = Math.sin(i * 0.1) * 2;
-                        const noise = (Math.random() - 0.5) * 2;
-                        const close = 100 + trend + noise + (i * 0.1); 
-                        const open = close + (Math.random() - 0.5);
-                        const high = Math.max(open, close) + Math.random();
-                        const low = Math.min(open, close) - Math.random();
-                        const vol = Math.floor(1000 + Math.random() * 500);
-                        sampleData.push(`${date},${open.toFixed(2)},${high.toFixed(2)},${low.toFixed(2)},${close.toFixed(2)},${vol}`);
-                    }
-                 } else { 
-                    // Single Value Generation
-                    for (let i = 0; i < count; i++) {
-                        price = price + (Math.random() - 0.5) * 5;
-                        sampleData.push(price.toFixed(2));
-                    }
-                 }
-                 const inputEl = document.getElementById('input-data');
-                 if (inputEl) inputEl.value = sampleData.join('\n');
-                 PlaygroundController.update();
-            },
-            update: () => {
-                PlaygroundController.clearError();
-                // Dynamic Params Collection
-                const params = {};
-                if (IndicatorConfig && Array.isArray(IndicatorConfig) && IndicatorConfig.length > 0) {
-                    IndicatorConfig.forEach(cfg => {
-                        const el = document.getElementById(`param-${cfg.id}`);
-                        if (el) params[cfg.id] = parseFloat(el.value);
-                    });
-                } else {
-                    // Fallback to default Period if no config
-                    const periodEl = document.getElementById('param-period');
-                    params.period = periodEl ? parseInt(periodEl.value) || 14 : 14;
-                }
-
-                const rawData = document.getElementById('input-data').value.trim();
-                let lines = [];
-                // Robust split: handle comma, newline, or mixed
-                if (rawData.includes('\n')) {
-                    // Split by newline first
-                    lines = rawData.split('\n').map(l => l.trim()).filter(l => l);
-                    // If it's NOT multi-column (header check), and lines contain commas, try to flatten
-                    const firstVal = parseFloat(lines[0].split(/[,\t]/)[0]);
-                    const isHeader = isNaN(firstVal) && /[a-zA-Z]/.test(lines[0]);
-                    if (!isHeader && lines.some(l => l.includes(','))) {
-                        // Flatten mixed content like "100, 101\n102, 103"
-                        lines = rawData.split(/[\n,]+/).map(l => l.trim()).filter(l => l);
-                    }
-                } else {
-                    // Single line, split by comma
-                    lines = rawData.split(',').map(l => l.trim()).filter(l => l);
-                }
-
-                let parsedData = [];
-                const firstLine = lines[0] || "";
-                const firstVal = parseFloat(firstLine.split(/[,\t]/)[0]);
-                const isMultiColumn = isNaN(firstVal) && /[a-zA-Z]/.test(firstLine);
-
-                if (isMultiColumn && lines.length > 1) {
-                    const headers = firstLine.split(/[,\t]+/).map(h => h.trim().toLowerCase());
-                    for (let i = 1; i < lines.length; i++) {
-                        const parts = lines[i].split(/[,\t]+/).map(v => parseFloat(v));
-                        if (parts.some(isNaN)) continue;
-                        const row = { time: i - 1 };
-                        headers.forEach((h, idx) => { row[h] = parts[idx]; });
-                        if (row.close === undefined && row.c !== undefined) row.close = row.c;
-                        parsedData.push(row);
-                    }
-                } else {
-                    parsedData = lines.map((l, i) => {
-                        const val = parseFloat(l);
-                        return isNaN(val) ? null : { time: i, close: val };
-                    }).filter(d => d);
-                }
-
-                if (parsedData.length < 2) {
-                    PlaygroundController.showError("Insufficient data.");
-                    return;
-                }
-
-                let indicatorValues = [];
-                try {
-                    if (typeof IndicatorLogic !== 'undefined' && IndicatorLogic.calculate) {
-                        indicatorValues = IndicatorLogic.calculate(parsedData, params);
-                    } else {
-                        // Fallback: Simple RSI calculation for demo
-                        indicatorValues = PlaygroundController.calculateRSI(parsedData, params.period);
-                    }
-                } catch (e) {
-                    console.error("Calculation Error", e);
-                    PlaygroundController.showError("Calculation Error: " + e.message);
-                    return;
-                }
-
-                // --- Format Output (CSV/TSV for Excel) ---
-                const outputEl = document.getElementById('output-data');
-                // --- Format Output (CSV/TSV for Excel) ---
-                if (outputEl) {
-                    if (Array.isArray(indicatorValues)) {
-                        // Single Array (e.g. RSI)
-                        outputEl.value = indicatorValues.map(v => v === null ? "" : v).join('\n');
-                    } else if (typeof indicatorValues === 'object') {
-                        // Multi-line Object (e.g. Ichimoku)
-                        const keys = Object.keys(indicatorValues);
-                        if (keys.length === 0) {
-                            outputEl.value = "";
-                        } else {
-                            const length = indicatorValues[keys[0]].length;
-                            // Comma separated as requested by user
-                            const separator = ','; 
-                            let csv = keys.join(separator) + '\n';
-                            for (let i = 0; i < length; i++) {
-                                const row = keys.map(k => {
-                                    const val = indicatorValues[k][i];
-                                    // Handle missing/undefined
-                                    return (val === null || val === undefined) ? "" : val;
-                                });
-                                csv += row.join(separator) + '\n';
-                            }
-                            outputEl.value = csv;
-                        }
-                    } else {
-                        outputEl.value = JSON.stringify(indicatorValues, null, 2);
-                    }
-                }
-                PlaygroundController.renderChart(parsedData, indicatorValues);
-            },
-            calculateRSI: (data, period) => {
-                // Simple RSI fallback
-                const values = [];
-                values.push(null); // First value is null
-                if (data.length < 2) return values;
-                let sumGains = 0, sumLosses = 0;
-                for (let i = 1; i < data.length; i++) {
-                    const change = data[i].close - data[i-1].close;
-                    const gain = change > 0 ? change : 0;
-                    const loss = change < 0 ? -change : 0;
-                    if (i < period) {
-                        sumGains += gain; sumLosses += loss;
-                        values.push(null);
-                        continue;
-                    }
-                    if (i === period) {
-                        sumGains += gain; sumLosses += loss;
-                        const avgGain = sumGains / period;
-                        const avgLoss = sumLosses / period;
-                        const rs = avgLoss < 0.0001 ? 100 : avgGain / avgLoss;
-                        values.push(100 - (100 / (1 + rs)));
-                        sumGains = avgGain; sumLosses = avgLoss;
-                        continue;
-                    }
-                    sumGains = (sumGains * (period - 1) + gain) / period;
-                    sumLosses = (sumLosses * (period - 1) + loss) / period;
-                    const rs = sumLosses < 0.0001 ? 100 : sumGains / sumLosses;
-                    values.push(100 - (100 / (1 + rs)));
-                }
-                return values;
-            },
-            renderChart: (prices, indicatorValues) => {
-                const canvas = document.getElementById('indicatorChart');
-                if (!canvas) return;
-                const ctx = canvas.getContext('2d');
-                const labels = prices.map((_, i) => i);
-                if (PlaygroundController.instanceChart) PlaygroundController.instanceChart.destroy();
-
-                const datasets = [];
-                // 1. Overlay: Close Price (if enabled)
-                if (IndicatorDisplay && IndicatorDisplay.isOverlay) {
-                    datasets.push({
-                        label: 'Close Price',
-                        data: prices.map(p => p.close),
-                        borderColor: '#94a3b8', // slate-400
-                        backgroundColor: 'transparent',
-                        borderDash: [5, 5],
-                        borderWidth: 1,
-                        pointRadius: 0,
-                        tension: 0.1
-                    });
-                }
-
-                // 2. Indicator Data
-                const defaultColors = ['#4F46E5', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6'];
-                if (Array.isArray(indicatorValues)) {
-                    datasets.push({
-                        label: 'Indicator',
-                        data: indicatorValues,
-                        borderColor: IndicatorDisplay.plots && IndicatorDisplay.plots.main ? IndicatorDisplay.plots.main.color : '#4F46E5',
-                        backgroundColor: 'transparent',
-                        tension: 0.1, pointRadius: 0, borderWidth: 2
-                    });
-                } else if (typeof indicatorValues === 'object' && indicatorValues !== null) {
-                    // Multi-line indicator (e.g., Bollinger Bands, Parabolic SAR)
-                    Object.keys(indicatorValues).forEach((key, idx) => {
-                        const conf = (IndicatorDisplay.plots && IndicatorDisplay.plots[key]) || {};
-                        const color = conf.color || defaultColors[idx % defaultColors.length];
-                        const isScatter = conf.type === 'scatter';
-                        // For scatter type, convert data to {x, y} format
-                        let chartData;
-                        if (isScatter) {
-                            chartData = indicatorValues[key]
-                                .map((val, i) => val !== null && val !== undefined ? { x: i, y: val } : null)
-                                .filter(p => p !== null);
-                        } else {
-                            chartData = indicatorValues[key];
-                        }
-                        datasets.push({
-                            label: conf.label || key,
-                            data: chartData,
-                            type: isScatter ? 'scatter' : (conf.type || 'line'),
-                            borderColor: isScatter ? 'transparent' : color,
-                            backgroundColor: isScatter ? color : 'transparent',
-                            pointRadius: isScatter ? (conf.pointRadius || 5) : 0,
-                            pointBorderWidth: 0,
-                            tension: 0.1,
-                            borderWidth: isScatter ? 0 : 2
-                        });
-                    });
-                }
-
-                PlaygroundController.instanceChart = new Chart(ctx, {
-                    type: 'line',
-                    data: { labels: labels, datasets: datasets },
-                    options: {
-                        responsive: true, maintainAspectRatio: false,
-                        interaction: { mode: 'index', intersect: false },
-                        scales: {
-                            y: { type: 'linear', display: true, position: 'left', title: { display: true, text: 'Value' } }
-                        }
-                    }
-                });
-            }
-        };
-
-        function updateTransform() {
-            if (els.content) {
-                els.content.style.transform = `translate(${CanvasState.panX}px, ${CanvasState.panY}px) scale(${CanvasState.scale})`;
-            }
-        }
-
-        function handleWheel(e) {
-            e.preventDefault();
-            const rect = els.container.getBoundingClientRect();
-            const mouseX = e.clientX - rect.left;
-            const mouseY = e.clientY - rect.top;
-            const zoomSensitivity = 0.001;
-            const delta = -e.deltaY * zoomSensitivity;
-            let newScale = CanvasState.scale * (1 + delta);
-            newScale = Math.max(CanvasState.minScale, Math.min(CanvasState.maxScale, newScale));
-            const scaleRatio = newScale / CanvasState.scale;
-            CanvasState.panX = mouseX - (mouseX - CanvasState.panX) * scaleRatio;
-            CanvasState.panY = mouseY - (mouseY - CanvasState.panY) * scaleRatio;
-            CanvasState.scale = newScale;
-            updateTransform();
-        }
-
-        function startDrag(e) {
-            if (e.button !== 0 && e.button !== 1) return;
-            CanvasState.isDragging = true;
-            CanvasState.startX = e.clientX;
-            CanvasState.startY = e.clientY;
-            els.container.style.cursor = 'grabbing';
-        }
-
-        function drag(e) {
-            if (!CanvasState.isDragging) return;
-            e.preventDefault();
-            const dx = e.clientX - CanvasState.startX;
-            const dy = e.clientY - CanvasState.startY;
-            CanvasState.panX += dx;
-            CanvasState.panY += dy;
-            CanvasState.startX = e.clientX;
-            CanvasState.startY = e.clientY;
-            updateTransform();
-        }
-
-        function stopDrag() {
-            CanvasState.isDragging = false;
-            if (els.container) els.container.style.cursor = 'grab';
-        }
-
-        window.zoomAction = (direction) => {
-            if (!els.container || !els.content) return;
-            const factor = direction === 'in' ? 1.2 : 0.8;
-            let newScale = CanvasState.scale * factor;
-            newScale = Math.max(CanvasState.minScale, Math.min(CanvasState.maxScale, newScale));
-            const rect = els.container.getBoundingClientRect();
-            const cx = rect.width / 2;
-            const cy = rect.height / 2;
-            const scaleRatio = newScale / CanvasState.scale;
-            CanvasState.panX = cx - (cx - CanvasState.panX) * scaleRatio;
-            CanvasState.panY = cy - (cy - CanvasState.panY) * scaleRatio;
-            CanvasState.scale = newScale;
-            updateTransform();
-        }
-
-        window.resetView = () => { centerContent(); }
-
-        function centerContent() {
-            if (!els.content || !els.container) return;
-            const containerRect = els.container.getBoundingClientRect();
-            const unscaledWidth = els.content.scrollWidth;
-            const unscaledHeight = els.content.scrollHeight;
-            let initialScale = 1.0;
-            if (unscaledWidth > containerRect.width) {
-                initialScale = (containerRect.width / unscaledWidth) * 0.9;
-            }
-            initialScale = Math.max(0.5, Math.min(1.0, initialScale));
-            CanvasState.scale = initialScale;
-            CanvasState.panX = (containerRect.width - unscaledWidth * initialScale) / 2;
-            CanvasState.panY = (containerRect.height - unscaledHeight * initialScale) / 2;
-            CanvasState.panY = Math.max(20, CanvasState.panY);
-            updateTransform();
-        }
-
-        // --- 3. Init ---
-        document.addEventListener('DOMContentLoaded', async () => {
-            // Bind element references
-            els.container = document.getElementById('canvas-container');
-            els.content = document.getElementById('canvas-content');
-
-            // Init code panel state
-            updateView();
-
-            // Init Playground
-            if (window.PlaygroundController) PlaygroundController.init();
-
-            // Mermaid rendering + center
-            if (window.mermaid) {
-                try {
-                    const nodes = document.querySelectorAll('.mermaid');
-                    if (nodes.length > 0) {
-                        await mermaid.run({ nodes: nodes });
-                        setTimeout(centerContent, 100);
-                    }
-                } catch (e) { console.error("Mermaid render failed", e); }
-            }
-
-            // Canvas Events (Wheel zoom + Drag pan)
-            if (els.container) {
-                els.container.addEventListener('wheel', handleWheel, { passive: false });
-                els.container.addEventListener('mousedown', startDrag);
-                window.addEventListener('mousemove', drag);
-                window.addEventListener('mouseup', stopDrag);
-            }
-
-            // KaTeX Auto Render
-            if (window.renderMathInElement) {
-                renderMathInElement(document.body, {
-                    delimiters: [
-                        {left: '$$', right: '$$', display: true},
-                        {left: '$', right: '$', display: false},
-                        {left: '\\(', right: '\\)', display: false},
-                        {left: '\\[', right: '\\]', display: true}
-                    ],
-                    throwOnError: false
-                });
-            }
-
-            // TOC ScrollSpy
-            const tocLinks = document.querySelectorAll('.toc-link');
-            if (tocLinks.length > 0) {
-                const headings = document.querySelectorAll('article h2[id], article h3[id]');
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            tocLinks.forEach(link => link.classList.remove('active'));
-                            const id = entry.target.getAttribute('id');
-                            const activeLink = document.querySelector(`.toc-link[href="#${id}"]`);
-                            if (activeLink) activeLink.classList.add('active');
-                        }
-                    });
-                }, { rootMargin: '-20% 0px -60% 0px' });
-                headings.forEach(h => observer.observe(h));
-            }
-
-            // Load Sample buttons
-            const btnOhlcv = document.getElementById('btn-load-sample-ohlcv');
-            if (btnOhlcv) {
-                btnOhlcv.addEventListener('click', () => {
-                    if (window.PlaygroundController) PlaygroundController.generateSample('ohlcv');
-                });
-            }
-            const btnSingle = document.getElementById('btn-load-sample-single');
-            if (btnSingle) {
-                btnSingle.addEventListener('click', () => {
-                    if (window.PlaygroundController) PlaygroundController.generateSample('single');
-                });
-            }
-            // Initialize Playground Controller
-            if (window.PlaygroundController && PlaygroundController.init) {
-                PlaygroundController.init();
-            }
-        });
-    </script>
 </body>
 </html>

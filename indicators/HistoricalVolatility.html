@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HistoricalVolatility - I ant I Investigates</title>
+    <meta name="description" content="HistoricalVolatility - Technical Indicator">
+    <meta name="keywords" content="HistoricalVolatility, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/historicalvolatility.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="HistoricalVolatility - I ant I Investigates">
+    <meta property="og:description" content="HistoricalVolatility - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/historicalvolatility.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/historicalvolatility.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="HistoricalVolatility">
+    <meta name="twitter:description" content="HistoricalVolatility - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/historicalvolatility.png">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
+
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">HistoricalVolatility</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="flex space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">HistoricalVolatility</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">Historical Volatility measures the annualized standard deviation of logarithmic price returns, quantifying how wildly prices have fluctuated in the recent past.</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION["Phase 1: Ingestion"];
+A[/"Receive Price Data Stream"/];
+B["Capture Consecutive Closing Prices"];
+C["Define Analysis Lookback Period"];
+end;
+subgraph EVALUATION["Phase 2: Evaluation"];
+D["Calculate Log Returns"];
+E["Measure Price Change Intensity"];
+F["Assess Return Distribution"];
+end;
+subgraph WEIGHTING["Phase 3: Weighting"];
+G["Compute Mean Return"];
+H["Calculate Deviations from Mean"];
+I["Square and Sum Deviations"];
+end;
+subgraph SYNTHESIS["Phase 4: Synthesis"];
+J["Calculate Standard Deviation"];
+K["Annualize to Yearly Scale"];
+L["Express as Percentage"];
+end;
+subgraph OUTCOME["Phase 5: Outcome"];
+M{"Volatility Assessment?"};
+N["Low HV = Squeeze/Compression"];
+O["High HV = Stress/Panic"];
+P["HV Turning = Regime Change"];
+Q[/"Generate Volatility Regime Signal"/];
+end;
+A --> B;
+B --> C;
+C --> D;
+D --> E;
+E --> F;
+F --> G;
+G --> H;
+H --> I;
+I --> J;
+J --> K;
+K --> L;
+L --> M;
+M -->|Squeeze| N;
+M -->|Panic| O;
+M -->|Transition| P;
+N --> Q;
+O --> Q;
+P --> Q;
+style INGESTION fill:#e3f2fd;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#e8f5e9;
+style SYNTHESIS fill:#fce4ec;
+style OUTCOME fill:#f3e5f5;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/HistoricalVolatility.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="historical-volatility">Historical Volatility</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: Historical Volatility  </p>
+<p class="mb-4">Abbreviation: HV  </p>
+<p class="mb-4">Category: Volatility / Risk Management  </p>
+<p class="mb-4">Creator: Black & Scholes (Concept popularizers in options pricing, 1973)  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: Historical Volatility measures the annualized standard deviation of logarithmic price returns, quantifying how wildly prices have fluctuated in the recent past.</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="formula">Formula</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Step</td><td class="px-4 py-2 border-b border-[#2a2e39]">Formula</td><td class="px-4 py-2 border-b border-[#2a2e39]">Purpose</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Log Returns</td><td class="px-4 py-2 border-b border-[#2a2e39]">$R_t = \ln\left(\frac{P_t}{P_{t-1}}\right)$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily % change</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Std Deviation</td><td class="px-4 py-2 border-b border-[#2a2e39]">$\sigma = \sqrt{\frac{\sum(R_t - \bar{R})^2}{N-1}}$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Dispersion measure</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Annualize</td><td class="px-4 py-2 border-b border-[#2a2e39]">$HV = \sigma \times \sqrt{252} \times 100$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yearly scale</td></tr>
+</table></div>
+
+<p class="mb-4">Variables:</p>
+<p class="mb-4">- $P_t$ = Today's closing price</p>
+<p class="mb-4">- $P_{t-1}$ = Yesterday's closing price</p>
+<p class="mb-4">- $N$ = Lookback period (typically 20)</p>
+<p class="mb-4">- $252$ = Trading days per year (for stocks)</p>
+
+<p class="mb-4">Step-by-Step Logic:</p>
+<p class="mb-4">1. Calculate log returns: $\ln(Close_t / Close_{t-1})$</p>
+<p class="mb-4">2. Compute mean of log returns over $N$ periods</p>
+<p class="mb-4">3. Calculate standard deviation using sample formula (N-1)</p>
+<p class="mb-4">4. Annualize by multiplying by $\sqrt{252}$</p>
+<p class="mb-4">5. Express as percentage (× 100)</p>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">Think of Historical Volatility like a seismograph measuring market tremors. Low HV = the market is calm, like a sleeping volcano. High HV = the market is shaking violently, like an active eruption. Unlike price direction, HV tells you the intensity of movement, not which way it's going.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Purpose</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Lookback</td><td class="px-4 py-2 border-b border-[#2a2e39]">20-21 days</td><td class="px-4 py-2 border-b border-[#2a2e39]">Approximately 1 trading month</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Short-term</td><td class="px-4 py-2 border-b border-[#2a2e39]">10 days</td><td class="px-4 py-2 border-b border-[#2a2e39]">Gamma trading / short-term options</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Annualization</td><td class="px-4 py-2 border-b border-[#2a2e39]">√252</td><td class="px-4 py-2 border-b border-[#2a2e39]">Stocks (trading days)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Crypto Annualization</td><td class="px-4 py-2 border-b border-[#2a2e39]">√365</td><td class="px-4 py-2 border-b border-[#2a2e39]">Crypto (24/7 trading)</td></tr>
+</table></div>
+
+<p class="mb-4">Typical Ranges:</p>
+<p class="mb-4">- S&P 500: 10-25% (normal), 30%+ (stressed)</p>
+<p class="mb-4">- Bitcoin: 50-100% (typical), 100%+ (extreme)</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<p class="mb-4">Best: Pre-breakout squeeze detection, panic bottom identification  </p>
+<p class="mb-4">Good: Options pricing, risk management decisions  </p>
+<p class="mb-4">Worst: Steady grinding trends (HV stays moderate, no actionable signal)</p>
+
+<p class="mb-4">Critical Insight: HV is NON-DIRECTIONAL. It tells you intensity, not direction. Always pair with price action or directional indicators.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-entry-signals">5. Entry Signals</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strength</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">The Squeeze</td><td class="px-4 py-2 border-b border-[#2a2e39]">HV at multi-month low, turns up</td><td class="px-4 py-2 border-b border-[#2a2e39]">With breakout</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">The Climax</td><td class="px-4 py-2 border-b border-[#2a2e39]">HV at extreme high, turns down</td><td class="px-4 py-2 border-b border-[#2a2e39]">Reversal likely</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Low HV Breakout</td><td class="px-4 py-2 border-b border-[#2a2e39]">HV < 10% + Price breakout</td><td class="px-4 py-2 border-b border-[#2a2e39]">Breakout direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Divergence</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price HH + HV LH</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish warning</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+</table></div>
+
+<h3 id="volatility-breakout-signal-the-squeeze">Volatility Breakout Signal (The Squeeze)</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF HV(20) at 6-month low               // Energy coiled
+AND HV(20) &gt; HV(20)[1]                 // Starting to release
+AND Price breaks Donchian(20) High     // Direction determined
+THEN → BUY (Explosive move starting)
+</code></pre>
+
+<h3 id="climax-exit-signal">Climax Exit Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF HV(20) &gt; 90th percentile            // Extreme volatility
+AND HV(20) &lt; HV(20)[1]                 // Starting to contract
+THEN → EXIT trends (Exhaustion imminent)
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-filter-usage">6. Filter Usage</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Partner</td><td class="px-4 py-2 border-b border-[#2a2e39]">Synergy</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Donchian Channels</td><td class="px-4 py-2 border-b border-[#2a2e39]">HV squeeze + Donchian breakout = directional trigger</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bollinger Band Width</td><td class="px-4 py-2 border-b border-[#2a2e39]">Confirms squeeze conditions</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Implied Volatility (IV)</td><td class="px-4 py-2 border-b border-[#2a2e39]">HV vs IV determines option pricing edge</td></tr>
+</table></div>
+
+<h3 id="options-trading-filter">Options Trading Filter</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF HV &gt; IV:                            // Options &quot;cheap&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;→ BUY options (straddles, strangles)
+&nbsp;&nbsp;&nbsp;&nbsp;
+IF IV &gt; HV:                            // Options &quot;expensive&quot;  
+&nbsp;&nbsp;&nbsp;&nbsp;→ SELL options (premium collection)
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">No Direction: HV is non-directional. A rising HV could mean breakout UP or DOWN. Always pair with price breakout indicators.</blockquote>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Ghost Effect: A single massive gap creates an HV spike that lingers for exactly $N$ days, then drops instantly when the gap leaves the window. This "ghost" distorts percentile rankings.</blockquote>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Annualization Factor: Ensure correct constant: 252 for stocks, 365 for crypto, 250 for forex. Wrong factor = meaningless values.</blockquote>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Percentile > Absolute: Raw HV numbers vary wildly by asset class. Use HV Rank/Percentile for cross-asset comparison.</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<p class="mb-4">The "Implied vs. Historical" Gap (Options Edge):</p>
+<p class="mb-4">Options traders compare HV to IV (Implied Volatility from options prices):</p>
+<p class="mb-4">- HV > IV: Market movement is GREATER than priced. Options are "cheap." → Buy straddles</p>
+<p class="mb-4">- IV > HV: Market calm but fear is priced. Options are "expensive." → Sell premium</p>
+
+<p class="mb-4">Volatility Cycles (Mandelbrot's Observation):</p>
+<p class="mb-4">Volatility clusters. High volatility begets high volatility (crisis periods). Low volatility begets low volatility (complacency). But eventually, regimes change—the longer the calm, the bigger the eventual storm.</p>
+
+<p class="mb-4">Percentile Ranking Solution:</p>
+<p class="mb-4">Don't compare raw HV across assets. Use:</p>
+<p class="mb-4">$$HV_{Rank} = \frac{Current\ HV - Min\ HV_{252}}{Max\ HV_{252} - Min\ HV_{252}}$$</p>
+<p class="mb-4">This normalizes to 0-100% for any asset.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"Historical Volatility is your market's seismograph—it doesn't predict earthquakes, but it tells you whether the ground is stable or shaking, so you can prepare accordingly."</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">Historical Volatility answers: "How much has this asset been moving recently?"</p>
+
+<p class="mb-4">HV measures the dispersion of returns—how far daily moves deviate from the average. High HV = wild swings. Low HV = quiet creeping. This has nothing to do with direction, only intensity.</p>
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<p class="mb-4">The HV provides:</p>
+<p class="mb-4">- Early warning of regime changes via volatility cycles</p>
+<p class="mb-4">- Squeeze detection: 70%+ of major moves start from HV extremes</p>
+<p class="mb-4">- Options pricing edge when compared to implied volatility</p>
+<p class="mb-4">- Risk-adjusted position sizing (lower HV = larger positions)</p>
+
+<h2 id="3-actionable-strategy:-"volatility-expansion-breakout"">3. Actionable Strategy: "Volatility Expansion Breakout"</h2>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+STRATEGY: The Squeeze Breakout
+SETUP: HV(20) drops to 6-month low (or below 10%)
+TRIGGER: Price breaks 20-day Donchian Channel (new 20-day high or low)
+DIRECTION: Direction of Donchian break
+ENTRY: Close of breakout candle
+STOP: Opposite Donchian band
+TARGET: 2× ATR from entry (expansion target)
+</code></pre>
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<p class="mb-4">- No direction: Must combine with breakout indicators</p>
+<p class="mb-4">- Ghost spikes: Single gaps distort readings for N periods</p>
+<p class="mb-4">- Asset-specific levels: 30% HV is panic for S&P, normal for Bitcoin</p>
+<p class="mb-4">- Lagging in fast regimes: Takes time to reflect new volatility</p>
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<p class="mb-4">Creator: Used extensively in Black-Scholes options model (1973); John Bollinger popularized volatility cycles  </p>
+<p class="mb-4">Related: Implied Volatility (IV), Average True Range, VIX, Bollinger Band Width</p>
+
+<h3 id="55-related-indicators-comparison">5.5 Related Indicators Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">Historical Vol</td><td class="px-4 py-2 border-b border-[#2a2e39]">ATR</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bollinger Width</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Calculation</td><td class="px-4 py-2 border-b border-[#2a2e39]">StdDev of returns</td><td class="px-4 py-2 border-b border-[#2a2e39]">Avg of True Range</td><td class="px-4 py-2 border-b border-[#2a2e39]">(Upper - Lower) / SMA</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Scale</td><td class="px-4 py-2 border-b border-[#2a2e39]">Annualized %</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price units</td><td class="px-4 py-2 border-b border-[#2a2e39]">Ratio</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">None</td><td class="px-4 py-2 border-b border-[#2a2e39]">None</td><td class="px-4 py-2 border-b border-[#2a2e39]">None</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Best For</td><td class="px-4 py-2 border-b border-[#2a2e39]">Options, risk</td><td class="px-4 py-2 border-b border-[#2a2e39]">Position sizing</td><td class="px-4 py-2 border-b border-[#2a2e39]">Squeeze detection</td></tr>
+</table></div>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h3 id="threshold-matrix">Threshold Matrix</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">HV Level</td><td class="px-4 py-2 border-b border-[#2a2e39]">Market State</td><td class="px-4 py-2 border-b border-[#2a2e39]">Action</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bottom 10%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Extreme compression</td><td class="px-4 py-2 border-b border-[#2a2e39]">Prepare for breakout</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">10-30%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Normal calm</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard strategies</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">30-50%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Elevated</td><td class="px-4 py-2 border-b border-[#2a2e39]">Reduce position sizes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">50-70%</td><td class="px-4 py-2 border-b border-[#2a2e39]">High stress</td><td class="px-4 py-2 border-b border-[#2a2e39]">Tighten stops, reduce risk</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Top 10%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Extreme panic</td><td class="px-4 py-2 border-b border-[#2a2e39]">Climax likely, look for reversal</td></tr>
+</table></div>
+
+<h3 id="signal-patterns">Signal Patterns</h3>
+
+<h4 id="hv-squeeze-buy-signal">HV Squeeze Buy Signal</h4>
+
+<p class="mb-4">This signal identifies the "volatility squeeze" setup where HV reaches near its 252-day minimum and price simultaneously breaks the Donchian channel. Low volatility environments store energy that often releases in explosive moves. 70%+ of major price moves start from extreme HV compression conditions.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def hv_squeeze_buy(hv, hv_min_252, price, donchian_high, prev_price):
+&nbsp;&nbsp;&nbsp;&nbsp;is_squeeze = hv &lt;= hv_min_252 * 1.1  # Within 10% of 252-day low
+&nbsp;&nbsp;&nbsp;&nbsp;breakout = price &gt; donchian_high and prev_price &lt;= donchian_high
+&nbsp;&nbsp;&nbsp;&nbsp;return is_squeeze and breakout
+</code></pre>
+
+<h4 id="hv-climax-exit-signal">HV Climax Exit Signal</h4>
+
+<p class="mb-4">This pattern detects when HV reaches extreme highs (90th percentile) and begins contracting—a sign of volatility exhaustion. Extreme volatility clusters tend to mean-revert, and the turning point often marks trend exhaustion. This signal warns traders to exit directional positions before the inevitable reversal or consolidation.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def hv_climax_exit(hv, hv_percentile):
+&nbsp;&nbsp;&nbsp;&nbsp;extreme_high = hv_percentile &gt; 90
+&nbsp;&nbsp;&nbsp;&nbsp;turning_down = hv &lt; hv[1]
+&nbsp;&nbsp;&nbsp;&nbsp;return extreme_high and turning_down
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+// Volatility Squeeze Scanner
+SET HV = HistoricalVolatility(20)
+SET MinHV = Lowest(HV, 120)            // 6-month low
+
+FILTER =
+&nbsp;&nbsp;(HV &lt;= MinHV * 1.1)                  // Within 10% of low
+</code></pre>
+
+<h3 id="combination-strategies">Combination Strategies</h3>
+
+<p class="mb-4">HV + Donchian Breakout:</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF HV at 6-month low                   // Squeeze confirmed
+AND Close &gt; Highest(High, 20)          // Upside breakout
+THEN BUY
+
+STOP = Lowest(Low, 20)
+TARGET = Entry + 2× ATR(14)
+</code></pre>
+
+<p class="mb-4">HV vs IV Options Strategy:</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SET HV = HistoricalVolatility(20)
+SET IV = ImpliedVolatility(ATM_Option)
+
+IF HV &gt; IV * 1.2:                      // 20% greater than implied
+&nbsp;&nbsp;&nbsp;&nbsp;BUY Straddle (options underpriced)
+&nbsp;&nbsp;&nbsp;&nbsp;
+IF IV &gt; HV * 1.2:                      // 20% greater than realized
+&nbsp;&nbsp;&nbsp;&nbsp;SELL Iron Condor (options overpriced)
+</code></pre>
+
+
+
+
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#formula" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Formula</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#5-entry-signals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Entry Signals</a>
+<a href="#volatility-breakout-signal-the-squeeze" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Volatility Breakout Signal (The Squeeze)</a>
+<a href="#climax-exit-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Climax Exit Signal</a>
+<a href="#6-filter-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Filter Usage</a>
+<a href="#options-trading-filter" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Options Trading Filter</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#3-actionable-strategy:-"volatility-expansion-breakout"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Strategy: "Volatility Expansion Breakout"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Matrix</a>
+<a href="#signal-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Signal Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "HistoricalVolatility",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 20;
+                const result = HistoricalVolatility.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/HistoricalVolatility.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[{"id": "period", "label": "Period (20)", "type": "number", "value": 20, "min": 2, "max": 100}]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": true, "plots": {"main": {"label": "HistoricalVolatility", "color": "#4f46e5", "type": "line"}}}
+    </script>
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code - loaded externally before this block
+
+        // 2. Configuration (XSS-safe via script type="application/json")
+        try {
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 20;
+                const result = HistoricalVolatility.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+    </script>
+
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
+
+</body>
+</html>

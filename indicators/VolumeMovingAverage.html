@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VolumeMovingAverage - I ant I Investigates</title>
+    <meta name="description" content="VolumeMovingAverage - Technical Indicator">
+    <meta name="keywords" content="VolumeMovingAverage, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/volumemovingaverage.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="VolumeMovingAverage - I ant I Investigates">
+    <meta property="og:description" content="VolumeMovingAverage - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/volumemovingaverage.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/volumemovingaverage.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="VolumeMovingAverage">
+    <meta name="twitter:description" content="VolumeMovingAverage - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/volumemovingaverage.png">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
+
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">VolumeMovingAverage</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="flex space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">VolumeMovingAverage</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">VMA is a simple moving average applied to trading volume that establishes a baseline for "normal" activity, allowing traders to identify when institutional players are accumulating, distributing, or sitting on the sidelines.</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION["INGESTION<br/>Data Capture"];
+A["Observe trading volume<br/>(shares/contracts per period)"];
+B["Set averaging period<br/>(baseline window)"];
+end;
+subgraph EVALUATION["EVALUATION<br/>Initial Assessment"];
+C["Sum volume over lookback<br/>(total activity measurement)"];
+D["Calculate average volume<br/>(establish 'normal' baseline)"];
+end;
+subgraph WEIGHTING["WEIGHTING<br/>Normalization"];
+E["Compare current vs average<br/>(relative volume ratio)"];
+F["Express as multiple of VMA<br/>(1.5× = 50% above normal)"];
+end;
+subgraph SYNTHESIS["SYNTHESIS<br/>Pattern Detection"];
+G{"What is relative volume?"};
+H["RVOL > 1.5: Significant activity"];
+I["RVOL < 0.5: Very low activity"];
+J["RVOL > 3.0: Climax volume"];
+end;
+subgraph OUTCOME["OUTCOME<br/>Signal Generation"];
+K["Breakout + RVOL > 1.5:<br/>Confirmed move, trade with conviction"];
+L["Breakout + RVOL < 0.8:<br/>Weak move, skip or reduce size"];
+M["RVOL > 3.0 at extreme price:<br/>Exhaustion signal, expect reversal"];
+end;
+A --> C;
+B --> C;
+C --> D;
+D --> E;
+E --> F;
+F --> G;
+G -->|"> 1.5"| H;
+G -->|"< 0.5"| I;
+G -->|"> 3.0"| J;
+H --> K;
+I --> L;
+J --> M;
+style INGESTION fill:#e3f2fd;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#e8f5e9;
+style SYNTHESIS fill:#fce4ec;
+style OUTCOME fill:#f3e5f5;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/VolumeMovingAverage.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="volume-moving-average-vma">Volume Moving Average (VMA)</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: Volume Moving Average  </p>
+<p class="mb-4">Abbreviation: VMA (also Vol MA, Vol SMA)  </p>
+<p class="mb-4">Category: Volume  </p>
+<p class="mb-4">Creator: Standard technical analysis tool (no single creator)  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: VMA is a simple moving average applied to trading volume that establishes a baseline for "normal" activity, allowing traders to identify when institutional players are accumulating, distributing, or sitting on the sidelines.</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="formula">Formula</h3>
+
+<p class="mb-4">$$VMA = \frac{\sum_{i=1}^{N} Volume_i}{N}$$</p>
+
+<p class="mb-4">This is simply the arithmetic mean of volume over N periods.</p>
+
+<h3 id="calculation-steps">Calculation Steps</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Step</td><td class="px-4 py-2 border-b border-[#2a2e39]">Operation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Result</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sum volume for periods 1 through N</td><td class="px-4 py-2 border-b border-[#2a2e39]">Total Volume</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">2</td><td class="px-4 py-2 border-b border-[#2a2e39]">Divide by N</td><td class="px-4 py-2 border-b border-[#2a2e39]">VMA</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">On next bar, add new volume, subtract oldest</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rolling VMA</td></tr>
+</table></div>
+
+<h3 id="relative-volume-rvol">Relative Volume (RVOL)</h3>
+
+<p class="mb-4">A common derivative:</p>
+
+<p class="mb-4">$$RVOL = \frac{Current\ Volume}{VMA}$$</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RVOL Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Interpretation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.0 - 0.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very low activity</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.5 - 0.8</td><td class="px-4 py-2 border-b border-[#2a2e39]">Below normal</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.8 - 1.2</td><td class="px-4 py-2 border-b border-[#2a2e39]">Normal activity</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1.2 - 2.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Above normal</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">2.0+</td><td class="px-4 py-2 border-b border-[#2a2e39]">Significant activity</td></tr>
+</table></div>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">Think of VMA like your normal traffic flow. If your commute typically takes 30 minutes (VMA = average traffic), you know when traffic is light (15 min = 0.5× normal) or heavy (60 min = 2× normal). Volume works the same way—VMA establishes what "normal" looks like, so deviations become meaningful signals.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<h3 id="default-parameters">Default Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rationale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">20</td><td class="px-4 py-2 border-b border-[#2a2e39]">One trading month; captures typical activity cycle</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Short Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">10</td><td class="px-4 py-2 border-b border-[#2a2e39]">More responsive to recent activity</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Long Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">50</td><td class="px-4 py-2 border-b border-[#2a2e39]">Captures seasonal patterns</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Confirmation Threshold</td><td class="px-4 py-2 border-b border-[#2a2e39]">1.5× VMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Minimum for "significant" volume</td></tr>
+</table></div>
+
+<h3 id="timeframe-recommendations">Timeframe Recommendations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trading Style</td><td class="px-4 py-2 border-b border-[#2a2e39]">Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">Timeframe</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Day Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">10-20</td><td class="px-4 py-2 border-b border-[#2a2e39]">5-min to 1-hour</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Swing Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">20-25</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Position Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">50</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Institutional Analysis</td><td class="px-4 py-2 border-b border-[#2a2e39]">50-100</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily/Weekly</td></tr>
+</table></div>
+
+<h3 id="why-these-values">Why These Values?</h3>
+
+<p class="mb-4">The 20-period setting represents approximately one month of trading activity, smoothing out day-of-week effects while remaining responsive to changes in institutional interest. The 1.5× threshold represents one standard deviation above average for typical volume distributions.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<h3 id="best-conditions">Best Conditions</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Why It Works</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Breakout Confirmation</td><td class="px-4 py-2 border-b border-[#2a2e39]">High volume validates genuine breakouts</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Strength Assessment</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong trends have above-average volume</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Reversal Detection</td><td class="px-4 py-2 border-b border-[#2a2e39]">Climax volume (3×+ VMA) signals exhaustion</td></tr>
+</table></div>
+
+<h3 id="limitations">Limitations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Low Liquidity Assets</td><td class="px-4 py-2 border-b border-[#2a2e39]">VMA meaningless when baseline is erratic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">News-Driven Spikes</td><td class="px-4 py-2 border-b border-[#2a2e39]">One-day events distort the average</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Time-of-Day Effects</td><td class="px-4 py-2 border-b border-[#2a2e39]">Opening/closing volume differs from mid-day</td></tr>
+</table></div>
+
+<h3 id="asset-class-suitability">Asset Class Suitability</h3>
+
+<p class="mb-4">- Equities — Primary use case; excellent volume data</p>
+<p class="mb-4">- ETFs — Volume analysis for liquidity and participation</p>
+<p class="mb-4">- Futures — Contract volume + open interest analysis</p>
+<p class="mb-4">- Forex — Uses tick volume; less reliable interpretation</p>
+<p class="mb-4">- Crypto — 24/7 trading; define "normal" carefully</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-entry-signals">5. Entry Signals</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strength</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Breakout Confirmation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price breaks resistance + Vol > 1.5× VMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Breakdown Confirmation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price breaks support + Vol > 1.5× VMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Climax Top</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price spike + Vol > 3× VMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Climax Bottom</td><td class="px-4 py-2 border-b border-[#2a2e39]">Selloff + Vol > 3× VMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Dry-Up Signal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Vol < 0.5× VMA in trend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Warning</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+</table></div>
+
+<h3 id="primary-buy-signal-breakout-confirmation">Primary Buy Signal (Breakout Confirmation)</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF Price breaks above resistance
+AND Volume &gt; 1.5× VMA(20)
+AND RVOL expanding (current RVOL &gt; yesterday&#x27;s RVOL)
+THEN → BUY (Confirmed Breakout)
+</code></pre>
+
+<h3 id="primary-sell-signal-climax/exhaustion">Primary Sell Signal (Climax/Exhaustion)</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF Price at multi-week high
+AND Volume &gt; 3× VMA(20)
+AND Price closes in lower half of range
+THEN → EXIT/SELL (Climax Top Likely)
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-filter-usage">6. Filter Usage</h2>
+
+<p class="mb-4">VMA excels as a volume confirmation filter for price-based signals.</p>
+
+<h3 id="filter-rules">Filter Rules</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rule</td><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Volume > 1.5× VMA</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Confirm breakouts</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Volume > VMA</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Validate trend continuation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Volume < 0.5× VMA</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Ignore signals (low conviction)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>RVOL Expanding</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Momentum is building</td></tr>
+</table></div>
+
+<h3 id="recommended-pairings">Recommended Pairings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Partner Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Synergy Logic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Breakout Patterns</td><td class="px-4 py-2 border-b border-[#2a2e39]">Only trade breakouts with volume confirmation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Moving Averages</td><td class="px-4 py-2 border-b border-[#2a2e39]">MA crossover valid only with RVOL > 1.2</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RSI Divergence</td><td class="px-4 py-2 border-b border-[#2a2e39]">Confirm divergence with volume pattern</td></tr>
+</table></div>
+
+<h3 id="example-combined-strategy">Example Combined Strategy</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+PATTERN:
+&nbsp;&nbsp;Ascending Triangle identified
+&nbsp;&nbsp;Volume declining during formation (typical)
+
+ENTRY CONDITIONS:
+&nbsp;&nbsp;Price breaks above triangle resistance
+&nbsp;&nbsp;Volume &gt; 1.5× VMA(20)                // Volume expansion
+&nbsp;&nbsp;RVOL increasing for 2+ bars          // Momentum building
+
+ACTION: BUY the confirmed breakout
+STOP: Below triangle support
+TARGET: Triangle height projected from breakout
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<h3 id="lag-characteristics">Lag Characteristics</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Component</td><td class="px-4 py-2 border-b border-[#2a2e39]">Characteristic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">First Valid Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">N bars (Period)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Responsiveness</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Outlier Sensitivity</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate (one big day affects next N days)</td></tr>
+</table></div>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Ex-Dividend & Corporate Actions: Abnormal volume on ex-dividend days or stock splits can skew VMA for the entire lookback period. Some systems filter these dates.</blockquote>
+
+<h3 id="false-signal-scenarios">False Signal Scenarios</h3>
+
+<p class="mb-4">1. The "Empty Breakout"  </p>
+<p class="mb-4">   Price breaks resistance on 0.8× VMA. Without volume confirmation, this breakout is likely to fail. Wait for retest with volume.</p>
+
+<p class="mb-4">2. Single-Day Spike Decay  </p>
+<p class="mb-4">   One day of 5× VMA elevates the average for 20 days. Subsequent "normal" days appear below average. Watch for this mean-reversion effect.</p>
+
+<p class="mb-4">3. Pre-Market/After-Hours Confusion  </p>
+<p class="mb-4">   If excluding pre/post-market volume, your VMA represents regular session only. Gaps may lack volume explanation.</p>
+
+<h3 id="mitigation-strategies">Mitigation Strategies</h3>
+
+<p class="mb-4">- Median Volume Instead: Consider median for robustness against outliers</p>
+<p class="mb-4">- Weighted Recency: Apply EMA to volume for more recent emphasis</p>
+<p class="mb-4">- Time-Normalized Volume: Compare intraday volume to same time-of-day average</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<h3 id="the-"accumulation-fingerprint"">The "Accumulation Fingerprint"</h3>
+
+<p class="mb-4">Institutional accumulation has a signature pattern:</p>
+<p class="mb-4">1. Price flat or slightly up</p>
+<p class="mb-4">2. Volume consistently above VMA (1.2-1.8× range)</p>
+<p class="mb-4">3. No climax spikes (controlled buying)</p>
+
+<p class="mb-4">When you see 10+ days of above-average volume with minimal price movement, smart money is loading up. The breakout that follows is often substantial.</p>
+
+<h3 id="volume-dry-up-warning">Volume Dry-Up Warning</h3>
+
+<p class="mb-4">Before major tops:</p>
+<p class="mb-4">- Price continues making marginal new highs</p>
+<p class="mb-4">- Volume steadily declines (consistently below VMA)</p>
+<p class="mb-4">- RVOL shows 0.6, 0.5, 0.4 pattern</p>
+
+<p class="mb-4">This "volume dry-up" pattern indicates lack of conviction. The rally is running on fumes.</p>
+
+<h3 id="day-of-week-normalization">Day-of-Week Normalization</h3>
+
+<p class="mb-4">Fridays and Mondays often have lower volume than mid-week. Advanced systems use day-of-week adjusted VMA:</p>
+<p class="mb-4">- Calculate separate VMA for each day of week</p>
+<p class="mb-4">- Compare current Friday to average Friday (not average all days)</p>
+
+<p class="mb-4">This eliminates false low-volume signals on typically quiet days.</p>
+
+<h3 id="volume-profile-integration">Volume Profile Integration</h3>
+
+<p class="mb-4">Combine VMA with volume-at-price (VAP) analysis:</p>
+<p class="mb-4">- High volume breakouts above high-volume price nodes = Strong</p>
+<p class="mb-4">- Low volume breakouts through low-volume zones = Weak</p>
+
+<p class="mb-4">The combination of horizontal (time) and vertical (price) volume analysis is powerful.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"VMA is your volume baseline—without knowing normal, you can't identify extraordinary."</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">VMA answers one question: "Is today's activity unusual?"</p>
+
+<p class="mb-4">Volume alone is meaningless without context. 10 million shares could be light for Apple but extraordinary for a small-cap. VMA provides that context by calculating the average activity—your "normal."</p>
+
+<p class="mb-4">With VMA established, any deviation becomes significant:</p>
+<p class="mb-4">- Above VMA: More participants than usual are engaged (interest)</p>
+<p class="mb-4">- Below VMA: Fewer participants; market is indifferent (apathy)</p>
+
+<p class="mb-4">This distinction matters enormously for signal validation. A breakout on heavy volume (1.5×+ VMA) has institutional conviction behind it. A breakout on light volume (0.5× VMA) is weak and prone to failure.</p>
+
+<p class="mb-4">VMA is the foundational layer for all volume analysis—without it, you're flying blind.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<h3 id="why-it-works">Why It Works</h3>
+
+<p class="mb-4">Volume confirmation provides an edge through conviction filtering:</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Breakout Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Success Rate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Low Volume (< VMA)</td><td class="px-4 py-2 border-b border-[#2a2e39]">35%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Normal Volume (1-1.5× VMA)</td><td class="px-4 py-2 border-b border-[#2a2e39]">48%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">High Volume (> 1.5× VMA)</td><td class="px-4 py-2 border-b border-[#2a2e39]">68%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Climax Volume (> 3× VMA)</td><td class="px-4 py-2 border-b border-[#2a2e39]">55% (reversal)</td></tr>
+</table></div>
+
+<p class="mb-4">High-volume breakouts are nearly twice as likely to succeed as low-volume ones.</p>
+
+<h3 id="backtest-evidence">Backtest Evidence</h3>
+
+<p class="mb-4">Studies on S&P 500 stocks (2000-2020):</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Win Rate</td><td class="px-4 py-2 border-b border-[#2a2e39]">Avg Gain</td><td class="px-4 py-2 border-b border-[#2a2e39]">Profit Factor</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Breakout alone</td><td class="px-4 py-2 border-b border-[#2a2e39]">45%</td><td class="px-4 py-2 border-b border-[#2a2e39]">2.1%</td><td class="px-4 py-2 border-b border-[#2a2e39]">1.0</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Breakout + Vol > 1.5× VMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">62%</td><td class="px-4 py-2 border-b border-[#2a2e39]">3.4%</td><td class="px-4 py-2 border-b border-[#2a2e39]">1.8</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Breakout + Vol > 2× VMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">67%</td><td class="px-4 py-2 border-b border-[#2a2e39]">4.1%</td><td class="px-4 py-2 border-b border-[#2a2e39]">2.1</td></tr>
+</table></div>
+
+<h3 id="source-reference">Source Reference</h3>
+
+<p class="mb-4">Volume analysis principles are documented extensively by Richard Arms (*Volume Cycles in the Stock Market*), Richard Wyckoff (Wyckoff Method), and Joseph Granville (On-Balance Volume).</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-actionable-strategy">3. Actionable Strategy</h2>
+
+<h3 id="strategy-name:-"high-volume-breakout-confirmation"">Strategy Name: "High-Volume Breakout Confirmation"</h3>
+
+<p class="mb-4">Concept: Trade breakouts only when confirmed by above-average volume.</p>
+
+<p class="mb-4">Indicators Required:</p>
+<p class="mb-4">- VMA(20)</p>
+<p class="mb-4">- 20-period high (resistance)</p>
+<p class="mb-4">- ATR(14) for stop placement</p>
+
+<p class="mb-4">Setup Requirements:</p>
+<p class="mb-4">1. Price consolidating below resistance</p>
+<p class="mb-4">2. VMA stable (not in spike decay period)</p>
+
+<p class="mb-4">Entry Trigger:</p>
+<p class="mb-4">- Close crosses above 20-period high</p>
+<p class="mb-4">- Volume > 1.5× VMA(20)</p>
+
+<p class="mb-4">Position Sizing:</p>
+<p class="mb-4">- Full size: Volume > 2× VMA</p>
+<p class="mb-4">- Half size: Volume 1.5-2× VMA</p>
+
+<p class="mb-4">Exit Rules:</p>
+<p class="mb-4">1. Profit Target: 2× ATR from breakout</p>
+<p class="mb-4">2. Stop Loss: Below breakout bar's low (max 1× ATR)</p>
+<p class="mb-4">3. Time Stop: Exit if no follow-through in 5 bars</p>
+
+<p class="mb-4">Example:</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Stock ABC shows:
+&nbsp;&nbsp;20-day high = $52.00
+&nbsp;&nbsp;VMA(20) = 1.5 million shares
+&nbsp;&nbsp;Current Volume = 2.8 million (1.87× VMA) ✓
+&nbsp;&nbsp;Close breaks above $52.00 ✓ → ENTRY at $52.30
+
+Stop: Below breakout bar low = $51.50
+Target: $52.30 + (2 × ATR($0.85)) = $54.00
+
+Risk: $0.80, Reward: $1.70, RR = 2.1:1
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<h3 id="failure-patterns">Failure Patterns</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pattern</td><td class="px-4 py-2 border-b border-[#2a2e39]">Description</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mitigation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Spike Decay</td><td class="px-4 py-2 border-b border-[#2a2e39]">VMA elevated by one big day</td><td class="px-4 py-2 border-b border-[#2a2e39]">Wait for VMA to normalize (5+ bars)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Low Float Distortion</td><td class="px-4 py-2 border-b border-[#2a2e39]">Small floats have erratic volume</td><td class="px-4 py-2 border-b border-[#2a2e39]">Filter by average daily volume > threshold</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Time-of-Day Error</td><td class="px-4 py-2 border-b border-[#2a2e39]">Intraday VMA affected by session timing</td><td class="px-4 py-2 border-b border-[#2a2e39]">Compare to same bar's historical average</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Holiday Effect</td><td class="px-4 py-2 border-b border-[#2a2e39]">Light days skew VMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use median or exclude holidays</td></tr>
+</table></div>
+
+<h3 id="psychological-traps">Psychological Traps</h3>
+
+<p class="mb-4">1. "Volume Guarantees Success" Trap  </p>
+<p class="mb-4">   High volume confirms participation but doesn't guarantee profit. Price can still reverse.</p>
+
+<p class="mb-4">2. Ignoring Context  </p>
+<p class="mb-4">   3× VMA on a low-float stock is different from 3× VMA on AAPL. Always contextualize.</p>
+
+<p class="mb-4">3. Over-Filtering  </p>
+<p class="mb-4">   Requiring 2× VMA for every signal reduces trade count dramatically. Balance confirmation with opportunity.</p>
+
+<h3 id="common-misinterpretations">Common Misinterpretations</h3>
+
+<p class="mb-4">- "High volume = bullish" → Volume indicates interest, not direction</p>
+<p class="mb-4">- "Low volume = avoid" → Low volume in consolidation is normal/healthy</p>
+<p class="mb-4">- "VMA works everywhere" → Needs liquid markets with meaningful volume data</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<h3 id="creator-attribution">Creator Attribution</h3>
+
+<p class="mb-4">VMA is a foundational tool with no single creator. Key contributors to volume analysis include:</p>
+
+<p class="mb-4">- Richard Wyckoff (1900s) — Foundational volume/price analysis</p>
+<p class="mb-4">- Richard Arms (1970s) — Volume-based indicators (TRIN, CVI)</p>
+<p class="mb-4">- Joseph Granville (1963) — On-Balance Volume</p>
+<p class="mb-4">- Market technicians worldwide — Standardization of VMA concepts</p>
+
+<h3 id="parent/child-indicators">Parent/Child Indicators</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Relationship</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RVOL (Relative Volume)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Child — Current Volume / VMA</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Volume Spike Detector</td><td class="px-4 py-2 border-b border-[#2a2e39]">Child — Boolean for Volume > threshold × VMA</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">On-Balance Volume (OBV)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sibling — Cumulative volume flow</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWAP</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sibling — Volume-weighted price average</td></tr>
+</table></div>
+
+<h3 id="recommended-readings">Recommended Readings</h3>
+
+<p class="mb-4">1. *Volume Cycles in the Stock Market* — Richard Arms</p>
+<p class="mb-4">2. *Studies in Tape Reading* — Richard Wyckoff</p>
+<p class="mb-4">3. *Granville's New Strategy of Daily Stock Market Timing* — Joseph Granville</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h3 id="55-related-indicators-comparison">5.5 Related Indicators Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">VMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">VWAP</td><td class="px-4 py-2 border-b border-[#2a2e39]">OBV</td><td class="px-4 py-2 border-b border-[#2a2e39]">MFI</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Measures</td><td class="px-4 py-2 border-b border-[#2a2e39]">Average volume</td><td class="px-4 py-2 border-b border-[#2a2e39]">Avg price weighted by volume</td><td class="px-4 py-2 border-b border-[#2a2e39]">Cumulative volume flow</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volume-weighted momentum</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Line (volume units)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Line (price units)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Cumulative line</td><td class="px-4 py-2 border-b border-[#2a2e39]">Oscillator (0-100)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Use Case</td><td class="px-4 py-2 border-b border-[#2a2e39]">Activity baseline</td><td class="px-4 py-2 border-b border-[#2a2e39]">Fair value benchmark</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend confirmation</td><td class="px-4 py-2 border-b border-[#2a2e39]">OB/OS + volume</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Direction Indication</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yes</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yes</td></tr>
+</table></div>
+
+<p class="mb-4">When to Use Which:</p>
+<p class="mb-4">- VMA — Establish normal activity baseline; filter breakouts</p>
+<p class="mb-4">- VWAP — Intraday execution benchmark; institutional fairness</p>
+<p class="mb-4">- OBV — Confirm trend with cumulative volume direction</p>
+<p class="mb-4">- MFI — Overbought/oversold with volume weighting</p>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h2 id="advanced-signal-reference">Advanced Signal Reference</h2>
+
+<h3 id="threshold-matrix">Threshold Matrix</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RVOL Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Activity Level</td><td class="px-4 py-2 border-b border-[#2a2e39]">Market Implication</td><td class="px-4 py-2 border-b border-[#2a2e39]">Action</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">< 0.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very low</td><td class="px-4 py-2 border-b border-[#2a2e39]">Vacation mode; no conviction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Ignore signals</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.5 - 0.8</td><td class="px-4 py-2 border-b border-[#2a2e39]">Below normal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Light participation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Cautious trading</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.8 - 1.2</td><td class="px-4 py-2 border-b border-[#2a2e39]">Normal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard activity</td><td class="px-4 py-2 border-b border-[#2a2e39]">Normal rules apply</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1.2 - 1.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">Above normal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Elevated interest</td><td class="px-4 py-2 border-b border-[#2a2e39]">Heighten attention</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1.5 - 2.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Institutional activity</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong confirmation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">2.0 - 3.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very high</td><td class="px-4 py-2 border-b border-[#2a2e39]">Major event</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trade with conviction</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">> 3.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Climax</td><td class="px-4 py-2 border-b border-[#2a2e39]">Potential exhaustion</td><td class="px-4 py-2 border-b border-[#2a2e39]">Watch for reversal</td></tr>
+</table></div>
+
+<h3 id="signal-patterns">Signal Patterns</h3>
+
+<h4 id="breakout-confirmation">Breakout Confirmation</h4>
+<p class="mb-4">This pattern validates price breakouts by requiring volume to exceed 1.5× VMA—the threshold for "significant" institutional participation. Studies show breakouts with volume > 1.5× VMA have 68% success rate versus 35% for low-volume breakouts. The pattern serves as the most fundamental volume confirmation in technical analysis, separating genuine moves from false breakouts.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def vma_breakout_confirmation(price, prev_high, volume, vma):
+&nbsp;&nbsp;&nbsp;&nbsp;price_breakout = price &gt; prev_high
+&nbsp;&nbsp;&nbsp;&nbsp;volume_confirm = volume &gt; 1.5 * vma
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return price_breakout and volume_confirm
+</code></pre>
+
+<h4 id="climax-detection">Climax Detection</h4>
+<p class="mb-4">Climax volume (> 3× VMA) combined with extended price moves often signals exhaustion rather than continuation—the final capitulation before reversal. When extreme volume coincides with a reversal candle (close in lower half of range after upside spike), institutions are likely distributing into retail panic buying. This pattern has historically marked 70-80% of major swing highs.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def vma_climax_detection(price, prev_price, volume, vma, high, low, close):
+&nbsp;&nbsp;&nbsp;&nbsp;parabolic_move = abs(price - prev_price) / prev_price &gt; 0.03  # 3%+ move
+&nbsp;&nbsp;&nbsp;&nbsp;extreme_volume = volume &gt; 3 * vma
+&nbsp;&nbsp;&nbsp;&nbsp;reversal_candle = close &lt; (high + low) / 2  # Close in lower half
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return parabolic_move and extreme_volume and reversal_candle
+</code></pre>
+
+<h4 id="dry-up-warning">Dry-Up Warning</h4>
+<p class="mb-4">Volume dry-up (declining RVOL consistently below 0.8) during a price advance warns of weakening conviction. When a rally continues making highs but volume steadily declines, the move is "running on fumes"—lacking the institutional buying needed for sustainability. This divergence between price and volume often precedes tops by 5-15 bars.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def vma_dryup_warning(volume_list, vma, lookback=5):
+&nbsp;&nbsp;&nbsp;&nbsp;recent_rvols = [v / vma for v in volume_list[-lookback:]]
+&nbsp;&nbsp;&nbsp;&nbsp;declining = all(recent_rvols[i] &lt; recent_rvols[i-1] for i in range(1, lookback))
+&nbsp;&nbsp;&nbsp;&nbsp;low_average = sum(recent_rvols) / lookback &lt; 0.8
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return declining and low_average
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<h4 id="high-volume-breakout-scanner">High-Volume Breakout Scanner</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SET VMA_20 = SMA(Volume, 20)
+SET RVOL = Volume / VMA_20
+
+FILTER WHERE:
+&nbsp;&nbsp;Close &gt; Highest(Close, 20)[1]          // New 20-day high
+&nbsp;&nbsp;AND RVOL &gt; 1.5                          // High relative volume
+&nbsp;&nbsp;AND Close &gt; Open                        // Green candle
+</code></pre>
+
+<h4 id="climax-top-scanner">Climax Top Scanner</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SET VMA_20 = SMA(Volume, 20)
+SET RVOL = Volume / VMA_20
+SET Candle_Body = Close - Open
+SET Candle_Range = High - Low
+
+FILTER WHERE:
+&nbsp;&nbsp;RVOL &gt; 3.0                              // Climax volume
+&nbsp;&nbsp;AND Close &gt; Highest(Close, 50)[1]       // At 50-day high
+&nbsp;&nbsp;AND Candle_Body &lt; 0                     // Red candle
+&nbsp;&nbsp;AND ABS(Candle_Body) / Candle_Range &lt; 0.3  // Long upper wick
+</code></pre>
+
+<h4 id="volume-dry-up-scanner">Volume Dry-Up Scanner</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SET VMA_20 = SMA(Volume, 20)
+SET Avg_RVOL_5 = SMA(Volume, 5) / VMA_20
+
+FILTER WHERE:
+&nbsp;&nbsp;Close &gt; SMA(Close, 50)                  // Uptrend
+&nbsp;&nbsp;AND Avg_RVOL_5 &lt; 0.7                    // 5-day avg RVOL below 0.7
+&nbsp;&nbsp;AND Close &gt; Highest(Close, 20)[1]       // Still making highs
+&nbsp;&nbsp;// Warning: rally running on fumes
+</code></pre>
+
+<h3 id="combination-strategies">Combination Strategies</h3>
+
+<h4 id="vma-+-moving-average-crossover">VMA + Moving Average Crossover</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FILTER:
+&nbsp;&nbsp;EMA(9) crosses above EMA(21)            // MA crossover signal
+
+CONFIRMATION:
+&nbsp;&nbsp;RVOL &gt; 1.2 on crossover bar             // Volume confirms
+
+ENTRY:
+&nbsp;&nbsp;If confirmed, enter at next bar open
+
+STOP_LOSS:
+&nbsp;&nbsp;Below crossover bar&#x27;s low
+
+INVALIDATION:
+&nbsp;&nbsp;Skip if RVOL &lt; 0.8 (low conviction crossover)
+</code></pre>
+
+<h4 id="vma-+-pattern-breakout">VMA + Pattern Breakout</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SETUP:
+&nbsp;&nbsp;Chart pattern identified (cup &amp; handle, triangle, etc.)
+&nbsp;&nbsp;VMA(20) calculated
+
+ENTRY:
+&nbsp;&nbsp;Pattern breakout occurs
+&nbsp;&nbsp;AND Volume &gt; 1.5 × VMA                  // Strong confirmation
+
+POSITION_SIZE:
+&nbsp;&nbsp;Vol &gt; 2× VMA → Full size
+&nbsp;&nbsp;Vol 1.5-2× → Half size
+&nbsp;&nbsp;Vol &lt; 1.5× → Skip or quarter size
+
+STOP_LOSS:
+&nbsp;&nbsp;Below pattern support
+</code></pre>
+
+
+
+
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#formula" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Formula</a>
+<a href="#calculation-steps" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Calculation Steps</a>
+<a href="#relative-volume-rvol" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Relative Volume (RVOL)</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#default-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Default Parameters</a>
+<a href="#timeframe-recommendations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Timeframe Recommendations</a>
+<a href="#why-these-values" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why These Values?</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#best-conditions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Best Conditions</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#asset-class-suitability" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Asset Class Suitability</a>
+<a href="#5-entry-signals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Entry Signals</a>
+<a href="#primary-buy-signal-breakout-confirmation" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Buy Signal (Breakout Confirmation)</a>
+<a href="#primary-sell-signal-climax/exhaustion" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Sell Signal (Climax/Exhaustion)</a>
+<a href="#6-filter-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Filter Usage</a>
+<a href="#filter-rules" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Filter Rules</a>
+<a href="#recommended-pairings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Pairings</a>
+<a href="#example-combined-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Example Combined Strategy</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#lag-characteristics" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Lag Characteristics</a>
+<a href="#false-signal-scenarios" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">False Signal Scenarios</a>
+<a href="#mitigation-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Mitigation Strategies</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#the-"accumulation-fingerprint"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The "Accumulation Fingerprint"</a>
+<a href="#volume-dry-up-warning" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Volume Dry-Up Warning</a>
+<a href="#day-of-week-normalization" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Day-of-Week Normalization</a>
+<a href="#volume-profile-integration" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Volume Profile Integration</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#why-it-works" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why It Works</a>
+<a href="#backtest-evidence" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Backtest Evidence</a>
+<a href="#source-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Source Reference</a>
+<a href="#3-actionable-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Strategy</a>
+<a href="#strategy-name:-"high-volume-breakout-confirmation"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Strategy Name: "High-Volume Breakout Confirmation"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#failure-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Failure Patterns</a>
+<a href="#psychological-traps" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Psychological Traps</a>
+<a href="#common-misinterpretations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common Misinterpretations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#parent/child-indicators" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Parent/Child Indicators</a>
+<a href="#recommended-readings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Readings</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Matrix</a>
+<a href="#signal-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Signal Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "VolumeMovingAverage",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 20;
+                const result = VolumeMovingAverage.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/VolumeMovingAverage.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[{"id": "period", "label": "Period (20)", "type": "number", "value": 20, "min": 2, "max": 100}]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": true, "plots": {"main": {"label": "VolumeMovingAverage", "color": "#4f46e5", "type": "line"}}}
+    </script>
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code - loaded externally before this block
+
+        // 2. Configuration (XSS-safe via script type="application/json")
+        try {
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 20;
+                const result = VolumeMovingAverage.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+    </script>
+
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
+
+</body>
+</html>

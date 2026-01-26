@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: https://ogp.me/ns#">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>I ant I Investigates | Stock Analysis Lab</title>
+    <meta name="description" content="I ant I Investigates is a stock analysis lab exploring market trends through technical indicators, screening, and custom software." />
+
+    <!-- OGP -->
+    <meta property="og:title" content="I ant I Investigates | Stock Analysis Lab" />
+    <meta property="og:description" content="Exploring market trends through technical indicators, screening, and software." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="./" />
+    <meta property="og:image" content="./assets/og-image.png" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4f46e5', // Indigo-600
+                        'primary-dark': '#4338ca', // Indigo-700
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans JP"', 'system-ui', 'sans-serif'],
+                        mono: ['"Roboto Mono"', 'ui-monospace', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root { color-scheme: light; }
+        body { font-family: 'Noto Sans JP', sans-serif; }
+        .font-mono-custom { font-family: 'Roboto Mono', monospace; }
+        .card-inactive { filter: grayscale(1); opacity: 0.6; cursor: not-allowed; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased flex flex-col min-h-screen">
+
+    <!-- Header / Navbar -->
+    <header id="site-header" class="border-b border-slate-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+        <nav class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3 sm:py-4" aria-label="Primary Navigation">
+            <!-- Logo -->
+            <a href="./" class="flex items-center gap-2" id="logo">
+                <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary text-xs font-semibold text-white font-mono-custom">I</span>
+                <div class="flex flex-col">
+                    <span class="text-sm font-semibold tracking-tight">I ant I Investigates</span>
+                    <span class="text-xs text-slate-500">Stock Analysis Lab</span>
+                </div>
+            </a>
+
+            <!-- Nav links -->
+            <div class="flex items-center gap-6 text-sm" id="nav-links">
+                <a href="./" class="font-semibold text-primary" aria-current="page">Home</a>
+                <a href="./indicators/" class="text-slate-600 hover:text-primary transition-colors">Indicators</a>
+                <span class="text-slate-300 font-medium cursor-not-allowed">Screening</span>
+                <span class="text-slate-300 font-medium cursor-not-allowed">Software</span>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-content" class="flex-1">
+        <!-- Gateway Cards Section (Now the primary section) -->
+        <section id="gateways" class="py-12 sm:py-20">
+            <div class="mx-auto max-w-5xl px-4">
+                <header class="mb-10">
+                    <h2 class="text-base font-semibold tracking-tight text-slate-900 uppercase">Gateway</h2>
+                    <p class="mt-1 text-xs text-slate-600">The portal to currently available sections and upcoming areas.</p>
+                </header>
+
+                <div class="grid gap-8 md:grid-cols-3">
+                    <!-- Indicators (Active) -->
+                    <article id="card-indicators" class="flex flex-col rounded-lg border border-indigo-200 bg-white shadow-sm ring-1 ring-indigo-100 hover:shadow-md transition-shadow">
+                        <div class="flex-1 p-6">
+                            <div class="mb-4 flex items-center justify-between">
+                                <div class="inline-flex items-center gap-1 rounded-full bg-indigo-50 px-2 py-0.5 text-[10px] font-medium text-primary">
+                                    <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                                    Active
+                                </div>
+                                <span class="text-[11px] font-mono-custom text-slate-500">indicators/</span>
+                            </div>
+                            <h3 class="text-base font-semibold text-slate-900">Indicators</h3>
+                            <p class="mt-3 text-xs leading-relaxed text-slate-600">
+                                A systematic collection of commonly used technical indicators (RSI, MACD, Moving Averages) with formulas, sample charts, and critical interpretations.
+                            </p>
+                            <ul class="mt-5 space-y-2 text-[11px] text-slate-500">
+                                <li class="flex items-start gap-2"><span>•</span> Auxiliary lines for labeling market states</li>
+                                <li class="flex items-start gap-2"><span>•</span> Clear definitions of prerequisites and limitations</li>
+                            </ul>
+                        </div>
+                        <div class="border-t border-indigo-100 bg-indigo-50/60 px-6 py-4">
+                            <a href="./indicators/" class="inline-flex w-full items-center justify-center rounded-md bg-primary px-4 py-2 text-xs font-medium text-white shadow-sm transition hover:bg-primary-dark">
+                                Go to Indicators
+                                <span class="ml-2 text-[11px] font-mono-custom">→</span>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Screening (Coming Soon) -->
+                    <article id="card-screening" class="flex flex-col rounded-lg border border-slate-200 bg-slate-50/70 card-inactive">
+                        <div class="flex-1 p-6">
+                            <div class="mb-4 flex items-center justify-between">
+                                <div class="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-medium text-amber-700">
+                                    <span class="h-1.5 w-1.5 rounded-full bg-amber-400"></span>
+                                    Coming Soon
+                                </div>
+                                <span class="text-[11px] font-mono-custom text-slate-500">screening/</span>
+                            </div>
+                            <h3 class="text-base font-semibold text-slate-800">Screening</h3>
+                            <p class="mt-3 text-xs leading-relaxed text-slate-600">
+                                A future section dedicated to stock screening logic combining indicators and fundamental conditions, along with validation processes.
+                            </p>
+                            <p class="mt-4 text-[11px] text-slate-400 font-medium italic">Status: Under Design</p>
+                        </div>
+                        <div class="border-t border-slate-200 bg-white/70 px-6 py-4">
+                            <button type="button" class="inline-flex w-full cursor-not-allowed items-center justify-center rounded-md border border-slate-200 px-4 py-2 text-[11px] font-medium text-slate-400" disabled>
+                                Preparation in Progress
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Software (Coming Soon) -->
+                    <article id="card-software" class="flex flex-col rounded-lg border border-slate-200 bg-slate-50/70 card-inactive">
+                        <div class="flex-1 p-6">
+                            <div class="mb-4 flex items-center justify-between">
+                                <div class="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-medium text-amber-700">
+                                    <span class="h-1.5 w-1.5 rounded-full bg-amber-400"></span>
+                                    Coming Soon
+                                </div>
+                                <span class="text-[11px] font-mono-custom text-slate-500">software/</span>
+                            </div>
+                            <h3 class="text-base font-semibold text-slate-800">Software</h3>
+                            <p class="mt-3 text-xs leading-relaxed text-slate-600">
+                                A planned section for small utilities and prototype tools designed to support chart measurement and verification.
+                            </p>
+                            <p class="mt-4 text-[11px] text-slate-400 font-medium italic">Status: Conceptual Stage</p>
+                        </div>
+                        <div class="border-t border-slate-200 bg-white/70 px-6 py-4">
+                            <button type="button" class="inline-flex w-full cursor-not-allowed items-center justify-center rounded-md border border-slate-200 px-4 py-2 text-[11px] font-medium text-slate-400" disabled>
+                                Coming Soon
+                            </button>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="site-footer" class="border-t border-slate-200 bg-white mt-auto">
+        <div class="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-8 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+            <div class="flex items-center gap-2">
+                <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-900 text-[10px] font-semibold text-white font-mono-custom">I</span>
+                <span class="text-[11px]">© 2026 I ant I Investigates</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-4">
+                <span class="text-[11px]">Static Documents / No Tracking</span>
+                <span class="hidden h-3 w-px bg-slate-300 sm:inline-block" aria-hidden="true"></span>
+                <nav class="flex gap-4">
+                    <a href="./indicators/" class="text-[11px] text-slate-500 hover:text-primary transition-colors">Indicators</a>
+                    <span class="text-[11px] text-slate-300 cursor-not-allowed">Screening</span>
+                    <span class="text-[11px] text-slate-300 cursor-not-allowed">Software</span>
+                </nav>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

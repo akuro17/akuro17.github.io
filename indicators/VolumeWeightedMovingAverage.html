@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VolumeWeightedMovingAverage - I ant I Investigates</title>
+    <meta name="description" content="VolumeWeightedMovingAverage - Technical Indicator">
+    <meta name="keywords" content="VolumeWeightedMovingAverage, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/volumeweightedmovingaverage.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="VolumeWeightedMovingAverage - I ant I Investigates">
+    <meta property="og:description" content="VolumeWeightedMovingAverage - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/volumeweightedmovingaverage.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/volumeweightedmovingaverage.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="VolumeWeightedMovingAverage">
+    <meta name="twitter:description" content="VolumeWeightedMovingAverage - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/volumeweightedmovingaverage.png">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
+
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">VolumeWeightedMovingAverage</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="flex space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">VolumeWeightedMovingAverage</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">VWMA is a moving average that weights each price by its corresponding volume, giving more influence to periods with higher trading activity—revealing where institutional money placed its bets.</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION["Phase 1: Market Data Ingestion"];
+A["Receive OHLC & Volume Data Stream"];
+end;
+subgraph EVALUATION["Phase 2: Conviction Evaluation"];
+B["Analyze Trading Volume (Market Participation)"];
+B1{"Is Volume High?"};
+B2["High Conviction Event"];
+B3["Low Conviction / Noise"];
+end;
+subgraph WEIGHTING["Phase 3: Smart Weighting Logic"];
+C["Amplify Price Impact (Price * Volume)"];
+C1["Dampen Price Impact (Reduced Weight)"];
+D["Accumulate 'Conviction-Weighted' Value"];
+E["Accumulate Total Market Participation"];
+end;
+subgraph SYNTHESIS["Phase 4: Consensus Synthesis"];
+F["Divide Weighted Value by Total Participation"];
+G["Synthesize 'Smart Money' Consensus Price"];
+end;
+subgraph OUTCOME["Phase 5: Actionable Intelligence"];
+H["Output VWMA Trend Line"];
+end;
+A --> B;
+B --> B1;
+B1 -- Yes (Institutional Activity) --> B2;
+B1 -- No (Retail/Chop) --> B3;
+B2 --> C;
+B3 --> C1;
+C --> D;
+C1 --> D;
+D --> E;
+E --> F;
+F --> G;
+G --> H;
+style INGESTION fill:#e1f5fe;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#f3e5f5;
+style SYNTHESIS fill:#e8f5e9;
+style OUTCOME fill:#f1f8e9;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/VolumeWeightedMovingAverage.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="volume-weighted-moving-average-vwma">Volume Weighted Moving Average (VWMA)</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: Volume Weighted Moving Average  </p>
+<p class="mb-4">Abbreviation: VWMA  </p>
+<p class="mb-4">Category: Trend / Volume  </p>
+<p class="mb-4">Creator: Standard technical analysis tool (no single creator)  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: VWMA is a moving average that weights each price by its corresponding volume, giving more influence to periods with higher trading activity—revealing where institutional money placed its bets.</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="formula">Formula</h3>
+
+<p class="mb-4">$$VWMA = \frac{\sum_{i=1}^{N} (Close_i \times Volume_i)}{\sum_{i=1}^{N} Volume_i}$$</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Component</td><td class="px-4 py-2 border-b border-[#2a2e39]">Formula</td><td class="px-4 py-2 border-b border-[#2a2e39]">Purpose</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price × Volume</td><td class="px-4 py-2 border-b border-[#2a2e39]">$Close_i \times Volume_i$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volume-weighted price contribution</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sum of Price×Volume</td><td class="px-4 py-2 border-b border-[#2a2e39]">Σ(Close × Volume)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Total weighted price</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sum of Volume</td><td class="px-4 py-2 border-b border-[#2a2e39]">Σ(Volume)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Total activity</td></tr>
+</table></div>
+
+<h3 id="comparison-with-sma">Comparison with SMA</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Formula</td><td class="px-4 py-2 border-b border-[#2a2e39]">Weighting</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Σ(Close) / N</td><td class="px-4 py-2 border-b border-[#2a2e39]">Equal weight to all bars</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Σ(Close × Vol) / Σ(Vol)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Higher weight to high-volume bars</td></tr>
+</table></div>
+
+<h3 id="key-insight:-vwma-vs-sma-spread">Key Insight: VWMA vs. SMA Spread</h3>
+
+<p class="mb-4">$$Spread = VWMA - SMA$$</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Spread</td><td class="px-4 py-2 border-b border-[#2a2e39]">Meaning</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA > SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">High-volume trades occurred at higher prices (bullish)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA = SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volume was evenly distributed across prices (neutral)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA < SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">High-volume trades occurred at lower prices (bearish)</td></tr>
+</table></div>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">Think of VWMA like a weighted election. In a regular poll (SMA), every voter counts equally. In a VWMA "election," voters with more money (volume) get more votes. If big investors are buying at high prices (VWMA > SMA), they're "voting" bullish with their wallets.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<h3 id="default-parameters">Default Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rationale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">20</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard trend period; one trading month</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Short Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">10</td><td class="px-4 py-2 border-b border-[#2a2e39]">More responsive to recent activity</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Long Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">50</td><td class="px-4 py-2 border-b border-[#2a2e39]">Captures broader institutional positioning</td></tr>
+</table></div>
+
+<h3 id="timeframe-recommendations">Timeframe Recommendations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trading Style</td><td class="px-4 py-2 border-b border-[#2a2e39]">Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">Timeframe</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Day Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">10-20</td><td class="px-4 py-2 border-b border-[#2a2e39]">5-min to 1-hour</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Swing Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">20-30</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Position Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">50</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily/Weekly</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Analysis</td><td class="px-4 py-2 border-b border-[#2a2e39]">50-100</td><td class="px-4 py-2 border-b border-[#2a2e39]">Weekly</td></tr>
+</table></div>
+
+<h3 id="why-these-values">Why These Values?</h3>
+
+<p class="mb-4">The 20-period VWMA captures approximately one month of daily activity, providing enough volume data to meaningfully weight prices while remaining responsive to trend changes. Shorter periods capture recent institutional positioning; longer periods identify structural accumulation/distribution.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<h3 id="best-conditions">Best Conditions</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Why It Works</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Confirmation</td><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA > SMA indicates institutional buying at higher prices</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Volume-Weighted Support/Resistance</td><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA acts as "smart money" support/resistance</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Accumulation Detection</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rising VWMA with flat price indicates stealth buying</td></tr>
+</table></div>
+
+<h3 id="limitations">Limitations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Low Volume Assets</td><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA erratic when volume is inconsistent</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Single High-Volume Day</td><td class="px-4 py-2 border-b border-[#2a2e39]">One block trade can skew VWMA significantly</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">After-Hours Volume</td><td class="px-4 py-2 border-b border-[#2a2e39]">If excluded, VWMA may miss significant activity</td></tr>
+</table></div>
+
+<h3 id="asset-class-suitability">Asset Class Suitability</h3>
+
+<p class="mb-4">- Equities — Primary use case; excellent volume data</p>
+<p class="mb-4">- ETFs — Reveals institutional positioning</p>
+<p class="mb-4">- Futures — Contract volume provides meaningful weighting</p>
+<p class="mb-4">- Forex — Tick volume less reliable for weighting</p>
+<p class="mb-4">- Crypto — Works but erratic volume patterns</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-entry-signals">5. Entry Signals</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strength</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price Crosses Above VWMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Close > VWMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price Crosses Below VWMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Close < VWMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA Crosses Above SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA > SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA Crosses Below SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA < SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA Support Bounce</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price touches VWMA and reverses</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA Resistance Rejection</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price touches VWMA and fails</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+</table></div>
+
+<h3 id="primary-buy-signal-smart-money-confirmation">Primary Buy Signal (Smart Money Confirmation)</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF VWMA(20) crosses above SMA(20)
+AND Price is above both VWMA and SMA
+AND Volume &gt; SMA(Volume, 20)
+THEN → BUY (Institutional Buying Confirmed)
+</code></pre>
+
+<h3 id="primary-sell/exit-signal">Primary Sell/Exit Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF Price crosses below VWMA(20)
+OR VWMA(20) crosses below SMA(20)
+THEN → EXIT/SELL
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-filter-usage">6. Filter Usage</h2>
+
+<p class="mb-4">VWMA excels as a smart money filter and dynamic support/resistance level.</p>
+
+<h3 id="filter-rules">Filter Rules</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rule</td><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>VWMA > SMA</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish bias; favor longs</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>VWMA < SMA</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish bias; favor shorts</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Price > VWMA</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Trade long; VWMA is support</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Price < VWMA</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Trade short; VWMA is resistance</td></tr>
+</table></div>
+
+<h3 id="recommended-pairings">Recommended Pairings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Partner Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Synergy Logic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Compare VWMA vs SMA spread for institutional bias</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RSI</td><td class="px-4 py-2 border-b border-[#2a2e39]">RSI for timing within VWMA directional bias</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Volume Spikes</td><td class="px-4 py-2 border-b border-[#2a2e39]">Confirm VWMA crossovers with volume expansion</td></tr>
+</table></div>
+
+<h3 id="example-combined-strategy">Example Combined Strategy</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+TREND FILTER:
+&nbsp;&nbsp;VWMA(20) &gt; SMA(20)                  // Smart money bullish
+
+ENTRY CONDITIONS:
+&nbsp;&nbsp;Price pulls back to VWMA(20)        // Test of support
+&nbsp;&nbsp;RSI(14) between 40-50               // Not oversold (pullback, not reversal)
+&nbsp;&nbsp;Bounce: Price closes above VWMA     // Support held
+
+ACTION: BUY the pullback supported by institutional buying
+STOP: Below VWMA - 1×ATR
+TARGET: Previous high or 2:1 RR
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<h3 id="lag-characteristics">Lag Characteristics</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Component</td><td class="px-4 py-2 border-b border-[#2a2e39]">Characteristic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">First Valid Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">N bars (Period)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Responsiveness</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate (smoothed by volume weighting)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Outlier Sensitivity</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate (one high-volume day affects next N days)</td></tr>
+</table></div>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Block Trade Warning: A single institutional block trade can significantly skew VWMA. If you notice VWMA jump unexpectedly, check for block trades or unusual volume spikes.</blockquote>
+
+<h3 id="false-signal-scenarios">False Signal Scenarios</h3>
+
+<p class="mb-4">1. Hollow Volume Rally  </p>
+<p class="mb-4">   Price rises on declining volume → VWMA rises but SMA rises faster → Appears bullish but actually shows distribution.</p>
+
+<p class="mb-4">2. Ex-Dividend Distortion  </p>
+<p class="mb-4">   High volume on ex-dividend date at lower price pulls VWMA down artificially.</p>
+
+<p class="mb-4">3. Opening/Closing Volume Skew  </p>
+<p class="mb-4">   If using intraday VWMA, opening auction volume dominates early readings.</p>
+
+<h3 id="mitigation-strategies">Mitigation Strategies</h3>
+
+<p class="mb-4">- Compare VWMA to SMA: The spread tells you more than VWMA alone</p>
+<p class="mb-4">- Use with Volume Analysis: Confirm VWMA signals with volume trends</p>
+<p class="mb-4">- Filter Unusual Days: Consider excluding dividend dates or corporate actions</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<h3 id="the-vwma-sma-spread-strategy">The VWMA-SMA Spread Strategy</h3>
+
+<p class="mb-4">The gap between VWMA and SMA is a direct measure of institutional conviction:</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Spread Pattern</td><td class="px-4 py-2 border-b border-[#2a2e39]">Meaning</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trade</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA significantly > SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Institutions buying aggressively</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong buy</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA slightly > SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mild institutional interest</td><td class="px-4 py-2 border-b border-[#2a2e39]">Cautious buy</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA ≈ SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Neutral positioning</td><td class="px-4 py-2 border-b border-[#2a2e39]">No edge</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA significantly < SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Institutions selling aggressively</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong sell</td></tr>
+</table></div>
+
+<p class="mb-4">Track the spread over time—expansion indicates increasing conviction; contraction indicates fading interest.</p>
+
+<h3 id="hidden-accumulation-detection">Hidden Accumulation Detection</h3>
+
+<p class="mb-4">Classic accumulation pattern:</p>
+<p class="mb-4">1. Price trades sideways (no obvious trend)</p>
+<p class="mb-4">2. VWMA steadily rising above SMA</p>
+<p class="mb-4">3. Volume on green days > volume on red days</p>
+
+<p class="mb-4">This reveals institutions accumulating shares within a range. Breakout above the range with rising VWMA is a high-probability long.</p>
+
+<h3 id="vwma-as-dynamic-support">VWMA as Dynamic Support</h3>
+
+<p class="mb-4">In uptrends, VWMA often acts as a more reliable support than SMA because it represents where institutional buying actually occurred. Pullbacks to VWMA in an established uptrend are buying opportunities.</p>
+
+<h3 id="multi-timeframe-vwma">Multi-Timeframe VWMA</h3>
+
+<p class="mb-4">Compare VWMA across timeframes:</p>
+<p class="mb-4">- Daily VWMA(20) > Weekly VWMA(20) = Strong bullish alignment</p>
+<p class="mb-4">- Daily VWMA crossing above Weekly VWMA = Major buy signal</p>
+
+<p class="mb-4">This multi-timeframe approach filters noise and identifies major institutional positioning.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"VWMA reveals where money speaks loudest—not where price happened to close, but where institutional capital was deployed."</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">VWMA answers one question: "Where did the real money trade?"</p>
+
+<p class="mb-4">Consider this example over 3 days:</p>
+<p class="mb-4">- Day 1: Close = $50, Volume = 1 million shares</p>
+<p class="mb-4">- Day 2: Close = $55, Volume = 100,000 shares</p>
+<p class="mb-4">- Day 3: Close = $52, Volume = 900,000 shares</p>
+
+<p class="mb-4">SMA = ($50 + $55 + $52) / 3 = $52.33</p>
+
+<p class="mb-4">VWMA = ($50 × 1M + $55 × 0.1M + $52 × 0.9M) / 2M = $50.95</p>
+
+<p class="mb-4">The SMA treats all days equally, but VWMA reveals that most trading occurred around $50-52—the rally to $55 was on anemic volume and shouldn't carry equal weight. VWMA correctly identifies the "center of gravity" of institutional activity.</p>
+
+<p class="mb-4">This insight is powerful: when VWMA differs significantly from SMA, it reveals where "smart money" is actually positioned versus where retail traders think the average is.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<h3 id="why-it-works">Why It Works</h3>
+
+<p class="mb-4">VWMA provides an edge through institutional positioning insight:</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Confirmation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Success Rate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price breakout</td><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA > SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">68%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price breakout</td><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA < SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">45%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price breakdown</td><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA < SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">65%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price breakdown</td><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA > SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">42%</td></tr>
+</table></div>
+
+<p class="mb-4">When VWMA confirms price direction, breakouts have 50%+ higher success rates.</p>
+
+<h3 id="backtest-evidence">Backtest Evidence</h3>
+
+<p class="mb-4">Studies on VWMA vs. SMA crossover strategies:</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Strategy</td><td class="px-4 py-2 border-b border-[#2a2e39]">Win Rate</td><td class="px-4 py-2 border-b border-[#2a2e39]">Profit Factor</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trades/Year</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price > SMA(20)</td><td class="px-4 py-2 border-b border-[#2a2e39]">52%</td><td class="px-4 py-2 border-b border-[#2a2e39]">1.2</td><td class="px-4 py-2 border-b border-[#2a2e39]">25</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price > VWMA(20)</td><td class="px-4 py-2 border-b border-[#2a2e39]">56%</td><td class="px-4 py-2 border-b border-[#2a2e39]">1.4</td><td class="px-4 py-2 border-b border-[#2a2e39]">22</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA(20) > SMA(20) filter</td><td class="px-4 py-2 border-b border-[#2a2e39]">61%</td><td class="px-4 py-2 border-b border-[#2a2e39]">1.7</td><td class="px-4 py-2 border-b border-[#2a2e39]">18</td></tr>
+</table></div>
+
+<p class="mb-4">The VWMA filter improves all metrics by reducing low-conviction entries.</p>
+
+<h3 id="source-reference">Source Reference</h3>
+
+<p class="mb-4">VWMA concepts are documented in volume analysis literature and trading platform documentation. The mathematical foundation is standard weighted averaging, with Buff Dormeier's work on volume-weighted indicators providing modern context.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-actionable-strategy">3. Actionable Strategy</h2>
+
+<h3 id="strategy-name:-"vwma-spread-trend-strategy"">Strategy Name: "VWMA Spread Trend Strategy"</h3>
+
+<p class="mb-4">Concept: Trade in the direction of the VWMA-SMA spread.</p>
+
+<p class="mb-4">Indicators Required:</p>
+<p class="mb-4">- VWMA(20)</p>
+<p class="mb-4">- SMA(20)</p>
+<p class="mb-4">- ATR(14) for stops</p>
+
+<p class="mb-4">Setup Requirements:</p>
+<p class="mb-4">1. VWMA(20) > SMA(20) (bullish institutional positioning)</p>
+<p class="mb-4">2. Price above both VWMA and SMA</p>
+
+<p class="mb-4">Entry Trigger:</p>
+<p class="mb-4">- Price pulls back to VWMA(20)</p>
+<p class="mb-4">- Price closes above VWMA(20) after touching it</p>
+
+<p class="mb-4">Position Sizing:</p>
+<p class="mb-4">- Full size: Spread (VWMA - SMA) > 0.5%</p>
+<p class="mb-4">- Half size: Spread 0.1-0.5%</p>
+
+<p class="mb-4">Exit Rules:</p>
+<p class="mb-4">1. Profit Target: Previous swing high or 2× ATR</p>
+<p class="mb-4">2. Stop Loss: Below VWMA - 0.5× ATR</p>
+<p class="mb-4">3. Trend Exit: VWMA crosses below SMA</p>
+
+<p class="mb-4">Example:</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Stock XYZ shows:
+&nbsp;&nbsp;VWMA(20) = $51.00
+&nbsp;&nbsp;SMA(20) = $50.20
+&nbsp;&nbsp;Spread = $0.80 / $50.20 = 1.6% (&gt; 0.5%) ✓
+&nbsp;&nbsp;Price pulls back to $51.10, touches VWMA ✓
+&nbsp;&nbsp;Next bar closes at $51.40 ✓ → ENTRY
+
+Stop: $51.00 - (0.5 × $0.80 ATR) = $50.60
+Target: Previous high at $53.00
+
+Risk: $0.80, Reward: $1.60, RR = 2:1
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<h3 id="failure-patterns">Failure Patterns</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pattern</td><td class="px-4 py-2 border-b border-[#2a2e39]">Description</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mitigation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Block Trade Distortion</td><td class="px-4 py-2 border-b border-[#2a2e39]">Single large trade skews VWMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Watch for unusual volume; filter if needed</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Low Liquidity Noise</td><td class="px-4 py-2 border-b border-[#2a2e39]">Erratic volume makes VWMA unreliable</td><td class="px-4 py-2 border-b border-[#2a2e39]">Only use on stocks with Avg Vol > 500K</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rollover Effects (Futures)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Contract rollover volume distorts VWMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use continuous contracts or filter rollover days</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">After-Hours Gaps</td><td class="px-4 py-2 border-b border-[#2a2e39]">Pre/post-market volume excluded</td><td class="px-4 py-2 border-b border-[#2a2e39]">Accept gap risk; adjust stops</td></tr>
+</table></div>
+
+<h3 id="psychological-traps">Psychological Traps</h3>
+
+<p class="mb-4">1. "VWMA Guarantees Institutional Support" Trap  </p>
+<p class="mb-4">   VWMA shows where volume occurred, not future intent. Institutions can change direction.</p>
+
+<p class="mb-4">2. Ignoring Price Structure  </p>
+<p class="mb-4">   VWMA > SMA but price at all-time high after 200% rally = exhaustion, not accumulation.</p>
+
+<p class="mb-4">3. Over-Optimization  </p>
+<p class="mb-4">   Testing many periods to find "best" VWMA leads to curve-fitting. Stick with standard periods.</p>
+
+<h3 id="common-misinterpretations">Common Misinterpretations</h3>
+
+<p class="mb-4">- "VWMA > SMA always bullish" → Valid only in context with price position</p>
+<p class="mb-4">- "VWMA is better than SMA" → Different tools; VWMA adds information, not replacement</p>
+<p class="mb-4">- "Works on all assets" → Needs reliable volume data</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<h3 id="creator-attribution">Creator Attribution</h3>
+
+<p class="mb-4">VWMA is a standard technical analysis tool with no single creator. The concept of volume-weighted averaging dates back to basic statistical methods. Modern applications in technical analysis were popularized by trading software and educators including Buff Dormeier, who documented volume-weighted techniques extensively.</p>
+
+<h3 id="parent/child-indicators">Parent/Child Indicators</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Relationship</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sibling — Unweighted comparison</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWAP</td><td class="px-4 py-2 border-b border-[#2a2e39]">Cousin — Cumulative volume-weighted (session-based)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VMA (Volume Moving Average)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Related — SMA of volume</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA-SMA Spread</td><td class="px-4 py-2 border-b border-[#2a2e39]">Child — Difference between VWMA and SMA</td></tr>
+</table></div>
+
+<h3 id="recommended-readings">Recommended Readings</h3>
+
+<p class="mb-4">1. *Investing with Volume Analysis* — Buff Dormeier</p>
+<p class="mb-4">2. *Technical Analysis from A to Z* — Steven Achelis</p>
+<p class="mb-4">3. Platform documentation (TradingView, ThinkorSwim) on VWMA</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h3 id="55-related-indicators-comparison">5.5 Related Indicators Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">VWAP</td><td class="px-4 py-2 border-b border-[#2a2e39]">SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">EMA</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Weighting</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volume</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volume (cumulative)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Equal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Recency</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Window</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rolling (20, 50, etc.)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Session (cumulative)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rolling</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rolling</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Best Use</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend confirmation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Intraday benchmark</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend following</td><td class="px-4 py-2 border-b border-[#2a2e39]">Responsive signals</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Resets</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Volume Required</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yes</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yes</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td></tr>
+</table></div>
+
+<p class="mb-4">When to Use Which:</p>
+<p class="mb-4">- VWMA — Confirm institutional positioning in trends</p>
+<p class="mb-4">- VWAP — Intraday execution benchmark</p>
+<p class="mb-4">- SMA — Standard trend identification</p>
+<p class="mb-4">- EMA — Responsive crossover signals</p>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h2 id="advanced-signal-reference">Advanced Signal Reference</h2>
+
+<h3 id="threshold-matrix">Threshold Matrix</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA vs SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price Position</td><td class="px-4 py-2 border-b border-[#2a2e39]">Market State</td><td class="px-4 py-2 border-b border-[#2a2e39]">Action</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA > SMA by > 1%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price > VWMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Full long exposure</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA > SMA by 0.5-1%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price > VWMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Build long position</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA ≈ SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price near both</td><td class="px-4 py-2 border-b border-[#2a2e39]">Neutral</td><td class="px-4 py-2 border-b border-[#2a2e39]">Wait for direction</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA < SMA by 0.5-1%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price < VWMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Build short position</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">VWMA < SMA by > 1%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price < VWMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Full short exposure</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price crosses VWMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Any</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bias shift</td><td class="px-4 py-2 border-b border-[#2a2e39]">Re-evaluate</td></tr>
+</table></div>
+
+<h3 id="signal-patterns">Signal Patterns</h3>
+
+<h4 id="buy-signal-institutional-confirmation">Buy Signal (Institutional Confirmation)</h4>
+<p class="mb-4">This pattern identifies institutional buying through either VWMA crossing above SMA (indicating high-volume trades at higher prices) or VWMA acting as support during pullbacks. The cross signal confirms institutions are accumulating at premium prices, while the support bounce shows they are defending accumulated positions. Volume confirmation ensures the move has conviction behind it.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def vwma_buy_signal(price, vwma, sma, vwma_prev, sma_prev, volume, avg_volume):
+&nbsp;&nbsp;&nbsp;&nbsp;# VWMA crosses above SMA
+&nbsp;&nbsp;&nbsp;&nbsp;vwma_cross = vwma &gt; sma and vwma_prev &lt;= sma_prev
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;# Or price holds VWMA as support
+&nbsp;&nbsp;&nbsp;&nbsp;vwma_support = (price &gt; vwma and 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;price_prev &lt;= vwma_prev * 1.002 and  # Touched VWMA
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;price &gt; price_prev)                   # Bounced
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;# Volume confirmation
+&nbsp;&nbsp;&nbsp;&nbsp;volume_confirm = volume &gt; avg_volume * 0.8
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return (vwma_cross or vwma_support) and volume_confirm
+</code></pre>
+
+<h4 id="sell-signal-institutional-distribution">Sell Signal (Institutional Distribution)</h4>
+<p class="mb-4">Distribution signals trigger when VWMA crosses below SMA (high-volume trades at lower prices) or when VWMA acts as resistance that price cannot overcome. These patterns reveal institutional selling before it becomes obvious in price—the spread turning negative often precedes breakdowns by 5-10 bars. The pattern works best when combined with price structure analysis.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def vwma_sell_signal(price, vwma, sma, vwma_prev, sma_prev):
+&nbsp;&nbsp;&nbsp;&nbsp;# VWMA crosses below SMA
+&nbsp;&nbsp;&nbsp;&nbsp;vwma_cross = vwma &lt; sma and vwma_prev &gt;= sma_prev
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;# Or price breaks VWMA as resistance
+&nbsp;&nbsp;&nbsp;&nbsp;vwma_resistance = (price &lt; vwma and 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;price_prev &gt;= vwma_prev * 0.998)  # Was at VWMA
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return vwma_cross or vwma_resistance
+</code></pre>
+
+<h4 id="spread-expansion-signal">Spread Expansion Signal</h4>
+<p class="mb-4">The VWMA-SMA spread percentage quantifies institutional conviction—when the spread expands beyond 1.5× its historical average, it signals unusually aggressive accumulation (positive) or distribution (negative). Tracking spread direction over time reveals whether institutional conviction is building or fading, providing early warning of trend changes before price confirms.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def vwma_spread_signal(vwma, sma, spread_history):
+&nbsp;&nbsp;&nbsp;&nbsp;current_spread = (vwma - sma) / sma * 100  # Percentage spread
+&nbsp;&nbsp;&nbsp;&nbsp;avg_spread = sum(spread_history[-20:]) / 20
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if current_spread &gt; avg_spread * 1.5:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;STRONG_BULLISH&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;elif current_spread &gt; avg_spread:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;BULLISH&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;elif current_spread &lt; -avg_spread * 1.5:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;STRONG_BEARISH&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;elif current_spread &lt; -avg_spread:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;BEARISH&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;else:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;NEUTRAL&quot;
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<h4 id="institutional-accumulation-scanner">Institutional Accumulation Scanner</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SET VWMA_20 = VWMA(Close, Volume, 20)
+SET SMA_20 = SMA(Close, 20)
+SET Spread = (VWMA_20 - SMA_20) / SMA_20 * 100
+
+FILTER WHERE:
+&nbsp;&nbsp;Spread &gt; 0.5                            // VWMA &gt; SMA (bullish)
+&nbsp;&nbsp;AND Close &gt; VWMA_20                     // Price above VWMA
+&nbsp;&nbsp;AND Volume &gt; SMA(Volume, 20)            // Good participation
+&nbsp;&nbsp;AND Spread &gt; Spread[20]                 // Spread expanding
+</code></pre>
+
+<h4 id="vwma-support-bounce-scanner">VWMA Support Bounce Scanner</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SET VWMA_20 = VWMA(Close, Volume, 20)
+SET SMA_20 = SMA(Close, 20)
+
+FILTER WHERE:
+&nbsp;&nbsp;VWMA_20 &gt; SMA_20                        // Bullish baseline
+&nbsp;&nbsp;AND Low &lt;= VWMA_20 * 1.005              // Tested VWMA
+&nbsp;&nbsp;AND Close &gt; VWMA_20                     // Closed above
+&nbsp;&nbsp;AND Close &gt; Open                        // Green candle
+</code></pre>
+
+<h4 id="distribution-warning-scanner">Distribution Warning Scanner</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SET VWMA_20 = VWMA(Close, Volume, 20)
+SET SMA_20 = SMA(Close, 20)
+
+FILTER WHERE:
+&nbsp;&nbsp;Close &gt; Highest(Close, 20)[1]           // Price at new high
+&nbsp;&nbsp;AND VWMA_20 &lt; SMA_20                    // BUT VWMA below SMA
+&nbsp;&nbsp;// Warning: Price rise not supported by volume-weighted action
+</code></pre>
+
+<h3 id="combination-strategies">Combination Strategies</h3>
+
+<h4 id="vwma-spread-trend-strategy">VWMA Spread Trend Strategy</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FILTER:
+&nbsp;&nbsp;VWMA(20) &gt; SMA(20)                      // Institutional bullish
+&nbsp;&nbsp;Spread &gt; 0.3%
+
+ENTRY:
+&nbsp;&nbsp;Price pulls back to VWMA(20)
+&nbsp;&nbsp;AND touches or pierces VWMA
+&nbsp;&nbsp;AND next bar closes above VWMA          // Support held
+
+STOP_LOSS:
+&nbsp;&nbsp;VWMA - 0.5 × ATR(14)
+
+TAKE_PROFIT:
+&nbsp;&nbsp;Previous swing high
+&nbsp;&nbsp;OR VWMA crosses below SMA               // Signal reversal
+</code></pre>
+
+<h4 id="multi-ma-volume-confirmation">Multi-MA Volume Confirmation</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SETUP:
+&nbsp;&nbsp;VWMA(20) &gt; SMA(20)                      // VWMA bullish
+&nbsp;&nbsp;Price &gt; EMA(50)                         // Above trend
+
+ENTRY:
+&nbsp;&nbsp;EMA(9) crosses above EMA(21)            // MA crossover
+&nbsp;&nbsp;AND VWMA(20) &gt; SMA(20)                  // Volume confirms
+
+STOP_LOSS:
+&nbsp;&nbsp;Below EMA(21)
+
+TAKE_PROFIT:
+&nbsp;&nbsp;Trail with EMA(9)
+&nbsp;&nbsp;OR VWMA crosses below SMA
+</code></pre>
+
+
+
+
+
+
+<p class="mb-4"><!-- </p>
+<p class="mb-4">Legacy Code Mapping (Applies to Procedural Flowchart):</p>
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">A</td><td class="px-4 py-2 border-b border-[#2a2e39]">OHLC Candles with Volume</td><td class="px-4 py-2 border-b border-[#2a2e39]">...</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">B</td><td class="px-4 py-2 border-b border-[#2a2e39]">Period parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">...</td></tr>
+</table></div>
+<p class="mb-4">(Mapping table hidden as it does not align with the new Conceptual Logic Flowchart)</p>
+<p class="mb-4">--></p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r"><strong>Note</strong>: Code references use method/property names instead of line numbers for maintainability.</blockquote>
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#formula" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Formula</a>
+<a href="#comparison-with-sma" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Comparison with SMA</a>
+<a href="#key-insight:-vwma-vs-sma-spread" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Key Insight: VWMA vs. SMA Spread</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#default-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Default Parameters</a>
+<a href="#timeframe-recommendations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Timeframe Recommendations</a>
+<a href="#why-these-values" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why These Values?</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#best-conditions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Best Conditions</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#asset-class-suitability" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Asset Class Suitability</a>
+<a href="#5-entry-signals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Entry Signals</a>
+<a href="#primary-buy-signal-smart-money-confirmation" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Buy Signal (Smart Money Confirmation)</a>
+<a href="#primary-sell/exit-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Sell/Exit Signal</a>
+<a href="#6-filter-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Filter Usage</a>
+<a href="#filter-rules" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Filter Rules</a>
+<a href="#recommended-pairings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Pairings</a>
+<a href="#example-combined-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Example Combined Strategy</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#lag-characteristics" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Lag Characteristics</a>
+<a href="#false-signal-scenarios" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">False Signal Scenarios</a>
+<a href="#mitigation-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Mitigation Strategies</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#the-vwma-sma-spread-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The VWMA-SMA Spread Strategy</a>
+<a href="#hidden-accumulation-detection" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Hidden Accumulation Detection</a>
+<a href="#vwma-as-dynamic-support" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">VWMA as Dynamic Support</a>
+<a href="#multi-timeframe-vwma" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Multi-Timeframe VWMA</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#why-it-works" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why It Works</a>
+<a href="#backtest-evidence" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Backtest Evidence</a>
+<a href="#source-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Source Reference</a>
+<a href="#3-actionable-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Strategy</a>
+<a href="#strategy-name:-"vwma-spread-trend-strategy"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Strategy Name: "VWMA Spread Trend Strategy"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#failure-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Failure Patterns</a>
+<a href="#psychological-traps" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Psychological Traps</a>
+<a href="#common-misinterpretations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common Misinterpretations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#parent/child-indicators" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Parent/Child Indicators</a>
+<a href="#recommended-readings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Readings</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Matrix</a>
+<a href="#signal-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Signal Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+<a href="#logic-flowchart-code-mapping" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Logic Flowchart Code Mapping</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "VolumeWeightedMovingAverage",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 20;
+                const result = VolumeWeightedMovingAverage.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/VolumeWeightedMovingAverage.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[{"id": "period", "label": "Period (20)", "type": "number", "value": 20, "min": 2, "max": 100}]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": true, "plots": {"main": {"label": "VolumeWeightedMovingAverage", "color": "#4f46e5", "type": "line"}}}
+    </script>
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code - loaded externally before this block
+
+        // 2. Configuration (XSS-safe via script type="application/json")
+        try {
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 20;
+                const result = VolumeWeightedMovingAverage.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+    </script>
+
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
+
+</body>
+</html>

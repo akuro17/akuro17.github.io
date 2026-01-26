@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovingAverageDeviationRate - I ant I Investigates</title>
+    <meta name="description" content="MovingAverageDeviationRate - Technical Indicator">
+    <meta name="keywords" content="MovingAverageDeviationRate, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/movingaveragedeviationrate.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="MovingAverageDeviationRate - I ant I Investigates">
+    <meta property="og:description" content="MovingAverageDeviationRate - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/movingaveragedeviationrate.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/movingaveragedeviationrate.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MovingAverageDeviationRate">
+    <meta name="twitter:description" content="MovingAverageDeviationRate - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/movingaveragedeviationrate.png">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
+
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">MovingAverageDeviationRate</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="flex space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">MovingAverageDeviationRate</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">The Disparity Index measures the percentage distance between the current price and a moving average, quantifying how "stretched" the market is and signaling potential mean reversion opportunities.</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION["Phase 1: Ingestion"];
+A[/"Receive Price Data Stream"/];
+B["Capture Closing Prices"];
+C["Define Moving Average Period"];
+end;
+subgraph EVALUATION["Phase 2: Evaluation"];
+D["Calculate Moving Average Baseline"];
+E["Measure Current Price Position"];
+F["Quantify Distance from Mean"];
+end;
+subgraph WEIGHTING["Phase 3: Weighting"];
+G["Convert to Percentage Deviation"];
+H["Compare to Historical Extremes"];
+I["Classify Tension Level"];
+end;
+subgraph SYNTHESIS["Phase 4: Synthesis"];
+J["Track Direction Changes"];
+K["Detect Curl Patterns"];
+L["Identify Divergences"];
+end;
+subgraph OUTCOME["Phase 5: Outcome"];
+M{"Mean Reversion Assessment?"};
+N["Disparity < -7% + Curling Up = Buy Zone"];
+O["Disparity > +7% + Curling Down = Sell Zone"];
+P["Near Zero = Fair Value"];
+Q[/"Generate Mean Reversion Signal"/];
+end;
+A --> B;
+B --> C;
+C --> D;
+D --> E;
+E --> F;
+F --> G;
+G --> H;
+H --> I;
+I --> J;
+J --> K;
+K --> L;
+L --> M;
+M -->|Oversold| N;
+M -->|Overbought| O;
+M -->|Neutral| P;
+N --> Q;
+O --> Q;
+P --> Q;
+style INGESTION fill:#e3f2fd;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#e8f5e9;
+style SYNTHESIS fill:#fce4ec;
+style OUTCOME fill:#f3e5f5;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/MovingAverageDeviationRate.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="moving-average-deviation-rate-disparity-index">Moving Average Deviation Rate (Disparity Index)</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: Moving Average Deviation Rate  </p>
+<p class="mb-4">Abbreviation: MAD, Disparity Index, BIAS  </p>
+<p class="mb-4">Category: Momentum / Mean Reversion  </p>
+<p class="mb-4">Creator: Popularized by Steve Nison (Japanese technical analysis traditions)  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: The Disparity Index measures the percentage distance between the current price and a moving average, quantifying how "stretched" the market is and signaling potential mean reversion opportunities.</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="formula">Formula</h3>
+
+<p class="mb-4">$$Disparity\ Index = \left( \frac{Price_{close} - MA_n}{MA_n} \right) \times 100$$</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Variable</td><td class="px-4 py-2 border-b border-[#2a2e39]">Meaning</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">$Price_{close}$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Current closing price</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">$MA_n$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moving Average over n periods (SMA or EMA)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Result</td><td class="px-4 py-2 border-b border-[#2a2e39]">Percentage deviation from average</td></tr>
+</table></div>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Step</td><td class="px-4 py-2 border-b border-[#2a2e39]">Formula</td><td class="px-4 py-2 border-b border-[#2a2e39]">Purpose</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1</td><td class="px-4 py-2 border-b border-[#2a2e39]">Calculate $MA_n$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Establish the "mean"</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">2</td><td class="px-4 py-2 border-b border-[#2a2e39]">Find difference: $Price - MA$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Raw deviation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">Divide by $MA$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Normalize to percentage</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">4</td><td class="px-4 py-2 border-b border-[#2a2e39]">Multiply by 100</td><td class="px-4 py-2 border-b border-[#2a2e39]">Express as percentage</td></tr>
+</table></div>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">Think of the Disparity Index like a rubber band stretched between price and its average. The further price stretches away (high positive or negative values), the more tension builds. Like a rubber band, extreme stretches tend to snap back toward the center. A +10% reading means price is 10% above its average—quite stretched—while 0% means price sits exactly on its average.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<h3 id="default-parameters">Default Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rationale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Short-Term MA</td><td class="px-4 py-2 border-b border-[#2a2e39]">25-day</td><td class="px-4 py-2 border-b border-[#2a2e39]">Captures short-term mean reversion</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Long-Term MA</td><td class="px-4 py-2 border-b border-[#2a2e39]">200-day</td><td class="px-4 py-2 border-b border-[#2a2e39]">Major trend extremes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Overbought</td><td class="px-4 py-2 border-b border-[#2a2e39]">+5% to +10%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Varies by asset volatility</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Oversold</td><td class="px-4 py-2 border-b border-[#2a2e39]">-5% to -10%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Varies by asset volatility</td></tr>
+</table></div>
+
+<h3 id="alternative-settings">Alternative Settings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Use Case</td><td class="px-4 py-2 border-b border-[#2a2e39]">MA Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">Thresholds</td><td class="px-4 py-2 border-b border-[#2a2e39]">Notes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Day Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">10</td><td class="px-4 py-2 border-b border-[#2a2e39]">±3%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Frequent signals</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Swing Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">25</td><td class="px-4 py-2 border-b border-[#2a2e39]">±5-7%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Balanced approach</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Position Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">200</td><td class="px-4 py-2 border-b border-[#2a2e39]">±10-15%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Major extremes only</td></tr>
+</table></div>
+
+<h3 id="timeframe-recommendations">Timeframe Recommendations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trading Style</td><td class="px-4 py-2 border-b border-[#2a2e39]">Timeframe</td><td class="px-4 py-2 border-b border-[#2a2e39]">MA Period</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Day Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">15-min to 1-hour</td><td class="px-4 py-2 border-b border-[#2a2e39]">10-20</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Swing Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily</td><td class="px-4 py-2 border-b border-[#2a2e39]">25-50</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Position Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily/Weekly</td><td class="px-4 py-2 border-b border-[#2a2e39]">100-200</td></tr>
+</table></div>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<h3 id="best-conditions">Best Conditions</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Why It Works</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Overextended Rallies/Selloffs</td><td class="px-4 py-2 border-b border-[#2a2e39]">Extreme deviation signals exhaustion</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Range-Bound Markets</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mean reversion dominant</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Correction Timing</td><td class="px-4 py-2 border-b border-[#2a2e39]">Identifies when pullbacks are due</td></tr>
+</table></div>
+
+<h3 id="limitations">Limitations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Strong Trending Markets</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price can stay "overbought" for weeks</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parabolic Breakouts</td><td class="px-4 py-2 border-b border-[#2a2e39]">High disparity is a sign of strength, not exhaustion</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Flash Crashes</td><td class="px-4 py-2 border-b border-[#2a2e39]">Extreme readings during crashes aren't buyable</td></tr>
+</table></div>
+
+<h3 id="asset-class-suitability">Asset Class Suitability</h3>
+
+<p class="mb-4">- Equities — Works well for stocks with defined trading ranges</p>
+<p class="mb-4">- Indices — Good for market timing</p>
+<p class="mb-4">- Forex — Works but requires adjusted thresholds</p>
+<p class="mb-4">- Crypto — Extreme volatility makes thresholds unreliable</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-entry-signals">5. Entry Signals</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strength</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Zero Line Cross Up</td><td class="px-4 py-2 border-b border-[#2a2e39]">Disparity crosses above 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Zero Line Cross Down</td><td class="px-4 py-2 border-b border-[#2a2e39]">Disparity crosses below 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Oversold Reversal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Disparity < -7% then curls up</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Overbought Reversal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Disparity > +7% then curls down</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish Divergence</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price Lower Low + Disparity Higher Low</td><td class="px-4 py-2 border-b border-[#2a2e39]">Reversal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish Divergence</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price Higher High + Disparity Lower High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Reversal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+</table></div>
+
+<h3 id="primary-buy-signal-oversold-reversal">Primary Buy Signal (Oversold Reversal)</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF Disparity_Index(25) &lt; -7.0          // Price 7% below 25-day MA
+AND Disparity_Index &gt; Disparity_Index[1]  // Hooking upward
+AND RSI(14) &lt; 30                       // Confirmation
+THEN → BUY (Mean reversion bounce expected)
+</code></pre>
+
+<h3 id="primary-sell-signal-overbought-reversal">Primary Sell Signal (Overbought Reversal)</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF Disparity_Index(25) &gt; +7.0          // Price 7% above 25-day MA
+AND Disparity_Index &lt; Disparity_Index[1]  // Hooking downward
+THEN → SELL (Mean reversion pullback expected)
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-filter-usage">6. Filter Usage</h2>
+
+<p class="mb-4">The Disparity Index works best as a mean reversion filter identifying when trend-following signals should be ignored.</p>
+
+<h3 id="filter-rules">Filter Rules</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rule</td><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Disparity > +5%</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Avoid new long entries; wait for pullback</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Disparity < -5%</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Avoid new short entries; wait for bounce</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Disparity ≈ 0</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Neutral; respect trend signals</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Disparity extreme + turning</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">High-probability reversal zone</td></tr>
+</table></div>
+
+<h3 id="recommended-pairings">Recommended Pairings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Partner Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Synergy Logic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bollinger Bands</td><td class="px-4 py-2 border-b border-[#2a2e39]">Disparity confirms Band touches</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RSI</td><td class="px-4 py-2 border-b border-[#2a2e39]">Disparity extreme + RSI extreme = Strong reversal</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Volume</td><td class="px-4 py-2 border-b border-[#2a2e39]">Climax volume + extreme Disparity = Exhaustion</td></tr>
+</table></div>
+
+<h3 id="example-combined-strategy">Example Combined Strategy</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+MEAN REVERSION SETUP:
+&nbsp;&nbsp;Disparity_Index(25) &lt; -7.0           // Oversold
+&nbsp;&nbsp;Price touches Lower Bollinger Band   // Band confirmation
+&nbsp;&nbsp;RSI(14) &lt; 30                         // Momentum confirmation
+
+ENTRY:
+&nbsp;&nbsp;Disparity hooks upward above -6%
+&nbsp;&nbsp;
+EXIT:
+&nbsp;&nbsp;Disparity crosses above 0 (reached the mean)
+&nbsp;&nbsp;OR Disparity reaches +5% (overbought)
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<h3 id="lag-characteristics">Lag Characteristics</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Component</td><td class="px-4 py-2 border-b border-[#2a2e39]">Approximate Lag</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">First Valid Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">MA Period bars</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Response</td><td class="px-4 py-2 border-b border-[#2a2e39]">Same-bar (uses current close)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Detection</td><td class="px-4 py-2 border-b border-[#2a2e39]">Delayed by MA smoothing</td></tr>
+</table></div>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Reality Check: The biggest danger is fighting a trend. A stock can remain overbought (Disparity > +10%) for weeks during a parabolic run. Never sell solely because Disparity is high—wait for it to "curl" back.</blockquote>
+
+<h3 id="false-signal-scenarios">False Signal Scenarios</h3>
+
+<p class="mb-4">1. The "Trending Overbought" Trap  </p>
+<p class="mb-4">   In strong uptrends, Disparity stays positive for extended periods. Selling early misses major gains.</p>
+
+<p class="mb-4">2. Catching Falling Knives  </p>
+<p class="mb-4">   Buying because Disparity is extremely negative during a bear market leads to losses.</p>
+
+<p class="mb-4">3. Penny Stock Distortion  </p>
+<p class="mb-4">   On low-priced stocks, small moves create huge percentage deviations.</p>
+
+<h3 id="mitigation-strategies">Mitigation Strategies</h3>
+
+<p class="mb-4">- Wait for the Curl: Never fade immediately; wait for reversal in Disparity direction</p>
+<p class="mb-4">- Combine with RSI: Require RSI divergence for confirmation</p>
+<p class="mb-4">- Volume Climax: Look for volume spike at extremes (exhaustion sign)</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<h3 id="the-"rubber-band"-trading-rule">The "Rubber Band" Trading Rule</h3>
+
+<p class="mb-4">When Disparity hits historical extremes (95th percentile):</p>
+<p class="mb-4">1. Don't act immediately</p>
+<p class="mb-4">2. Wait for Disparity to start moving back toward zero</p>
+<p class="mb-4">3. Enter on the "snap-back" when Disparity crosses a less extreme threshold</p>
+
+<p class="mb-4">This prevents catching falling knives while still capturing mean reversion.</p>
+
+<h3 id="multi-timeframe-disparity">Multi-Timeframe Disparity</h3>
+
+<p class="mb-4">Compare Disparity across timeframes:</p>
+<p class="mb-4">- Weekly Disparity > +5% + Daily Disparity > +7% = Maximum overbought</p>
+<p class="mb-4">- Weekly near 0 + Daily extreme = Short-term correction likely; weekly trend intact</p>
+
+<h3 id="ignoring-first-signals-in-breakouts">Ignoring First Signals in Breakouts</h3>
+
+<p class="mb-4">When a stock breaks out on massive volume:</p>
+<p class="mb-4">1. Disparity immediately hits "overbought"</p>
+<p class="mb-4">2. Do NOT sell based on first overbought reading</p>
+<p class="mb-4">3. Real tops occur on the second peak with Disparity divergence</p>
+<p class="mb-4">4. Price makes new high, but Disparity makes lower high = Actual sell signal</p>
+
+<h3 id="sector-rotation-application">Sector Rotation Application</h3>
+
+<p class="mb-4">Screen for sectors where:</p>
+<p class="mb-4">- Major stocks showing Disparity near zero (not overextended)</p>
+<p class="mb-4">- Relative strength rising</p>
+<p class="mb-4">- This identifies sectors with room to run without being stretched</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"The Disparity Index is your market's rubber band gauge—extreme stretches create tension that eventually snaps back to the mean, but only a fool tries to catch the rubber band before it starts returning."</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">The Disparity Index answers: "How far has price strayed from normal?"</p>
+
+<p class="mb-4">It's deceptively simple: percentage distance from a moving average. But this simplicity reveals powerful market dynamics:</p>
+
+<p class="mb-4">- Positive values: Price above average → Bulls in control</p>
+<p class="mb-4">- Negative values: Price below average → Bears in control</p>
+<p class="mb-4">- Zero: Price exactly at average → Equilibrium</p>
+<p class="mb-4">- Extreme values: Stretched market → Reversal pressure building</p>
+
+<p class="mb-4">The indicator is rooted in mean reversion theory: markets oscillate around a moving average, and extreme departures tend to correct. Like a temperature that's too far from room temperature, the market has "pressure" to return to normal.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<h3 id="backtest-evidence">Backtest Evidence</h3>
+
+<p class="mb-4">Mean reversion studies show:</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Forward 5-Day Return</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Disparity < -10%</td><td class="px-4 py-2 border-b border-[#2a2e39]">+2.1% average</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Disparity < -5%</td><td class="px-4 py-2 border-b border-[#2a2e39]">+1.3% average</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Disparity ≈ 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">+0.2% average</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Disparity > +5%</td><td class="px-4 py-2 border-b border-[#2a2e39]">-0.8% average</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Disparity > +10%</td><td class="px-4 py-2 border-b border-[#2a2e39]">-1.5% average</td></tr>
+</table></div>
+
+<h3 id="why-it-works">Why It Works</h3>
+
+<p class="mb-4">The edge comes from behavioral finance. When prices stretch far from averages:</p>
+<p class="mb-4">- Profit-taking pressure builds (overbought)</p>
+<p class="mb-4">- Bargain-hunting emerges (oversold)</p>
+<p class="mb-4">- Mean reversion becomes a self-fulfilling prophecy as traders react to "extreme" readings</p>
+
+<p class="mb-4">Academic research on momentum mean-reversion (Jegadeesh & Titman) supports short-term reversion but longer-term momentum—matching Disparity's signal profile.</p>
+
+<h3 id="academic-reference">Academic Reference</h3>
+
+<p class="mb-4">Steve Nison introduced Western traders to Disparity (BIAS) through his books on Japanese candlestick analysis. The concept has roots in Japanese technical traditions dating to the early 20th century.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-actionable-strategy">3. Actionable Strategy</h2>
+
+<h3 id="strategy-name:-"rubber-band-snap"">Strategy Name: "Rubber Band Snap"</h3>
+
+<p class="mb-4">Concept: Buy oversold extremes when Disparity starts reversing.</p>
+
+<p class="mb-4">Setup Requirements:</p>
+<p class="mb-4">1. Disparity(25) < -7% — Significantly oversold</p>
+<p class="mb-4">2. Price touched Lower Bollinger Band (2SD)</p>
+<p class="mb-4">3. RSI(14) < 35 — Momentum confirmation</p>
+
+<p class="mb-4">Entry Trigger:</p>
+<p class="mb-4">- Disparity hooks upward (Disparity > Disparity[1])</p>
+<p class="mb-4">- Close above previous bar's high</p>
+
+<p class="mb-4">Position Sizing:</p>
+<p class="mb-4">- Full size when Disparity < -10%</p>
+<p class="mb-4">- Half size when Disparity between -7% and -10%</p>
+
+<p class="mb-4">Exit Rules:</p>
+<p class="mb-4">1. Target: Disparity crosses above 0 (reached the mean)</p>
+<p class="mb-4">2. Extended Target: Disparity reaches +3%</p>
+<p class="mb-4">3. Stop Loss: New low below entry day's low</p>
+
+<p class="mb-4">Example:</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Stock ABC shows:
+&nbsp;&nbsp;Disparity(25) = -8.5% ✓
+&nbsp;&nbsp;RSI(14) = 28 ✓
+&nbsp;&nbsp;Price touched Lower BB ✓
+&nbsp;&nbsp;
+Day 2: Disparity = -7.8% (hooking up)
+→ ENTRY at $45
+
+Exit at Disparity = 0 ($48.75, at MA)
+Profit: +8.3%
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<h3 id="failure-patterns">Failure Patterns</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pattern</td><td class="px-4 py-2 border-b border-[#2a2e39]">Description</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mitigation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Persistence</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong trends keep Disparity extreme</td><td class="px-4 py-2 border-b border-[#2a2e39]">Add trend filter; avoid in ADX > 40</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Falling Knife</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bear markets have persistently negative Disparity</td><td class="px-4 py-2 border-b border-[#2a2e39]">Require volume climax or RSI divergence</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Scale Issues</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low-priced stocks show noise</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use higher thresholds for penny stocks</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Division by Zero</td><td class="px-4 py-2 border-b border-[#2a2e39]">MA = 0 causes crash</td><td class="px-4 py-2 border-b border-[#2a2e39]">Exclude assets with MA near zero</td></tr>
+</table></div>
+
+<h3 id="psychological-traps">Psychological Traps</h3>
+
+<p class="mb-4">1. The "It's So Cheap" Trap  </p>
+<p class="mb-4">   Extreme negative Disparity feels like a bargain. But cheap can get cheaper.</p>
+
+<p class="mb-4">2. Impatience at Extremes  </p>
+<p class="mb-4">   Entering immediately at extreme readings without waiting for the "curl."</p>
+
+<p class="mb-4">3. Fighting the Trend  </p>
+<p class="mb-4">   Using Disparity to short rising markets leads to painful losses.</p>
+
+<h3 id="common-misinterpretations">Common Misinterpretations</h3>
+
+<p class="mb-4">- "Disparity at +10% = sell immediately" → Wait for it to turn down first</p>
+<p class="mb-4">- "Negative Disparity = always buy" → True in ranges; false in bear markets</p>
+<p class="mb-4">- "Higher absolute value = stronger signal" → Context matters</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<h3 id="creator-attribution">Creator Attribution</h3>
+
+<p class="mb-4">The Disparity Index (BIAS) emerged from Japanese technical analysis traditions and was popularized in the West by Steve Nison through *Beyond Candlesticks* (1994). Japanese traders used it to measure "emotional tension" in markets.</p>
+
+<h3 id="parent/child-indicators">Parent/Child Indicators</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Relationship</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Moving Averages</td><td class="px-4 py-2 border-b border-[#2a2e39]">Foundation — Disparity is derived from MA</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Percent B (%B)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Related — Bollinger Band position as percentage</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price Oscillator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Related — Difference between two MAs</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Detrended Price</td><td class="px-4 py-2 border-b border-[#2a2e39]">Related — Price minus MA (not percentage)</td></tr>
+</table></div>
+
+<h3 id="recommended-readings">Recommended Readings</h3>
+
+<p class="mb-4">1. *Beyond Candlesticks* — Steve Nison</p>
+<p class="mb-4">2. *Technical Analysis Explained* — Martin Pring</p>
+<p class="mb-4">3. *The Art and Science of Technical Analysis* — Adam Grimes</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h3 id="55-related-indicators-comparison">5.5 Related Indicators Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">Disparity Index</td><td class="px-4 py-2 border-b border-[#2a2e39]">RSI</td><td class="px-4 py-2 border-b border-[#2a2e39]">Stochastic</td><td class="px-4 py-2 border-b border-[#2a2e39]">%B</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Measures</td><td class="px-4 py-2 border-b border-[#2a2e39]">Distance from MA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price momentum</td><td class="px-4 py-2 border-b border-[#2a2e39]">Range position</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bollinger position</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bounded</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yes (0-100)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yes (0-100)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Nearly (0-1)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Best For</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mean reversion</td><td class="px-4 py-2 border-b border-[#2a2e39]">Overbought/sold</td><td class="px-4 py-2 border-b border-[#2a2e39]">Entry timing</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility extremes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Zero Significance</td><td class="px-4 py-2 border-b border-[#2a2e39]">At the mean</td><td class="px-4 py-2 border-b border-[#2a2e39]">50 = neutral</td><td class="px-4 py-2 border-b border-[#2a2e39]">50 = mid-range</td><td class="px-4 py-2 border-b border-[#2a2e39]">0.5 = mid-band</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Historical Context</td><td class="px-4 py-2 border-b border-[#2a2e39]">Japanese origin</td><td class="px-4 py-2 border-b border-[#2a2e39]">Wilder</td><td class="px-4 py-2 border-b border-[#2a2e39]">Lane</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bollinger</td></tr>
+</table></div>
+
+<p class="mb-4">When to Use Which:</p>
+<p class="mb-4">- Disparity Index — When you need to know exact percentage from moving average</p>
+<p class="mb-4">- RSI — General momentum and overbought/oversold</p>
+<p class="mb-4">- Stochastic — Precise entry timing on pullbacks</p>
+<p class="mb-4">- %B — When volatility context matters (Bollinger Band framework)</p>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h2 id="advanced-signal-reference">Advanced Signal Reference</h2>
+
+<h3 id="threshold-matrix">Threshold Matrix</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Disparity Level</td><td class="px-4 py-2 border-b border-[#2a2e39]">Market State</td><td class="px-4 py-2 border-b border-[#2a2e39]">Action</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">> +10%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Extreme overbought</td><td class="px-4 py-2 border-b border-[#2a2e39]">Fade if curling; never chase</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">+5% to +10%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Overbought</td><td class="px-4 py-2 border-b border-[#2a2e39]">Lighten longs; tighten stops</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">+2% to +5%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Modestly extended</td><td class="px-4 py-2 border-b border-[#2a2e39]">Normal position</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">-2% to +2%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Neutral/Mean</td><td class="px-4 py-2 border-b border-[#2a2e39]">Respect trend; full position</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">-5% to -2%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Modestly oversold</td><td class="px-4 py-2 border-b border-[#2a2e39]">Accumulate on weakness</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">-10% to -5%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Oversold</td><td class="px-4 py-2 border-b border-[#2a2e39]">Look for reversal signals</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">< -10%</td><td class="px-4 py-2 border-b border-[#2a2e39]">Extreme oversold</td><td class="px-4 py-2 border-b border-[#2a2e39]">Fade if curling; verify not crash</td></tr>
+</table></div>
+
+<h3 id="signal-patterns">Signal Patterns</h3>
+
+<h4 id="buy-signal-oversold-reversal">Buy Signal (Oversold Reversal)</h4>
+<p class="mb-4">This signal triggers when price has stretched significantly below its moving average and begins to revert toward the mean. The key is waiting for the disparity to "curl" upward rather than buying immediately at extreme readings—this confirms reversal momentum has begun. RSI confirmation below 35 adds reliability by ensuring momentum also shows oversold conditions.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def disparity_buy_signal(disparity, rsi, threshold=-7.0):
+&nbsp;&nbsp;&nbsp;&nbsp;condition_1 = disparity &lt; threshold              # Oversold
+&nbsp;&nbsp;&nbsp;&nbsp;condition_2 = disparity &gt; disparity_prev         # Curling up
+&nbsp;&nbsp;&nbsp;&nbsp;condition_3 = rsi &lt; 35                           # RSI confirms
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return all([condition_1, condition_2, condition_3])
+</code></pre>
+
+<h4 id="sell-signal-overbought-reversal">Sell Signal (Overbought Reversal)</h4>
+<p class="mb-4">This signal identifies when price has extended too far above its moving average and is beginning to pull back toward the mean. The curling down of disparity confirms the exhaustion of buying pressure, while elevated volume often accompanies distribution and adds conviction to the reversal signal. This setup is ideal for taking profits on long positions or initiating short-term mean reversion trades.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def disparity_sell_signal(disparity, volume, threshold=7.0):
+&nbsp;&nbsp;&nbsp;&nbsp;condition_1 = disparity &gt; threshold              # Overbought
+&nbsp;&nbsp;&nbsp;&nbsp;condition_2 = disparity &lt; disparity_prev         # Curling down
+&nbsp;&nbsp;&nbsp;&nbsp;condition_3 = volume &gt; sma(volume, 20) * 1.5    # Volume spike
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return all([condition_1, condition_2, condition_3])
+</code></pre>
+
+<h4 id="divergence-signal">Divergence Signal</h4>
+<p class="mb-4">Bullish divergence occurs when price makes a new low but disparity makes a higher low, indicating the downward pressure is weakening as price approaches its moving average from increasingly smaller gaps. This pattern suggests sellers are losing momentum and a reversal is likely. Divergence signals are most reliable when occurring near historically significant disparity levels.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def disparity_divergence(price, disparity):
+&nbsp;&nbsp;&nbsp;&nbsp;price_lower_low = price &lt; min(price[-20:])
+&nbsp;&nbsp;&nbsp;&nbsp;disparity_higher_low = disparity &gt; min(disparity[-20:])
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return price_lower_low and disparity_higher_low
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<h4 id="oversold-reversion-scan">Oversold Reversion Scan</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Disparity_Index(25) &lt; -7.0
+AND Disparity_Index &gt; Disparity_Index[1]
+AND RSI(14) &lt; 30
+</code></pre>
+
+<h4 id="overbought-warning-scan">Overbought Warning Scan</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Disparity_Index(25) &gt; +7.0
+AND Volume &gt; SMA(Volume, 20) × 1.5
+</code></pre>
+
+<h4 id="neutral-setup-scan-room-to-run">Neutral Setup Scan (Room to Run)</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+ABS(Disparity_Index(25)) &lt; 2.0
+AND ADX(14) &gt; 25
+AND Close &gt; SMA(Close, 50)
+</code></pre>
+
+<h3 id="combination-strategies">Combination Strategies</h3>
+
+<h4 id="disparity-+-bollinger-band-strategy">Disparity + Bollinger Band Strategy</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SETUP:
+&nbsp;&nbsp;Disparity(25) &lt; -7%
+&nbsp;&nbsp;Price touched Lower Bollinger Band (2SD)
+
+ENTRY:
+&nbsp;&nbsp;Price closes back INSIDE Bollinger Band
+&nbsp;&nbsp;AND Disparity hooks upward
+
+EXIT:
+&nbsp;&nbsp;Disparity crosses above 0 (reached mean)
+&nbsp;&nbsp;OR Disparity reaches +5%
+</code></pre>
+
+<h4 id="multi-timeframe-mean-reversion">Multi-Timeframe Mean Reversion</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+WEEKLY CHECK:
+&nbsp;&nbsp;Weekly Disparity(25) near 0 (not extended)
+&nbsp;&nbsp;
+DAILY ENTRY:
+&nbsp;&nbsp;Daily Disparity(25) &lt; -7% (short-term oversold)
+&nbsp;&nbsp;Daily hooks up
+&nbsp;&nbsp;
+LOGIC:
+&nbsp;&nbsp;Weekly trend intact; daily correction = buy opportunity
+</code></pre>
+
+
+
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#formula" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Formula</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#default-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Default Parameters</a>
+<a href="#alternative-settings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Alternative Settings</a>
+<a href="#timeframe-recommendations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Timeframe Recommendations</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#best-conditions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Best Conditions</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#asset-class-suitability" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Asset Class Suitability</a>
+<a href="#5-entry-signals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Entry Signals</a>
+<a href="#primary-buy-signal-oversold-reversal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Buy Signal (Oversold Reversal)</a>
+<a href="#primary-sell-signal-overbought-reversal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Sell Signal (Overbought Reversal)</a>
+<a href="#6-filter-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Filter Usage</a>
+<a href="#filter-rules" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Filter Rules</a>
+<a href="#recommended-pairings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Pairings</a>
+<a href="#example-combined-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Example Combined Strategy</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#lag-characteristics" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Lag Characteristics</a>
+<a href="#false-signal-scenarios" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">False Signal Scenarios</a>
+<a href="#mitigation-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Mitigation Strategies</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#the-"rubber-band"-trading-rule" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The "Rubber Band" Trading Rule</a>
+<a href="#multi-timeframe-disparity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Multi-Timeframe Disparity</a>
+<a href="#ignoring-first-signals-in-breakouts" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Ignoring First Signals in Breakouts</a>
+<a href="#sector-rotation-application" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Sector Rotation Application</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#backtest-evidence" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Backtest Evidence</a>
+<a href="#why-it-works" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why It Works</a>
+<a href="#academic-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Academic Reference</a>
+<a href="#3-actionable-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Strategy</a>
+<a href="#strategy-name:-"rubber-band-snap"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Strategy Name: "Rubber Band Snap"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#failure-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Failure Patterns</a>
+<a href="#psychological-traps" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Psychological Traps</a>
+<a href="#common-misinterpretations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common Misinterpretations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#parent/child-indicators" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Parent/Child Indicators</a>
+<a href="#recommended-readings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Readings</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Matrix</a>
+<a href="#signal-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Signal Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "MovingAverageDeviationRate",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 20;
+                const result = MovingAverageDeviationRate.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/MovingAverageDeviationRate.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[{"id": "period", "label": "Period (20)", "type": "number", "value": 20, "min": 2, "max": 100}]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": true, "plots": {"main": {"label": "MovingAverageDeviationRate", "color": "#4f46e5", "type": "line"}}}
+    </script>
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code - loaded externally before this block
+
+        // 2. Configuration (XSS-safe via script type="application/json")
+        try {
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 20;
+                const result = MovingAverageDeviationRate.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+    </script>
+
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnBalanceVolume - I ant I Investigates</title>
+    <meta name="description" content="OnBalanceVolume - Technical Indicator">
+    <meta name="keywords" content="OnBalanceVolume, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/onbalancevolume.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="OnBalanceVolume - I ant I Investigates">
+    <meta property="og:description" content="OnBalanceVolume - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/onbalancevolume.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/onbalancevolume.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="OnBalanceVolume">
+    <meta name="twitter:description" content="OnBalanceVolume - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/onbalancevolume.png">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
+
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">OnBalanceVolume</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="flex space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">OnBalanceVolume</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">OBV is a cumulative volume indicator that adds volume on up-days and subtracts it on down-days, revealing the hidden flow of "smart money" before price moves.</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION["Phase 1: Ingestion"];
+A[/"Receive Price + Volume Data"/];
+B["Capture Daily Closes"];
+C["Capture Daily Volume Levels"];
+end;
+subgraph EVALUATION["Phase 2: Evaluation"];
+D["Compare Close to Prior Close"];
+E["Classify Day Direction"];
+F["Link Volume to Direction"];
+end;
+subgraph WEIGHTING["Phase 3: Weighting"];
+G["Add Volume on Up Days"];
+H["Subtract Volume on Down Days"];
+I["Build Cumulative Flow"];
+end;
+subgraph SYNTHESIS["Phase 4: Synthesis"];
+J["Track OBV Trend"];
+K["Monitor for Divergences"];
+L["Compare to Price Action"];
+end;
+subgraph OUTCOME["Phase 5: Outcome"];
+M{"Volume Flow Assessment?"};
+N["OBV Rising + Price Rising = Strong"];
+O["OBV Falling + Price Rising = Warning"];
+P["OBV Rising + Price Flat = Accumulation"];
+Q[/"Generate Accumulation/Distribution Signal"/];
+end;
+A --> B;
+B --> C;
+C --> D;
+D --> E;
+E --> F;
+F --> G;
+G --> H;
+H --> I;
+I --> J;
+J --> K;
+K --> L;
+L --> M;
+M -->|Confirmed| N;
+M -->|Divergence| O;
+M -->|Stealth| P;
+N --> Q;
+O --> Q;
+P --> Q;
+style INGESTION fill:#e3f2fd;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#e8f5e9;
+style SYNTHESIS fill:#fce4ec;
+style OUTCOME fill:#f3e5f5;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/OnBalanceVolume.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="on-balance-volume-obv">On-Balance Volume (OBV)</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: On-Balance Volume  </p>
+<p class="mb-4">Abbreviation: OBV  </p>
+<p class="mb-4">Category: Volume / Momentum  </p>
+<p class="mb-4">Creator: Joseph Granville (1963)  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: OBV is a cumulative volume indicator that adds volume on up-days and subtracts it on down-days, revealing the hidden flow of "smart money" before price moves.</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="formula">Formula</h3>
+
+<p class="mb-4">$$OBV_t = OBV_{t-1} + \begin{cases} Volume_t & \text{if } Close_t > Close_{t-1} \\ 0 & \text{if } Close_t = Close_{t-1} \\ -Volume_t & \text{if } Close_t < Close_{t-1} \end{cases}$$</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Step</td><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Action</td><td class="px-4 py-2 border-b border-[#2a2e39]">Purpose</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1</td><td class="px-4 py-2 border-b border-[#2a2e39]">Initialize</td><td class="px-4 py-2 border-b border-[#2a2e39]">$OBV_0 = 0$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Starting point (arbitrary)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">2</td><td class="px-4 py-2 border-b border-[#2a2e39]">If $Close_t > Close_{t-1}$</td><td class="px-4 py-2 border-b border-[#2a2e39]">$OBV_t = OBV_{t-1} + Volume_t$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Accumulation day</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">If $Close_t < Close_{t-1}$</td><td class="px-4 py-2 border-b border-[#2a2e39]">$OBV_t = OBV_{t-1} - Volume_t$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Distribution day</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">4</td><td class="px-4 py-2 border-b border-[#2a2e39]">If $Close_t = Close_{t-1}$</td><td class="px-4 py-2 border-b border-[#2a2e39]">$OBV_t = OBV_{t-1}$</td><td class="px-4 py-2 border-b border-[#2a2e39]">No change</td></tr>
+</table></div>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">Think of OBV like a reservoir's water level. On days when the market closes up, water flows in (buying pressure). On down days, water flows out (selling pressure). The absolute level doesn't matter—what matters is whether the water level is rising or falling. A rising reservoir during apparent drought (falling prices) reveals hidden accumulation.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<h3 id="default-parameters">Default Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rationale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">Cumulative (No Period)</td><td class="px-4 py-2 border-b border-[#2a2e39]">OBV is inherently cumulative from first data point</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal MA</td><td class="px-4 py-2 border-b border-[#2a2e39]">20-period SMA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Optional smoothing for crossover signals</td></tr>
+</table></div>
+
+<h3 id="timeframe-recommendations">Timeframe Recommendations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trading Style</td><td class="px-4 py-2 border-b border-[#2a2e39]">Timeframe</td><td class="px-4 py-2 border-b border-[#2a2e39]">Notes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Day Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">5-min to 1-hour</td><td class="px-4 py-2 border-b border-[#2a2e39]">Focus on intraday volume patterns</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Swing Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">Daily</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard interpretation works best</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Position Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">Weekly</td><td class="px-4 py-2 border-b border-[#2a2e39]">Captures institutional accumulation cycles</td></tr>
+</table></div>
+
+<h3 id="why-no-period">Why No Period?</h3>
+
+<p class="mb-4">Unlike most oscillators, OBV doesn't require a lookback period. Its power lies in the cumulative nature—it captures the entire history of buying vs. selling pressure. The absolute value is meaningless; only the direction and slope matter.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<h3 id="best-conditions">Best Conditions</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Why It Works</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Breakout Confirmation</td><td class="px-4 py-2 border-b border-[#2a2e39]">OBV breakout before price validates the move</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Accumulation Phases</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rising OBV + flat price reveals institutional buying</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Divergence Detection</td><td class="px-4 py-2 border-b border-[#2a2e39]">OBV vs. price divergence often precedes reversals</td></tr>
+</table></div>
+
+<h3 id="limitations">Limitations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Single Massive Volume Days</td><td class="px-4 py-2 border-b border-[#2a2e39]">Earnings or rebalancing distorts the entire OBV scale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Low Liquidity Assets</td><td class="px-4 py-2 border-b border-[#2a2e39]">Small volume trades paint misleading patterns</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Gap-Heavy Markets</td><td class="px-4 py-2 border-b border-[#2a2e39]">Gaps without volume handling create false readings</td></tr>
+</table></div>
+
+<h3 id="asset-class-suitability">Asset Class Suitability</h3>
+
+<p class="mb-4">- Equities — Excellent for stocks with consistent volume</p>
+<p class="mb-4">- ETFs — Works well for broad market accumulation signals</p>
+<p class="mb-4">- Forex — No centralized volume data; use tick volume proxies</p>
+<p class="mb-4">- Crypto — Works but exchange volume manipulation is common</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-entry-signals">5. Entry Signals</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strength</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">OBV MA Cross Up</td><td class="px-4 py-2 border-b border-[#2a2e39]">OBV crosses above 20-MA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">OBV MA Cross Down</td><td class="px-4 py-2 border-b border-[#2a2e39]">OBV crosses below 20-MA</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">OBV Trendline Breakout</td><td class="px-4 py-2 border-b border-[#2a2e39]">OBV breaks resistance trendline</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish Divergence</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price Lower Low + OBV Higher Low</td><td class="px-4 py-2 border-b border-[#2a2e39]">Reversal Warning</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish Divergence</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price Higher High + OBV Lower High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Reversal Warning</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">OBV New High</td><td class="px-4 py-2 border-b border-[#2a2e39]">OBV makes new high before price</td><td class="px-4 py-2 border-b border-[#2a2e39]">Leading Buy</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+</table></div>
+
+<h3 id="primary-buy-signal">Primary Buy Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF OBV crosses above its 20-period MovingAverage
+AND OBV is making higher highs
+AND Price is at or near resistance
+THEN → BUY (OBV confirms breakout potential)
+</code></pre>
+
+<h3 id="primary-sell/exit-signal">Primary Sell/Exit Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF OBV crosses below its 20-period MovingAverage
+OR Price makes Higher High while OBV makes Lower High (Divergence)
+THEN → EXIT/SELL
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-filter-usage">6. Filter Usage</h2>
+
+<p class="mb-4">OBV excels as a leading confirmation filter for breakout strategies. Use it to validate whether volume supports the price action.</p>
+
+<h3 id="filter-rules">Filter Rules</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rule</td><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>OBV > OBV_MA(20)</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Accumulation active; favor long positions</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>OBV < OBV_MA(20)</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Distribution active; favor shorts or cash</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>OBV rising, Price flat</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Stealth accumulation; prepare for breakout</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>OBV falling, Price rising</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">"Hollow rally"; prepare for reversal</td></tr>
+</table></div>
+
+<h3 id="recommended-pairings">Recommended Pairings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Partner Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Synergy Logic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bollinger Bands (on OBV)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Identify OBV squeeze before expansion</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Price Trendlines</td><td class="px-4 py-2 border-b border-[#2a2e39]">OBV breakout confirms price breakout</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RSI</td><td class="px-4 py-2 border-b border-[#2a2e39]">OBV divergence + RSI divergence = High-confidence reversal</td></tr>
+</table></div>
+
+<h3 id="example-combined-strategy">Example Combined Strategy</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+ENTRY CONDITIONS:
+&nbsp;&nbsp;OBV &gt; Highest(OBV, 50)             // OBV breaking 50-day high
+&nbsp;&nbsp;Close &lt; Highest(Close, 50)          // Price hasn&#x27;t broken yet
+&nbsp;&nbsp;Volume &gt; SMA(Volume, 20)            // Confirmed volume increase
+
+ACTION: BUY on OBV leading breakout
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<h3 id="lag-characteristics">Lag Characteristics</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Component</td><td class="px-4 py-2 border-b border-[#2a2e39]">Approximate Lag</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">First Valid OBV</td><td class="px-4 py-2 border-b border-[#2a2e39]">2 bars (needs prior close for comparison)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Responsiveness</td><td class="px-4 py-2 border-b border-[#2a2e39]">Immediate (reacts same-day to volume)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">MA Crossover</td><td class="px-4 py-2 border-b border-[#2a2e39]">10-20 bars depending on MA period</td></tr>
+</table></div>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Reality Check: The absolute OBV number is meaningless. Never compare OBV values across different assets or even different time windows of the same asset.</blockquote>
+
+<h3 id="false-signal-scenarios">False Signal Scenarios</h3>
+
+<p class="mb-4">1. The "Earnings Spike" Distortion  </p>
+<p class="mb-4">   A single day with 100x normal volume permanently shifts OBV scale, compressing all future readings visually.</p>
+
+<p class="mb-4">2. Index Rebalancing Days  </p>
+<p class="mb-4">   ETF additions/removals create artificial volume spikes unrelated to smart money.</p>
+
+<p class="mb-4">3. Flat Price, Flat OBV  </p>
+<p class="mb-4">   When both are flat, there's no signal—don't force a trade.</p>
+
+<h3 id="mitigation-strategies">Mitigation Strategies</h3>
+
+<p class="mb-4">- Use Trendlines on OBV: More reliable than raw MA crossovers</p>
+<p class="mb-4">- Ignore Earnings Days: Note abnormal volume days and discount their impact</p>
+<p class="mb-4">- Focus on Slope, Not Level: A rising slope is bullish regardless of absolute value</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<h3 id="the-granville-edge:-leading-breakouts">The Granville Edge: Leading Breakouts</h3>
+
+<p class="mb-4">Joseph Granville's key insight: "OBV often breaks its resistance before price does." Draw trendlines on OBV peaks just as you would on price. When OBV breaks above its trendline while price is still consolidating, a price breakout is typically 3-5 bars away.</p>
+
+<h3 id="obv-bollinger-bands">OBV Bollinger Bands</h3>
+
+<p class="mb-4">Apply Bollinger Bands directly to the OBV line (not price). When OBV bands squeeze and then OBV breaks above the upper band, it signals a volume expansion phase—buy immediately even if price is still at resistance.</p>
+
+<h3 id="accumulation-detection-protocol">Accumulation Detection Protocol</h3>
+
+<p class="mb-4">Screen for stocks where:</p>
+<p class="mb-4">- OBV making 20-day highs for 3+ days</p>
+<p class="mb-4">- Price is flat or slightly down</p>
+<p class="mb-4">- Volume below average (quiet accumulation)</p>
+
+<p class="mb-4">This pattern identifies institutional "stealth buying" before public breakouts.</p>
+
+<h3 id="the-"hollow-rally"-warning">The "Hollow Rally" Warning</h3>
+
+<p class="mb-4">When price rallies to new highs but OBV fails to confirm (makes lower high), the rally lacks conviction. This "hollow rally" pattern often precedes distribution and decline.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"OBV is your market X-ray—it reveals the skeleton of accumulation and distribution that price alone cannot show, often warning of breakouts days before they happen."</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">OBV answers one primal question: "Is money flowing in or out?"</p>
+
+<p class="mb-4">Granville's premise was revolutionary: volume is the fuel that moves price. If a car (price) is climbing a hill but the gas tank (volume) is draining, the car will eventually roll back. OBV captures this fuel flow by assigning the entire day's volume to either buyers or sellers based on whether the close was up or down.</p>
+
+<p class="mb-4">The genius lies in cumulation:</p>
+<p class="mb-4">- Rising OBV = More volume is flowing to up-days than down-days (net accumulation)</p>
+<p class="mb-4">- Falling OBV = More volume is flowing to down-days (net distribution)</p>
+<p class="mb-4">- Flat OBV = Volume balanced between buyers and sellers (consolidation)</p>
+
+<p class="mb-4">Think of it this way: OBV doesn't care *how much* price moved—only *whether* it was up or down. A 1% gain on huge volume adds more to OBV than a 5% gain on tiny volume.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<h3 id="backtest-evidence">Backtest Evidence</h3>
+
+<p class="mb-4">Studies on OBV divergence strategies show:</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Metric</td><td class="px-4 py-2 border-b border-[#2a2e39]">Without OBV Filter</td><td class="px-4 py-2 border-b border-[#2a2e39]">With OBV Confirmation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Win Rate</td><td class="px-4 py-2 border-b border-[#2a2e39]">50%</td><td class="px-4 py-2 border-b border-[#2a2e39]">58%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Profit Factor</td><td class="px-4 py-2 border-b border-[#2a2e39]">1.1</td><td class="px-4 py-2 border-b border-[#2a2e39]">1.5</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Breakout Accuracy</td><td class="px-4 py-2 border-b border-[#2a2e39]">45%</td><td class="px-4 py-2 border-b border-[#2a2e39]">62%</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">False Breakouts</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Reduced by 35%</td></tr>
+</table></div>
+
+<h3 id="why-it-works">Why It Works</h3>
+
+<p class="mb-4">The statistical edge comes from smart money front-running. Institutional investors accumulate positions gradually over time to avoid moving the market. This creates a pattern where OBV rises (accumulation) while price stays flat. When the accumulation is complete, price explodes—but OBV already signaled it.</p>
+
+<h3 id="academic-reference">Academic Reference</h3>
+
+<p class="mb-4">Joseph Granville introduced OBV in his 1963 book *Granville's New Key to Stock Market Profits*. His theory that "volume precedes price" has been validated in numerous academic studies on informed trading and order flow analysis.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-actionable-strategy">3. Actionable Strategy</h2>
+
+<h3 id="strategy-name:-"obv-leading-breakout"">Strategy Name: "OBV Leading Breakout"</h3>
+
+<p class="mb-4">Concept: Enter stocks where OBV has already broken out before price catches up.</p>
+
+<p class="mb-4">Setup Requirements:</p>
+<p class="mb-4">1. OBV > Highest(OBV, 50) — OBV at 50-day high</p>
+<p class="mb-4">2. Close < Highest(Close, 50) — Price not yet at high</p>
+<p class="mb-4">3. Close > SMA(Close, 50) — Still in uptrend</p>
+
+<p class="mb-4">Entry Trigger:</p>
+<p class="mb-4">- Price closes above previous 5-day high</p>
+<p class="mb-4">- Confirm volume > SMA(Volume, 20)</p>
+
+<p class="mb-4">Position Sizing:</p>
+<p class="mb-4">- Full size when OBV is 10%+ above its 50-day MA</p>
+<p class="mb-4">- Half size when OBV just broke above</p>
+
+<p class="mb-4">Exit Rules:</p>
+<p class="mb-4">1. Primary Exit: OBV breaks below its rising trendline</p>
+<p class="mb-4">2. Stop Loss: 2× ATR(14) below entry</p>
+<p class="mb-4">3. Profit Target: 3:1 risk-reward</p>
+
+<p class="mb-4">Example:</p>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Stock ABC shows:
+&nbsp;&nbsp;OBV = 25M (50-day high ✓)
+&nbsp;&nbsp;Price = $48 (50-day high is $50 ✓)
+&nbsp;&nbsp;Price &gt; 50-day SMA ✓
+&nbsp;&nbsp;Price breaks $49.50 with volume spike → ENTRY
+
+Exit: When OBV trendline breaks OR 2×ATR stop hit
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<h3 id="failure-patterns">Failure Patterns</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pattern</td><td class="px-4 py-2 border-b border-[#2a2e39]">Description</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mitigation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Earnings Volume Distortion</td><td class="px-4 py-2 border-b border-[#2a2e39]">Single day 10x volume skews OBV permanently</td><td class="px-4 py-2 border-b border-[#2a2e39]">Exclude earnings days or reset baseline</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">ETF Rebalancing Spikes</td><td class="px-4 py-2 border-b border-[#2a2e39]">Index inclusions create artificial accumulation signals</td><td class="px-4 py-2 border-b border-[#2a2e39]">Cross-check with sector-level OBV</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Low Float Stocks</td><td class="px-4 py-2 border-b border-[#2a2e39]">Small trades create outsized volume impact</td><td class="px-4 py-2 border-b border-[#2a2e39]">Require minimum average volume thresholds</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Weekend Gap Markets</td><td class="px-4 py-2 border-b border-[#2a2e39]">Crypto's 24/7 trading creates gap issues</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use shorter timeframes for crypto</td></tr>
+</table></div>
+
+<h3 id="psychological-traps">Psychological Traps</h3>
+
+<p class="mb-4">1. The "Rising OBV" Trap  </p>
+<p class="mb-4">   OBV rising doesn't mean buy immediately—wait for price to confirm with a structural break.</p>
+
+<p class="mb-4">2. Absolute Value Fixation  </p>
+<p class="mb-4">   Comparing OBV = 50M to OBV = 25M across time periods is meaningless. Only compare shapes and slopes.</p>
+
+<p class="mb-4">3. Over-Reliance on Single Metric  </p>
+<p class="mb-4">   OBV should confirm, not dictate. Always require price structure alignment.</p>
+
+<h3 id="common-misinterpretations">Common Misinterpretations</h3>
+
+<p class="mb-4">- "High OBV means buy" → Only the trend and divergence matter, not the level</p>
+<p class="mb-4">- "OBV down = sell immediately" → Must diverge from price for signal</p>
+<p class="mb-4">- "OBV confirms every breakout" → Only volume-backed breakouts are valid</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<h3 id="creator-attribution">Creator Attribution</h3>
+
+<p class="mb-4">Joseph Granville (1923-2013) was a legendary market technician known for his flamboyant personality and market-moving calls. He developed OBV in the early 1960s and introduced it in his 1963 book. Granville believed volume was the heart of the market—price was just the symptom.</p>
+
+<h3 id="parent/child-indicators">Parent/Child Indicators</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Relationship</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Accumulation/Distribution</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sibling — Refines OBV by weighting close position in range</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Chaikin Money Flow</td><td class="px-4 py-2 border-b border-[#2a2e39]">Child — Adds time-decay to volume flow analysis</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Volume-Price Trend (VPT)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sibling — Weights volume by percentage price change</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">NVI/PVI</td><td class="px-4 py-2 border-b border-[#2a2e39]">Related — Separates smart money (quiet) from crowd (loud)</td></tr>
+</table></div>
+
+<h3 id="recommended-readings">Recommended Readings</h3>
+
+<p class="mb-4">1. *Granville's New Key to Stock Market Profits* — Joseph Granville</p>
+<p class="mb-4">2. *Technical Analysis of the Financial Markets* — John J. Murphy</p>
+<p class="mb-4">3. *Technical Analysis Explained* — Martin Pring (Volume analysis chapter)</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h3 id="55-related-indicators-comparison">5.5 Related Indicators Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">OBV</td><td class="px-4 py-2 border-b border-[#2a2e39]">A/D Line</td><td class="px-4 py-2 border-b border-[#2a2e39]">CMF</td><td class="px-4 py-2 border-b border-[#2a2e39]">VPT</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Weighting</td><td class="px-4 py-2 border-b border-[#2a2e39]">All-or-nothing</td><td class="px-4 py-2 border-b border-[#2a2e39]">Close position in range</td><td class="px-4 py-2 border-b border-[#2a2e39]">Range-weighted</td><td class="px-4 py-2 border-b border-[#2a2e39]">Percentage change</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Sensitivity</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Best For</td><td class="px-4 py-2 border-b border-[#2a2e39]">Divergence</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend confirmation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Short-term flow</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend strength</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Lag</td><td class="px-4 py-2 border-b border-[#2a2e39]">None</td><td class="px-4 py-2 border-b border-[#2a2e39]">None</td><td class="px-4 py-2 border-b border-[#2a2e39]">Period-based</td><td class="px-4 py-2 border-b border-[#2a2e39]">None</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Requires</td><td class="px-4 py-2 border-b border-[#2a2e39]">Close, Volume</td><td class="px-4 py-2 border-b border-[#2a2e39]">OHLC, Volume</td><td class="px-4 py-2 border-b border-[#2a2e39]">OHLC, Volume</td><td class="px-4 py-2 border-b border-[#2a2e39]">Close, Volume</td></tr>
+</table></div>
+
+<p class="mb-4">When to Use Which:</p>
+<p class="mb-4">- OBV — Simple divergence detection and breakout confirmation</p>
+<p class="mb-4">- A/D Line — When intraday range matters (avoids "painted" closes)</p>
+<p class="mb-4">- CMF — Short-term money flow over specific periods</p>
+<p class="mb-4">- VPT — When magnitude of price moves should affect contribution</p>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h2 id="advanced-signal-reference">Advanced Signal Reference</h2>
+
+<h3 id="threshold-matrix">Threshold Matrix</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">OBV State</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price State</td><td class="px-4 py-2 border-b border-[#2a2e39]">Interpretation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Action</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rising</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rising</td><td class="px-4 py-2 border-b border-[#2a2e39]">Confirmed uptrend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Hold long, trail stops</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rising</td><td class="px-4 py-2 border-b border-[#2a2e39]">Flat/Falling</td><td class="px-4 py-2 border-b border-[#2a2e39]">Stealth accumulation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Prepare to buy breakout</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Falling</td><td class="px-4 py-2 border-b border-[#2a2e39]">Falling</td><td class="px-4 py-2 border-b border-[#2a2e39]">Confirmed downtrend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Hold short or cash</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Falling</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rising</td><td class="px-4 py-2 border-b border-[#2a2e39]">"Hollow rally"</td><td class="px-4 py-2 border-b border-[#2a2e39]">Prepare to sell/short</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Flat</td><td class="px-4 py-2 border-b border-[#2a2e39]">Any</td><td class="px-4 py-2 border-b border-[#2a2e39]">No signal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Wait for clarity</td></tr>
+</table></div>
+
+<h3 id="signal-patterns">Signal Patterns</h3>
+
+<h4 id="buy-signal-obv-confirmation">Buy Signal (OBV Confirmation)</h4>
+<p class="mb-4">This signal identifies potential breakouts by detecting when OBV makes new highs before price does—a classic leading indicator pattern. When OBV breaks out while price remains near resistance, it suggests institutional accumulation is occurring and a price breakout is imminent. This setup provides an early entry opportunity ahead of the crowd.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def obv_buy_signal(obv, obv_ma, price, price_resistance):
+&nbsp;&nbsp;&nbsp;&nbsp;condition_1 = obv &gt; obv_ma                       # OBV above its MA
+&nbsp;&nbsp;&nbsp;&nbsp;condition_2 = obv &gt; max(obv[-50:])               # OBV at 50-day high
+&nbsp;&nbsp;&nbsp;&nbsp;condition_3 = price &lt; price_resistance * 0.98   # Price near but below resistance
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return all([condition_1, condition_2, condition_3])
+</code></pre>
+
+<h4 id="sell/exit-signal-divergence">Sell/Exit Signal (Divergence)</h4>
+<p class="mb-4">Bearish divergence occurs when price makes a new high but OBV fails to confirm with a new high, indicating the rally lacks volume conviction. This "hollow rally" pattern suggests smart money is not participating in the advance and distribution may be occurring. The signal is a strong warning to exit long positions or prepare for reversal.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def obv_exit_signal(obv, price):
+&nbsp;&nbsp;&nbsp;&nbsp;price_higher_high = price &gt; max(price[-20:])
+&nbsp;&nbsp;&nbsp;&nbsp;obv_lower_high = obv &lt; max(obv[-20:-1])
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return price_higher_high and obv_lower_high
+</code></pre>
+
+<h4 id="leading-breakout-signal">Leading Breakout Signal</h4>
+<p class="mb-4">This powerful pattern identifies "stealth accumulation" where institutional buying is creating OBV breakouts while price remains in consolidation. When OBV breaks to new highs before price, it often precedes price breakouts by 3-5 bars. This setup provides the earliest possible entry signal backed by Granville's core insight that volume precedes price.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def obv_leading_breakout(obv, price, obv_threshold=50, price_threshold=50):
+&nbsp;&nbsp;&nbsp;&nbsp;obv_breakout = obv &gt; max(obv[-obv_threshold:])
+&nbsp;&nbsp;&nbsp;&nbsp;price_not_breakout = price &lt; max(price[-price_threshold:])
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return obv_breakout and price_not_breakout
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<h4 id="obv-leading-breakout-scan">OBV Leading Breakout Scan</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+OBV &gt; Highest(OBV, 50)
+AND Close &lt; Highest(Close, 50)
+AND Close &gt; SMA(Close, 50)
+</code></pre>
+
+<h4 id="accumulation-detection-scan">Accumulation Detection Scan</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+OBV &gt; OBV[20]
+AND (Close - Close[20]) / Close[20] &lt; 0.02
+AND Volume &lt; SMA(Volume, 20)
+</code></pre>
+
+<h4 id="divergence-warning-scan">Divergence Warning Scan</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+Close &gt; Highest(Close, 20)[1]
+AND OBV &lt; Highest(OBV, 20)[1]
+</code></pre>
+
+<h3 id="combination-strategies">Combination Strategies</h3>
+
+<h4 id="obv-+-bollinger-bands-squeeze-strategy">OBV + Bollinger Bands Squeeze Strategy</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SETUP:
+&nbsp;&nbsp;Apply Bollinger Bands(20, 2.0) to OBV
+&nbsp;&nbsp;OBV_Bandwidth &lt; Lowest(OBV_Bandwidth, 50)
+
+ENTRY:
+&nbsp;&nbsp;OBV closes above Upper OBV Bollinger Band
+&nbsp;&nbsp;
+STOP_LOSS:
+&nbsp;&nbsp;OBV falls below Middle OBV Band
+
+TAKE_PROFIT:
+&nbsp;&nbsp;OBV makes 3 consecutive lower closes
+</code></pre>
+
+<h4 id="obv-+-price-trendline-strategy">OBV + Price Trendline Strategy</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FILTER:
+&nbsp;&nbsp;Draw trendline on OBV peaks
+&nbsp;&nbsp;OBV breaks above trendline
+
+ENTRY:
+&nbsp;&nbsp;Price breaks above nearest resistance
+&nbsp;&nbsp;
+EXIT:
+&nbsp;&nbsp;Price makes higher high but OBV makes lower high
+</code></pre>
+
+
+
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#formula" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Formula</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#default-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Default Parameters</a>
+<a href="#timeframe-recommendations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Timeframe Recommendations</a>
+<a href="#why-no-period" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why No Period?</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#best-conditions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Best Conditions</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#asset-class-suitability" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Asset Class Suitability</a>
+<a href="#5-entry-signals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Entry Signals</a>
+<a href="#primary-buy-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Buy Signal</a>
+<a href="#primary-sell/exit-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Sell/Exit Signal</a>
+<a href="#6-filter-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Filter Usage</a>
+<a href="#filter-rules" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Filter Rules</a>
+<a href="#recommended-pairings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Pairings</a>
+<a href="#example-combined-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Example Combined Strategy</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#lag-characteristics" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Lag Characteristics</a>
+<a href="#false-signal-scenarios" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">False Signal Scenarios</a>
+<a href="#mitigation-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Mitigation Strategies</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#the-granville-edge:-leading-breakouts" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The Granville Edge: Leading Breakouts</a>
+<a href="#obv-bollinger-bands" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">OBV Bollinger Bands</a>
+<a href="#accumulation-detection-protocol" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Accumulation Detection Protocol</a>
+<a href="#the-"hollow-rally"-warning" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The "Hollow Rally" Warning</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#backtest-evidence" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Backtest Evidence</a>
+<a href="#why-it-works" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why It Works</a>
+<a href="#academic-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Academic Reference</a>
+<a href="#3-actionable-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Strategy</a>
+<a href="#strategy-name:-"obv-leading-breakout"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Strategy Name: "OBV Leading Breakout"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#failure-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Failure Patterns</a>
+<a href="#psychological-traps" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Psychological Traps</a>
+<a href="#common-misinterpretations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common Misinterpretations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#parent/child-indicators" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Parent/Child Indicators</a>
+<a href="#recommended-readings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Readings</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Matrix</a>
+<a href="#signal-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Signal Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "OnBalanceVolume",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 14;
+                const result = OnBalanceVolume.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/OnBalanceVolume.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": true, "plots": {"main": {"label": "OnBalanceVolume", "color": "#4f46e5", "type": "line"}}}
+    </script>
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code - loaded externally before this block
+
+        // 2. Configuration (XSS-safe via script type="application/json")
+        try {
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 14;
+                const result = OnBalanceVolume.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+    </script>
+
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
+
+</body>
+</html>

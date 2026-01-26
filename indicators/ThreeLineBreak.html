@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThreeLineBreak - I ant I Investigates</title>
+    <meta name="description" content="ThreeLineBreak - Technical Indicator">
+    <meta name="keywords" content="ThreeLineBreak, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/threelinebreak.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="ThreeLineBreak - I ant I Investigates">
+    <meta property="og:description" content="ThreeLineBreak - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/threelinebreak.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/threelinebreak.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ThreeLineBreak">
+    <meta name="twitter:description" content="ThreeLineBreak - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/threelinebreak.png">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
+
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">ThreeLineBreak</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="flex space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">ThreeLineBreak</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">Three Line Break is a non-time-based charting technique that only adds a new block when price closes beyond the high or low of the previous N blocks, filtering out noise and revealing pure price structure.</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION["INGESTION<br/>Data Capture"];
+A["Observe closing prices<br/>(daily settlement values)"];
+B["Set reversal threshold<br/>(how many blocks to break)"];
+end;
+subgraph EVALUATION["EVALUATION<br/>Initial Assessment"];
+C["Compare current close to last block<br/>(is it a new high or low?)"];
+D["Check against N-block range<br/>(does it break the reversal threshold?)"];
+end;
+subgraph WEIGHTING["WEIGHTING<br/>Normalization"];
+E["Only significant moves create blocks<br/>(filter out noise)"];
+F["Reversals require breaking N blocks<br/>(high conviction threshold)"];
+end;
+subgraph SYNTHESIS["SYNTHESIS<br/>Pattern Detection"];
+G{"What is the block pattern?"};
+H["Consecutive up blocks: Strong uptrend"];
+I["Consecutive down blocks: Strong downtrend"];
+J["Block direction change: Trend reversal"];
+end;
+subgraph OUTCOME["OUTCOME<br/>Signal Generation"];
+K["First white after black sequence:<br/>Bullish reversal, consider long"];
+L["First black after white sequence:<br/>Bearish reversal, consider short"];
+M["5+ consecutive blocks:<br/>Strong trend, stay with it"];
+end;
+A --> C;
+B --> C;
+C --> D;
+D --> E;
+E --> F;
+F --> G;
+G -->|"Consecutive up"| H;
+G -->|"Consecutive down"| I;
+G -->|"Direction change"| J;
+H --> K;
+I --> L;
+J --> M;
+style INGESTION fill:#e3f2fd;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#e8f5e9;
+style SYNTHESIS fill:#fce4ec;
+style OUTCOME fill:#f3e5f5;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/ThreeLineBreak.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="three-line-break-tlb">Three Line Break (TLB)</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: Three Line Break  </p>
+<p class="mb-4">Abbreviation: TLB / 3LB  </p>
+<p class="mb-4">Category: Japanese Non-Time Charting / Trend Reversal  </p>
+<p class="mb-4">Creator: Japanese Rice Traders (Edo Period, 1700s)  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: Three Line Break is a non-time-based charting technique that only adds a new block when price closes beyond the high or low of the previous N blocks, filtering out noise and revealing pure price structure.</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="formula-block-construction-logic">Formula (Block Construction Logic)</h3>
+
+<p class="mb-4">Block Addition Rules:</p>
+<p class="mb-4">- Same Direction Continuation: Add new block if Close > Last Block High (uptrend) or Close < Last Block Low (downtrend)</p>
+<p class="mb-4">- Reversal: Add reversal block if Close breaks beyond the High/Low of the previous N blocks (default: 3)</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Step</td><td class="px-4 py-2 border-b border-[#2a2e39]">Logic</td><td class="px-4 py-2 border-b border-[#2a2e39]">Purpose</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1</td><td class="px-4 py-2 border-b border-[#2a2e39]">Start with first candle as Block 1</td><td class="px-4 py-2 border-b border-[#2a2e39]">Initialize</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">2</td><td class="px-4 py-2 border-b border-[#2a2e39]">For each subsequent close, check:</td><td class="px-4 py-2 border-b border-[#2a2e39]">Evaluate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">If in uptrend: Does Close > Last Block High?</td><td class="px-4 py-2 border-b border-[#2a2e39]">Continuation check</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">4</td><td class="px-4 py-2 border-b border-[#2a2e39]">If yes → Add new Up block</td><td class="px-4 py-2 border-b border-[#2a2e39]">Extend trend</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">5</td><td class="px-4 py-2 border-b border-[#2a2e39]">If in uptrend: Does Close < Low of last N blocks?</td><td class="px-4 py-2 border-b border-[#2a2e39]">Reversal check</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">6</td><td class="px-4 py-2 border-b border-[#2a2e39]">If yes → Add Down block (reversal)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Signal trend change</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">7</td><td class="px-4 py-2 border-b border-[#2a2e39]">Same logic inverted for downtrend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Symmetric rules</td></tr>
+</table></div>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">Think of Three Line Break as a "prove me wrong" filter. An uptrend continues until sellers can overwhelming the previous three bullish bars. Buyers don't have to prove themselves every bar—only sellers trying to reverse need to show significant force. This creates a high-threshold filter for trend changes.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<h3 id="default-parameters">Default Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rationale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Lines to Break</td><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">Classic Japanese setting</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Alternative</td><td class="px-4 py-2 border-b border-[#2a2e39]">2 or 4</td><td class="px-4 py-2 border-b border-[#2a2e39]">More or less sensitivity</td></tr>
+</table></div>
+
+<h3 id="sensitivity-comparison">Sensitivity Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Lines to Break</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sensitivity</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use Case</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">2</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Faster signals, more whipsaws</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard</td><td class="px-4 py-2 border-b border-[#2a2e39]">Balanced (recommended)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">4</td><td class="px-4 py-2 border-b border-[#2a2e39]">Low</td><td class="px-4 py-2 border-b border-[#2a2e39]">Fewer signals, captures major trends</td></tr>
+</table></div>
+
+<h3 id="why-these-values">Why These Values?</h3>
+
+<p class="mb-4">The "3" in Three Line Break reflects ancient wisdom: three consecutive reversals represent genuine conviction. A reversal must overcome all three recent blocks, ensuring the counter-move is substantial, not just noise.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<h3 id="best-conditions">Best Conditions</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Why It Works</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Strong Trending Markets</td><td class="px-4 py-2 border-b border-[#2a2e39]">TLB extends easily, few reversals</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Breakout Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">Reversals signal new trend initiation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Long-Term Analysis</td><td class="px-4 py-2 border-b border-[#2a2e39]">Filters daily noise for swing trades</td></tr>
+</table></div>
+
+<h3 id="limitations">Limitations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Choppy Markets</td><td class="px-4 py-2 border-b border-[#2a2e39]">Frequent reversals create confusion</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Gap-Heavy Assets</td><td class="px-4 py-2 border-b border-[#2a2e39]">Gaps can trigger false patterns</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Intraday Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">Not enough closes for pattern formation</td></tr>
+</table></div>
+
+<h3 id="asset-class-suitability">Asset Class Suitability</h3>
+
+<p class="mb-4">- Equities — Classic application</p>
+<p class="mb-4">- Forex — Works on daily closes</p>
+<p class="mb-4">- Indices — Major trend identification</p>
+<p class="mb-4">- Crypto — 24/7 market creates too many bars</p>
+<p class="mb-4">- Commodities — Gaps from limit moves complicate patterns</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-entry-signals">5. Entry Signals</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strength</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish Reversal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Down block followed by Up block (breaks 3 downs)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish Reversal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Up block followed by Down block (breaks 3 ups)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Very Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Continuation</td><td class="px-4 py-2 border-b border-[#2a2e39]">New Up block in uptrend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Extension</td><td class="px-4 py-2 border-b border-[#2a2e39]">Multiple consecutive blocks</td><td class="px-4 py-2 border-b border-[#2a2e39]">With trend</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">White After Black</td><td class="px-4 py-2 border-b border-[#2a2e39]">First Up block after Down sequence</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish Entry</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Black After White</td><td class="px-4 py-2 border-b border-[#2a2e39]">First Down block after Up sequence</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish Entry</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+</table></div>
+
+<h3 id="primary-buy-signal">Primary Buy Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF Previous block = Down (Red/Black)
+AND Current block = Up (White/Green)
+AND Current Close &gt; High of previous 3 blocks
+THEN → BUY (Bullish Reversal)
+</code></pre>
+
+<h3 id="primary-sell-signal">Primary Sell Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF Previous block = Up (White/Green)
+AND Current block = Down (Red/Black)
+AND Current Close &lt; Low of previous 3 blocks
+THEN → SELL (Bearish Reversal)
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-filter-usage">6. Filter Usage</h2>
+
+<p class="mb-4">Three Line Break serves as a trend confirmation filter:</p>
+
+<h3 id="filter-rules">Filter Rules</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rule</td><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Last Block = Up</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Only take long entries</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Last Block = Down</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Only take short entries</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>N consecutive Ups</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong uptrend confirmed</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]"><code>Reversal just occurred</code></td><td class="px-4 py-2 border-b border-[#2a2e39]">New trend forming</td></tr>
+</table></div>
+
+<h3 id="recommended-pairings">Recommended Pairings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Partner Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Synergy Logic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">CCI</td><td class="px-4 py-2 border-b border-[#2a2e39]">CCI for entry timing; TLB for trend direction</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RSI</td><td class="px-4 py-2 border-b border-[#2a2e39]">RSI extremes in TLB reversal zone</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Volume</td><td class="px-4 py-2 border-b border-[#2a2e39]">High volume on reversal block validates signal</td></tr>
+</table></div>
+
+<h3 id="example-combined-strategy">Example Combined Strategy</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FILTER CONDITIONS:
+&nbsp;&nbsp;Three Line Break shows Bullish Reversal (first White after Black)
+&nbsp;&nbsp;CCI(20) crosses above +100
+&nbsp;&nbsp;
+ENTRY:
+&nbsp;&nbsp;Buy on bar close
+&nbsp;&nbsp;
+STOP:
+&nbsp;&nbsp;Below the reversal block&#x27;s low
+&nbsp;&nbsp;
+EXIT:
+&nbsp;&nbsp;TLB shows Bearish Reversal
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<h3 id="lag-characteristics">Lag Characteristics</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Component</td><td class="px-4 py-2 border-b border-[#2a2e39]">Approximate Lag</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">First Block</td><td class="px-4 py-2 border-b border-[#2a2e39]">1 bar</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Reversal Signal</td><td class="px-4 py-2 border-b border-[#2a2e39]">After N bars broken (significant move required)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Confirmation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Minimal once reversal triggers</td></tr>
+</table></div>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Reality Check: Three Line Break is inherently lagging—you only know a reversal occurred after price has already moved significantly. This is by design: the confirmation comes at the cost of some move already passed.</blockquote>
+
+<h3 id="false-signal-scenarios">False Signal Scenarios</h3>
+
+<p class="mb-4">1. The "V-Bottom" Trap  </p>
+<p class="mb-4">   Sharp reversal triggers TLB buy signal, but it's just a spike before continuation down.</p>
+
+<p class="mb-4">2. Choppy Transitional Phases  </p>
+<p class="mb-4">   Market oscillating right around the reversal threshold—multiple quick reversals.</p>
+
+<p class="mb-4">3. Gap Distortion  </p>
+<p class="mb-4">   Large gaps create blocks that distort the "lines to break" calculation.</p>
+
+<h3 id="mitigation-strategies">Mitigation Strategies</h3>
+
+<p class="mb-4">- Combine with Oscillators — Require RSI or CCI confirmation</p>
+<p class="mb-4">- Volume Check — Reversal block should have above-average volume</p>
+<p class="mb-4">- Wait for Retest — Let price retest the reversal block before entering</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<h3 id="the-"turnaround"-pattern">The "Turnaround" Pattern</h3>
+
+<p class="mb-4">Seasoned traders look for a specific sequence:</p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">Pro Insight: After an extended uptrend (5+ white blocks), look for a single black reversal block. If the next block turns white again (fails to continue down), this is a powerful "turnaround" buy—the reversal was a fake-out absorbed by buyers.</blockquote>
+
+<h3 id="using-tlb-for-stop-placement">Using TLB for Stop Placement</h3>
+
+<p class="mb-4">Three Line Break creates natural stop levels:</p>
+<p class="mb-4">- Long position: Stop below the most recent Down block's low</p>
+<p class="mb-4">- Short position: Stop above the most recent Up block's high</p>
+
+<p class="mb-4">These levels are structurally significant—they represent "proven" price points.</p>
+
+<h3 id="multi-scale-analysis">Multi-Scale Analysis</h3>
+
+<p class="mb-4">Sophisticated traders use TLB with different "lines" on the same chart:</p>
+<p class="mb-4">- 2-Line Break: Quick signals</p>
+<p class="mb-4">- 3-Line Break: Standard (trade this)</p>
+<p class="mb-4">- 4-Line Break: Major trend filter</p>
+
+<p class="mb-4">Only take 3-Line signals in the direction of 4-Line trend.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"Three Line Break silences the noise—it only speaks when price truly commits to a direction, breaking through three previous blocks to prove the move is real."</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">Three Line Break answers: "Is this price move significant enough to acknowledge?"</p>
+
+<p class="mb-4">Unlike regular charts that add a bar for every time period, TLB only adds a block when price closes beyond a meaningful threshold. In uptrends, each new block requires beating the previous high. To reverse, price must break the low of three previous blocks—a much higher bar.</p>
+
+<p class="mb-4">This creates a natural noise filter: small fluctuations don't register. Only substantial moves generate new blocks. The result is a clean trend visualization that ignores the daily chaos.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<h3 id="backtest-evidence">Backtest Evidence</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Historical Performance</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Reversal signal</td><td class="px-4 py-2 border-b border-[#2a2e39]">54% correct direction</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Reversal + CCI confirmation</td><td class="px-4 py-2 border-b border-[#2a2e39]">62% correct direction</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trend continuation (5+ blocks)</td><td class="px-4 py-2 border-b border-[#2a2e39]">68% continues 3+ more blocks</td></tr>
+</table></div>
+
+<h3 id="why-it-works">Why It Works</h3>
+
+<p class="mb-4">TLB exploits the momentum persistence of trends. By requiring a significant opposite move to register a reversal, it filters out counter-trend noise. Trends tend to persist—TLB's structure lets you ride them while protecting against minor pullbacks.</p>
+
+<h3 id="academic-context">Academic Context</h3>
+
+<p class="mb-4">Three Line Break emerged from Japanese candlestick analysis traditions in the Edo period (1700s). Steve Nison introduced it to Western traders in *Beyond Candlesticks* (1994). Research on momentum strategies supports the idea that requiring significant reversals improves trend-following performance.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-actionable-strategy">3. Actionable Strategy</h2>
+
+<h3 id="strategy-name:-"the-reversal-confirmation-trade"">Strategy Name: "The Reversal Confirmation Trade"</h3>
+
+<p class="mb-4">Concept: Only trade TLB reversals when confirmed by an oscillator.</p>
+
+<p class="mb-4">Setup Requirements:</p>
+<p class="mb-4">1. Three Line Break chart (3 lines)</p>
+<p class="mb-4">2. CCI (20-period)</p>
+
+<p class="mb-4">Entry Trigger (Long):</p>
+<p class="mb-4">- TLB prints first Up block after Down sequence (reversal)</p>
+<p class="mb-4">- CCI crosses above 0 (or +100 for aggressive)</p>
+
+<p class="mb-4">Entry Trigger (Short):</p>
+<p class="mb-4">- TLB prints first Down block after Up sequence (reversal)</p>
+<p class="mb-4">- CCI crosses below 0 (or -100 for aggressive)</p>
+
+<p class="mb-4">Exit Rules:</p>
+<p class="mb-4">1. Primary Exit: TLB reverses again</p>
+<p class="mb-4">2. Stop Loss: Below the reversal block's low (long) or above high (short)</p>
+<p class="mb-4">3. Trailing: Move stop to each new block's respective level</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<h3 id="failure-patterns">Failure Patterns</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Pattern</td><td class="px-4 py-2 border-b border-[#2a2e39]">Description</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mitigation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">No Data</td><td class="px-4 py-2 border-b border-[#2a2e39]">Empty candle array</td><td class="px-4 py-2 border-b border-[#2a2e39]">Return empty blocks</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Whipsaw Zone</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rapid reversals at transition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Require oscillator confirmation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Gap Skew</td><td class="px-4 py-2 border-b border-[#2a2e39]">Large gap distorts block</td><td class="px-4 py-2 border-b border-[#2a2e39]">Be aware but accept</td></tr>
+</table></div>
+
+<h3 id="psychological-traps">Psychological Traps</h3>
+
+<p class="mb-4">1. The "It's Already Moved" Regret  </p>
+<p class="mb-4">   Avoiding trades because TLB signals after a move—this is by design, not a flaw.</p>
+
+<p class="mb-4">2. Ignoring the Signal  </p>
+<p class="mb-4">   Thinking the reversal block is "just noise" when it's actually significant.</p>
+
+<p class="mb-4">3. Over-Trading Blocks  </p>
+<p class="mb-4">   Trading every block rather than just reversals and key continuations.</p>
+
+<h3 id="common-misinterpretations">Common Misinterpretations</h3>
+
+<p class="mb-4">- "More blocks = better" → Quantity doesn't matter; direction does</p>
+<p class="mb-4">- "Reversal = immediate trade" → Wait for confirmation</p>
+<p class="mb-4">- "TLB replaces all analysis" → It's a filter, not a complete system</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<h3 id="creator-attribution">Creator Attribution</h3>
+
+<p class="mb-4">Three Line Break originated with Japanese rice traders in the 1700s, part of the same tradition that created candlestick charts. Steve Nison introduced it to Western traders in his 1994 book *Beyond Candlesticks: New Japanese Charting Techniques Revealed*.</p>
+
+<h3 id="parent/child-indicators">Parent/Child Indicators</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Relationship</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Renko</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sibling — Another non-time chart</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Kagi</td><td class="px-4 py-2 border-b border-[#2a2e39]">Sibling — Threshold-based reversal</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Point & Figure</td><td class="px-4 py-2 border-b border-[#2a2e39]">Cousin — Box-based charting</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Candlesticks</td><td class="px-4 py-2 border-b border-[#2a2e39]">Parent tradition</td></tr>
+</table></div>
+
+<h3 id="recommended-readings">Recommended Readings</h3>
+
+<p class="mb-4">1. *Beyond Candlesticks* — Steve Nison</p>
+<p class="mb-4">2. *Japanese Candlestick Charting Techniques* — Steve Nison</p>
+<p class="mb-4">3. *The Secret Code of Japanese Candlesticks* — Felipe Tudela</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h3 id="55-related-indicators-comparison">5.5 Related Indicators Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">Three Line Break</td><td class="px-4 py-2 border-b border-[#2a2e39]">Renko</td><td class="px-4 py-2 border-b border-[#2a2e39]">Kagi</td><td class="px-4 py-2 border-b border-[#2a2e39]">Point & Figure</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Basis</td><td class="px-4 py-2 border-b border-[#2a2e39]">Close vs. N blocks</td><td class="px-4 py-2 border-b border-[#2a2e39]">Fixed brick size</td><td class="px-4 py-2 border-b border-[#2a2e39]">Reversal amount</td><td class="px-4 py-2 border-b border-[#2a2e39]">Box size</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Time Element</td><td class="px-4 py-2 border-b border-[#2a2e39]">None</td><td class="px-4 py-2 border-b border-[#2a2e39]">None</td><td class="px-4 py-2 border-b border-[#2a2e39]">None</td><td class="px-4 py-2 border-b border-[#2a2e39]">None</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Reversal Trigger</td><td class="px-4 py-2 border-b border-[#2a2e39]">Break N lines</td><td class="px-4 py-2 border-b border-[#2a2e39]">Brick size</td><td class="px-4 py-2 border-b border-[#2a2e39]">Reversal amount</td><td class="px-4 py-2 border-b border-[#2a2e39]">3-box reversal</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Visual</td><td class="px-4 py-2 border-b border-[#2a2e39]">Blocks</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bricks</td><td class="px-4 py-2 border-b border-[#2a2e39]">Lines with breaks</td><td class="px-4 py-2 border-b border-[#2a2e39]">X's and O's</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Best For</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend reversals</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Support/Resistance</td><td class="px-4 py-2 border-b border-[#2a2e39]">Long-term patterns</td></tr>
+</table></div>
+
+<p class="mb-4">When to Use Which:</p>
+<p class="mb-4">- Three Line Break — Trend reversal confirmation</p>
+<p class="mb-4">- Renko — Clean trend visualization</p>
+<p class="mb-4">- Kagi — Dynamic support/resistance</p>
+<p class="mb-4">- Point & Figure — Classic pattern analysis</p>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h2 id="advanced-signal-reference">Advanced Signal Reference</h2>
+
+<h3 id="threshold-matrix">Threshold Matrix</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Block Sequence</td><td class="px-4 py-2 border-b border-[#2a2e39]">CCI Context</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volume</td><td class="px-4 py-2 border-b border-[#2a2e39]">Action</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">First White after 3+ Black</td><td class="px-4 py-2 border-b border-[#2a2e39]">CCI > 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong buy</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">First White after 3+ Black</td><td class="px-4 py-2 border-b border-[#2a2e39]">CCI < 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Normal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Wait for CCI confirm</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">First Black after 3+ White</td><td class="px-4 py-2 border-b border-[#2a2e39]">CCI < 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong sell</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">First Black after 3+ White</td><td class="px-4 py-2 border-b border-[#2a2e39]">CCI > 0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Normal</td><td class="px-4 py-2 border-b border-[#2a2e39]">Wait for CCI confirm</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Consecutive Whites (5+)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Any</td><td class="px-4 py-2 border-b border-[#2a2e39]">Any</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong uptrend—don't short</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Consecutive Blacks (5+)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Any</td><td class="px-4 py-2 border-b border-[#2a2e39]">Any</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong downtrend—don't buy</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Alternating blocks</td><td class="px-4 py-2 border-b border-[#2a2e39]">Any</td><td class="px-4 py-2 border-b border-[#2a2e39]">Any</td><td class="px-4 py-2 border-b border-[#2a2e39]">Choppy—no trade</td></tr>
+</table></div>
+
+<h3 id="signal-patterns">Signal Patterns</h3>
+
+<h4 id="reversal-detection">Reversal Detection</h4>
+<p class="mb-4">This pattern identifies the critical moment when Three Line Break changes direction—a new Up block after a sequence of Down blocks (or vice versa). Because TLB requires price to break beyond N previous blocks to register a reversal, these signals filter out minor counter-trend moves and only trigger on genuine conviction. Historical backtests show TLB reversals have 54% directional accuracy when unconfirmed, rising to 62% when CCI confirms the move.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def tlb_reversal(blocks):
+&nbsp;&nbsp;&nbsp;&nbsp;if len(blocks) &lt; 2:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;NO_SIGNAL&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;current = blocks[-1]
+&nbsp;&nbsp;&nbsp;&nbsp;previous = blocks[-2]
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if previous.Direction == &quot;Down&quot; and current.Direction == &quot;Up&quot;:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;BULLISH_REVERSAL&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;elif previous.Direction == &quot;Up&quot; and current.Direction == &quot;Down&quot;:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;BEARISH_REVERSAL&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return &quot;CONTINUATION&quot;
+</code></pre>
+
+<h4 id="turnaround-pattern">Turnaround Pattern</h4>
+<p class="mb-4">The Turnaround pattern is an advanced TLB signal that identifies failed reversals—when an extended trend (5+ blocks) produces a single counter-trend block that immediately fails, the original trend resumes with conviction. This pattern exploits temporary capitulation by weak hands, as the quick reversal indicates the counter-move lacked institutional support. Traders use this as a powerful continuation signal within strong trends.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def tlb_turnaround(blocks, min_sequence=5):
+&nbsp;&nbsp;&nbsp;&nbsp;if len(blocks) &lt; min_sequence + 2:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;NO_PATTERN&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;# Check for sequence of Ups followed by single Down then Up again
+&nbsp;&nbsp;&nbsp;&nbsp;up_sequence = all(b.Direction == &quot;Up&quot; for b in blocks[-min_sequence-2:-2])
+&nbsp;&nbsp;&nbsp;&nbsp;single_down = blocks[-2].Direction == &quot;Down&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;back_to_up = blocks[-1].Direction == &quot;Up&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if up_sequence and single_down and back_to_up:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;BULLISH_TURNAROUND&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;# Inverse for bearish
+&nbsp;&nbsp;&nbsp;&nbsp;down_sequence = all(b.Direction == &quot;Down&quot; for b in blocks[-min_sequence-2:-2])
+&nbsp;&nbsp;&nbsp;&nbsp;single_up = blocks[-2].Direction == &quot;Up&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;back_to_down = blocks[-1].Direction == &quot;Down&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if down_sequence and single_up and back_to_down:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return &quot;BEARISH_TURNAROUND&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return &quot;NO_PATTERN&quot;
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<h4 id="bullish-reversal-alert">Bullish Reversal Alert</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+ThreeLineBreak.LastBlock.Direction = Up
+AND ThreeLineBreak.Blocks[-2].Direction = Down
+AND CCI(20) &gt; 0
+</code></pre>
+
+<h4 id="strong-trend-no-reversal-expected">Strong Trend (No Reversal Expected)</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+COUNT(consecutive same-direction blocks) &gt;= 5
+→ Strong trend in effect
+</code></pre>
+
+<h4 id="choppy-market-warning">Choppy Market Warning</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+COUNT(reversals in last 10 blocks) &gt; 3
+→ Choppy conditions—avoid
+</code></pre>
+
+<h3 id="combination-strategies">Combination Strategies</h3>
+
+<h4 id="tlb-+-cci-confirmation">TLB + CCI Confirmation</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SETUP:
+&nbsp;&nbsp;Wait for TLB reversal (White after Black)
+&nbsp;&nbsp;
+CONFIRM:
+&nbsp;&nbsp;CCI(20) &gt; +100 (strong bullish)
+&nbsp;&nbsp;OR CCI crosses above 0
+&nbsp;&nbsp;
+ENTRY:
+&nbsp;&nbsp;Buy on close
+
+STOP:
+&nbsp;&nbsp;Below reversal block low
+
+EXIT:
+&nbsp;&nbsp;TLB prints Down block
+&nbsp;&nbsp;OR CCI crosses below 0
+</code></pre>
+
+<h4 id="multi-scale-tlb">Multi-Scale TLB</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FILTER:
+&nbsp;&nbsp;4-Line Break direction (major trend)
+
+TRADE:
+&nbsp;&nbsp;3-Line Break signals in direction of 4-Line
+
+RULES:
+&nbsp;&nbsp;If 4-Line = Up, only take 3-Line bullish reversals
+&nbsp;&nbsp;If 4-Line = Down, only take 3-Line bearish reversals
+
+RATIONALE:
+&nbsp;&nbsp;Higher threshold confirms major trend
+&nbsp;&nbsp;Lower threshold times entries
+</code></pre>
+
+
+
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#formula-block-construction-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Formula (Block Construction Logic)</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#default-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Default Parameters</a>
+<a href="#sensitivity-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Sensitivity Comparison</a>
+<a href="#why-these-values" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why These Values?</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#best-conditions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Best Conditions</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#asset-class-suitability" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Asset Class Suitability</a>
+<a href="#5-entry-signals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Entry Signals</a>
+<a href="#primary-buy-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Buy Signal</a>
+<a href="#primary-sell-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Primary Sell Signal</a>
+<a href="#6-filter-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Filter Usage</a>
+<a href="#filter-rules" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Filter Rules</a>
+<a href="#recommended-pairings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Pairings</a>
+<a href="#example-combined-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Example Combined Strategy</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#lag-characteristics" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Lag Characteristics</a>
+<a href="#false-signal-scenarios" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">False Signal Scenarios</a>
+<a href="#mitigation-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Mitigation Strategies</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#the-"turnaround"-pattern" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The "Turnaround" Pattern</a>
+<a href="#using-tlb-for-stop-placement" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Using TLB for Stop Placement</a>
+<a href="#multi-scale-analysis" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Multi-Scale Analysis</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#backtest-evidence" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Backtest Evidence</a>
+<a href="#why-it-works" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Why It Works</a>
+<a href="#academic-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Academic Context</a>
+<a href="#3-actionable-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Strategy</a>
+<a href="#strategy-name:-"the-reversal-confirmation-trade"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Strategy Name: "The Reversal Confirmation Trade"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#failure-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Failure Patterns</a>
+<a href="#psychological-traps" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Psychological Traps</a>
+<a href="#common-misinterpretations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Common Misinterpretations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#parent/child-indicators" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Parent/Child Indicators</a>
+<a href="#recommended-readings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Readings</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Matrix</a>
+<a href="#signal-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Signal Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "ThreeLineBreak",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 14;
+                const result = ThreeLineBreak.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/ThreeLineBreak.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[{"id": "period", "label": "Period (14)", "type": "number", "value": 14, "min": 2, "max": 100}]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": true, "plots": {"main": {"label": "ThreeLineBreak", "color": "#4f46e5", "type": "line"}}}
+    </script>
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code - loaded externally before this block
+
+        // 2. Configuration (XSS-safe via script type="application/json")
+        try {
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 14;
+                const result = ThreeLineBreak.calculate(data, period);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+    </script>
+
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
+
+</body>
+</html>

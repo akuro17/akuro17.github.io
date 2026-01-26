@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BollingerBandsPercentB - I ant I Investigates</title>
+    <meta name="description" content="BollingerBandsPercentB - Technical Indicator">
+    <meta name="keywords" content="BollingerBandsPercentB, technical indicator, stock analysis">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/indicators/bollingerbandspercentb.html">
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="BollingerBandsPercentB - I ant I Investigates">
+    <meta property="og:description" content="BollingerBandsPercentB - Technical Indicator">
+    <meta property="og:url" content="https://iantinvestigates.com/indicators/bollingerbandspercentb.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/bollingerbandspercentb.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="BollingerBandsPercentB">
+    <meta name="twitter:description" content="BollingerBandsPercentB - Technical Indicator">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/bollingerbandspercentb.png">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    </script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/indicator.css">
+    <!-- KaTeX (Math) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Libraries (defer for non-blocking load) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Pygments Syntax Highlighting (Externalized) -->
+    <link rel="stylesheet" href="../assets/css/pygments.css">
+
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative">
+        <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs (Moved Here) -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">BollingerBandsPercentB</span></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Page Top Nav (Anchor Links) -->
+                    <div class="flex space-x-4 items-center">
+                        <a href="#interactive-playground" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Chart
+                        </a>
+                        <a href="#logic-visualization" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Logic
+                        </a>
+                        <a href="#documentation" class="text-slate-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Docs
+                        </a>
+                    </div>
+                </div>
+                <!-- External Links Placeholder -->
+                <div class="hidden sm:flex items-center">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Container: 1-Column Stack -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <!-- ======================================================= -->
+        <!-- TOP SECTION: CONTEXT & PLAYGROUND                       -->
+        <!-- ======================================================= -->
+        <div class="flex flex-col gap-6">
+            <!-- Hero Header -->
+            <header>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">BollingerBandsPercentB</h1>
+                <p class="text-lg text-slate-600 leading-relaxed">%B quantifies where price sits within the Bollinger Bands—0.0 at the lower band, 0.5 at the middle, 1.0 at the upper—transforming the visual bands into a precise numerical oscillator for systematic trading.</p>
+            </header>
+
+            <!-- Interactive Playground -->
+            <section id="interactive-playground" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+                <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">C</span>
+                        Calculator
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-2">Calculate indicator values from your price data.</p>
+                </div>
+                <div class="p-6">
+                    <!-- Chart Area -->
+                    <div class="relative h-[400px] w-full mb-6 border border-slate-100 rounded bg-slate-50">
+                        <canvas id="indicatorChart"></canvas>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div id="controls" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-4 rounded border border-slate-200">
+                        <!-- Parameters -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">Parameters</h3>
+                            <div id="settings-container">
+                                <div class="space-y-3">
+                                    <!-- Dynamic settings will be injected here -->
+                                </div>
+                            </div>
+                            <button id="btn-run" onclick="PlaygroundController.update()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors shadow-sm flex items-center justify-center">
+                                Calculate
+                            </button>
+                        </div>
+
+                        <!-- Data I/O -->
+                        <div class="md:col-span-2 space-y-4">
+                            <!-- Input -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Input Data (CSV)</h3>
+                                    <div class="flex space-x-2">
+                                        <button id="btn-load-sample-ohlcv" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load OHLCV Sample Data">Shape (OHLCV)</button>
+                                        <span class="text-slate-300">|</span>
+                                        <button id="btn-load-sample-single" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors" title="Load Single Value Sample Data">Single</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500">Enter CSV data (Date,Open,High,Low,Close,Volume) or single values.</p>
+                                <textarea id="input-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded focus:ring-2 focus:ring-indigo-500 transition-shadow" placeholder="e.g. 100.5, 101.2, 99.8, 102.3, 103.1...
+
+or one per line:
+100.5
+101.2
+99.8"></textarea>
+                            </div>
+                            <!-- Output (Enabled) -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wide">Output Data (Result)</h3>
+                                </div>
+                                <textarea id="output-data" class="w-full h-24 p-2 text-xs font-mono border border-slate-300 rounded bg-slate-100 text-slate-600" readonly placeholder="Calculation results will appear here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- MIDDLE SECTION: LOGIC & ARCHITECTURE (PORTED FROM 0117) -->
+        <!-- ======================================================= -->
+        <section id="logic-visualization" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Section Header (Styled like Playground) -->
+            <div class="border-b border-slate-200 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-emerald-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">L</span>
+                    Logic & Code Architecture
+                </h2>
+                <p class="text-sm text-slate-600 mt-2">Visual flowchart showing how the indicator processes data.</p>
+            </div>
+
+            <!-- LOGIC FIGURE STRUCTURE -->
+            <figure class="logic-figure" style="border: none; border-radius: 0;">
+                <!-- 1. Code Panel Toggle Button -->
+                <button id="code-panel-toggle-btn" onclick="toggleCodePanel()" title="View Source Code" class="font-bold text-xs">
+                    CODE
+                </button>
+
+                <!-- 2. Infinite Canvas Layer -->
+                <div id="canvas-container" class="chart-scroll-wrapper" 
+                     tabindex="0"
+                     role="application"
+                     aria-label="フローチャート操作エリア。矢印キーで移動、+/-でズーム、Rでリセット">
+                    <div id="canvas-content" class="mermaid" style="position: absolute; top:0; left:0;">
+                        flowchart TD;
+subgraph INGESTION["Phase 1: Ingestion"];
+A[/"Receive Price Data"/];
+B["Define Volatility Window"];
+end;
+subgraph EVALUATION["Phase 2: Evaluation"];
+C["Establish Price Boundaries"];
+D["Calculate Total Band Width"];
+E{"Bands Established?"};
+end;
+subgraph WEIGHTING["Phase 3: Weighting"];
+F["Measure Distance from Lower Bound"];
+G["Normalize to 0-1 Scale"];
+end;
+subgraph SYNTHESIS["Phase 4: Synthesis"];
+H["Derive Relative Position Score"];
+I["Compare to Statistical Thresholds"];
+end;
+subgraph OUTCOME["Phase 5: Outcome"];
+J{"%B Level?"};
+K["Above 1.0 - Beyond Upper Extreme"];
+L["At 0.5 - Neutral Zone"];
+M["Below 0.0 - Beyond Lower Extreme"];
+N[/"Generate %B Value"/];
+end;
+A --> B;
+B --> C;
+C --> D;
+D --> E;
+E -->|No| N;
+E -->|Yes| F;
+F --> G;
+G --> H;
+H --> I;
+I --> J;
+J -->|>1| K;
+J -->|~0.5| L;
+J -->|<0| M;
+K --> N;
+L --> N;
+M --> N;
+style INGESTION fill:#e3f2fd;
+style EVALUATION fill:#fff3e0;
+style WEIGHTING fill:#e8f5e9;
+style SYNTHESIS fill:#fce4ec;
+style OUTCOME fill:#f3e5f5;
+                    </div>
+                </div>
+
+                <!-- 3. Canvas Controls (Zoom) -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                    <button onclick="if(window.resetView) window.resetView()" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Reset View">R</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('in')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom In">+</button>
+                    <button onclick="if(window.zoomAction) window.zoomAction('out')" class="p-2 bg-white rounded shadow border border-slate-200 hover:bg-slate-50 text-slate-600 font-mono text-xs" title="Zoom Out">-</button>
+                </div>
+
+                <!-- 4. Code Panel Overlay (Slide-in) -->
+                <div id="code-panel-overlay" class="panel-hidden" onmousedown="event.stopPropagation();">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center p-3 border-b border-slate-200 bg-slate-50 shrink-0">
+                        <div class="flex gap-2">
+                            <button id="btn-lang-csharp" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('csharp')">C#</button>
+                            <button id="btn-lang-python" class="px-2 py-1 text-xs rounded transition-colors text-slate-500 hover:bg-slate-100" onclick="setLang('python')">Python</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-type-simple" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('simple')">Simple</button>
+                            <button id="btn-type-detailed" class="text-xs text-slate-500 hover:text-indigo-600 transition-colors" onclick="setType('detailed')">Detailed</button>
+                            <!-- Copy -->
+                            <button id="btn-copy-code" class="ml-2 text-slate-500 hover:text-slate-800 transition-colors" onclick="copyCode()" title="Copy Code">
+                                <svg id="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <svg id="icon-copy-done" class="hidden text-green-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <!-- Expand/Collapse -->
+                            <button id="btn-panel-expand" class="text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleExpand()" title="Toggle Width">
+                                <svg id="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" />
+                                </svg>
+                                <svg id="icon-collapse" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14l-7 7" />
+                                </svg>
+                            </button>
+                            <!-- Close -->
+                            <button class="text-slate-500 hover:text-red-600 transition-colors" onclick="toggleCodePanel()" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="code-panel-body custom-scrollbar p-4" 
+                         id="code-panel-body"
+                         data-code-src="../data/codes/BollingerBandsPercentB.js">
+                        <!-- Loading indicator -->
+                        <div id="code-loading" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                            <span class="text-slate-400 text-sm">Loading code...</span>
+                        </div>
+                        <!-- Code containers (populated via JS fetch) -->
+                        <div id="code-csharp-simple" class="code-content hidden"></div>
+                        <div id="code-csharp-detailed" class="code-content hidden"></div>
+                        <div id="code-python-simple" class="code-content hidden"></div>
+                        <div id="code-python-detailed" class="code-content hidden"></div>
+                    </div>
+                </div>
+            </figure>
+
+            <!-- Legend (5-Step Model) -->
+            <div class="logic-legend">
+                <div class="legend-item"><span class="legend-dot l-ingestion"></span>Ingestion</div>
+                <div class="legend-item"><span class="legend-dot l-evaluation"></span>Evaluation</div>
+                <div class="legend-item"><span class="legend-dot l-weighting"></span>Weighting</div>
+                <div class="legend-item"><span class="legend-dot l-synthesis"></span>Synthesis</div>
+                <div class="legend-item"><span class="legend-dot l-outcome"></span>Outcome</div>
+                <div class="text-xs text-slate-500 ml-auto">Keyboard: Arrows(pan) / +-(zoom) / R(reset)</div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- BOTTOM SECTION: DOCS & TOC                              -->
+        <!-- ======================================================= -->
+        <section id="documentation" class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <!-- Documentation Header -->
+            <div class="border-b border-orange-200 bg-orange-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">D</span>
+                    Technical Documentation
+                </h2>
+                <p class="text-slate-600 text-xs mt-1 ml-9">
+                    Detailed technical explanation of the indicator's logic, math, and implementation details.
+                </p>
+            </div>
+            <!-- Content Body -->
+            <div class="p-6 flex flex-col lg:flex-row gap-12">
+                <!-- Left: Article -->
+                <article class="flex-1 min-w-0">
+                    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:mt-8 prose-a:text-indigo-600 hover:prose-a:text-indigo-800">
+                        <h1 id="bollingerbandspercentb-%b">BollingerBandsPercentB (%B)</h1>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 1: MAIN GUIDE</h2></p>
+
+<h2 id="1-identity">1. Identity</h2>
+
+<p class="mb-4">Full Name: Bollinger Bands Percent B  </p>
+<p class="mb-4">Abbreviation: %B (or BBR - Bollinger Bands Ratio)  </p>
+<p class="mb-4">Category: Momentum / Volatility Oscillator  </p>
+<p class="mb-4">Creator: John Bollinger (1980s)  </p>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">One-Sentence Definition: %B quantifies where price sits within the Bollinger Bands—0.0 at the lower band, 0.5 at the middle, 1.0 at the upper—transforming the visual bands into a precise numerical oscillator for systematic trading.</blockquote>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-calculation-logic">2. Calculation Logic</h2>
+
+<h3 id="formula">Formula</h3>
+
+<p class="mb-4">$$\%B = \frac{\text{Close} - \text{Lower Band}}{\text{Upper Band} - \text{Lower Band}}$$</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Step</td><td class="px-4 py-2 border-b border-[#2a2e39]">Formula</td><td class="px-4 py-2 border-b border-[#2a2e39]">Purpose</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1</td><td class="px-4 py-2 border-b border-[#2a2e39]">$SMA = \frac{\sum Close}{n}$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Calculate 20-period average</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">2</td><td class="px-4 py-2 border-b border-[#2a2e39]">$\sigma = \sqrt{\frac{\sum (Close - SMA)^2}{n}}$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard deviation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">3</td><td class="px-4 py-2 border-b border-[#2a2e39]">$UB = SMA + (k \times \sigma)$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Upper Band</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">4</td><td class="px-4 py-2 border-b border-[#2a2e39]">$LB = SMA - (k \times \sigma)$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Lower Band</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">5</td><td class="px-4 py-2 border-b border-[#2a2e39]">$BandWidth = UB - LB$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Total band spread</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">6</td><td class="px-4 py-2 border-b border-[#2a2e39]">$\%B = \frac{Close - LB}{BandWidth}$</td><td class="px-4 py-2 border-b border-[#2a2e39]">Normalized position (0 to 1)</td></tr>
+</table></div>
+
+<h3 id="key-values">Key Values</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">%B Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price Location</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">At Upper Band</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">At Middle Band (SMA)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">At Lower Band</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">> 1.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Above Upper Band (breakout)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">< 0.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Below Lower Band (breakdown)</td></tr>
+</table></div>
+
+<h3 id="real-world-analogy">Real-World Analogy</h3>
+
+<p class="mb-4">%B is like a fuel gauge for price momentum. At 0.0 (Empty), you're at the bottom of the tank—price is stretched low. At 1.0 (Full), you're topped up—price is stretched high. At 0.5 (Half), you're cruising at the average. Values above 1.0 or below 0.0 mean you've entered the reserve tank—statistically extreme territory.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-market-standards">3. Market Standards</h2>
+
+<h3 id="default-parameters">Default Parameters</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Parameter</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Rationale</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Period</td><td class="px-4 py-2 border-b border-[#2a2e39]">20</td><td class="px-4 py-2 border-b border-[#2a2e39]">Matches standard Bollinger Bands</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Multiplier</td><td class="px-4 py-2 border-b border-[#2a2e39]">2.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Creates meaningful 0-1 range</td></tr>
+</table></div>
+
+<h3 id="key-levels">Key Levels</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Level</td><td class="px-4 py-2 border-b border-[#2a2e39]">Meaning</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trading Application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">At Upper Band</td><td class="px-4 py-2 border-b border-[#2a2e39]">Potential overbought</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.8</td><td class="px-4 py-2 border-b border-[#2a2e39]">Upper zone</td><td class="px-4 py-2 border-b border-[#2a2e39]">Extended to upside</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">Middle Band</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend baseline cross</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.2</td><td class="px-4 py-2 border-b border-[#2a2e39]">Lower zone</td><td class="px-4 py-2 border-b border-[#2a2e39]">Extended to downside</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">At Lower Band</td><td class="px-4 py-2 border-b border-[#2a2e39]">Potential oversold</td></tr>
+</table></div>
+
+<h3 id="timeframe-recommendations">Timeframe Recommendations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Timeframe</td><td class="px-4 py-2 border-b border-[#2a2e39]">Suitability</td><td class="px-4 py-2 border-b border-[#2a2e39]">Notes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Daily</td><td class="px-4 py-2 border-b border-[#2a2e39]">Excellent</td><td class="px-4 py-2 border-b border-[#2a2e39]">Standard application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">4-Hour</td><td class="px-4 py-2 border-b border-[#2a2e39]">Good</td><td class="px-4 py-2 border-b border-[#2a2e39]">Swing trading signals</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Weekly</td><td class="px-4 py-2 border-b border-[#2a2e39]">Good</td><td class="px-4 py-2 border-b border-[#2a2e39]">Position trading confirmation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">1-Hour or less</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td><td class="px-4 py-2 border-b border-[#2a2e39]">Higher noise, needs filtering</td></tr>
+</table></div>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-market-context">4. Market Context</h2>
+
+<h3 id="best-conditions">Best Conditions</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Why It Works</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Trend Reversals</td><td class="px-4 py-2 border-b border-[#2a2e39]">Divergence detection excels here</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Mean Reversion</td><td class="px-4 py-2 border-b border-[#2a2e39]">Clear overbought/oversold levels</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Systematic Trading</td><td class="px-4 py-2 border-b border-[#2a2e39]">Numerical values enable rule-based entries</td></tr>
+</table></div>
+
+<h3 id="limitations">Limitations</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Problem</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Strong Trends</td><td class="px-4 py-2 border-b border-[#2a2e39]">%B "pegs" at 1.0 or 0.0 for extended periods</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Low Volatility</td><td class="px-4 py-2 border-b border-[#2a2e39]">Division by zero if Upper Band = Lower Band</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Band Walking</td><td class="px-4 py-2 border-b border-[#2a2e39]">%B stays extreme without reverting</td></tr>
+</table></div>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-entry-signals">5. Entry Signals</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Signal Type</td><td class="px-4 py-2 border-b border-[#2a2e39]">Condition</td><td class="px-4 py-2 border-b border-[#2a2e39]">Direction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strength</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Cross Above 0.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">%B crosses from below 0.5 to above 0.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Cross Below 0.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">%B crosses from above 0.5 to below 0.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Moderate</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">W-Bottom</td><td class="px-4 py-2 border-b border-[#2a2e39]">Second %B low higher than first (both < 0.2)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">M-Top</td><td class="px-4 py-2 border-b border-[#2a2e39]">Second %B high lower than first (both > 0.8)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish Divergence</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price Lower Low, %B Higher Low</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bullish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish Divergence</td><td class="px-4 py-2 border-b border-[#2a2e39]">Price Higher High, %B Lower High</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bearish</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong</td></tr>
+</table></div>
+
+<h3 id="05-crossover-trend-signal">0.5 Crossover (Trend Signal)</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+IF %B crosses above 0.5
+THEN → BUY (Price crossed above Middle Band)
+
+IF %B crosses below 0.5
+THEN → SELL (Price crossed below Middle Band)
+</code></pre>
+
+<h3 id="divergence-signal">Divergence Signal</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+BULLISH DIVERGENCE:
+&nbsp;&nbsp;Price makes Lower Low
+&nbsp;&nbsp;%B makes Higher Low (e.g., -0.1 → 0.1)
+&nbsp;&nbsp;→ Selling pressure exhausting
+&nbsp;&nbsp;→ BUY on next green bar
+
+BEARISH DIVERGENCE:
+&nbsp;&nbsp;Price makes Higher High
+&nbsp;&nbsp;%B makes Lower High (e.g., 1.1 → 0.9)
+&nbsp;&nbsp;→ Buying pressure fading
+&nbsp;&nbsp;→ SELL on next red bar
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="6-filter-usage">6. Filter Usage</h2>
+
+<p class="mb-4">%B provides precise numerical thresholds for filtering.</p>
+
+<h3 id="filter-rules">Filter Rules</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Rule</td><td class="px-4 py-2 border-b border-[#2a2e39]">Application</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">%B < 0.05</td><td class="px-4 py-2 border-b border-[#2a2e39]">Deep oversold, look for reversal patterns</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">%B > 0.95</td><td class="px-4 py-2 border-b border-[#2a2e39]">Deep overbought, look for reversal patterns</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">%B between 0.2–0.8</td><td class="px-4 py-2 border-b border-[#2a2e39]">Neutral zone, use trend direction</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">%B > 1.0 for 3+ bars</td><td class="px-4 py-2 border-b border-[#2a2e39]">Strong uptrend, don't fade</td></tr>
+</table></div>
+
+<h3 id="recommended-pairings">Recommended Pairings</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Partner Indicator</td><td class="px-4 py-2 border-b border-[#2a2e39]">Synergy Logic</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">MFI (Money Flow Index)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Volume-weighted confirmation of %B extremes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">RSI</td><td class="px-4 py-2 border-b border-[#2a2e39]">Double confirmation at extremes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Bandwidth</td><td class="px-4 py-2 border-b border-[#2a2e39]">Combine squeeze detection with %B position</td></tr>
+</table></div>
+
+<h3 id="double-oversold-filter">Double Oversold Filter</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+DEEP VALUE SETUP:
+&nbsp;&nbsp;%B &lt; 0.0 (Below Lower Band)
+&nbsp;&nbsp;MFI(14) &lt; 20 (Volume oversold)
+&nbsp;&nbsp;→ HIGH PROBABILITY reversal buy
+</code></pre>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="7-practical-cautions">7. Practical Cautions</h2>
+
+<h3 id="lag-characteristics">Lag Characteristics</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Component</td><td class="px-4 py-2 border-b border-[#2a2e39]">Notes</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">First Valid Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">20 bars (period requirement)</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">%B Reaction</td><td class="px-4 py-2 border-b border-[#2a2e39]">Updates in real-time with price</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Divergence Confirmation</td><td class="px-4 py-2 border-b border-[#2a2e39]">May take 5-10 bars to fully form</td></tr>
+</table></div>
+
+<h3 id="false-signal-scenarios">False Signal Scenarios</h3>
+
+<p class="mb-4">1. Band Walking Pegging  </p>
+<p class="mb-4">   In strong uptrends, %B stays above 0.8 (or even 1.0) for weeks. Each reading is NOT a sell signal.</p>
+
+<p class="mb-4">2. Division by Zero  </p>
+<p class="mb-4">   If Upper Band = Lower Band (σ = 0), the formula breaks. Check for null values.</p>
+
+<p class="mb-4">3. The Bulge Trap  </p>
+<p class="mb-4">   When bands are extremely wide and %B touches 1.0, it might mark exhaustion—but could also be the middle of a parabolic move.</p>
+
+<h3 id="mitigation-strategies">Mitigation Strategies</h3>
+
+<p class="mb-4">- Use threshold buffers (0.05/0.95) instead of exact 0/1</p>
+<p class="mb-4">- Require MFI or RSI confirmation at extremes</p>
+<p class="mb-4">- Check ADX to avoid fading strong trends</p>
+<p class="mb-4">- Handle null values when bandwidth approaches zero</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="8-pro-insights">8. Pro Insights</h2>
+
+<h3 id="the-bulge-trade">The Bulge Trade</h3>
+
+<p class="mb-4">When Bollinger Band Width is at a multi-month high (bands very wide) and %B > 1.0 but starts turning down, it marks a significant top. Wide bands mean the market has just experienced extreme volatility—the "Bulge" is often the final gasp before mean reversion.</p>
+
+<h3 id="divergence-confirmation-for-double-tops">Divergence Confirmation for Double Tops</h3>
+
+<p class="mb-4">Use %B specifically to confirm double top patterns. If:</p>
+<p class="mb-4">- Price High 2 > Price High 1</p>
+<p class="mb-4">- But %B High 2 < %B High 1</p>
+
+<p class="mb-4">The second high is weak—price made a new high but couldn't stretch the bands as much as before.</p>
+
+<h3 id="the-05-as-trend-filter">The 0.5 as Trend Filter</h3>
+
+<p class="mb-4">Rather than using %B for entries, use it as a filter:</p>
+<p class="mb-4">- %B > 0.5: Only take long signals from other systems</p>
+<p class="mb-4">- %B < 0.5: Only take short signals from other systems</p>
+
+<p class="mb-4">This simple rule aligns you with the underlying trend.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="9-summary">9. Summary</h2>
+
+<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4 bg-gray-50 py-2 pr-2 rounded-r">"%B transforms the visual Bollinger Bands into a precise oscillator—trade divergences when %B fails to confirm price extremes, and use the 0.5 level as your bull/bear dividing line."</blockquote>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 2: SUPPLEMENTARY GUIDE</h2></p>
+
+<h2 id="1-core-concept">1. Core Concept</h2>
+
+<p class="mb-4">%B normalizes price location within the Bollinger Bands to a standardized scale:</p>
+
+<p class="mb-4">- %B = 0.0: Price equals the Lower Band</p>
+<p class="mb-4">- %B = 0.5: Price equals the Middle Band (SMA)</p>
+<p class="mb-4">- %B = 1.0: Price equals the Upper Band</p>
+
+<p class="mb-4">This transformation enables:</p>
+<p class="mb-4">1. Rule-based trading with precise thresholds</p>
+<p class="mb-4">2. Cross-asset comparison (all instruments on same 0-1 scale)</p>
+<p class="mb-4">3. Divergence detection that's mathematically precise</p>
+<p class="mb-4">4. Systematic backtesting with clear entry/exit levels</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="2-statistical-edge">2. Statistical Edge</h2>
+
+<h3 id="probability-interpretation">Probability Interpretation</h3>
+
+<p class="mb-4">Under a normal distribution assumption with k=2 standard deviations:</p>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">%B Range</td><td class="px-4 py-2 border-b border-[#2a2e39]">Statistical Probability</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">%B > 1.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">~2.5% of observations</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">%B < 0.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">~2.5% of observations</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.0 ≤ %B ≤ 1.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">~95% of observations</td></tr>
+</table></div>
+
+<h3 id="divergence-win-rate">Divergence Win Rate</h3>
+
+<p class="mb-4">In ranging markets (ADX < 25), %B divergences show:</p>
+<p class="mb-4">- Bullish divergence success rate: ~62%</p>
+<p class="mb-4">- Bearish divergence success rate: ~58%</p>
+
+<p class="mb-4">Win rates increase when combined with MFI confirmation.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="3-actionable-strategy">3. Actionable Strategy</h2>
+
+<h3 id="strategy-name:-"double-oversold-reversal"">Strategy Name: "Double Oversold Reversal"</h3>
+
+<p class="mb-4">Setup:</p>
+<p class="mb-4">1. %B < 0.0 (Price below Lower Band)</p>
+<p class="mb-4">2. MFI(14) < 20 (Volume confirms oversold)</p>
+<p class="mb-4">3. ADX < 25 (Not a strong trend)</p>
+
+<p class="mb-4">Entry: </p>
+<p class="mb-4">Buy at next bar open after both conditions are met</p>
+
+<p class="mb-4">Stop Loss: </p>
+<p class="mb-4">Below the recent swing low</p>
+
+<p class="mb-4">Take Profit:</p>
+<p class="mb-4">- Target 1: Middle Band (0.5)</p>
+<p class="mb-4">- Target 2: Upper Band (1.0)</p>
+
+<p class="mb-4">Exit:</p>
+<p class="mb-4">%B crosses back below 0.5 OR MFI crosses above 80</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="4-risks-&-limitations">4. Risks & Limitations</h2>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Risk</td><td class="px-4 py-2 border-b border-[#2a2e39]">Mitigation</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Division by zero when σ=0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Check for null values, return 0.5 or skip</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Band walking in trends</td><td class="px-4 py-2 border-b border-[#2a2e39]">Use ADX filter to avoid counter-trend trades</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Extreme values (>2.0 or <-1.0)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Clamp values or flag as outliers</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Fading strong momentum</td><td class="px-4 py-2 border-b border-[#2a2e39]">Require divergence, not just extreme %B</td></tr>
+</table></div>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h2 id="5-further-study">5. Further Study</h2>
+
+<h3 id="creator-attribution">Creator Attribution</h3>
+
+<p class="mb-4">John Bollinger introduced %B alongside Bollinger Bands to enable systematic quantification of price position. The indicator is detailed in his 2001 book *Bollinger on Bollinger Bands*.</p>
+
+<hr class="border-[#2a2e39] my-8">
+
+<h3 id="55-related-indicators-comparison">5.5 Related Indicators Comparison</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Feature</td><td class="px-4 py-2 border-b border-[#2a2e39]">%B</td><td class="px-4 py-2 border-b border-[#2a2e39]">Stochastic %K</td><td class="px-4 py-2 border-b border-[#2a2e39]">RSI</td><td class="px-4 py-2 border-b border-[#2a2e39]">Williams %R</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Basis</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bollinger Bands</td><td class="px-4 py-2 border-b border-[#2a2e39]">High-Low Range</td><td class="px-4 py-2 border-b border-[#2a2e39]">Gains/Losses</td><td class="px-4 py-2 border-b border-[#2a2e39]">High-Low Range</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Range</td><td class="px-4 py-2 border-b border-[#2a2e39]">Unbounded (typically 0–1)</td><td class="px-4 py-2 border-b border-[#2a2e39]">0–100</td><td class="px-4 py-2 border-b border-[#2a2e39]">0–100</td><td class="px-4 py-2 border-b border-[#2a2e39]">-100 to 0</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Volatility Adaptive</td><td class="px-4 py-2 border-b border-[#2a2e39]">Yes</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td><td class="px-4 py-2 border-b border-[#2a2e39]">No</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">Best For</td><td class="px-4 py-2 border-b border-[#2a2e39]">Band position</td><td class="px-4 py-2 border-b border-[#2a2e39]">Short-term momentum</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend strength</td><td class="px-4 py-2 border-b border-[#2a2e39]">Quick reversals</td></tr>
+</table></div>
+
+<p class="mb-4">When to use %B over alternatives:</p>
+<p class="mb-4">- When you want volatility-adjusted readings</p>
+<p class="mb-4">- When systematic trading requires precise 0–1 scale</p>
+<p class="mb-4">- When divergence analysis is the primary goal</p>
+
+<p class="mb-4"><h2 class="text-2xl font-bold mt-12 mb-6 border-b pb-2">PART 3: ADVANCED SIGNAL REFERENCE</h2></p>
+
+<h2 id="advanced-signal-reference">Advanced Signal Reference</h2>
+
+<h3 id="threshold-matrix">Threshold Matrix</h3>
+
+<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-[#2a2e39] text-sm text-left">
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">%B Value</td><td class="px-4 py-2 border-b border-[#2a2e39]">Bandwidth</td><td class="px-4 py-2 border-b border-[#2a2e39]">Interpretation</td><td class="px-4 py-2 border-b border-[#2a2e39]">Action</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">> 1.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Wide (Bulge)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Exhaustion likely</td><td class="px-4 py-2 border-b border-[#2a2e39]">Watch for reversal</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">> 1.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Narrow (Squeeze)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Breakout starting</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trail long position</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.8–1.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Any</td><td class="px-4 py-2 border-b border-[#2a2e39]">Overbought zone</td><td class="px-4 py-2 border-b border-[#2a2e39]">Prepare exit/reversal</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.5</td><td class="px-4 py-2 border-b border-[#2a2e39]">Any</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trend inflection</td><td class="px-4 py-2 border-b border-[#2a2e39]">Key support/resistance</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">0.0–0.2</td><td class="px-4 py-2 border-b border-[#2a2e39]">Any</td><td class="px-4 py-2 border-b border-[#2a2e39]">Oversold zone</td><td class="px-4 py-2 border-b border-[#2a2e39]">Look for reversal signals</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">< 0.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Narrow (Squeeze)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Breakdown starting</td><td class="px-4 py-2 border-b border-[#2a2e39]">Trail short position</td></tr>
+<tr><td class="px-4 py-2 border-b border-[#2a2e39]">< 0.0</td><td class="px-4 py-2 border-b border-[#2a2e39]">Wide (Bulge)</td><td class="px-4 py-2 border-b border-[#2a2e39]">Capitulation likely</td><td class="px-4 py-2 border-b border-[#2a2e39]">Watch for reversal</td></tr>
+</table></div>
+
+<h3 id="signal-patterns">Signal Patterns</h3>
+
+<h4 id="middle-band-crossover-detection">Middle Band Crossover Detection</h4>
+
+<p class="mb-4">When %B crosses above 0.5, price has moved above the middle Bollinger Band (the SMA), indicating a shift to bullish bias. Conversely, crossing below 0.5 signals price has fallen below the middle band, suggesting bearish momentum. This simple threshold acts as a trend filter—trades taken in the direction of the 0.5 level tend to have higher success rates.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def percentb_cross(percentb_values):
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;&quot;Detect 0.5 crossover signals&quot;&quot;&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;cross_up = percentb_values[-2] &lt; 0.5 and percentb_values[-1] &gt; 0.5
+&nbsp;&nbsp;&nbsp;&nbsp;cross_down = percentb_values[-2] &gt; 0.5 and percentb_values[-1] &lt; 0.5
+&nbsp;&nbsp;&nbsp;&nbsp;return cross_up, cross_down
+</code></pre>
+
+<h4 id="divergence-detection">Divergence Detection</h4>
+
+<p class="mb-4">Bullish divergence occurs when price makes a new low but %B makes a higher low—indicating that while price is falling, it's not stretching the bands as far, suggesting seller exhaustion. Bearish divergence (price higher high, %B lower high) signals that buyers are losing momentum even as price rises, often preceding reversals.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def percentb_divergence(prices, percentb_values, lookback=20):
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;&quot;Detect bullish/bearish divergences&quot;&quot;&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;# Bullish: Price makes lower low, %B makes higher low
+&nbsp;&nbsp;&nbsp;&nbsp;price_ll = prices[-1] &lt; min(prices[-lookback:-1])
+&nbsp;&nbsp;&nbsp;&nbsp;percentb_hl = percentb_values[-1] &gt; min(percentb_values[-lookback:-1])
+&nbsp;&nbsp;&nbsp;&nbsp;bullish_div = price_ll and percentb_hl
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;# Bearish: Price makes higher high, %B makes lower high
+&nbsp;&nbsp;&nbsp;&nbsp;price_hh = prices[-1] &gt; max(prices[-lookback:-1])
+&nbsp;&nbsp;&nbsp;&nbsp;percentb_lh = percentb_values[-1] &lt; max(percentb_values[-lookback:-1])
+&nbsp;&nbsp;&nbsp;&nbsp;bearish_div = price_hh and percentb_lh
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return bullish_div, bearish_div
+</code></pre>
+
+<h4 id="extreme-condition-detection">Extreme Condition Detection</h4>
+
+<p class="mb-4">When %B drops below 0.0 (price below lower band) combined with MFI below 20, this "double oversold" condition identifies high-probability reversal opportunities. Similarly, %B above 1.0 with MFI above 80 signals extreme overbought conditions where both price position and volume confirm exhaustion.</p>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-python">
+def percentb_extreme(percentb_value, mfi_value):
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;&quot;Detect extreme conditions with MFI confirmation&quot;&quot;&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;deep_oversold = percentb_value &lt; 0.0 and mfi_value &lt; 20
+&nbsp;&nbsp;&nbsp;&nbsp;deep_overbought = percentb_value &gt; 1.0 and mfi_value &gt; 80
+&nbsp;&nbsp;&nbsp;&nbsp;return deep_oversold, deep_overbought
+</code></pre>
+
+<h3 id="screening-filters">Screening Filters</h3>
+
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+// Deep Value Buy Scanner
+IF (%B &lt; 0.0)
+AND (MFI(14) &lt; 20)
+THEN Signal = DEEP_VALUE_BUY
+
+// Trend Confirmation Scanner
+IF (%B crosses above 0.5)
+AND (Close &gt; SMA(50))
+THEN Signal = BULLISH_CONFIRMATION
+
+// Divergence Scanner
+IF (Price makes 20-bar Lower Low)
+AND (%B makes Higher Low vs 20-bar low)
+THEN Signal = BULLISH_DIVERGENCE
+
+// Exhaustion Top Scanner
+IF (%B &gt; 1.0)
+AND (Bandwidth &gt; 90th percentile of 120 bars)
+AND (%B &lt; %B[1])
+THEN Signal = EXHAUSTION_TOP
+</code></pre>
+
+<h3 id="combination-strategies">Combination Strategies</h3>
+
+<h4 id="%b-+-mfi-double-divergence">%B + MFI Double Divergence</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+SETUP:
+&nbsp;&nbsp;Price makes Lower Low
+&nbsp;&nbsp;%B makes Higher Low
+&nbsp;&nbsp;MFI makes Higher Low
+&nbsp;&nbsp;→ Triple confirmation of exhausting sellers
+
+ENTRY:
+&nbsp;&nbsp;Buy at close of first green bar
+
+STOP:
+&nbsp;&nbsp;Below the double divergence low
+
+TARGET:
+&nbsp;&nbsp;%B returns to 0.5 (Middle Band)
+</code></pre>
+
+<h4 id="%b-trend-filter-+-rsi-entry">%B Trend Filter + RSI Entry</h4>
+<pre class="whitespace-pre overflow-x-auto bg-slate-800 text-slate-100 p-4 rounded"><code class="language-">
+FILTER:
+&nbsp;&nbsp;IF %B &gt; 0.5 THEN Long bias only
+&nbsp;&nbsp;IF %B &lt; 0.5 THEN Short bias only
+
+ENTRY (LONG):
+&nbsp;&nbsp;%B &gt; 0.5 (Bullish regime)
+&nbsp;&nbsp;RSI(14) &lt; 40 (Pullback oversold)
+&nbsp;&nbsp;→ Buy on RSI upturn
+
+ENTRY (SHORT):
+&nbsp;&nbsp;%B &lt; 0.5 (Bearish regime)
+&nbsp;&nbsp;RSI(14) &gt; 60 (Rally overbought)
+&nbsp;&nbsp;→ Sell on RSI downturn
+</code></pre>
+
+
+
+
+
+
+                    </div>
+                </article>
+                <!-- Right: Sticky TOC -->
+                <aside class="lg:block w-64 flex-shrink-0">
+                    <div class="sticky top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 text-sm uppercase tracking-wider">
+                            On this page
+                        </h3>
+                        <nav id="toc-nav" class="space-y-1 text-sm text-slate-600">
+                            <a href="#1-identity" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Identity</a>
+<a href="#2-calculation-logic" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Calculation Logic</a>
+<a href="#formula" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Formula</a>
+<a href="#key-values" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Key Values</a>
+<a href="#real-world-analogy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Real-World Analogy</a>
+<a href="#3-market-standards" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Market Standards</a>
+<a href="#default-parameters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Default Parameters</a>
+<a href="#key-levels" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Key Levels</a>
+<a href="#timeframe-recommendations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Timeframe Recommendations</a>
+<a href="#4-market-context" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Market Context</a>
+<a href="#best-conditions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Best Conditions</a>
+<a href="#limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Limitations</a>
+<a href="#5-entry-signals" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Entry Signals</a>
+<a href="#05-crossover-trend-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">0.5 Crossover (Trend Signal)</a>
+<a href="#divergence-signal" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Divergence Signal</a>
+<a href="#6-filter-usage" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">6. Filter Usage</a>
+<a href="#filter-rules" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Filter Rules</a>
+<a href="#recommended-pairings" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Recommended Pairings</a>
+<a href="#double-oversold-filter" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Double Oversold Filter</a>
+<a href="#7-practical-cautions" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">7. Practical Cautions</a>
+<a href="#lag-characteristics" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Lag Characteristics</a>
+<a href="#false-signal-scenarios" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">False Signal Scenarios</a>
+<a href="#mitigation-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Mitigation Strategies</a>
+<a href="#8-pro-insights" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">8. Pro Insights</a>
+<a href="#the-bulge-trade" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The Bulge Trade</a>
+<a href="#divergence-confirmation-for-double-tops" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Divergence Confirmation for Double Tops</a>
+<a href="#the-05-as-trend-filter" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">The 0.5 as Trend Filter</a>
+<a href="#9-summary" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">9. Summary</a>
+<a href="#1-core-concept" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">1. Core Concept</a>
+<a href="#2-statistical-edge" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">2. Statistical Edge</a>
+<a href="#probability-interpretation" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Probability Interpretation</a>
+<a href="#divergence-win-rate" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Divergence Win Rate</a>
+<a href="#3-actionable-strategy" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">3. Actionable Strategy</a>
+<a href="#strategy-name:-"double-oversold-reversal"" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Strategy Name: "Double Oversold Reversal"</a>
+<a href="#4-risks-&-limitations" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">4. Risks & Limitations</a>
+<a href="#5-further-study" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">5. Further Study</a>
+<a href="#creator-attribution" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Creator Attribution</a>
+<a href="#55-related-indicators-comparison" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">5.5 Related Indicators Comparison</a>
+<a href="#advanced-signal-reference" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors ">Advanced Signal Reference</a>
+<a href="#threshold-matrix" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Threshold Matrix</a>
+<a href="#signal-patterns" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Signal Patterns</a>
+<a href="#screening-filters" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Screening Filters</a>
+<a href="#combination-strategies" class="toc-link block py-1 px-2 rounded hover:bg-slate-50 transition-colors pl-4">Combination Strategies</a>
+
+                        </nav>
+                        <div class="mt-8 pt-4 border-t border-slate-100">
+                            <a href="#" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center transition-colors">
+                                Back to Top
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+    </div>
+
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2023-2025 I ant I Investigates. All rights reserved.
+            </p>
+        </div>
+    </footer>
+        <!-- ========================================== -->
+    <!-- 1. DATA & LOGIC INJECTION                  -->
+    <!-- ========================================== -->
+    <script>
+        window.IndicatorLogic = {
+            name: "BollingerBandsPercentB",
+            params: [],
+            calculate: null
+        };
+        (function() {
+            try {
+                const injectedCode = `
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 20;
+                const multiplier = params.multiplier || 2.0;
+                const result = BollingerBandsPercentB.calculate(data, period, multiplier);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+        `;
+                const isTemplatePlaceholder = injectedCode.includes('{{') && injectedCode.includes('CODE_INDICATOR_LOGIC');
+                if (injectedCode && injectedCode.trim().length > 0 && !isTemplatePlaceholder) {
+                    new Function(injectedCode)();
+                } else {
+                    console.warn("Playground Logic: Running in Preview/Fallback mode.");
+                    window.IndicatorLogic.calculate = () => []; 
+                }
+            } catch (e) {
+                console.error("Critical Error in Logic Injection:", e);
+                window.IndicatorLogic.calculate = () => [];
+            }
+        })();
+    </script>
+
+    <!-- ========================================== -->
+    <!-- 2. VISUALIZATION ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+    </script>
+    <!-- ========================================== -->
+    <!-- 3. UI CONTROLLERS & APP INITIALIZATION     -->
+    <!-- ========================================== -->
+    <!-- INLINE UI CONTROLLERS (PORTED FROM 0117) -->
+    <script src="../assets/js/BollingerBandsPercentB.js"></script>
+    <!-- JSON Data Containers (XSS-safe) -->
+    <script id="data-indicator-config" type="application/json">
+[{"id": "period", "label": "Period (20)", "type": "number", "value": 20, "min": 2, "max": 100}, {"id": "multiplier", "label": "Multiplier (2.0)", "type": "number", "value": 2.0, "min": 0.5, "max": 5.0, "step": 0.1}]
+    </script>
+    <script id="data-indicator-display" type="application/json">
+{"isOverlay": true, "plots": {"upper": {"label": "Upper Band", "color": "#22c55e", "type": "line"}, "middle": {"label": "Middle Band (SMA)", "color": "#3b82f6", "type": "line"}, "lower": {"label": "Lower Band", "color": "#ef4444", "type": "line"}}}
+    </script>
+    <script>
+        // --- 0. Indicator Data Injection ---
+        // Use existing IndicatorLogic (set in earlier script block), only set if not exists
+        var IndicatorLogic = window.IndicatorLogic || { calculate: null };
+        var IndicatorConfig = [];
+        var IndicatorDisplay = { isOverlay: false, plots: {} };
+
+        // 1. Library Code - loaded externally before this block
+
+        // 2. Configuration (XSS-safe via script type="application/json")
+        try {
+            var configEl = document.getElementById('data-indicator-config');
+            if(configEl && configEl.textContent.trim()) {
+                IndicatorConfig = JSON.parse(configEl.textContent);
+            }
+        } catch(e){ console.warn('Config parse error', e); }
+
+        try {
+            var displayEl = document.getElementById('data-indicator-display');
+            if(displayEl && displayEl.textContent.trim()) {
+                IndicatorDisplay = JSON.parse(displayEl.textContent);
+            }
+        } catch(e){ console.warn('Display parse error', e); }
+
+        // 3. Logic Adapter
+        window.IndicatorLogic = {
+            calculate: (data, params) => {
+                const period = params.period || 20;
+                const multiplier = params.multiplier || 2.0;
+                const result = BollingerBandsPercentB.calculate(data, period, multiplier);
+                // Handle both array and object returns
+                if (Array.isArray(result)) {
+                    return { main: result };
+                }
+                return result;
+            }
+        };
+    </script>
+
+    <!-- UI Controllers: indicator.js loads first to define PlaygroundController -->
+    <script src="../assets/js/indicator.js" defer></script>
+    <!-- script.js loads second, skips PlaygroundController if already defined -->
+    <script src="../assets/js/script.js" defer></script>
+
+</body>
+</html>
