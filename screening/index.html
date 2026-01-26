@@ -1,241 +1,733 @@
 <!DOCTYPE html>
-<html lang="en" prefix="og: https://ogp.me/ns#">
+<html lang="en" class="light">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Screening | I ant I Investigates</title>
-    <meta name="description" content="Screening results based on daily updated S&P 500 data and custom indicators." />
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>S&P 500 Screening - I ant I Investigates</title>
     
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3375094177283762"
-         crossorigin="anonymous"></script>
+    <!-- Google Fonts: Inter & Roboto Mono (matching indicators) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries,typography"></script>
+    
+    <!-- Reusing Project Styles -->
+    <link rel="stylesheet" href="../assets/css/style.css">
 
-    <!-- OGP -->
-    <meta property="og:title" content="Screening | I ant I Investigates" />
-    <meta property="og:description" content="Daily S&P 500 screening results." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="./" />
-    <meta property="og:image" content="../assets/og-image.png" />
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
-
-    <!-- Tailwind CSS (CDN) -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Theme Configuration -->
     <script>
         tailwind.config = {
-            darkMode: 'class', // Enable manual dark mode toggle if needed
+            darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        primary: '#4f46e5', // Indigo-600
-                        'primary-dark': '#4338ca', // Indigo-700
-                        dark: {
-                            bg: '#0f172a',    // Slate-900
-                            card: '#1e293b',  // Slate-800
-                            border: '#334155' // Slate-700
-                        }
+                        "primary": "#5048e5",
+                        "primary-light": "#eef2ff",
+                        "background-light": "#f8fafc",
+                        "background-dark": "#0f172a",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1e293b",
+                        "border-light": "#e2e8f0",
+                        "border-dark": "#334155",
                     },
                     fontFamily: {
-                        sans: ['"Noto Sans JP"', 'system-ui', 'sans-serif'],
-                        mono: ['"Roboto Mono"', 'ui-monospace', 'monospace'],
-                    },
-                }
-            }
+                        "display": ["Inter", "sans-serif"],
+                        "sans": ["Inter", "sans-serif"],
+                        "mono": ["Roboto Mono", "monospace"]
+                    }
+                },
+            },
         }
     </script>
 
     <style>
-        :root { color-scheme: light dark; }
-        body { font-family: 'Noto Sans JP', sans-serif; }
-        .font-mono-custom { font-family: 'Roboto Mono', monospace; }
+        /* Custom scrollbar for table */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
         
-        /* Dark mode overrides provided by Tailwind classes mostly, but explicit generic styles here */
-        body { background-color: #f8fafc; color: #0f172a; }
-        @media (prefers-color-scheme: dark) {
-            body { background-color: #0f172a; color: #f1f5f9; }
+        /* Tabular nums for financial data alignment */
+        .tabular-nums {
+            font-feature-settings: "tnum";
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Sticky column shadow handling */
+        .sticky-col {
+            position: sticky;
+            left: 0;
+            z-index: 10;
+        }
+        .sticky-col::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 4px;
+            transform: translateX(100%);
+            background: linear-gradient(to right, rgba(0,0,0,0.05), transparent);
+            pointer-events: none;
         }
     </style>
 </head>
-<body class="flex flex-col min-h-screen antialiased transition-colors duration-200">
+<body class="bg-slate-50 text-slate-800 font-sans antialiased relative min-h-screen flex flex-col">
 
-    <!-- Header / Navbar -->
-    <header id="site-header" class="border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm sticky top-0 z-50">
-        <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:py-4" aria-label="Primary Navigation">
-            <!-- Logo -->
-            <a href="../" class="flex items-center gap-2" id="logo">
-                <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary text-xs font-semibold text-white font-mono-custom">I</span>
-                <div class="flex flex-col">
-                    <span class="text-sm font-semibold tracking-tight text-slate-900 dark:text-slate-100">I ant I Investigates</span>
-                    <span class="text-xs text-slate-500 dark:text-slate-400">Stock Analysis Lab</span>
-                </div>
-            </a>
-
-            <!-- Nav links -->
-            <div class="flex items-center gap-6 text-sm" id="nav-links">
-                <a href="../" class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors">Home</a>
-                <a href="../indicators/" class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors">Indicators</a>
-                <a href="./" class="font-semibold text-primary" aria-current="page">Screening</a>
-                <span class="text-slate-300 dark:text-slate-700 font-medium cursor-not-allowed">Software</span>
-            </div>
-        </nav>
-    </header>
-
-    <main id="main-content" class="flex-1 py-8 sm:py-12">
-        <div class="mx-auto max-w-7xl px-4">
-            
-            <!-- Page Header -->
-            <div class="mb-8">
-                <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Screening Results</h1>
-                <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">
-                    Latest indicator values for monitored stocks (S&P 500). Updated Daily.
-                </p>
-                <div class="mt-2 text-xs text-slate-500 dark:text-slate-500 font-mono-custom" id="data-meta">
-                    Loading metadata...
+    <!-- Standard Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm shrink-0">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-6">
+                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
+                            I ant I Investigates
+                        </a>
+                    </div>
+                    <!-- Breadcrumbs -->
+                    <nav class="flex text-sm text-slate-500 mr-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="../index.html" class="hover:text-indigo-600 transition-colors">home</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><a href="./" class="hover:text-indigo-600 transition-colors">indicators</a></li>
+                            <li><span class="mx-1">/</span></li>
+                            <li><span class="font-medium text-slate-900">S&P 500 Screening</span></li>
+                        </ol>
+                    </nav>
                 </div>
             </div>
-
-            <!-- Loading State -->
-            <div id="loading" class="flex justify-center py-20">
-                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-            </div>
-
-            <!-- Data Table Container -->
-            <div id="table-container" class="hidden overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm bg-white dark:bg-slate-900">
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
-                        <thead class="bg-slate-50 dark:bg-slate-800/50">
-                            <tr id="table-header">
-                                <!-- Headers will be injected via JS -->
-                            </tr>
-                        </thead>
-                        <tbody id="table-body" class="divide-y divide-slate-200 dark:divide-slate-700 bg-white dark:bg-slate-900">
-                            <!-- Rows will be injected via JS -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            
-            <!-- Error State -->
-            <div id="error-message" class="hidden rounded-md bg-red-50 dark:bg-red-900/20 p-4 text-sm text-red-700 dark:text-red-400">
-                Failed to load screening data.
-            </div>
-
         </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+        
+        <!-- Hero Header -->
+        <header>
+            <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-2 leading-tight">S&P 500 Screening</h1>
+            <p class="text-lg text-slate-600 leading-relaxed">Filter and analyze S&P 500 stocks based on real-time technical indicators.</p>
+        </header>
+
+        <!-- Stats Overview -->
+         <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-4 flex items-center justify-between">
+            <div>
+                <p class="text-slate-500 text-xs font-medium uppercase tracking-wider">Stocks Visible</p>
+                <div class="flex items-baseline gap-1">
+                    <p class="text-slate-900 text-2xl font-bold mt-1" id="row-count">0</p>
+                    <span class="text-slate-400 text-sm font-medium" id="total-count">/ 0</span>
+                </div>
+            </div>
+            
+            <!-- Dynamic Status Message -->
+            <div id="status-container" class="hidden text-sm text-slate-600 bg-slate-50 px-3 py-2 rounded border border-slate-200">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
+        <!-- Filter Control Panel -->
+        <section class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
+            <div class="border-b border-slate-200 bg-indigo-50 px-6 py-4 flex justify-between items-center cursor-pointer" onclick="app.toggleFilters()">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="bg-indigo-600 text-white p-1 rounded mr-3 text-xs shadow-sm font-mono">F</span>
+                    Filters
+                </h2>
+                <span class="material-symbols-outlined text-slate-400 transform transition-transform" id="filter-arrow">expand_more</span>
+            </div>
+            
+            <div id="filter-content" class="p-6">
+                <!-- Dynamic Filters Grid -->
+                <!-- We will generate filters for ALL available numeric columns here -->
+                <div id="dynamic-filters-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Symbol Search (Always Present) -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Symbol Search</label>
+                        <input type="text" id="filter-symbol" placeholder="Search (e.g. AAPL)" class="w-full text-sm p-2 rounded border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-shadow">
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="mt-8 flex justify-end gap-3 pt-4 border-t border-slate-100">
+                    <button onclick="app.resetFilters()" class="px-4 py-2 text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded transition-colors">
+                        Reset All
+                    </button>
+                    <button onclick="app.applyFilters()" class="px-6 py-2 text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded shadow-sm transition-colors">
+                        Apply Filters
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Table Section -->
+        <section class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden flex flex-col h-[600px]">
+            <!-- Table Header Bar -->
+             <div class="border-b border-slate-200 bg-slate-50 px-6 py-3 flex justify-between items-center shrink-0">
+                <span class="text-xs font-bold text-slate-500 uppercase tracking-wide">Market Data</span>
+                <span class="text-xs font-mono text-slate-400">Live JSON Feed</span>
+            </div>
+
+            <!-- Scrollable Container -->
+            <div class="flex-1 overflow-auto relative w-full custom-scrollbar">
+                <table class="w-full text-left border-collapse" id="screening-table">
+                    <thead class="bg-slate-50 sticky top-0 z-20 shadow-sm">
+                        <tr id="table-header-row">
+                            <!-- Headers injected via JS -->
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 bg-white" id="table-body">
+                        <!-- Rows injected via JS -->
+                    </tbody>
+                </table>
+                
+                <!-- Empty State -->
+                <div id="empty-state" class="hidden absolute inset-0 flex flex-col items-center justify-center text-center bg-white z-10 pointer-events-none">
+                    <div class="h-12 w-12 text-slate-300 mb-3">
+                        <span class="material-symbols-outlined text-[48px]">filter_list_off</span>
+                    </div>
+                    <h3 class="text-sm font-medium text-slate-900">No matching stocks</h3>
+                    <p class="text-sm text-slate-500 mt-1">Try relaxing your filters.</p>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- Footer -->
-    <footer id="site-footer" class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 mt-auto">
-        <div class="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-8 text-xs text-slate-500 dark:text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-            <div class="flex items-center gap-2">
-                <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-900 dark:bg-slate-700 text-[10px] font-semibold text-white font-mono-custom">I</span>
-                <span class="text-[11px]">© 2026 I ant I Investigates</span>
-            </div>
-            <div class="flex flex-wrap items-center gap-4">
-                 <nav class="flex gap-4">
-                    <a href="../indicators/" class="text-[11px] text-slate-500 dark:text-slate-400 hover:text-primary transition-colors">Indicators</a>
-                    <span class="text-[11px] text-slate-300 dark:text-slate-700 cursor-not-allowed">Software</span>
-                </nav>
-            </div>
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2026 I ant I Investigates
+            </p>
         </div>
     </footer>
 
+
+    <!-- Load Data Globally to bypass CORS in local mode -->
+    <script src="data_loader.js"></script>
+
+    <!-- Application Logic -->
     <script>
-        const DATA_URL = '../data/screening/latest_screening_data.json';
-
-        async function fetchScreeningData() {
-            try {
-                const response = await fetch(DATA_URL);
-                if (!response.ok) throw new Error('Network response was not ok');
-                return await response.json();
-            } catch (error) {
-                console.error('Fetch error:', error);
-                showError();
-                return null;
-            }
-        }
-
-        function renderTable(data) {
-            const container = document.getElementById('table-container');
-            const headerRow = document.getElementById('table-header');
-            const body = document.getElementById('table-body');
-            const meta = document.getElementById('data-meta');
-            const loading = document.getElementById('loading');
-
-            if (!data || !data.data || data.data.length === 0) {
-                container.classList.add('hidden');
-                loading.classList.add('hidden');
-                return; // Or show empty state
-            }
-
-            // Update Metadata
-            meta.textContent = `Generated: ${data.generated_at} | Tickers: ${data.ticker_count} | Version: ${data.version}`;
-
-            // Determine columns dynamically from first item
-            // Structure: { symbol, date, last_price, indicators: { Key: Val } }
-            // Flatten generic indicators for display
+        /**
+         * Application State Management
+         */
+        const app = {
+            config: {
+                // If loaded via data_loader.js, use that. Otherwise fetch.
+                dataPath: '../data/screening/latest_screening_data.json',
+            },
+            state: {
+                rawData: (typeof PRELOADED_DATA !== 'undefined') ? PRELOADED_DATA.data : [],
+                displayData: [],
+                generatedFilterKeys: [], // Track which filters we created
+                filters: {
+                    symbol: '',
+                    numeric: {} // Structured: { 'RSI': { min: null, max: null }, ... }
+                },
+                sortCol: null,
+                sortAsc: true,
+                isLoading: false,
+                isFiltersOpen: true
+            },
             
-            const firstItem = data.data[0];
-            const indicatorKeys = firstItem.indicators ? Object.keys(firstItem.indicators) : [];
-            
-            // Define Columns
-            const columns = [
-                { key: 'symbol', label: 'Ticker' },
-                { key: 'last_price', label: 'Price' },
-                ...indicatorKeys.map(k => ({ key: k, label: k, isIndicator: true }))
-            ];
+            // DOM Elements Cache
+            elements: {
+                tableHead: document.getElementById('table-header-row'),
+                tableBody: document.getElementById('table-body'),
+                statusContainer: document.getElementById('status-container'),
+                rowCount: document.getElementById('row-count'),
+                totalCount: document.getElementById('total-count'),
+                emptyState: document.getElementById('empty-state'),
+                filterContent: document.getElementById('filter-content'),
+                filterArrow: document.getElementById('filter-arrow'),
+                dynamicFilters: document.getElementById('dynamic-filters-container')
+            },
 
-            // Render Header
-            headerRow.innerHTML = columns.map(col => `
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" onclick="sortTable('${col.key}')">
-                    ${col.label}
-                </th>
-            `).join('');
+            /**
+             * Initialize
+             */
+            init: function() {
+                this.fetchData();
+            },
 
-            // Render Body
-            body.innerHTML = data.data.map(item => `
-                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors hover:cursor-pointer">
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-white font-mono-custom">
-                        ${item.symbol}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 font-mono-custom">
-                        ${formatNumber(item.last_price)}
-                    </td>
-                    ${indicatorKeys.map(key => `
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 font-mono-custom">
-                            ${formatNumber(item.indicators[key])}
-                        </td>
-                    `).join('')}
-                </tr>
-            `).join('');
+            /**
+             * UI: Toggle Filter Section
+             */
+            toggleFilters: function() {
+                this.state.isFiltersOpen = !this.state.isFiltersOpen;
+                const content = this.elements.filterContent;
+                const arrow = this.elements.filterArrow;
 
-            loading.classList.add('hidden');
-            container.classList.remove('hidden');
-        }
+                if (this.state.isFiltersOpen) {
+                    content.style.display = 'block';
+                    arrow.classList.add('rotate-180');
+                } else {
+                    content.style.display = 'none';
+                    arrow.classList.remove('rotate-180');
+                }
+            },
 
-        function formatNumber(num) {
-            if (typeof num !== 'number') return num;
-            return num.toFixed(2);
-        }
+            /**
+             * UI: Generate Dynamic Filters with Categories
+             */
+            renderDynamicFilters: function(sampleRow) {
+                const keys = Object.keys(sampleRow);
+                const ignore = ['Symbol'];
+                
+                // Define Categories
+                const categories = {
+                    'Market Data': ['Close', 'Volume', 'price', 'change'],
+                    'Trend': ['SMA', 'EMA', 'MACD', 'ADX', 'SuperTrend', 'Ichimoku', 'Parabolic'],
+                    'Oscillators': ['RSI', 'Stoch', 'CCI', 'Williams', 'MOM'],
+                    'Volatility': ['ATR', 'Bollinger', 'BB', 'Keltner'],
+                    'Other': []
+                };
 
-        function showError() {
-            document.getElementById('loading').classList.add('hidden');
-            document.getElementById('error-message').classList.remove('hidden');
-        }
+                const numericKeys = keys.filter(key => 
+                    !ignore.includes(key) && 
+                    !isNaN(parseFloat(sampleRow[key]))
+                ).sort();
 
-        function sortTable(key) {
-           // Simple sort implementation placeholder
-           console.log("Sorting by", key);
-           // TODO: Implement client-side sorting if needed, or leave for future iteration
-        }
+                if (this.state.generatedFilterKeys.length > 0) return;
 
-        // Init
-        document.addEventListener('DOMContentLoaded', async () => {
-            const data = await fetchScreeningData();
-            renderTable(data);
-        });
+                const container = this.elements.dynamicFilters;
+                container.innerHTML = ''; // Clear previous
+
+                // Helper to find category
+                const getCategory = (key) => {
+                    for (const [cat, keywords] of Object.entries(categories)) {
+                        if (keywords.some(k => key.includes(k))) return cat;
+                    }
+                    return 'Other';
+                };
+
+                // Group keys
+                const grouped = {};
+                numericKeys.forEach(key => {
+                    const cat = getCategory(key);
+                    if (!grouped[cat]) grouped[cat] = [];
+                    grouped[cat].push(key);
+                });
+
+                // Render by Category
+                for (const [cat, catKeys] of Object.entries(grouped)) {
+                    if (catKeys.length === 0) continue;
+                    
+                    const details = document.createElement('details');
+                    details.className = "mb-2 bg-slate-50 rounded border border-slate-200 group";
+                    if (cat === 'Market Data' || cat === 'Trend') details.open = true;
+
+                    const summary = document.createElement('summary');
+                    summary.className = "px-3 py-2 cursor-pointer font-bold text-slate-700 text-xs uppercase tracking-wide flex justify-between items-center hover:bg-slate-100 select-none";
+                    summary.innerHTML = `${cat} <span class="text-slate-400 text-[10px] Material-symbols-outlined">expand_more</span>`;
+                    
+                    const content = document.createElement('div');
+                    content.className = "p-3 grid grid-cols-1 gap-3 border-t border-slate-200";
+
+                    catKeys.forEach(key => {
+                        this.state.generatedFilterKeys.push(key);
+                        const div = document.createElement('div');
+                        div.className = "filter-item";
+                        div.innerHTML = `
+                            <label class="block text-[10px] font-semibold text-slate-500 mb-1 truncate" title="${key}">${key}</label>
+                            <div class="flex gap-2">
+                                <input type="number" data-filter-key="${key}" data-filter-type="min" placeholder="Min" class="w-full text-xs p-1.5 rounded border border-slate-300">
+                                <input type="number" data-filter-key="${key}" data-filter-type="max" placeholder="Max" class="w-full text-xs p-1.5 rounded border border-slate-300">
+                            </div>
+                        `;
+                        content.appendChild(div);
+                    });
+
+                    details.appendChild(summary);
+                    details.appendChild(content);
+                    container.appendChild(details);
+                }
+
+                this.setupInputListeners();
+            },
+
+            /**
+             * UI: Setup Input Listeners for Dynamic Filters
+             */
+            setupInputListeners: function() {
+                const inputs = document.querySelectorAll('#filter-content input[type="number"]');
+                inputs.forEach(input => {
+                    input.addEventListener('input', () => this.applyFilters());
+                });
+                
+                const searchInput = document.getElementById('filter-symbol');
+                if (searchInput) {
+                    searchInput.addEventListener('input', () => this.applyFilters());
+                }
+            },
+
+            /**
+             * Data: Fetch from JSON
+             */
+            fetchData: function() {
+                this.setLoading(true);
+                
+                // Use preloaded data if available (e.g. from data_loader.js)
+                // In local file system context, fetch() often fails due to CORS.
+                // data_loader.js assigning to a global variable is a workaround.
+                if (typeof PRELOADED_DATA !== 'undefined' && PRELOADED_DATA.data) {
+                    console.log("Using Preloaded Data");
+                    this.state.rawData = PRELOADED_DATA.data; // Store raw first
+                    this.processData(PRELOADED_DATA.data);
+                    this.setLoading(false);
+                    return;
+                }
+
+                // Fallback to fetch if hosted
+                fetch(this.config.dataPath)
+                    .then(response => {
+                        if (!response.ok) throw new Error('Network response was not ok');
+                        return response.json();
+                    })
+                    .then(data => {
+                        this.processData(data.data || data); // Handle {data: [...]} or [...]
+                    })
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                        this.elements.tableBody.innerHTML = `<tr><td colspan="100%" class="text-center py-12 text-red-500">Error loading data. <br><span class="text-xs text-slate-400">If running locally, ensure data_loader.js is loaded.</span></td></tr>`;
+                        // Fallback to mock data if fetch fails (optional, good for demo)
+                        // this.generateMockData();
+                    })
+                    .finally(() => {
+                        this.setLoading(false);
+                    });
+            },
+
+            /**
+             * Logic: Process Data
+             */
+            processData: function(rawData) {
+                console.log("Processing Data. Input count:", rawData.length);
+                try {
+                    // Normalize Data
+                    const normalizedData = rawData.map(item => {
+                        // 1. Base Mapping
+                        // Debug log for first item
+                        // if (item.symbol === 'A') console.log('Sample Raw Item:', item);
+
+                        let closeVal = 0;
+                        if (item.price !== undefined) closeVal = parseFloat(item.price);
+                        else if (item.last_price !== undefined) closeVal = parseFloat(item.last_price);
+                        else if (item.Close !== undefined) closeVal = parseFloat(item.Close);
+                        
+                        // Fallback to SMA_20 if price is missing (unlikely but safe)
+                        if (!closeVal && item.indicators && item.indicators.SMA_20) {
+                            closeVal = parseFloat(item.indicators.SMA_20);
+                        }
+
+                        const newItem = {
+                            Symbol: item.symbol || item.Symbol || 'N/A',
+                            Close: closeVal,
+                            // Fix: Volume safety check (handle lowercase volume)
+                            Volume: parseInt(item.volume || item.Volume || (item.indicators ? item.indicators.Volume : 0) || 0)
+                        };
+
+                        // 2. Flatten Indicators
+                        if (item.indicators) {
+                            Object.keys(item.indicators).forEach(k => {
+                                // Handle arrays (e.g. MACD, BB) -> Take first or average?
+                                // Usually [0] is the main line. For MACD: [Macd, Signal, Hist]
+                                if (Array.isArray(item.indicators[k])) {
+                                    // Special handling could go here, for now take [0]
+                                    // Ensure it's not null
+                                    if (item.indicators[k][0] !== null) {
+                                        newItem[k] = parseFloat(item.indicators[k][0]);
+                                    }
+                                } else if (item.indicators[k] !== null) {
+                                    newItem[k] = parseFloat(item.indicators[k]);
+                                }
+                            });
+                        }
+                        
+                        // 3. Flatten top level numbers
+                        Object.keys(item).forEach(k => {
+                            if (k !== 'indicators' && k !== 'symbol' && k !== 'data' && !newItem.hasOwnProperty(k)) {
+                               const val = parseFloat(item[k]);
+                               if (!isNaN(val)) newItem[k] = val;
+                            }
+                        });
+
+                        return newItem;
+                    }).filter(item => {
+                        // Filter out empty rows
+                        // console.log(`Symbol: ${item.Symbol}, Close: ${item.Close}, Valid: ${item.Close > 0}`);
+                        return item.Close > 0 && !isNaN(item.Close);
+                    });
+
+                    this.state.rawData = normalizedData;
+                    this.state.displayData = [...normalizedData];
+                    
+                    // Generate Filters based on first valid row
+                    if (normalizedData.length > 0) {
+                        this.renderDynamicFilters(normalizedData[0]);
+                    }
+
+                    // Default Sort
+                    if (normalizedData.length > 0) {
+                         // Default to Volume desc if confirmed, else Close
+                         if (normalizedData[0].Volume > 0) {
+                            this.state.sortCol = 'Volume';
+                            this.state.sortAsc = false;
+                        } else {
+                            this.state.sortCol = 'Close'; // Was Symbol, but Close is more interesting
+                            this.state.sortAsc = false;
+                        }
+                    }
+
+                    this.applyFilters();
+                } catch (e) {
+                    console.error("Process Data Error:", e);
+                }
+            },
+
+            /**
+             * Logic: Apply Filters
+             */
+            applyFilters: function() {
+                // ... (Existing logic, update Count) ... 
+                // Copying existing logic for brevity if unchanged, but I need to make sure I don't delete it?
+                // The logical block is replaced. I must ensure applyFilters body is complete.
+                
+                const symbolInput = document.getElementById('filter-symbol');
+                const symbolVal = symbolInput ? symbolInput.value.toLowerCase() : '';
+                
+                const numericFilters = {};
+                this.state.generatedFilterKeys.forEach(key => {
+                    const minEl = document.querySelector(`input[data-filter-key="${key}"][data-filter-type="min"]`);
+                    const maxEl = document.querySelector(`input[data-filter-key="${key}"][data-filter-type="max"]`);
+                    
+                    const min =  minEl && minEl.value !== '' ? parseFloat(minEl.value) : null;
+                    const max =  maxEl && maxEl.value !== '' ? parseFloat(maxEl.value) : null;
+
+                    if (min !== null || max !== null) {
+                        numericFilters[key] = { min, max };
+                    }
+                });
+
+                this.state.displayData = this.state.rawData.filter(row => {
+                    if (symbolVal && !String(row.Symbol).toLowerCase().includes(symbolVal)) return false;
+
+                    for (const [key, range] of Object.entries(numericFilters)) {
+                        const val = parseFloat(row[key]);
+                        // If data missing for this specific indicator, do we hide? 
+                        // Let's hide only if filter is active.
+                        if (isNaN(val)) return false; 
+
+                        if (range.min !== null && val < range.min) return false;
+                        if (range.max !== null && val > range.max) return false;
+                    }
+                    return true;
+                });
+
+                this.sortData();
+                this.renderTableBody();
+                this.renderTableHeaders();
+                this.updateCount();
+            },
+
+            resetFilters: function() {
+                // Clear inputs
+                document.querySelectorAll('#filter-content input').forEach(input => input.value = '');
+                this.applyFilters();
+            },
+
+            /**
+             * Logic: Generate Mock Data (Fallback)
+             */
+            generateMockData: function() {
+                // Realistic data fallback (same spec as JSON file)
+                // Expanded list to simulate scale
+                const baseData = [
+                    { "Symbol": "AAPL", "Close": 195.42, "Volume": 45321000, "RSI": 58.4, "MACD": 1.25, "SMA_20": 190.50 },
+                    { "Symbol": "MSFT", "Close": 402.15, "Volume": 23145000, "RSI": 72.1, "MACD": 3.45, "SMA_20": 395.20 },
+                    { "Symbol": "GOOGL", "Close": 145.32, "Volume": 18954000, "RSI": 45.6, "MACD": -0.85, "SMA_20": 148.10 },
+                    { "Symbol": "AMZN", "Close": 158.75, "Volume": 32156000, "RSI": 62.3, "MACD": 1.10, "SMA_20": 155.40 },
+                    { "Symbol": "NVDA", "Close": 610.50, "Volume": 41235000, "RSI": 78.5, "MACD": 12.30, "SMA_20": 580.20 },
+                    { "Symbol": "META", "Close": 385.20, "Volume": 15423000, "RSI": 68.9, "MACD": 4.10, "SMA_20": 370.50 },
+                    { "Symbol": "TSLA", "Close": 205.60, "Volume": 98452000, "RSI": 32.1, "MACD": -5.20, "SMA_20": 220.30 },
+                    { "Symbol": "BRK.B", "Close": 370.40, "Volume": 3452000, "RSI": 51.2, "MACD": 0.50, "SMA_20": 368.10 },
+                    { "Symbol": "LLY", "Close": 645.10, "Volume": 2845000, "RSI": 71.4, "MACD": 5.60, "SMA_20": 630.20 },
+                    { "Symbol": "JPM", "Close": 172.50, "Volume": 8954000, "RSI": 55.3, "MACD": 0.80, "SMA_20": 170.10 },
+                    { "Symbol": "V", "Close": 268.40, "Volume": 5621000, "RSI": 59.1, "MACD": 1.20, "SMA_20": 265.30 },
+                    { "Symbol": "UNH", "Close": 510.20, "Volume": 3125000, "RSI": 42.5, "MACD": -2.10, "SMA_20": 520.40 },
+                    { "Symbol": "XOM", "Close": 98.40, "Volume": 14523000, "RSI": 48.2, "MACD": -0.30, "SMA_20": 100.20 },
+                    { "Symbol": "JNJ", "Close": 159.30, "Volume": 6542000, "RSI": 46.5, "MACD": -0.15, "SMA_20": 160.50 },
+                    { "Symbol": "PG", "Close": 148.20, "Volume": 5842000, "RSI": 53.4, "MACD": 0.40, "SMA_20": 147.10 },
+                    { "Symbol": "MA", "Close": 435.60, "Volume": 2954000, "RSI": 61.2, "MACD": 2.50, "SMA_20": 430.40 },
+                    { "Symbol": "HD", "Close": 355.40, "Volume": 3845000, "RSI": 57.8, "MACD": 1.80, "SMA_20": 350.20 },
+                    { "Symbol": "CVX", "Close": 145.20, "Volume": 7854000, "RSI": 47.9, "MACD": -0.50, "SMA_20": 146.80 },
+                    { "Symbol": "MRK", "Close": 118.50, "Volume": 6521000, "RSI": 54.2, "MACD": 0.90, "SMA_20": 116.40 },
+                    { "Symbol": "ABBV", "Close": 165.40, "Volume": 5421000, "RSI": 50.1, "MACD": 0.20, "SMA_20": 165.10 },
+                    { "Symbol": "KO", "Close": 59.80, "Volume": 11254000, "RSI": 52.3, "MACD": 0.10, "SMA_20": 59.50 },
+                    { "Symbol": "PEP", "Close": 168.30, "Volume": 4521000, "RSI": 49.8, "MACD": -0.20, "SMA_20": 169.10 },
+                    { "Symbol": "COST", "Close": 685.40, "Volume": 2854000, "RSI": 65.4, "MACD": 4.50, "SMA_20": 670.20 },
+                    { "Symbol": "BAC", "Close": 32.40, "Volume": 35421000, "RSI": 56.1, "MACD": 0.30, "SMA_20": 31.80 },
+                    { "Symbol": "AMD", "Close": 175.20, "Volume": 48521000, "RSI": 74.2, "MACD": 5.80, "SMA_20": 165.40 },
+                    { "Symbol": "NFLX", "Close": 560.20, "Volume": 3215000, "RSI": 68.4, "MACD": 4.20, "SMA_20": 550.10 },
+                    { "Symbol": "INTC", "Close": 43.50, "Volume": 38541000, "RSI": 41.2, "MACD": -1.20, "SMA_20": 45.30 },
+                    { "Symbol": "WMT", "Close": 165.20, "Volume": 5421000, "RSI": 55.4, "MACD": 0.80, "SMA_20": 163.20 },
+                    { "Symbol": "T", "Close": 16.80, "Volume": 28451000, "RSI": 48.5, "MACD": -0.10, "SMA_20": 17.10 },
+                    { "Symbol": "DIS", "Close": 95.40, "Volume": 8542000, "RSI": 52.1, "MACD": 0.30, "SMA_20": 94.20 }
+                ];
+                
+                const mockData = [];
+                // Generate 500 records by cycling baseData
+                for (let i = 0; i < 500; i++) {
+                    const base = baseData[i % baseData.length];
+                    mockData.push({
+                        ...base,
+                        // Append index only if we exceed unique base items to avoid duplicate keys issues if any
+                        Symbol: i < baseData.length ? base.Symbol : `${base.Symbol}-${Math.floor(i/baseData.length)}`
+                    });
+                }
+
+                this.processData(mockData);
+            },
+
+            /**
+             * UI: Set Loading
+             */
+            setLoading: function(isLoading) {
+                if(isLoading) {
+                    this.elements.tableBody.innerHTML = `<tr><td colspan="100%" class="text-center py-12 text-slate-500">Loading...</td></tr>`;
+                }
+            },
+
+            /**
+             * Logic: Sorting
+             */
+            handleSort: function(col) {
+                if (this.state.sortCol === col) this.state.sortAsc = !this.state.sortAsc;
+                else {
+                    this.state.sortCol = col;
+                    this.state.sortAsc = true;
+                    // Default desc for numbers usually
+                    if (['Volume', 'Close', 'RSI', 'MACD'].includes(col)) this.state.sortAsc = false;
+                }
+                this.sortData();
+                this.renderTableBody();
+                this.renderTableHeaders();
+            },
+
+            sortData: function() {
+                const { sortCol, sortAsc } = this.state;
+                if (!sortCol) return;
+
+                this.state.displayData.sort((a,b) => {
+                    let valA = a[sortCol], valB = b[sortCol];
+                    
+                    // Try numeric
+                    if (!isNaN(parseFloat(valA)) && !isNaN(parseFloat(valB))) {
+                        return sortAsc ? valA - valB : valB - valA;
+                    }
+                    // String
+                    valA = String(valA).toLowerCase(); valB = String(valB).toLowerCase();
+                    if (valA < valB) return sortAsc ? -1 : 1;
+                    if (valA > valB) return sortAsc ? 1 : -1;
+                    return 0;
+                });
+            },
+
+            /**
+             * Render: Table Body
+             */
+            renderTableBody: function() {
+                const data = this.state.displayData;
+                if (data.length === 0) {
+                    this.elements.tableBody.innerHTML = '';
+                    this.elements.emptyState.classList.remove('hidden');
+                    return;
+                }
+                this.elements.emptyState.classList.add('hidden');
+
+                const keys = this.getColumns();
+                let html = '';
+
+                data.forEach(row => {
+                    html += `<tr class="hover:bg-slate-50 transition-colors border-b border-slate-50 group">`;
+                    keys.forEach(key => {
+                        let val = row[key];
+                        let content = val;
+                        let cellClass = "px-4 py-3 text-sm border-b border-slate-100 group-hover:border-slate-200 tabular-nums";
+                        
+                        // Formatting
+                        const num = parseFloat(val);
+                        if (!isNaN(num)) {
+                             if (key === 'Volume') content = (num/1000000).toFixed(2) + 'M';
+                             else content = num.toFixed(2);
+                             cellClass += " text-right font-mono text-slate-600";
+                        } else {
+                            if (key === 'Symbol') cellClass += " font-bold text-slate-900 sticky-col bg-white group-hover:bg-slate-50";
+                            else cellClass += " text-slate-600";
+                        }
+
+                        // Color Logic (Simplified)
+                        if (key === 'RSI' && !isNaN(num)) {
+                            if (num > 70) content = `<span class="bg-red-100 text-red-700 px-1 rounded">${content}</span>`;
+                            if (num < 30) content = `<span class="bg-emerald-100 text-emerald-700 px-1 rounded">${content}</span>`;
+                        }
+
+                        html += `<td class="${cellClass}">${content}</td>`;
+                    });
+                    html += `</tr>`;
+                });
+                this.elements.tableBody.innerHTML = html;
+            },
+
+            /**
+             * Render: Headers
+             */
+            renderTableHeaders: function() {
+                const keys = this.getColumns();
+                let html = '';
+                keys.forEach(key => {
+                    const isSorted = this.state.sortCol === key;
+                    const isSticky = key === 'Symbol';
+                    let align = key === 'Symbol' ? 'text-left' : 'text-right';
+                    
+                    let classes = `px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-500 cursor-pointer hover:bg-slate-100 select-none ${align}`;
+                    if (isSticky) classes += " sticky-col bg-slate-50 z-20";
+
+                    let icon = '';
+                    if (isSorted) {
+                        classes += " text-indigo-600";
+                        icon = `<span class="material-symbols-outlined text-[14px] align-middle">${this.state.sortAsc ? 'arrow_upward' : 'arrow_downward'}</span>`;
+                    }
+
+                    html += `<th class="${classes}" onclick="app.handleSort('${key}')">
+                        <div class="flex items-center gap-1 ${align === 'text-right' ? 'justify-end' : ''}">
+                            ${key} ${icon}
+                        </div>
+                    </th>`;
+                });
+                this.elements.tableHead.innerHTML = html;
+            },
+
+            getColumns: function() {
+                 if (this.state.rawData.length === 0) return [];
+                 const allKeys = Object.keys(this.state.rawData[0]);
+                 const priority = ['Symbol', 'Close', 'RSI', 'MACD', 'Volume'];
+                 return [...priority.filter(k => allKeys.includes(k)), ...allKeys.filter(k => !priority.includes(k))];
+            },
+
+            updateCount: function() {
+                this.elements.rowCount.textContent = this.state.displayData.length;
+                this.elements.totalCount.textContent = `/ ${this.state.rawData.length}`;
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => app.init());
     </script>
 </body>
 </html>
