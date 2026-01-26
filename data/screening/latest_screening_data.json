@@ -1,0 +1,38 @@
+{
+    "generated_at": "2024-01-26T10:00:00Z",
+    "ticker_count": 3,
+    "version": "2.1",
+    "description": "Mock Data",
+    "data": [
+        {
+            "symbol": "AAPL",
+            "date": "2024-01-25",
+            "indicators": {
+                "RSI": 65.4,
+                "SMA_20": 185.3,
+                "SMA_50": 180.1
+            },
+            "last_price": 188.5
+        },
+        {
+            "symbol": "GOOGL",
+            "date": "2024-01-25",
+            "indicators": {
+                "RSI": 45.2,
+                "SMA_20": 145.0,
+                "SMA_50": 148.2
+            },
+            "last_price": 142.1
+        },
+        {
+            "symbol": "MSFT",
+            "date": "2024-01-25",
+            "indicators": {
+                "RSI": 72.1,
+                "SMA_20": 395.0,
+                "SMA_50": 380.5
+            },
+            "last_price": 402.5
+        }
+    ]
+}

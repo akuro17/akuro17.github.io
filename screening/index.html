@@ -1,11 +1,237 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: https://ogp.me/ns#">
 <head>
-    <meta charset="UTF-8">
-    <title>Screening Tool</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Screening | I ant I Investigates</title>
+    <meta name="description" content="Screening results based on daily updated S&P 500 data and custom indicators." />
+
+    <!-- OGP -->
+    <meta property="og:title" content="Screening | I ant I Investigates" />
+    <meta property="og:description" content="Daily S&P 500 screening results." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="./" />
+    <meta property="og:image" content="../assets/og-image.png" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // Enable manual dark mode toggle if needed
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4f46e5', // Indigo-600
+                        'primary-dark': '#4338ca', // Indigo-700
+                        dark: {
+                            bg: '#0f172a',    // Slate-900
+                            card: '#1e293b',  // Slate-800
+                            border: '#334155' // Slate-700
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans JP"', 'system-ui', 'sans-serif'],
+                        mono: ['"Roboto Mono"', 'ui-monospace', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root { color-scheme: light dark; }
+        body { font-family: 'Noto Sans JP', sans-serif; }
+        .font-mono-custom { font-family: 'Roboto Mono', monospace; }
+        
+        /* Dark mode overrides provided by Tailwind classes mostly, but explicit generic styles here */
+        body { background-color: #f8fafc; color: #0f172a; }
+        @media (prefers-color-scheme: dark) {
+            body { background-color: #0f172a; color: #f1f5f9; }
+        }
+    </style>
 </head>
-<body>
-    <h1>Screening Tool</h1>
-    <p>Interactive screening tool goes here.</p>
+<body class="flex flex-col min-h-screen antialiased transition-colors duration-200">
+
+    <!-- Header / Navbar -->
+    <header id="site-header" class="border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm sticky top-0 z-50">
+        <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:py-4" aria-label="Primary Navigation">
+            <!-- Logo -->
+            <a href="../" class="flex items-center gap-2" id="logo">
+                <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary text-xs font-semibold text-white font-mono-custom">I</span>
+                <div class="flex flex-col">
+                    <span class="text-sm font-semibold tracking-tight text-slate-900 dark:text-slate-100">I ant I Investigates</span>
+                    <span class="text-xs text-slate-500 dark:text-slate-400">Stock Analysis Lab</span>
+                </div>
+            </a>
+
+            <!-- Nav links -->
+            <div class="flex items-center gap-6 text-sm" id="nav-links">
+                <a href="../" class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors">Home</a>
+                <a href="../indicators/" class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors">Indicators</a>
+                <a href="./" class="font-semibold text-primary" aria-current="page">Screening</a>
+                <span class="text-slate-300 dark:text-slate-700 font-medium cursor-not-allowed">Software</span>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-content" class="flex-1 py-8 sm:py-12">
+        <div class="mx-auto max-w-7xl px-4">
+            
+            <!-- Page Header -->
+            <div class="mb-8">
+                <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Screening Results</h1>
+                <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">
+                    Latest indicator values for monitored stocks (S&P 500). Updated Daily.
+                </p>
+                <div class="mt-2 text-xs text-slate-500 dark:text-slate-500 font-mono-custom" id="data-meta">
+                    Loading metadata...
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loading" class="flex justify-center py-20">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+            </div>
+
+            <!-- Data Table Container -->
+            <div id="table-container" class="hidden overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm bg-white dark:bg-slate-900">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
+                        <thead class="bg-slate-50 dark:bg-slate-800/50">
+                            <tr id="table-header">
+                                <!-- Headers will be injected via JS -->
+                            </tr>
+                        </thead>
+                        <tbody id="table-body" class="divide-y divide-slate-200 dark:divide-slate-700 bg-white dark:bg-slate-900">
+                            <!-- Rows will be injected via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Error State -->
+            <div id="error-message" class="hidden rounded-md bg-red-50 dark:bg-red-900/20 p-4 text-sm text-red-700 dark:text-red-400">
+                Failed to load screening data.
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="site-footer" class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 mt-auto">
+        <div class="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-8 text-xs text-slate-500 dark:text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+            <div class="flex items-center gap-2">
+                <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-900 dark:bg-slate-700 text-[10px] font-semibold text-white font-mono-custom">I</span>
+                <span class="text-[11px]">© 2026 I ant I Investigates</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-4">
+                 <nav class="flex gap-4">
+                    <a href="../indicators/" class="text-[11px] text-slate-500 dark:text-slate-400 hover:text-primary transition-colors">Indicators</a>
+                    <span class="text-[11px] text-slate-300 dark:text-slate-700 cursor-not-allowed">Software</span>
+                </nav>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const DATA_URL = '../data/screening/latest_screening_data.json';
+
+        async function fetchScreeningData() {
+            try {
+                const response = await fetch(DATA_URL);
+                if (!response.ok) throw new Error('Network response was not ok');
+                return await response.json();
+            } catch (error) {
+                console.error('Fetch error:', error);
+                showError();
+                return null;
+            }
+        }
+
+        function renderTable(data) {
+            const container = document.getElementById('table-container');
+            const headerRow = document.getElementById('table-header');
+            const body = document.getElementById('table-body');
+            const meta = document.getElementById('data-meta');
+            const loading = document.getElementById('loading');
+
+            if (!data || !data.data || data.data.length === 0) {
+                container.classList.add('hidden');
+                loading.classList.add('hidden');
+                return; // Or show empty state
+            }
+
+            // Update Metadata
+            meta.textContent = `Generated: ${data.generated_at} | Tickers: ${data.ticker_count} | Version: ${data.version}`;
+
+            // Determine columns dynamically from first item
+            // Structure: { symbol, date, last_price, indicators: { Key: Val } }
+            // Flatten generic indicators for display
+            
+            const firstItem = data.data[0];
+            const indicatorKeys = firstItem.indicators ? Object.keys(firstItem.indicators) : [];
+            
+            // Define Columns
+            const columns = [
+                { key: 'symbol', label: 'Ticker' },
+                { key: 'last_price', label: 'Price' },
+                ...indicatorKeys.map(k => ({ key: k, label: k, isIndicator: true }))
+            ];
+
+            // Render Header
+            headerRow.innerHTML = columns.map(col => `
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" onclick="sortTable('${col.key}')">
+                    ${col.label}
+                </th>
+            `).join('');
+
+            // Render Body
+            body.innerHTML = data.data.map(item => `
+                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors hover:cursor-pointer">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-white font-mono-custom">
+                        ${item.symbol}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 font-mono-custom">
+                        ${formatNumber(item.last_price)}
+                    </td>
+                    ${indicatorKeys.map(key => `
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 font-mono-custom">
+                            ${formatNumber(item.indicators[key])}
+                        </td>
+                    `).join('')}
+                </tr>
+            `).join('');
+
+            loading.classList.add('hidden');
+            container.classList.remove('hidden');
+        }
+
+        function formatNumber(num) {
+            if (typeof num !== 'number') return num;
+            return num.toFixed(2);
+        }
+
+        function showError() {
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('error-message').classList.remove('hidden');
+        }
+
+        function sortTable(key) {
+           // Simple sort implementation placeholder
+           console.log("Sorting by", key);
+           // TODO: Implement client-side sorting if needed, or leave for future iteration
+        }
+
+        // Init
+        document.addEventListener('DOMContentLoaded', async () => {
+            const data = await fetchScreeningData();
+            renderTable(data);
+        });
+    </script>
 </body>
 </html>
