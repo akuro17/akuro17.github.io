@@ -5,8 +5,8 @@
 :root {
     --font-sans: 'Inter', system-ui, sans-serif;
     --font-mono: 'Roboto Mono', monospace;
-    --color-primary: #5048e5;
-    /* Indigo-600 */
+    --color-primary: #4f46e5;
+    /* Indigo-600 (Site Standard) */
     --color-primary-hover: #4338ca;
     /* Indigo-700 */
     --bg-page: #f8fafc;
@@ -52,9 +52,7 @@ body {
     grid-template-columns: 320px 1fr;
     /* Filter Panel | Results */
     gap: 1.5rem;
-    height: calc(100vh - 180px);
-    /* Adjust based on header/footer */
-    min-height: 600px;
+    gap: 1.5rem;
 }
 
 /* Collapsible Filter Panel */
@@ -160,7 +158,7 @@ body {
 /* Add Button Area */
 .add-condition-area {
     padding: 1rem;
-    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
     background: #f8fafc;
 }
 

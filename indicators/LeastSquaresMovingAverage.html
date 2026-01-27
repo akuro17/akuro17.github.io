@@ -115,8 +115,12 @@
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center mr-6">
-                        <a href="../index.html" class="font-bold text-xl text-indigo-600">
-                            I ant I Investigates
+                        <a href="../" class="flex items-center gap-2" id="logo">
+                            <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-xs font-semibold text-white font-mono">I</span>
+                            <div class="flex flex-col">
+                                <span class="text-sm font-semibold tracking-tight">I ant I Investigates</span>
+                                <span class="text-xs text-slate-500">Stock Analysis Lab</span>
+                            </div>
                         </a>
                     </div>
                     <!-- Breadcrumbs (Moved Here) -->
@@ -144,7 +148,11 @@
                     </div>
                 </div>
                 <!-- External Links Placeholder -->
-                <div class="hidden sm:flex items-center">
+                <div class="hidden sm:flex items-center gap-6 text-sm font-medium">
+                    <a href="../" class="text-slate-600 hover:text-indigo-600 transition-colors">Home</a>
+                    <a href="./" class="font-semibold text-indigo-600" aria-current="page">Indicators</a>
+                    <a href="../screening/" class="text-slate-600 hover:text-indigo-600 transition-colors">Screening</a>
+                    <span class="text-slate-300 font-medium cursor-not-allowed">Software</span>
                 </div>
             </div>
         </div>
@@ -845,11 +853,20 @@ EXIT:
 
 
         <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 mt-12">
-        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-            <p class="text-center text-slate-400 text-sm">
-                &copy; 2026 I ant I Investigates
-            </p>
+    <footer id="site-footer" class="border-t border-slate-200 bg-white mt-auto">
+        <div class="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-8 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+            <div class="flex items-center gap-2">
+                <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-indigo-600 text-[10px] font-semibold text-white font-mono">I</span>
+                <span class="text-[11px]">&copy; 2026 I ant I Investigates</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-4">
+                <span class="text-[11px]">Static Documents / No Tracking</span>
+                <nav class="flex gap-4">
+                    <a href="./" class="text-[11px] font-semibold text-indigo-600" aria-current="page">Indicators</a>
+                    <a href="../screening/" class="text-[11px] text-slate-500 hover:text-indigo-600 transition-colors">Screening</a>
+                    <span class="text-[11px] text-slate-300 cursor-not-allowed">Software</span>
+                </nav>
+            </div>
         </div>
     </footer>
         <!-- ========================================== -->

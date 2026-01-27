@@ -4,6 +4,42 @@
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>Advanced Stock Screener - I ant I Investigates</title>
+    <meta name="description" content="Advanced technical stock screener for S&P 500. Filter by RSI, MACD, Moving Averages, and Candle Patterns.">
+    <meta name="keywords" content="stock screener, technical analysis, S&P 500, RSI, MACD, trading tools">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3375094177283762"
+         crossorigin="anonymous"></script>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://iantinvestigates.com/screening/index.html">
+
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Advanced Stock Screener - I ant I Investigates">
+    <meta property="og:description" content="Advanced technical stock screener for S&P 500. Filter by RSI, MACD, Moving Averages, and Candle Patterns.">
+    <meta property="og:url" content="https://iantinvestigates.com/screening/index.html">
+    <meta property="og:site_name" content="I ant I Investigates">
+    <meta property="og:image" content="https://iantinvestigates.com/assets/images/ogp/index.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Advanced Stock Screener">
+    <meta name="twitter:description" content="Advanced technical stock screener for S&P 500. Filter by RSI, MACD, Moving Averages, and Candle Patterns.">
+    <meta name="twitter:image" content="https://iantinvestigates.com/assets/images/ogp/index.png">
+
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "IaI Stock Screener",
+      "url": "https://iantinvestigates.com/screening/",
+      "description": "Advanced technical stock screener for S&P 500 components.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All"
+    }
+    </script>
     
     <!-- CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries,typography"></script>
@@ -28,32 +64,47 @@
         }
     </script>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased overflow-hidden">
+<body class="bg-slate-50 text-slate-800 font-sans antialiased flex flex-col min-h-screen">
 
-    <!-- Header (Compact) -->
-    <nav class="bg-white border-b border-slate-200 h-14 flex items-center justify-between px-4 shrink-0 z-30">
-        <div class="flex items-center gap-4">
-            <a href="../index.html" class="font-bold text-indigo-600 flex items-center gap-2">
-                <span class="material-symbols-outlined">analytics</span>
-                I ant I Screener
-            </a>
-            <div class="h-6 w-px bg-slate-200 mx-2"></div>
-            <span class="text-sm font-semibold text-slate-700">S&P 500</span>
-        </div>
-        
-        <div class="flex items-center gap-4">
-            <div class="text-xs text-right">
-                <span class="block font-bold text-slate-900" id="row-count">0</span>
-                <span class="block text-slate-400" id="total-count">/ 0 loaded</span>
+    <!-- Header / Navbar (Standardized) -->
+    <header id="site-header" class="border-b border-slate-200 bg-white/80 backdrop-blur-sm shrink-0 z-50 sticky top-0">
+        <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3" aria-label="Primary Navigation">
+            <!-- Logo -->
+            <div class="flex items-center gap-6">
+                <a href="../index.html" class="flex items-center gap-2" id="logo">
+                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-xs font-semibold text-white font-mono">I</span>
+                    <div class="flex flex-col">
+                        <span class="text-sm font-semibold tracking-tight">I ant I Investigates</span>
+                        <span class="text-xs text-slate-500">Stock Analysis Lab</span>
+                    </div>
+                </a>
+                
+                <!-- Breadcrumbs -->
+                <nav class="flex items-center text-xs text-slate-500 font-medium">
+                    <a href="../index.html" class="hover:text-indigo-600 transition-colors">Home</a>
+                    <span class="mx-2 text-slate-300">/</span>
+                    <a href="./" class="hover:text-indigo-600 transition-colors">Screening</a>
+                    <span class="mx-2 text-slate-300">/</span>
+                    <span class="text-slate-900 font-semibold">Index</span>
+                </nav>
             </div>
-            <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded text-sm font-medium transition-colors shadow-sm">
-                Export
-            </button>
-        </div>
-    </nav>
+
+            <!-- Loading Info & Export -->
+            <div class="flex items-center gap-4">
+                <div class="text-xs text-right flex items-baseline gap-1">
+                    <span class="font-bold text-slate-900" id="row-count">0</span>
+                    <span class="text-slate-400" id="total-count">/ 0 loaded</span>
+                </div>
+                <button id="btn-export" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded text-sm font-medium transition-colors shadow-sm flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[16px]">download</span>
+                    Export
+                </button>
+            </div>
+        </nav>
+    </header>
 
     <!-- Main Layout (2 Columns) -->
-    <main class="screening-layout p-4">
+    <main class="screening-layout p-4 flex-1">
         
         <!-- Left: Filter Panel -->
         <aside class="filter-panel" id="filter-panel">
@@ -62,38 +113,34 @@
                     <span class="material-symbols-outlined text-[18px]">filter_alt</span>
                     Filters
                 </h2>
-                <button class="text-slate-400 hover:text-slate-600">
-                    <span class="material-symbols-outlined text-[18px]">menu_open</span>
+                <!-- menu_open removed -->
+            </div>
+
+            <!-- Add Button -->
+            <div class="add-condition-area">
+                <button class="btn-add" onclick="screeningApp.addCondition()">
+                    <span class="material-symbols-outlined">add</span>
+                    Add Condition
                 </button>
             </div>
 
             <!-- Conditions List -->
-            <div id="filter-conditions-list" class="filter-conditions custom-scrollbar">
+            <div id="filter-conditions-list" class="filter-conditions">
                 <!-- Dynamic Conditions will replace this -->
-                <!-- Default Hint -->
-                <div class="text-center py-8 text-slate-400 text-xs">
-                    <span class="material-symbols-outlined text-[32px] mb-2 opacity-50">playlist_add</span>
-                    <p>Add conditions to filter stocks</p>
-                </div>
             </div>
-
-            <!-- Add Button -->
-            <div class="add-condition-area mt-auto">
-                <button class="btn-add" onclick="screeningApp.addCondition()">
-                    <span class="material-symbols-outlined">add</span>
-                    Add Condition
+            
+            <!-- Debug Tools -->
+            <div class="p-4 mt-auto border-t border-slate-200 bg-slate-50">
+                <button onclick="screeningApp.copyDebugInfo()" class="text-[10px] text-slate-400 hover:text-indigo-600 flex items-center gap-1 w-full justify-center">
+                    <span class="material-symbols-outlined text-[12px]">content_copy</span>
+                    Copy Indicator Names
                 </button>
             </div>
         </aside>
 
         <!-- Right: Results Panel -->
         <section class="results-panel">
-            <!-- Table Header (Sticky) -->
-            <div class="bg-slate-50 border-b border-slate-200 px-4 py-2 flex justify-between items-center text-xs text-slate-500">
-                <span>Displaying top matches</span>
-                <span>Real-time Update</span>
-            </div>
-
+            
             <!-- Table Container -->
             <div class="table-container custom-scrollbar">
                 <table class="w-full text-left border-collapse">
@@ -111,9 +158,27 @@
 
     </main>
 
+    <!-- Footer (Standardized) -->
+    <footer id="site-footer" class="border-t border-slate-200 bg-white shrink-0">
+        <div class="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-4 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+            <div class="flex items-center gap-2">
+                <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-indigo-600 text-[10px] font-semibold text-white font-mono">I</span>
+                <span class="text-[11px]">&copy; 2026 I ant I Investigates</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-4">
+                <span class="text-[11px]">Static Documents / No Tracking</span>
+                <nav class="flex gap-4">
+                    <a href="../indicators/" class="text-[11px] text-slate-500 hover:text-indigo-600 transition-colors">Indicators</a>
+                    <a href="./" class="text-[11px] font-semibold text-indigo-600" aria-current="page">Screening</a>
+                    <span class="text-[11px] text-slate-300 cursor-not-allowed">Software</span>
+                </nav>
+            </div>
+        </div>
+    </footer>
+
     <!-- Data & Logic -->
-    <script src="data_loader.js"></script> <!-- Defines PRELOADED_DATA -->
-    <script src="screening_core.js"></script>
+    <script src="data_loader.js?v=10"></script> <!-- Defines PRELOADED_DATA -->
+    <script src="screening_core.js?v=10"></script>
 
 </body>
 </html>

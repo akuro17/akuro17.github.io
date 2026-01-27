@@ -88,6 +88,11 @@ class ScreeningApp {
                 delete flat.indicators; // Cleanup
             }
 
+            // Remove internal keys (nu_)
+            Object.keys(flat).forEach(k => {
+                if (k.startsWith('nu_') || k === 'valid' || k === 'error') delete flat[k];
+            });
+
             // Map standard keys if missing (Fix for case sensitivity)
             if (!flat.Symbol && flat.symbol) { flat.Symbol = flat.symbol; delete flat.symbol; }
             if (!flat.Close && flat.price) { flat.Close = flat.price; delete flat.price; }
@@ -122,15 +127,182 @@ class ScreeningApp {
             else if (['SMA', 'EMA', 'WMA', 'ADX', 'SuperTrend', 'Ichimoku', 'Parabolic'].some(s => key.includes(s))) category = 'Trend';
             else if (['BB', 'ATR', 'Keltner'].some(s => key.includes(s))) category = 'Volatility';
 
+            // Metadata Cleaning: Skip internal or invalid keys
+            if (key.startsWith('nu_') && !['nu_error'].includes(key)) return; // Skip nu_ internal keys
+            if (key === 'Symbol' || key === 'generated_at') return;
+
+            // Beautify Name
+            let name = key.replace(/_/g, ' ');
+
+            // Expansion Map
+            const INDICATOR_NAMES = {
+                'SMA': 'Simple Moving Average',
+                'EMA': 'Exponential Moving Average',
+                'WMA': 'Weighted Moving Average',
+                'DEMA': 'Double Exponential Moving Average',
+                'TEMA': 'Triple Exponential Moving Average',
+                'TRIMA': 'Triangular Moving Average',
+                'KAMA': 'Kaufman Adaptive Moving Average',
+                'MAMA': 'MESA Adaptive Moving Average',
+                'T3': 'T3 Moving Average',
+                'MACD': 'MACD',
+                'MACDEXT': 'MACD with Controllable MA Type',
+                'MACDFIX': 'MACD Fix 12/26',
+                'RSI': 'Relative Strength Index',
+                'STOCH': 'Stochastic',
+                'STOCHF': 'Stochastic Fast',
+                'STOCHRSI': 'Stochastic RSI',
+                'WILLR': 'Williams %R',
+                'ADX': 'Average Directional Movement Index',
+                'ADXR': 'Average Directional Movement Index Rating',
+                'APO': 'Absolute Price Oscillator',
+                'PPO': 'Percentage Price Oscillator',
+                'MOM': 'Momentum',
+                'BOP': 'Balance Of Power',
+                'CCI': 'Commodity Channel Index',
+                'CMO': 'Chande Momentum Oscillator',
+                'ROC': 'Rate of Change',
+                'ROCR': 'Rate of Change Ratio',
+                'ROCP': 'Rate of Change Percentage',
+                'ROCR100': 'Rate of Change Ratio 100 Scale',
+                'AROON': 'Aroon',
+                'AROONOSC': 'Aroon Oscillator',
+                'MFI': 'Money Flow Index',
+                'TRIX': 'Triple Smooth EMA (TRIX) 1-Day ROC',
+                'ULTOSC': 'Ultimate Oscillator',
+                'DX': 'Directional Movement Index',
+                'MINUS_DI': 'Minus Directional Indicator',
+                'PLUS_DI': 'Plus Directional Indicator',
+                'MINUS_DM': 'Minus Directional Movement',
+                'PLUS_DM': 'Plus Directional Movement',
+                'BB': 'Bollinger Bands',
+                'BBANDS': 'Bollinger Bands',
+                'MIDPOINT': 'MidPoint over period',
+                'MIDPRICE': 'Midpoint Price over period',
+                'SAR': 'Parabolic SAR',
+                'SAREXT': 'Parabolic SAR - Extended',
+                'TRANGE': 'True Range',
+                'ATR': 'Average True Range',
+                'NATR': 'Normalized Average True Range',
+                'OBV': 'On Balance Volume',
+                'AD': 'Chaikin A/D Line',
+                'ADOSC': 'Chaikin A/D Oscillator',
+                'HT_TRENDLINE': 'Hilbert Transform - Instantaneous Trendline',
+                'HT_SINE': 'Hilbert Transform - SineWave',
+                'HT_TRENDMODE': 'Hilbert Transform - Trend vs Cycle Mode',
+                'HT_DCPERIOD': 'Hilbert Transform - Dominant Cycle Period',
+                'HT_DCPHASE': 'Hilbert Transform - Dominant Cycle Phase',
+                'HT_PHASOR': 'Hilbert Transform - Phasor Components',
+                'AVGPRICE': 'Average Price',
+                'MEDPRICE': 'Median Price',
+                'TYPPRICE': 'Typical Price',
+                'WCLPRICE': 'Weighted Close Price',
+                'AO': 'Awesome Oscillator',
+                'KST': 'Know Sure Thing',
+                'ICHIMOKU': 'Ichimoku Cloud',
+                'SUPERTREND': 'SuperTrend',
+                'PARABOLIC': 'Parabolic SAR',
+                'AC': 'Accelerator Oscillator',
+                'ADL': 'Accumulation/Distribution Line',
+                'ALMA': 'Arnaud Legoux Moving Average',
+                'HMA': 'Hull Moving Average',
+                'ZLEMA': 'Zero Lag EMA',
+                'VAMA': 'Variable Adaptive Moving Average',
+                'SMMA': 'Smoothed Moving Average',
+                'DPO': 'Detrended Price Oscillator',
+                'COPPOCK': 'Coppock Curve',
+                'FISHER': 'Fisher Transform',
+                'KVO': 'Klinger Volume Oscillator',
+                'QSTICK': 'QStick',
+                'VO': 'Volume Oscillator',
+                'VWAP': 'Volume Weighted Average Price',
+                'BBR': 'Bollinger Bands %B',
+                'BBW': 'Bollinger Bands Width',
+                'CHOP': 'Choppiness Index',
+                'CMF': 'Chaikin Money Flow',
+                'DMA': 'Displaced Moving Average',
+                'DMI': 'Directional Movement Index',
+                'EMV': 'Ease of Movement',
+                'FDI': 'Fractal Dimension Index',
+                'GMA': 'Guppy Moving Average',
+                'HLBand': 'High Low Bands',
+                'KC': 'Keltner Channels',
+                'LSMA': 'Least Squares Moving Average',
+                'MADR': 'Moving Average Deviation Rate',
+                'NVI': 'Negative Volume Index',
+                'PVI': 'Positive Volume Index',
+                'PVT': 'Price Volume Trend',
+                'PSAR': 'Parabolic SAR',
+                'PSY': 'Psychological Line',
+                'RCI': 'Rank Correlation Index',
+                'SMI': 'Stochastic Momentum Index',
+                'STC': 'Schaff Trend Cycle',
+                'TMA': 'Triangular Moving Average',
+                'UDVR': 'Up/Down Volume Ratio',
+                'UO': 'Ultimate Oscillator',
+                'VixFix': 'CM Williams Vix Fix',
+                'VolMA': 'Volume Moving Average',
+                'VWMA': 'Volume Weighted Moving Average',
+                'WPR': 'Williams %R',
+                'Wilder': 'Wilders Smoothing',
+                'RegSlope': 'Linear Regression Slope',
+                'LinReg': 'Linear Regression',
+                'LinRegSlope': 'Linear Regression Slope',
+                'Mass': 'Mass Index',
+                'Force': 'Force Index',
+                'Envelope': 'Moving Average Envelope',
+                'Entropy': 'Sample Entropy',
+                'StdDev': 'Standard Deviation',
+                'Var': 'Variance',
+                'Vortex': 'Vortex Indicator',
+                'YangZhang': 'Yang Zhang Volatility',
+                'ElderImpulse': 'Elder Impulse System',
+                'ElderRay': 'Elder Ray Index',
+                'ChaikinOsc': 'Chaikin Oscillator',
+                'ChaikinVol': 'Chaikin Volatility',
+                'HV': 'Historical Volatility',
+                'MACD': 'Moving Average Convergence Divergence'
+            };
+
+            // Replace Acronyms with Full Names
+            Object.keys(INDICATOR_NAMES).forEach(acronym => {
+                const regex = new RegExp(`\\b${acronym}\\b`, 'gi');
+                name = name.replace(regex, (match) => {
+                    return INDICATOR_NAMES[acronym];
+                });
+            });
+
+            // Handle Candle Patterns (CDL*) generically
+            if (name.startsWith('CDL')) {
+                name = name.replace('CDL', 'Pattern: ').replace(/_/g, ' ');
+            }
+
+            // Fallback Capitalization for any unmapped
+            name = name.replace(/\b(sma|ema|wma|rsi|macd|bb|atr|roc|obv|mfi|uo|ao|kst|ac|adl|alma|hma|zlema|dma|dmi|kc|lsma|nvi|pvi|pvt|psar|psy|rci|smi|stc|tma|udvr|uo|wpr|vwma|hv)\b/gi, (match) => match.toUpperCase());
+
             this.state.metaMap[key] = {
                 id: key,
-                code: key, // Display Code
-                name: key.replace(/_/g, ' '), // Beautified Name
+                code: key, // Display Code (Short)
+                name: name, // Full Name (Long)
                 category: category,
                 type: 'numeric'
             };
         });
         console.log("Generated Metadata for keys:", Object.keys(this.state.metaMap).length);
+    }
+
+    copyDebugInfo() {
+        const lines = Object.values(this.state.metaMap)
+            .sort((a, b) => a.code.localeCompare(b.code))
+            .map(m => `${m.code} \t ${m.name}`);
+
+        const text = "CODE \t NAME\n" + lines.join("\n");
+        navigator.clipboard.writeText(text).then(() => {
+            alert("Copied " + lines.length + " indicator names to clipboard!");
+        }).catch(err => {
+            console.error("Failed to copy", err);
+            alert("Failed to copy. See console.");
+        });
     }
 
     /**
@@ -199,6 +371,12 @@ class ScreeningApp {
         this.renderTable();
         // Add one empty condition to start if none
         if (this.state.conditions.length === 0) this.addCondition();
+
+        // Bind Export Button
+        const btnExport = document.getElementById('btn-export');
+        if (btnExport) {
+            btnExport.addEventListener('click', () => this.exportCSV());
+        }
     }
 
     updateStats() {
@@ -291,15 +469,16 @@ class ScreeningApp {
      */
     addCondition() {
         const id = 'cond-' + Math.random().toString(36).substr(2, 9);
-        this.state.conditions.push({
+        const newCond = {
             id,
             indicatorKey: null,
             operator: 'gt',
             targetType: 'value', // 'value' | 'indicator' 
             value: null,
             targetKey: null
-        });
-        this.renderConditionRow(id);
+        };
+        this.state.conditions.unshift(newCond); // Add to TOP
+        this.renderConditionRow(id, true); // true = prepend
     }
 
     removeCondition(id) {
@@ -331,7 +510,7 @@ class ScreeningApp {
     /**
      * UI: Render Single Condition Row
      */
-    renderConditionRow(id) {
+    renderConditionRow(id, prepend = false) {
         const list = document.getElementById('filter-conditions-list');
         const div = document.createElement('div');
         div.className = 'condition-card';
@@ -347,7 +526,7 @@ class ScreeningApp {
             
             <div class="flex flex-col gap-2">
                 <!-- Left Side: Indicator Search -->
-                <div class="indicator-search-container relative">
+                <div class="indicator-search-container relative" onclick="event.stopPropagation()">
                     <input type="text" 
                            id="input-left-${id}"
                            class="input-sm w-full font-semibold text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" 
@@ -383,7 +562,11 @@ class ScreeningApp {
                 </div>
             </div>
         `;
-        list.appendChild(div);
+        if (prepend) {
+            list.insertBefore(div, list.firstChild);
+        } else {
+            list.appendChild(div);
+        }
 
         this.setupSearchAutocomplete(id, 'left');
     }
@@ -427,6 +610,22 @@ class ScreeningApp {
                        placeholder="Right Indicator..." 
                        autocomplete="off">
                 <div id="dropdown-right-${id}" class="search-dropdown hidden custom-scrollbar"></div>
+                <div class="indicator-search-container relative hidden" id="right-search-wrapper-${id}" onclick="event.stopPropagation()">
+                     <!-- Wrapper for containment reference, though inputs are injected above. 
+                          Actually, we need to wrap the injected input in the container div structure 
+                          to match the class check in global listener. -->
+                </div>
+            `;
+            // Re-write innerHTML correctly to wrap right side input
+            container.innerHTML = `
+                <div class="indicator-search-container relative" onclick="event.stopPropagation()">
+                    <input type="text" 
+                        id="input-right-${id}"
+                        class="input-sm w-full font-semibold text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" 
+                        placeholder="Right Indicator..." 
+                        autocomplete="off">
+                    <div id="dropdown-right-${id}" class="search-dropdown hidden custom-scrollbar"></div>
+                </div>
             `;
             this.setupSearchAutocomplete(id, 'right');
             // If exists, set value
@@ -453,15 +652,15 @@ class ScreeningApp {
             const term = filter.toLowerCase();
             const matches = Object.values(this.state.metaMap)
                 .filter(m => m.code.toLowerCase().includes(term) || m.name.toLowerCase().includes(term))
-                .sort((a, b) => a.category.localeCompare(b.category));
+                .sort((a, b) => a.name.localeCompare(b.name)); // Sort Alphabetically by Name
 
             if (matches.length === 0) {
                 dropdown.innerHTML = `<div class="p-2 text-xs text-slate-400 text-center">No matches</div>`;
                 return;
             }
 
-            dropdown.innerHTML = matches.slice(0, 50).map(m => `
-                <div class="search-item flex justify-between items-center group" onclick="screeningApp.selectIndicator('${id}', '${side}', '${m.code}')">
+            dropdown.innerHTML = matches.slice(0, 10000).map(m => `
+                <div class="search-item flex justify-between items-center group" onmousedown="event.preventDefault(); screeningApp.selectIndicator('${id}', '${side}', '${m.code}')">
                     <div>
                         <div class="search-item-code group-hover:text-indigo-600 transition-colors">${m.code}</div>
                         <div class="search-item-name">${m.name}</div>
@@ -501,6 +700,48 @@ class ScreeningApp {
             clearTimeout(timeout);
             timeout = setTimeout(() => func.apply(this, args), wait);
         };
+    }
+
+    /**
+     * Export to CSV
+     */
+    exportCSV() {
+        if (!this.state.displayData || this.state.displayData.length === 0) {
+            alert("No data to export.");
+            return;
+        }
+
+        // Determine Columns (same as visual table)
+        const defaultCols = ['Symbol', 'Close', 'Volume'];
+        const activeKeys = new Set();
+        this.state.conditions.forEach(c => {
+            if (c.indicatorKey) activeKeys.add(c.indicatorKey);
+            if (c.targetType === 'indicator' && c.targetKey) activeKeys.add(c.targetKey);
+        });
+        const cols = [...defaultCols, ...[...activeKeys].filter(k => !defaultCols.includes(k))];
+
+        // Header
+        let csvContent = "data:text/csv;charset=utf-8,"
+            + cols.join(",") + "\n";
+
+        // Rows
+        this.state.displayData.forEach(row => {
+            const rowStr = cols.map(col => {
+                let val = row[col];
+                if (val === undefined || val === null) return "";
+                return val;
+            }).join(",");
+            csvContent += rowStr + "\n";
+        });
+
+        // Download Trigger
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "screening_results.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
 }
 
