@@ -108,12 +108,15 @@
         
         <!-- Left: Filter Panel -->
         <aside class="filter-panel" id="filter-panel">
-            <div class="filter-header">
+            <div class="filter-header flex justify-between items-center">
                 <h2 class="text-sm font-bold uppercase tracking-wider text-slate-600 flex items-center gap-2">
                     <span class="material-symbols-outlined text-[18px]">filter_alt</span>
                     Filters
                 </h2>
-                <!-- menu_open removed -->
+                <button onclick="screeningApp.copyCurrentURL()" class="text-slate-400 hover:text-indigo-600 flex items-center gap-1 text-[10px] font-medium transition-colors" title="Copy Link with Filters">
+                    <span class="material-symbols-outlined text-[14px]">link</span>
+                    Copy Link
+                </button>
             </div>
 
             <!-- Add Button -->

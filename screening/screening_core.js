@@ -35,6 +35,7 @@ class ScreeningApp {
         console.log("Initializing Screening App...");
         await this.loadData();
         this.generateMetadata(); // Dynamic generation based on loaded data
+        this.loadStateFromURL(); // Load filters from URL
         this.renderInitialUI();
     }
 
@@ -306,9 +307,108 @@ class ScreeningApp {
     }
 
     /**
+     * URL State Management
+     */
+    loadStateFromURL() {
+        const params = new URLSearchParams(window.location.search);
+        const filtersJson = params.get('filters');
+        if (filtersJson) {
+            try {
+                const conditions = JSON.parse(filtersJson);
+                if (Array.isArray(conditions)) {
+                    this.state.conditions = conditions.map(c => {
+                        // Check if it's the short format (has 'k' instead of 'indicatorKey')
+                        if (c.k) {
+                            return {
+                                id: 'cond-' + Math.random().toString(36).substr(2, 9),
+                                indicatorKey: c.k,      // k -> indicatorKey
+                                operator: c.o,          // o -> operator
+                                targetType: c.t || 'value', // t -> targetType (default 'value')
+                                value: c.v || null,     // v -> value
+                                targetKey: c.tk || null // tk -> targetKey
+                            };
+                        }
+
+                        // Fallback processing for backward compatibility (if verbose format exists)
+                        return {
+                            ...c,
+                            id: c.id || 'cond-' + Math.random().toString(36).substr(2, 9)
+                        };
+                    });
+                    console.log("Restored conditions from URL:", this.state.conditions.length);
+                    // Re-apply filters immediately to update data state
+                    this.applyFilters(false); // false = don't update URL yet
+                }
+            } catch (e) {
+                console.error("Failed to parse filters from URL:", e);
+            }
+        }
+    }
+
+    updateURL() {
+        // Filter out empty/invalid conditions before saving
+        const validConditions = this.state.conditions.filter(c => c.indicatorKey && c.operator);
+
+        if (validConditions.length === 0) {
+            // Clean URL
+            window.history.replaceState({}, '', window.location.pathname);
+            return;
+        }
+
+        // Map to short keys for URL compression
+        const shortConditions = validConditions.map(c => {
+            const sc = {
+                k: c.indicatorKey,
+                o: c.operator
+            };
+
+            // Only add optional fields if necessary to save space
+            if (c.targetType === 'indicator') {
+                sc.t = 'indicator';
+                if (c.targetKey) sc.tk = c.targetKey;
+            } else {
+                // targetType 'value' is default, can be omitted
+                if (c.value !== null && c.value !== '') sc.v = c.value;
+            }
+            return sc;
+        });
+
+        const json = JSON.stringify(shortConditions);
+        const params = new URLSearchParams(window.location.search);
+        params.set('filters', json);
+        window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
+    }
+
+    copyCurrentURL() {
+        const url = window.location.href;
+        navigator.clipboard.writeText(url).then(() => {
+            // Visual feedback could be a toast, but using alert for minimal fix
+            const originalText = document.querySelector('.filter-header button span').textContent;
+
+            // Temporary indication on the button
+            const btn = document.querySelector('.filter-header button');
+            const icon = btn.querySelector('.material-symbols-outlined');
+            const textSpan = Array.from(btn.childNodes).find(n => n.nodeType === 3 && n.textContent.trim().length > 0);
+
+            if (btn) {
+                icon.textContent = 'check';
+                // textSpan.textContent = ' Copied!'; // Careful with text nodes
+
+                setTimeout(() => {
+                    icon.textContent = 'link';
+                    // textSpan.textContent = ' Copy Link';
+                }, 2000);
+            }
+        }).catch(err => {
+            console.error("Failed to copy URL:", err);
+            alert("Failed to copy URL.");
+        });
+    }
+
+    /**
      * Filtering Engine
      */
-    applyFilters() {
+    applyFilters(updateUrl = true) {
         console.time("Filtering");
         const conditions = this.state.conditions.filter(c => {
             // Context: Left side must be valid. Right side depends on type.
@@ -347,6 +447,8 @@ class ScreeningApp {
         this.sortData();
         this.updateStats();
         this.renderTable();
+
+        if (updateUrl) this.updateURL();
     }
 
     sortData() {
@@ -369,8 +471,24 @@ class ScreeningApp {
     renderInitialUI() {
         this.updateStats();
         this.renderTable();
-        // Add one empty condition to start if none
-        if (this.state.conditions.length === 0) this.addCondition();
+
+        // Render persistence state if exists
+        if (this.state.conditions.length > 0) {
+            // Clear current list just in case (though should be empty on init)
+            document.getElementById('filter-conditions-list').innerHTML = '';
+
+            this.state.conditions.forEach(cond => {
+                this.renderConditionRow(cond.id, false); // Append
+                this.renderRightSide(cond.id); // Setup right side inputs
+                this.updateConditionUI(cond.id, 'left', cond.indicatorKey);
+                if (cond.targetType === 'indicator') {
+                    this.updateConditionUI(cond.id, 'right', cond.targetKey);
+                }
+            });
+        } else {
+            // Add one empty condition to start if none
+            this.addCondition();
+        }
 
         // Bind Export Button
         const btnExport = document.getElementById('btn-export');
